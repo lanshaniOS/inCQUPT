@@ -1,5 +1,5 @@
 //
-//  WCYNavigationController.h
+//  UIColor+Additions.h
 //  微重邮
 //
 //  Created by 周维康 on 16/10/15.
@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WCYNavigationController : UINavigationController
+@interface UIColor (Additions)
 
++ (UIColor *)colorWithRGBHex:(UInt32)hex;
++ (UIColor *)randomColor;
 @end

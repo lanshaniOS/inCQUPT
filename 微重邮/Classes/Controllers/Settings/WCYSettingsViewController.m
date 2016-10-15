@@ -1,18 +1,18 @@
 //
-//  WCYNavigationController.m
+//  WCYSettingsViewController.m
 //  微重邮
 //
 //  Created by 周维康 on 16/10/15.
 //  Copyright © 2016年 周维康. All rights reserved.
 //
 
-#import "WCYNavigationController.h"
+#import "WCYSettingsViewController.h"
 
-@interface WCYNavigationController ()
+@interface WCYSettingsViewController ()
 
 @end
 
-@implementation WCYNavigationController
+@implementation WCYSettingsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

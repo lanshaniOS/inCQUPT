@@ -10,12 +10,15 @@
 		493744B71DB1E6D300E49E4E /* WCYAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4937449F1DB1E6D300E49E4E /* WCYAppDelegate.m */; };
 		493744B81DB1E6D300E49E4E /* WCYBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 493744A41DB1E6D300E49E4E /* WCYBaseViewController.m */; };
 		493744B91DB1E6D300E49E4E /* WCYHomeTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 493744A61DB1E6D300E49E4E /* WCYHomeTabBarController.m */; };
-		493744BA1DB1E6D300E49E4E /* WCYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 493744A81DB1E6D300E49E4E /* WCYNavigationController.m */; };
 		493744BB1DB1E6D300E49E4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 493744B11DB1E6D300E49E4E /* Assets.xcassets */; };
 		493744BC1DB1E6D300E49E4E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 493744B21DB1E6D300E49E4E /* LaunchScreen.storyboard */; };
 		493744BD1DB1E6D300E49E4E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 493744B51DB1E6D300E49E4E /* main.m */; };
-		493744BE1DB1E6D300E49E4E /* WCYInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 493744B61DB1E6D300E49E4E /* WCYInfo.plist */; };
 		493744C01DB1E6DE00E49E4E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 493744BF1DB1E6DE00E49E4E /* Default-568h@2x.png */; };
+		493744C31DB2211300E49E4E /* WCYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 493744C21DB2211300E49E4E /* WCYNavigationController.m */; };
+		493744C91DB2232800E49E4E /* WCYHomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 493744C81DB2232800E49E4E /* WCYHomePageViewController.m */; };
+		493744CE1DB2274400E49E4E /* WCYInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 493744CD1DB2274400E49E4E /* WCYInformationViewController.m */; };
+		493744D11DB2277700E49E4E /* WCYSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 493744D01DB2277700E49E4E /* WCYSettingsViewController.m */; };
+		493744D51DB230AD00E49E4E /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 493744D41DB230AD00E49E4E /* UIColor+Additions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,13 +29,23 @@
 		493744A41DB1E6D300E49E4E /* WCYBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCYBaseViewController.m; sourceTree = "<group>"; };
 		493744A51DB1E6D300E49E4E /* WCYHomeTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCYHomeTabBarController.h; sourceTree = "<group>"; };
 		493744A61DB1E6D300E49E4E /* WCYHomeTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCYHomeTabBarController.m; sourceTree = "<group>"; };
-		493744A71DB1E6D300E49E4E /* WCYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCYNavigationController.h; sourceTree = "<group>"; };
-		493744A81DB1E6D300E49E4E /* WCYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCYNavigationController.m; sourceTree = "<group>"; };
 		493744B11DB1E6D300E49E4E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		493744B31DB1E6D300E49E4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		493744B51DB1E6D300E49E4E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		493744B61DB1E6D300E49E4E /* WCYInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WCYInfo.plist; sourceTree = "<group>"; };
 		493744BF1DB1E6DE00E49E4E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		493744C11DB2211300E49E4E /* WCYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCYNavigationController.h; sourceTree = "<group>"; };
+		493744C21DB2211300E49E4E /* WCYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCYNavigationController.m; sourceTree = "<group>"; };
+		493744C71DB2232800E49E4E /* WCYHomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCYHomePageViewController.h; sourceTree = "<group>"; };
+		493744C81DB2232800E49E4E /* WCYHomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCYHomePageViewController.m; sourceTree = "<group>"; };
+		493744CA1DB2244900E49E4E /* WCYStyleDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WCYStyleDefine.h; sourceTree = "<group>"; };
+		493744CB1DB224F000E49E4E /* WCYPrefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WCYPrefix.pch; sourceTree = "<group>"; };
+		493744CC1DB2274400E49E4E /* WCYInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCYInformationViewController.h; sourceTree = "<group>"; };
+		493744CD1DB2274400E49E4E /* WCYInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCYInformationViewController.m; sourceTree = "<group>"; };
+		493744CF1DB2277700E49E4E /* WCYSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCYSettingsViewController.h; sourceTree = "<group>"; };
+		493744D01DB2277700E49E4E /* WCYSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCYSettingsViewController.m; sourceTree = "<group>"; };
+		493744D31DB230AD00E49E4E /* UIColor+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Additions.h"; sourceTree = "<group>"; };
+		493744D41DB230AD00E49E4E /* UIColor+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Additions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +120,9 @@
 		493744A11DB1E6D300E49E4E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				493744C41DB2230500E49E4E /* HomePage */,
+				493744C51DB2230500E49E4E /* Information */,
+				493744C61DB2230500E49E4E /* Settings */,
 				493744A21DB1E6D300E49E4E /* Base */,
 			);
 			path = Controllers;
@@ -119,8 +135,8 @@
 				493744A41DB1E6D300E49E4E /* WCYBaseViewController.m */,
 				493744A51DB1E6D300E49E4E /* WCYHomeTabBarController.h */,
 				493744A61DB1E6D300E49E4E /* WCYHomeTabBarController.m */,
-				493744A71DB1E6D300E49E4E /* WCYNavigationController.h */,
-				493744A81DB1E6D300E49E4E /* WCYNavigationController.m */,
+				493744C11DB2211300E49E4E /* WCYNavigationController.h */,
+				493744C21DB2211300E49E4E /* WCYNavigationController.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -142,6 +158,9 @@
 		493744AB1DB1E6D300E49E4E /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				493744D21DB2308D00E49E4E /* Category */,
+				493744CA1DB2244900E49E4E /* WCYStyleDefine.h */,
+				493744CB1DB224F000E49E4E /* WCYPrefix.pch */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -192,6 +211,42 @@
 				493744B61DB1E6D300E49E4E /* WCYInfo.plist */,
 			);
 			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		493744C41DB2230500E49E4E /* HomePage */ = {
+			isa = PBXGroup;
+			children = (
+				493744C71DB2232800E49E4E /* WCYHomePageViewController.h */,
+				493744C81DB2232800E49E4E /* WCYHomePageViewController.m */,
+			);
+			path = HomePage;
+			sourceTree = "<group>";
+		};
+		493744C51DB2230500E49E4E /* Information */ = {
+			isa = PBXGroup;
+			children = (
+				493744CC1DB2274400E49E4E /* WCYInformationViewController.h */,
+				493744CD1DB2274400E49E4E /* WCYInformationViewController.m */,
+			);
+			path = Information;
+			sourceTree = "<group>";
+		};
+		493744C61DB2230500E49E4E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				493744CF1DB2277700E49E4E /* WCYSettingsViewController.h */,
+				493744D01DB2277700E49E4E /* WCYSettingsViewController.m */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		493744D21DB2308D00E49E4E /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				493744D31DB230AD00E49E4E /* UIColor+Additions.h */,
+				493744D41DB230AD00E49E4E /* UIColor+Additions.m */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,7 +311,6 @@
 				493744BB1DB1E6D300E49E4E /* Assets.xcassets in Resources */,
 				493744C01DB1E6DE00E49E4E /* Default-568h@2x.png in Resources */,
 				493744BC1DB1E6D300E49E4E /* LaunchScreen.storyboard in Resources */,
-				493744BE1DB1E6D300E49E4E /* WCYInfo.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,10 +322,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				493744BD1DB1E6D300E49E4E /* main.m in Sources */,
+				493744D11DB2277700E49E4E /* WCYSettingsViewController.m in Sources */,
+				493744D51DB230AD00E49E4E /* UIColor+Additions.m in Sources */,
+				493744C31DB2211300E49E4E /* WCYNavigationController.m in Sources */,
+				493744C91DB2232800E49E4E /* WCYHomePageViewController.m in Sources */,
 				493744B71DB1E6D300E49E4E /* WCYAppDelegate.m in Sources */,
+				493744CE1DB2274400E49E4E /* WCYInformationViewController.m in Sources */,
 				493744B81DB1E6D300E49E4E /* WCYBaseViewController.m in Sources */,
 				493744B91DB1E6D300E49E4E /* WCYHomeTabBarController.m in Sources */,
-				493744BA1DB1E6D300E49E4E /* WCYNavigationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,6 +440,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YLLJA83YGF;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/微重邮/Classes/Support/WCYPrefix.pch";
 				INFOPLIST_FILE = "微重邮/SupportingFiles/WCYInfo.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wakeen.ios.org.weCQUPT;
@@ -394,6 +453,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YLLJA83YGF;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/微重邮/Classes/Support/WCYPrefix.pch";
 				INFOPLIST_FILE = "微重邮/SupportingFiles/WCYInfo.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wakeen.ios.org.weCQUPT;
