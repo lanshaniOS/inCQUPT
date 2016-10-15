@@ -6,8 +6,33 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		493744B71DB1E6D300E49E4E /* WCYAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4937449F1DB1E6D300E49E4E /* WCYAppDelegate.m */; };
+		493744B81DB1E6D300E49E4E /* WCYBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 493744A41DB1E6D300E49E4E /* WCYBaseViewController.m */; };
+		493744B91DB1E6D300E49E4E /* WCYHomeTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 493744A61DB1E6D300E49E4E /* WCYHomeTabBarController.m */; };
+		493744BA1DB1E6D300E49E4E /* WCYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 493744A81DB1E6D300E49E4E /* WCYNavigationController.m */; };
+		493744BB1DB1E6D300E49E4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 493744B11DB1E6D300E49E4E /* Assets.xcassets */; };
+		493744BC1DB1E6D300E49E4E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 493744B21DB1E6D300E49E4E /* LaunchScreen.storyboard */; };
+		493744BD1DB1E6D300E49E4E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 493744B51DB1E6D300E49E4E /* main.m */; };
+		493744BE1DB1E6D300E49E4E /* WCYInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 493744B61DB1E6D300E49E4E /* WCYInfo.plist */; };
+		493744C01DB1E6DE00E49E4E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 493744BF1DB1E6DE00E49E4E /* Default-568h@2x.png */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		493744141DB1C1F700E49E4E /* 微重邮.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "微重邮.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4937449E1DB1E6D300E49E4E /* WCYAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCYAppDelegate.h; sourceTree = "<group>"; };
+		4937449F1DB1E6D300E49E4E /* WCYAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCYAppDelegate.m; sourceTree = "<group>"; };
+		493744A31DB1E6D300E49E4E /* WCYBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCYBaseViewController.h; sourceTree = "<group>"; };
+		493744A41DB1E6D300E49E4E /* WCYBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCYBaseViewController.m; sourceTree = "<group>"; };
+		493744A51DB1E6D300E49E4E /* WCYHomeTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCYHomeTabBarController.h; sourceTree = "<group>"; };
+		493744A61DB1E6D300E49E4E /* WCYHomeTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCYHomeTabBarController.m; sourceTree = "<group>"; };
+		493744A71DB1E6D300E49E4E /* WCYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCYNavigationController.h; sourceTree = "<group>"; };
+		493744A81DB1E6D300E49E4E /* WCYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCYNavigationController.m; sourceTree = "<group>"; };
+		493744B11DB1E6D300E49E4E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		493744B31DB1E6D300E49E4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		493744B51DB1E6D300E49E4E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		493744B61DB1E6D300E49E4E /* WCYInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WCYInfo.plist; sourceTree = "<group>"; };
+		493744BF1DB1E6DE00E49E4E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -24,6 +49,8 @@
 		4937440B1DB1C1F700E49E4E = {
 			isa = PBXGroup;
 			children = (
+				493744BF1DB1E6DE00E49E4E /* Default-568h@2x.png */,
+				4937449B1DB1E6D300E49E4E /* 微重邮 */,
 				493744151DB1C1F700E49E4E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -34,6 +61,137 @@
 				493744141DB1C1F700E49E4E /* 微重邮.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		4937449B1DB1E6D300E49E4E /* 微重邮 */ = {
+			isa = PBXGroup;
+			children = (
+				4937449C1DB1E6D300E49E4E /* Classes */,
+				493744AF1DB1E6D300E49E4E /* Libraries */,
+				493744B01DB1E6D300E49E4E /* Resources */,
+				493744B41DB1E6D300E49E4E /* SupportingFiles */,
+			);
+			path = "微重邮";
+			sourceTree = "<group>";
+		};
+		4937449C1DB1E6D300E49E4E /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4937449D1DB1E6D300E49E4E /* Application */,
+				493744A01DB1E6D300E49E4E /* BuinessMgr */,
+				493744A11DB1E6D300E49E4E /* Controllers */,
+				493744A91DB1E6D300E49E4E /* Models */,
+				493744AA1DB1E6D300E49E4E /* Network */,
+				493744AB1DB1E6D300E49E4E /* Support */,
+				493744AC1DB1E6D300E49E4E /* Views */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		4937449D1DB1E6D300E49E4E /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				4937449E1DB1E6D300E49E4E /* WCYAppDelegate.h */,
+				4937449F1DB1E6D300E49E4E /* WCYAppDelegate.m */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		493744A01DB1E6D300E49E4E /* BuinessMgr */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BuinessMgr;
+			sourceTree = "<group>";
+		};
+		493744A11DB1E6D300E49E4E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				493744A21DB1E6D300E49E4E /* Base */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		493744A21DB1E6D300E49E4E /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				493744A31DB1E6D300E49E4E /* WCYBaseViewController.h */,
+				493744A41DB1E6D300E49E4E /* WCYBaseViewController.m */,
+				493744A51DB1E6D300E49E4E /* WCYHomeTabBarController.h */,
+				493744A61DB1E6D300E49E4E /* WCYHomeTabBarController.m */,
+				493744A71DB1E6D300E49E4E /* WCYNavigationController.h */,
+				493744A81DB1E6D300E49E4E /* WCYNavigationController.m */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		493744A91DB1E6D300E49E4E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		493744AA1DB1E6D300E49E4E /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		493744AB1DB1E6D300E49E4E /* Support */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		493744AC1DB1E6D300E49E4E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				493744AD1DB1E6D300E49E4E /* CustomCells */,
+				493744AE1DB1E6D300E49E4E /* CustomViews */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		493744AD1DB1E6D300E49E4E /* CustomCells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CustomCells;
+			sourceTree = "<group>";
+		};
+		493744AE1DB1E6D300E49E4E /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
+		493744AF1DB1E6D300E49E4E /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
+		493744B01DB1E6D300E49E4E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				493744B11DB1E6D300E49E4E /* Assets.xcassets */,
+				493744B21DB1E6D300E49E4E /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		493744B41DB1E6D300E49E4E /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				493744B51DB1E6D300E49E4E /* main.m */,
+				493744B61DB1E6D300E49E4E /* WCYInfo.plist */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -95,6 +253,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				493744BB1DB1E6D300E49E4E /* Assets.xcassets in Resources */,
+				493744C01DB1E6DE00E49E4E /* Default-568h@2x.png in Resources */,
+				493744BC1DB1E6D300E49E4E /* LaunchScreen.storyboard in Resources */,
+				493744BE1DB1E6D300E49E4E /* WCYInfo.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,10 +267,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				493744BD1DB1E6D300E49E4E /* main.m in Sources */,
+				493744B71DB1E6D300E49E4E /* WCYAppDelegate.m in Sources */,
+				493744B81DB1E6D300E49E4E /* WCYBaseViewController.m in Sources */,
+				493744B91DB1E6D300E49E4E /* WCYHomeTabBarController.m in Sources */,
+				493744BA1DB1E6D300E49E4E /* WCYNavigationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		493744B21DB1E6D300E49E4E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				493744B31DB1E6D300E49E4E /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		493744291DB1C1F700E49E4E /* Debug */ = {
@@ -204,9 +382,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YLLJA83YGF;
-				INFOPLIST_FILE = "微重邮/WCYInfo.plist";
+				INFOPLIST_FILE = "微重邮/SupportingFiles/WCYInfo.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "wakeen.ios.org.---";
+				PRODUCT_BUNDLE_IDENTIFIER = wakeen.ios.org.weCQUPT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -216,9 +394,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YLLJA83YGF;
-				INFOPLIST_FILE = "微重邮/WCYInfo.plist";
+				INFOPLIST_FILE = "微重邮/SupportingFiles/WCYInfo.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "wakeen.ios.org.---";
+				PRODUCT_BUNDLE_IDENTIFIER = wakeen.ios.org.weCQUPT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -242,6 +420,7 @@
 				4937442D1DB1C1F700E49E4E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
