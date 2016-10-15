@@ -6,17 +6,23 @@
 //  Copyright © 2016年 周维康. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "WCYAppDelegate.h"
+#import "WCYHomeTabBarController.h"
 
-@interface AppDelegate ()
+@interface WCYAppDelegate ()
 
 @end
 
-@implementation AppDelegate
+@implementation WCYAppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    WCYHomeTabBarController *tabBarC = [[WCYHomeTabBarController alloc] init];
+    self.window.rootViewController = tabBarC;
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

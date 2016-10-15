@@ -6,26 +6,8 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		493744191DB1C1F700E49E4E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 493744181DB1C1F700E49E4E /* main.m */; };
-		4937441C1DB1C1F700E49E4E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4937441B1DB1C1F700E49E4E /* AppDelegate.m */; };
-		4937441F1DB1C1F700E49E4E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4937441E1DB1C1F700E49E4E /* ViewController.m */; };
-		493744221DB1C1F700E49E4E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 493744201DB1C1F700E49E4E /* Main.storyboard */; };
-		493744241DB1C1F700E49E4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 493744231DB1C1F700E49E4E /* Assets.xcassets */; };
-		493744271DB1C1F700E49E4E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 493744251DB1C1F700E49E4E /* LaunchScreen.storyboard */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
 		493744141DB1C1F700E49E4E /* 微重邮.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "微重邮.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		493744181DB1C1F700E49E4E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		4937441A1DB1C1F700E49E4E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		4937441B1DB1C1F700E49E4E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		4937441D1DB1C1F700E49E4E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		4937441E1DB1C1F700E49E4E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		493744211DB1C1F700E49E4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		493744231DB1C1F700E49E4E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		493744261DB1C1F700E49E4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		493744281DB1C1F700E49E4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,7 +24,6 @@
 		4937440B1DB1C1F700E49E4E = {
 			isa = PBXGroup;
 			children = (
-				493744161DB1C1F700E49E4E /* 微重邮 */,
 				493744151DB1C1F700E49E4E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -53,30 +34,6 @@
 				493744141DB1C1F700E49E4E /* 微重邮.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		493744161DB1C1F700E49E4E /* 微重邮 */ = {
-			isa = PBXGroup;
-			children = (
-				4937441A1DB1C1F700E49E4E /* AppDelegate.h */,
-				4937441B1DB1C1F700E49E4E /* AppDelegate.m */,
-				4937441D1DB1C1F700E49E4E /* ViewController.h */,
-				4937441E1DB1C1F700E49E4E /* ViewController.m */,
-				493744201DB1C1F700E49E4E /* Main.storyboard */,
-				493744231DB1C1F700E49E4E /* Assets.xcassets */,
-				493744251DB1C1F700E49E4E /* LaunchScreen.storyboard */,
-				493744281DB1C1F700E49E4E /* Info.plist */,
-				493744171DB1C1F700E49E4E /* Supporting Files */,
-			);
-			path = "微重邮";
-			sourceTree = "<group>";
-		};
-		493744171DB1C1F700E49E4E /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				493744181DB1C1F700E49E4E /* main.m */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,9 +95,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				493744271DB1C1F700E49E4E /* LaunchScreen.storyboard in Resources */,
-				493744241DB1C1F700E49E4E /* Assets.xcassets in Resources */,
-				493744221DB1C1F700E49E4E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,32 +105,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4937441F1DB1C1F700E49E4E /* ViewController.m in Sources */,
-				4937441C1DB1C1F700E49E4E /* AppDelegate.m in Sources */,
-				493744191DB1C1F700E49E4E /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		493744201DB1C1F700E49E4E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				493744211DB1C1F700E49E4E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		493744251DB1C1F700E49E4E /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				493744261DB1C1F700E49E4E /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		493744291DB1C1F700E49E4E /* Debug */ = {
@@ -272,7 +204,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YLLJA83YGF;
-				INFOPLIST_FILE = "微重邮/Info.plist";
+				INFOPLIST_FILE = "微重邮/WCYInfo.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "wakeen.ios.org.---";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -284,7 +216,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YLLJA83YGF;
-				INFOPLIST_FILE = "微重邮/Info.plist";
+				INFOPLIST_FILE = "微重邮/WCYInfo.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "wakeen.ios.org.---";
 				PRODUCT_NAME = "$(TARGET_NAME)";
