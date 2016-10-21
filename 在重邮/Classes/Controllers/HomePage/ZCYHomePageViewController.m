@@ -24,8 +24,14 @@
 - (void)initUI
 {
     self.view.backgroundColor = kAppBg_Color;
+    [self setNavigationBar];
     [self initBackgroundScrollView];
     
+}
+
+- (void)setNavigationBar
+{
+    self.navigationController.navigationBar.hidden = YES;
 }
 
 - (void)initBackgroundScrollView
