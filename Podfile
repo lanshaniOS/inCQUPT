@@ -1,5 +1,5 @@
 platform:ios, ’10.0’
-target ‘微重邮’ do
+target ‘在重邮’ do
   pod 'Reveal-iOS-SDK', :configurations => ['Debug']
   pod ‘AFNetworking’
   pod ‘JSPatch’
