@@ -1,0 +1,565 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4951C8A71DBA409700E5AC63 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4951C8991DBA409700E5AC63 /* Assets.xcassets */; };
+		4951C8AC1DBA41A500E5AC63 /* ZCYBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C87E1DBA409700E5AC63 /* ZCYBaseViewController.m */; };
+		4951C8AE1DBA41A500E5AC63 /* ZCYHomeTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C8801DBA409700E5AC63 /* ZCYHomeTabBarController.m */; };
+		4951C8B01DBA41A500E5AC63 /* ZCYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C8821DBA409700E5AC63 /* ZCYNavigationController.m */; };
+		4951C8B21DBA41AB00E5AC63 /* ZCYAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C8791DBA409700E5AC63 /* ZCYAppDelegate.m */; };
+		4951C8B41DBA41C900E5AC63 /* ZCYHomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C8851DBA409700E5AC63 /* ZCYHomePageViewController.m */; };
+		4951C8B61DBA41C900E5AC63 /* ZCYInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C8881DBA409700E5AC63 /* ZCYInformationViewController.m */; };
+		4951C8B81DBA41C900E5AC63 /* ZCYSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C88B1DBA409700E5AC63 /* ZCYSettingsViewController.m */; };
+		4951C8BA1DBA41C900E5AC63 /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C8911DBA409700E5AC63 /* UIColor+Additions.m */; };
+		4951C8BD1DBA41D000E5AC63 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C89D1DBA409700E5AC63 /* main.m */; };
+		4951C8C31DBA484800E5AC63 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 493744BF1DB1E6DE00E49E4E /* Default-568h@2x.png */; };
+		E51FFEF2FC165CDCBE4A6571 /* libPods-在重邮.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1189500E1074EECD137C3468 /* libPods-在重邮.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1189500E1074EECD137C3468 /* libPods-在重邮.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-在重邮.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		493744141DB1C1F700E49E4E /* 在重邮.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "在重邮.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		493744BF1DB1E6DE00E49E4E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		4951C8781DBA409700E5AC63 /* ZCYAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYAppDelegate.h; sourceTree = "<group>"; };
+		4951C8791DBA409700E5AC63 /* ZCYAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYAppDelegate.m; sourceTree = "<group>"; };
+		4951C87D1DBA409700E5AC63 /* ZCYBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYBaseViewController.h; sourceTree = "<group>"; };
+		4951C87E1DBA409700E5AC63 /* ZCYBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYBaseViewController.m; sourceTree = "<group>"; };
+		4951C87F1DBA409700E5AC63 /* ZCYHomeTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYHomeTabBarController.h; sourceTree = "<group>"; };
+		4951C8801DBA409700E5AC63 /* ZCYHomeTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYHomeTabBarController.m; sourceTree = "<group>"; };
+		4951C8811DBA409700E5AC63 /* ZCYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYNavigationController.h; sourceTree = "<group>"; };
+		4951C8821DBA409700E5AC63 /* ZCYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYNavigationController.m; sourceTree = "<group>"; };
+		4951C8841DBA409700E5AC63 /* ZCYHomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYHomePageViewController.h; sourceTree = "<group>"; };
+		4951C8851DBA409700E5AC63 /* ZCYHomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYHomePageViewController.m; sourceTree = "<group>"; };
+		4951C8871DBA409700E5AC63 /* ZCYInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYInformationViewController.h; sourceTree = "<group>"; };
+		4951C8881DBA409700E5AC63 /* ZCYInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYInformationViewController.m; sourceTree = "<group>"; };
+		4951C88A1DBA409700E5AC63 /* ZCYSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYSettingsViewController.h; sourceTree = "<group>"; };
+		4951C88B1DBA409700E5AC63 /* ZCYSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYSettingsViewController.m; sourceTree = "<group>"; };
+		4951C8901DBA409700E5AC63 /* UIColor+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Additions.h"; sourceTree = "<group>"; };
+		4951C8911DBA409700E5AC63 /* UIColor+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Additions.m"; sourceTree = "<group>"; };
+		4951C8921DBA409700E5AC63 /* ZCYPrefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYPrefix.pch; sourceTree = "<group>"; };
+		4951C8931DBA409700E5AC63 /* ZCYStyleDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYStyleDefine.h; sourceTree = "<group>"; };
+		4951C8991DBA409700E5AC63 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4951C89B1DBA409700E5AC63 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4951C89D1DBA409700E5AC63 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4951C89E1DBA409700E5AC63 /* ZCYInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ZCYInfo.plist; sourceTree = "<group>"; };
+		66C2A3B14195ED8D12228F00 /* Pods-在重邮.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-在重邮.release.xcconfig"; path = "Pods/Target Support Files/Pods-在重邮/Pods-在重邮.release.xcconfig"; sourceTree = "<group>"; };
+		B9A8BE7DC58BA8111526991E /* Pods-在重邮.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-在重邮.debug.xcconfig"; path = "Pods/Target Support Files/Pods-在重邮/Pods-在重邮.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		493744111DB1C1F700E49E4E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E51FFEF2FC165CDCBE4A6571 /* libPods-在重邮.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4937440B1DB1C1F700E49E4E = {
+			isa = PBXGroup;
+			children = (
+				493744BF1DB1E6DE00E49E4E /* Default-568h@2x.png */,
+				4951C8751DBA409700E5AC63 /* 在重邮 */,
+				493744151DB1C1F700E49E4E /* Products */,
+				DE8FDDA178AEC12746377F8F /* Pods */,
+				5434925B5381CD43A936643C /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		493744151DB1C1F700E49E4E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				493744141DB1C1F700E49E4E /* 在重邮.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4951C8751DBA409700E5AC63 /* 在重邮 */ = {
+			isa = PBXGroup;
+			children = (
+				4951C8761DBA409700E5AC63 /* Classes */,
+				4951C8971DBA409700E5AC63 /* Libraries */,
+				4951C8981DBA409700E5AC63 /* Resources */,
+				4951C89C1DBA409700E5AC63 /* SupportingFiles */,
+			);
+			path = "在重邮";
+			sourceTree = "<group>";
+		};
+		4951C8761DBA409700E5AC63 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4951C8771DBA409700E5AC63 /* Application */,
+				4951C87A1DBA409700E5AC63 /* BuinessMgr */,
+				4951C87B1DBA409700E5AC63 /* Controllers */,
+				4951C88C1DBA409700E5AC63 /* Models */,
+				4951C88D1DBA409700E5AC63 /* Network */,
+				4951C88E1DBA409700E5AC63 /* Support */,
+				4951C8941DBA409700E5AC63 /* Views */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		4951C8771DBA409700E5AC63 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				4951C8781DBA409700E5AC63 /* ZCYAppDelegate.h */,
+				4951C8791DBA409700E5AC63 /* ZCYAppDelegate.m */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		4951C87A1DBA409700E5AC63 /* BuinessMgr */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BuinessMgr;
+			sourceTree = "<group>";
+		};
+		4951C87B1DBA409700E5AC63 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4951C87C1DBA409700E5AC63 /* Base */,
+				4951C8831DBA409700E5AC63 /* HomePage */,
+				4951C8861DBA409700E5AC63 /* Information */,
+				4951C8891DBA409700E5AC63 /* Settings */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		4951C87C1DBA409700E5AC63 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				4951C87D1DBA409700E5AC63 /* ZCYBaseViewController.h */,
+				4951C87E1DBA409700E5AC63 /* ZCYBaseViewController.m */,
+				4951C87F1DBA409700E5AC63 /* ZCYHomeTabBarController.h */,
+				4951C8801DBA409700E5AC63 /* ZCYHomeTabBarController.m */,
+				4951C8811DBA409700E5AC63 /* ZCYNavigationController.h */,
+				4951C8821DBA409700E5AC63 /* ZCYNavigationController.m */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		4951C8831DBA409700E5AC63 /* HomePage */ = {
+			isa = PBXGroup;
+			children = (
+				4951C8841DBA409700E5AC63 /* ZCYHomePageViewController.h */,
+				4951C8851DBA409700E5AC63 /* ZCYHomePageViewController.m */,
+			);
+			path = HomePage;
+			sourceTree = "<group>";
+		};
+		4951C8861DBA409700E5AC63 /* Information */ = {
+			isa = PBXGroup;
+			children = (
+				4951C8871DBA409700E5AC63 /* ZCYInformationViewController.h */,
+				4951C8881DBA409700E5AC63 /* ZCYInformationViewController.m */,
+			);
+			path = Information;
+			sourceTree = "<group>";
+		};
+		4951C8891DBA409700E5AC63 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				4951C88A1DBA409700E5AC63 /* ZCYSettingsViewController.h */,
+				4951C88B1DBA409700E5AC63 /* ZCYSettingsViewController.m */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		4951C88C1DBA409700E5AC63 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4951C88D1DBA409700E5AC63 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		4951C88E1DBA409700E5AC63 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				4951C88F1DBA409700E5AC63 /* Category */,
+				4951C8921DBA409700E5AC63 /* ZCYPrefix.pch */,
+				4951C8931DBA409700E5AC63 /* ZCYStyleDefine.h */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		4951C88F1DBA409700E5AC63 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				4951C8901DBA409700E5AC63 /* UIColor+Additions.h */,
+				4951C8911DBA409700E5AC63 /* UIColor+Additions.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		4951C8941DBA409700E5AC63 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4951C8951DBA409700E5AC63 /* CustomCells */,
+				4951C8961DBA409700E5AC63 /* CustomViews */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4951C8951DBA409700E5AC63 /* CustomCells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CustomCells;
+			sourceTree = "<group>";
+		};
+		4951C8961DBA409700E5AC63 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
+		4951C8971DBA409700E5AC63 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
+		4951C8981DBA409700E5AC63 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4951C8991DBA409700E5AC63 /* Assets.xcassets */,
+				4951C89A1DBA409700E5AC63 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		4951C89C1DBA409700E5AC63 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				4951C89D1DBA409700E5AC63 /* main.m */,
+				4951C89E1DBA409700E5AC63 /* ZCYInfo.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		5434925B5381CD43A936643C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1189500E1074EECD137C3468 /* libPods-在重邮.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DE8FDDA178AEC12746377F8F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B9A8BE7DC58BA8111526991E /* Pods-在重邮.debug.xcconfig */,
+				66C2A3B14195ED8D12228F00 /* Pods-在重邮.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		493744131DB1C1F700E49E4E /* 在重邮 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4937442B1DB1C1F700E49E4E /* Build configuration list for PBXNativeTarget "在重邮" */;
+			buildPhases = (
+				EE6D1B4062BEB2117E9596EF /* 📦 Check Pods Manifest.lock */,
+				493744101DB1C1F700E49E4E /* Sources */,
+				493744111DB1C1F700E49E4E /* Frameworks */,
+				493744121DB1C1F700E49E4E /* Resources */,
+				988FAE71E350FA5C75F688D8 /* 📦 Embed Pods Frameworks */,
+				303581A05D57D0A22185FD4D /* 📦 Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "在重邮";
+			productName = "微重邮";
+			productReference = 493744141DB1C1F700E49E4E /* 在重邮.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4937440C1DB1C1F700E49E4E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = "周维康";
+				TargetAttributes = {
+					493744131DB1C1F700E49E4E = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = YLLJA83YGF;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 4937440F1DB1C1F700E49E4E /* Build configuration list for PBXProject "在重邮" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4937440B1DB1C1F700E49E4E;
+			productRefGroup = 493744151DB1C1F700E49E4E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				493744131DB1C1F700E49E4E /* 在重邮 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		493744121DB1C1F700E49E4E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4951C8C31DBA484800E5AC63 /* Default-568h@2x.png in Resources */,
+				4951C8A71DBA409700E5AC63 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		303581A05D57D0A22185FD4D /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-在重邮/Pods-在重邮-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		988FAE71E350FA5C75F688D8 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-在重邮/Pods-在重邮-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EE6D1B4062BEB2117E9596EF /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		493744101DB1C1F700E49E4E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4951C8BD1DBA41D000E5AC63 /* main.m in Sources */,
+				4951C8B41DBA41C900E5AC63 /* ZCYHomePageViewController.m in Sources */,
+				4951C8B61DBA41C900E5AC63 /* ZCYInformationViewController.m in Sources */,
+				4951C8B81DBA41C900E5AC63 /* ZCYSettingsViewController.m in Sources */,
+				4951C8BA1DBA41C900E5AC63 /* UIColor+Additions.m in Sources */,
+				4951C8B21DBA41AB00E5AC63 /* ZCYAppDelegate.m in Sources */,
+				4951C8AC1DBA41A500E5AC63 /* ZCYBaseViewController.m in Sources */,
+				4951C8AE1DBA41A500E5AC63 /* ZCYHomeTabBarController.m in Sources */,
+				4951C8B01DBA41A500E5AC63 /* ZCYNavigationController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		4951C89A1DBA409700E5AC63 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4951C89B1DBA409700E5AC63 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		493744291DB1C1F700E49E4E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		4937442A1DB1C1F700E49E4E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4937442C1DB1C1F700E49E4E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B9A8BE7DC58BA8111526991E /* Pods-在重邮.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = YLLJA83YGF;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/在重邮/Classes/Support/ZCYPrefix.pch";
+				INFOPLIST_FILE = "在重邮/SupportingFiles/ZCYInfo.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = wakeen.ios.org.INCQUPT;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4937442D1DB1C1F700E49E4E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 66C2A3B14195ED8D12228F00 /* Pods-在重邮.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = YLLJA83YGF;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/在重邮/Classes/Support/ZCYPrefix.pch";
+				INFOPLIST_FILE = "在重邮/SupportingFiles/ZCYInfo.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = wakeen.ios.org.INCQUPT;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4937440F1DB1C1F700E49E4E /* Build configuration list for PBXProject "在重邮" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				493744291DB1C1F700E49E4E /* Debug */,
+				4937442A1DB1C1F700E49E4E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4937442B1DB1C1F700E49E4E /* Build configuration list for PBXNativeTarget "在重邮" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4937442C1DB1C1F700E49E4E /* Debug */,
+				4937442D1DB1C1F700E49E4E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4937440C1DB1C1F700E49E4E /* Project object */;
+}

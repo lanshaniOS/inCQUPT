@@ -8,66 +8,100 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 		<key>FMDB.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>2</integer>
 		</dict>
 		<key>JSPatch.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>3</integer>
 		</dict>
 		<key>MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>5</integer>
 		</dict>
 		<key>MJRefresh.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>6</integer>
 		</dict>
 		<key>Masonry.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>4</integer>
 		</dict>
-		<key>Pods-微重邮.xcscheme</key>
+		<key>Pods-在重邮.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>7</integer>
 		</dict>
 		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>8</integer>
 		</dict>
 		<key>YYCache.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>9</integer>
 		</dict>
 		<key>YYImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>10</integer>
 		</dict>
 		<key>YYText.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>11</integer>
 		</dict>
 		<key>YYWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>12</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>4773A4A3D1CE54A10A37E70495280EDE</key>
+		<key>0FB4DAE9B51B7EE65FDD79A78BCE263A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3EE914ED55DC1DADCD7C7A65069D089B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>461DF1888C457A01FACE8940702870F9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -87,32 +121,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>9774C6564782EF32947693647F4E683D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>9F12FB4A63E20F601CFB2E64A65B57C1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AB7351038C7E9F1C29014C7B93497907</key>
+		<key>A01B6DE0F259F3FB87149CBF35C81592</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C30B503BEE6D7F278AE826C0836B33A7</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C634BBF4E4FE25D3AFE11EA10D942C49</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C66447F2083280479F24E2F9196376CF</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>D12D6E080AA73FD25BF82A9A5414281F</key>
+		<key>C8D577F107EB28B64095C26AAD5169E7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
