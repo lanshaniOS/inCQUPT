@@ -18,6 +18,7 @@
 		4951C8BA1DBA41C900E5AC63 /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C8911DBA409700E5AC63 /* UIColor+Additions.m */; };
 		4951C8BD1DBA41D000E5AC63 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C89D1DBA409700E5AC63 /* main.m */; };
 		4951C8C31DBA484800E5AC63 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 493744BF1DB1E6DE00E49E4E /* Default-568h@2x.png */; };
+		49B730941DBE57F000F438BD /* ZCYClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B730931DBE57F000F438BD /* ZCYClassViewController.m */; };
 		E51FFEF2FC165CDCBE4A6571 /* libPods-在重邮.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1189500E1074EECD137C3468 /* libPods-在重邮.a */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,8 @@
 		4951C89B1DBA409700E5AC63 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4951C89D1DBA409700E5AC63 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4951C89E1DBA409700E5AC63 /* ZCYInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ZCYInfo.plist; sourceTree = "<group>"; };
+		49B730921DBE57F000F438BD /* ZCYClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYClassViewController.h; sourceTree = "<group>"; };
+		49B730931DBE57F000F438BD /* ZCYClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYClassViewController.m; sourceTree = "<group>"; };
 		66C2A3B14195ED8D12228F00 /* Pods-在重邮.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-在重邮.release.xcconfig"; path = "Pods/Target Support Files/Pods-在重邮/Pods-在重邮.release.xcconfig"; sourceTree = "<group>"; };
 		B9A8BE7DC58BA8111526991E /* Pods-在重邮.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-在重邮.debug.xcconfig"; path = "Pods/Target Support Files/Pods-在重邮/Pods-在重邮.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -152,6 +155,8 @@
 			children = (
 				4951C8841DBA409700E5AC63 /* ZCYHomePageViewController.h */,
 				4951C8851DBA409700E5AC63 /* ZCYHomePageViewController.m */,
+				49B730921DBE57F000F438BD /* ZCYClassViewController.h */,
+				49B730931DBE57F000F438BD /* ZCYClassViewController.m */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -394,6 +399,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49B730941DBE57F000F438BD /* ZCYClassViewController.m in Sources */,
 				4951C8BD1DBA41D000E5AC63 /* main.m in Sources */,
 				4951C8B41DBA41C900E5AC63 /* ZCYHomePageViewController.m in Sources */,
 				4951C8B61DBA41C900E5AC63 /* ZCYInformationViewController.m in Sources */,
