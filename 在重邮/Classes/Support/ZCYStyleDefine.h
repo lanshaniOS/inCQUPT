@@ -7,11 +7,20 @@
 //
 
 #import "UIColor+Additions.h"
+#import "DDLog.h"
 #ifndef ZCYStyleDefine_h
 #define ZCYStyleDefine_h
 
+#ifdef DEBUG
+static const int ddLogLevel = DDLogLevelVerbose;
+#else
+static const int ddLogLevel = DDLogLevelInfo;
+#endif
+
 #define kProportionWidthFactor  (kScreenWidth / kStanderWidth)   //设备屏幕宽度与基准屏幕宽度比例
 #define kProportionHeightFactor (kScreenHeight / kStanderHeight) //设备屏幕宽度与基准屏幕宽度比例
+
+#define kStandardPx(Px) round(Px/1.92 * 10)/10          //把标注转化成实际宽高
 
 #define kFont(x) [UIFont systemFontOfSize:x]
 
@@ -71,7 +80,6 @@
 
 #define kNavbar_BgImage                 [UIImage imageWithColor:kNavBar_Color]
 #define kTabbar_BgImage                 [UIImage imageWithColor:[UIColor whiteColor]]
-
 
 
 #endif /* ZCYStyleDefine_h */

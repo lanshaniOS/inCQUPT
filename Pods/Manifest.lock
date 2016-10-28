@@ -14,6 +14,14 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - CocoaLumberjack (2.2.0):
+    - CocoaLumberjack/Default (= 2.2.0)
+    - CocoaLumberjack/Extensions (= 2.2.0)
+  - CocoaLumberjack/Core (2.2.0)
+  - CocoaLumberjack/Default (2.2.0):
+    - CocoaLumberjack/Core
+  - CocoaLumberjack/Extensions (2.2.0):
+    - CocoaLumberjack/Default
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
@@ -31,6 +39,7 @@ PODS:
   - YYImage (1.0.1):
     - YYImage/Core (= 1.0.1)
   - YYImage/Core (1.0.1)
+  - YYModel (1.0.2)
   - YYText (1.0.4)
   - YYWebImage (1.0.3):
     - YYCache
@@ -38,6 +47,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - CocoaLumberjack
   - FMDB
   - JSPatch
   - Masonry
@@ -45,11 +55,13 @@ DEPENDENCIES:
   - MJRefresh
   - Reveal-iOS-SDK
   - SDWebImage
+  - YYModel
   - YYText
   - YYWebImage
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   JSPatch: 23dcceeec8f8357644f8ef70eb002ef2dbd830de
   Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
@@ -59,9 +71,10 @@ SPEC CHECKSUMS:
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   YYCache: 282f35b5b0990833d0b7a06d864a87141a021da2
   YYImage: b41b45bc5f32bfcdf67bdfb9c09da9e9832357c0
+  YYModel: 7a467eff45ae3641c33efb136c262d33b6f48c1a
   YYText: 41761822986179828a27ccf82aa97c7b5483c2e2
   YYWebImage: 8da75a611fd0d2e0f58a273f9ca0bc731614cb0d
 
-PODFILE CHECKSUM: fcbb6679f8530f3e7321a9e02e7493cbb60f1490
+PODFILE CHECKSUM: e42782965ee54068b36eb24c6f40be19d51d171f
 
-COCOAPODS: 1.0.0.beta.7
+COCOAPODS: 1.1.1
