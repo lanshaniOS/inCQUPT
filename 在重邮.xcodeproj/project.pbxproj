@@ -27,6 +27,7 @@
 		49B730A61DBF949A00F438BD /* ZCYSchoolCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B7309C1DBF933300F438BD /* ZCYSchoolCardViewController.m */; };
 		49B730A71DBF949E00F438BD /* ZCYHydroelectricViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B730A01DBF939000F438BD /* ZCYHydroelectricViewController.m */; };
 		49B730A81DBF94A300F438BD /* ZCYPropertyRepairViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B730A31DBF941700F438BD /* ZCYPropertyRepairViewController.m */; };
+		688F260B1DC39B49005DE074 /* ZCYLoginViewControoler.m in Sources */ = {isa = PBXBuildFile; fileRef = 688F260A1DC39B49005DE074 /* ZCYLoginViewControoler.m */; };
 		E51FFEF2FC165CDCBE4A6571 /* libPods-在重邮.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1189500E1074EECD137C3468 /* libPods-在重邮.a */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +76,8 @@
 		49B730A21DBF941700F438BD /* ZCYPropertyRepairViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYPropertyRepairViewController.h; sourceTree = "<group>"; };
 		49B730A31DBF941700F438BD /* ZCYPropertyRepairViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYPropertyRepairViewController.m; sourceTree = "<group>"; };
 		66C2A3B14195ED8D12228F00 /* Pods-在重邮.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-在重邮.release.xcconfig"; path = "Pods/Target Support Files/Pods-在重邮/Pods-在重邮.release.xcconfig"; sourceTree = "<group>"; };
+		688F26091DC39B49005DE074 /* ZCYLoginViewControoler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYLoginViewControoler.h; sourceTree = "<group>"; };
+		688F260A1DC39B49005DE074 /* ZCYLoginViewControoler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYLoginViewControoler.m; sourceTree = "<group>"; };
 		B9A8BE7DC58BA8111526991E /* Pods-在重邮.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-在重邮.debug.xcconfig"; path = "Pods/Target Support Files/Pods-在重邮/Pods-在重邮.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -156,6 +159,7 @@
 		4951C87B1DBA409700E5AC63 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				688F26071DC39AF8005DE074 /* Login */,
 				4951C87C1DBA409700E5AC63 /* Base */,
 				4951C8831DBA409700E5AC63 /* HomePage */,
 				4951C8861DBA409700E5AC63 /* Information */,
@@ -332,6 +336,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		688F26071DC39AF8005DE074 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				688F26091DC39B49005DE074 /* ZCYLoginViewControoler.h */,
+				688F260A1DC39B49005DE074 /* ZCYLoginViewControoler.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
 		DE8FDDA178AEC12746377F8F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -479,6 +492,7 @@
 				49AC74081DC37EAE00E903EA /* NSDate+Utilities.m in Sources */,
 				49AC73FD1DC201EA00E903EA /* ZCYTimeTableModel.m in Sources */,
 				4951C8AE1DBA41A500E5AC63 /* ZCYHomeTabBarController.m in Sources */,
+				688F260B1DC39B49005DE074 /* ZCYLoginViewControoler.m in Sources */,
 				49AC73EB1DC0EC8100E903EA /* ZCYUserMgr.m in Sources */,
 				4951C8B01DBA41A500E5AC63 /* ZCYNavigationController.m in Sources */,
 			);

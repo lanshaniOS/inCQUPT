@@ -8,7 +8,7 @@
 
 #import "ZCYAppDelegate.h"
 #import "ZCYHomeTabBarController.h"
-
+#import "ZCYLoginViewControoler.h"
 @interface ZCYAppDelegate ()
 
 @end
@@ -20,9 +20,10 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = kCommonWhite_Color;
-    
+    ZCYLoginViewControoler *LVC = [[ZCYLoginViewControoler alloc]init];
     ZCYHomeTabBarController *tabBarC = [[ZCYHomeTabBarController alloc] init];
-    self.window.rootViewController = tabBarC;
+  //  self.window.rootViewController = tabBarC;
+    self.window.rootViewController = LVC;
     [self.window makeKeyAndVisible];
     
     return YES;
