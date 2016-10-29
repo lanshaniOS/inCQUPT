@@ -35,15 +35,11 @@ PODS:
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
-  - YYCache (1.0.3)
   - YYImage (1.0.1):
     - YYImage/Core (= 1.0.1)
   - YYImage/Core (1.0.1)
   - YYModel (1.0.2)
   - YYText (1.0.4)
-  - YYWebImage (1.0.3):
-    - YYCache
-    - YYImage
 
 DEPENDENCIES:
   - AFNetworking
@@ -55,9 +51,9 @@ DEPENDENCIES:
   - MJRefresh
   - Reveal-iOS-SDK
   - SDWebImage
+  - YYImage
   - YYModel
   - YYText
-  - YYWebImage
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -69,12 +65,10 @@ SPEC CHECKSUMS:
   MJRefresh: 743e6404967d1c2c688472ea3ecfde247d872db4
   Reveal-iOS-SDK: e2250b3c155bcfac53ae223ddc1f76d08f206c33
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
-  YYCache: 282f35b5b0990833d0b7a06d864a87141a021da2
   YYImage: b41b45bc5f32bfcdf67bdfb9c09da9e9832357c0
   YYModel: 7a467eff45ae3641c33efb136c262d33b6f48c1a
   YYText: 41761822986179828a27ccf82aa97c7b5483c2e2
-  YYWebImage: 8da75a611fd0d2e0f58a273f9ca0bc731614cb0d
 
-PODFILE CHECKSUM: e42782965ee54068b36eb24c6f40be19d51d171f
+PODFILE CHECKSUM: 2c7ad3c2c0b17e613661b44e9837622fcade6874
 
 COCOAPODS: 1.1.1

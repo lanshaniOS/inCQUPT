@@ -30,7 +30,14 @@ static const int ddLogLevel = DDLogLevelInfo;
 
 #define kDefaultFont  kFont(13.5)
 
-#define kCommonGreen_Color              [UIColor colorWithRGBHex:0x2ac99a]
+#define kCommonGreen_Color              [UIColor colorWithRGBHex:0xc2ffb6]
+#define kDeepGreen_Color                [UIColor colorWithRGBHex:0x56db3c]
+#define kCommonYellow_Color             [UIColor colorWithRGBHex:0xfbff9b]
+#define kDeepYellow_Color               [UIColor colorWithRGBHex:0xccb800]
+#define kCommonPink_Color               [UIColor colorWithRGBHex:0xf7c1ff]
+#define kDeepPink_Color                 [UIColor colorWithRGBHex:0xe84fff]
+#define kDeepGray_Color                 [UIColor colorWithRGBHex:0x666666]
+
 #define kCommonRed_Color                [UIColor colorWithRGBHex:0xf86365]
 #define kCommonOrange_Color             [UIColor colorWithRGBHex:0xe96600]
 #define kCommonRed_Color_Highlighted    [UIColor colorWithRGBHex:0xbd494a]
@@ -42,8 +49,6 @@ static const int ddLogLevel = DDLogLevelInfo;
 #define kCommonBorder_Color             [UIColor colorWithRGBHex:0xbbbbbb]
 #define kCommonLightBlue_Color          [UIColor colorWithRGBHex:0x268ddd]
 
-
-#define kCommonYellow_Color             [UIColor colorWithRGBHex:0xffeca0]
 #define kCommonGolden_Color             [UIColor colorWithRGBHex:0xfda00d]
 
 
@@ -81,5 +86,36 @@ static const int ddLogLevel = DDLogLevelInfo;
 #define kNavbar_BgImage                 [UIImage imageWithColor:kNavBar_Color]
 #define kTabbar_BgImage                 [UIImage imageWithColor:[UIColor whiteColor]]
 
+#ifndef weakify
+#if DEBUG
+#if __has_feature(objc_arc)
+#define weakify(object) autoreleasepool{} __weak __typeof__(object) weak##_##object = object;
+#else
+#define weakify(object) autoreleasepool{} __block __typeof__(object) block##_##object = object;
+#endif
+#else
+#if __has_feature(objc_arc)
+#define weakify(object) try{} @finally{} {} __weak __typeof__(object) weak##_##object = object;
+#else
+#define weakify(object) try{} @finally{} {} __block __typeof__(object) block##_##object = object;
+#endif
+#endif
+#endif
+
+#ifndef strongify
+#if DEBUG
+#if __has_feature(objc_arc)
+#define strongify(object) autoreleasepool{} __typeof__(object) object = weak##_##object;
+#else
+#define strongify(object) autoreleasepool{} __typeof__(object) object = block##_##object;
+#endif
+#else
+#if __has_feature(objc_arc)
+#define strongify(object) try{} @finally{} __typeof__(object) object = weak##_##object;
+#else
+#define strongify(object) try{} @finally{} __typeof__(object) object = block##_##object;
+#endif
+#endif
+#endif
 
 #endif /* ZCYStyleDefine_h */

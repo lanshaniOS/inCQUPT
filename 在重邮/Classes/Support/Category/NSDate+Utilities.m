@@ -8,7 +8,7 @@
 
 #import "NSDate+Utilities.h"
 
-static const unsigned componentFlags = (NSCalendarUnitYear| NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekOfMonth |  NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitWeekdayOrdinal);
+static const unsigned componentFlags = (NSCalendarUnitYear| NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday |  NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitWeekOfYear | NSCalendarUnitWeekdayOrdinal);
 
 @implementation NSDate (Utilities)
 
@@ -23,7 +23,7 @@ static const unsigned componentFlags = (NSCalendarUnitYear| NSCalendarUnitMonth 
 - (NSInteger)week
 {
     NSDateComponents *components = [[NSDate currentCalendar] components:componentFlags fromDate:self];
-    return components.weekOfMonth;
+    return components.weekday;
 }
 
 - (NSInteger)month

@@ -12,7 +12,7 @@
 
 @implementation ZCYTimeTableHelper
 
-+ (void)getTimeTableWithStdNumber:(NSString *)studentNumber withCompeletionBlock:(void (^)(NSArray *))compeletionBlock
++ (void)getTimeTableWithStdNumber:(NSString *)studentNumber withCompeletionBlock:(void (^)(NSError *, NSArray *))compeletionBlock
 {
     //存放课表数组初始化
     NSMutableArray *weekArray = [[NSMutableArray alloc] initWithCapacity:7];
@@ -26,14 +26,14 @@
             [weekArray[i] addObject:detailArray];
         }
     }
-
+    
     [[ZCYNetworkHelperMgr sharedMgr] requestWithData:@{@"xh" : studentNumber} andCompeletionBlock:^(NSError *error, id response, NSURLSessionDataTask *task) {
         
-    
         NSArray *timeTableArray = response[@"data"];
         if (error)
         {
             DDLogError(@"%@", error);
+            compeletionBlock(error, nil);
             return;
         }
         for (NSInteger i = 0; i < 6; i++)
@@ -56,7 +56,7 @@
         }
         if (compeletionBlock)
         {
-            compeletionBlock(weekArray);
+            compeletionBlock(nil, weekArray);
         }
     } andURLPath:@"/api/get_kebiao.php"];
 }

@@ -15,9 +15,9 @@ static const NSString * URL = @"http://we.cqupt.edu.cn";
 + (ZCYNetworkHelperMgr *)sharedMgr
 {
     static ZCYNetworkHelperMgr *networkHelper = nil;
-    dispatch_once_t onceToken;
+    static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        networkHelper = [[ZCYNetworkHelperMgr alloc] init];
+        networkHelper = [[self alloc] init];
     });
     return networkHelper;
 }

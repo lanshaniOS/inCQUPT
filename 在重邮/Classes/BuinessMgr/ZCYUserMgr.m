@@ -15,13 +15,15 @@
     static ZCYUserMgr *sharedMgr = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedMgr = [[ZCYUserMgr alloc] init];
+        sharedMgr = [[self alloc] init];
+        sharedMgr.studentNumber = @"";
+        sharedMgr.courseArray = [[NSArray alloc] init];
     });
     return sharedMgr;
 }
 
 - (instancetype)init
 {
-    return [ZCYUserMgr sharedMgr];
+    return nil;
 }
 @end

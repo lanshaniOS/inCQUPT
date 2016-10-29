@@ -10,6 +10,6 @@
 
 @interface ZCYTimeTableHelper : NSObject
 
-+ (void)getTimeTableWithStdNumber:(NSString *)studentNumber withCompeletionBlock:(void (^)(NSArray *))compeletionBlock;
++ (void)getTimeTableWithStdNumber:(NSString *)studentNumber withCompeletionBlock:(void (^)(NSError *, NSArray *))compeletionBlock;
 
 @end

@@ -8,8 +8,8 @@ target '在重邮' do
   pod 'SDWebImage'
   pod 'FMDB'
   pod 'MBProgressHUD'
-  pod 'YYWebImage'
-  pod 'YYText'
-  pod 'YYModel'
   pod ‘CocoaLumberjack’
+  pod ‘YYModel’
+  pod ‘YYText’
+  pod ‘YYImage’
 end

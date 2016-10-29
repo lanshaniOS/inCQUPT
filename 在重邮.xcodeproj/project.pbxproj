@@ -17,7 +17,9 @@
 		4951C8B81DBA41C900E5AC63 /* ZCYSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C88B1DBA409700E5AC63 /* ZCYSettingsViewController.m */; };
 		4951C8BA1DBA41C900E5AC63 /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C8911DBA409700E5AC63 /* UIColor+Additions.m */; };
 		4951C8BD1DBA41D000E5AC63 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C89D1DBA409700E5AC63 /* main.m */; };
-		4951C8C31DBA484800E5AC63 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 493744BF1DB1E6DE00E49E4E /* Default-568h@2x.png */; };
+		499232CB1DC487AA00B17B54 /* ZCYProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 499232CA1DC487AA00B17B54 /* ZCYProgressHUD.m */; };
+		499232DA1DC4A28C00B17B54 /* ZCYCourseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 499232D91DC4A28C00B17B54 /* ZCYCourseView.m */; };
+		499232E01DC4ECBC00B17B54 /* ZCYCourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 499232DF1DC4ECBC00B17B54 /* ZCYCourseViewController.m */; };
 		49AC73EB1DC0EC8100E903EA /* ZCYUserMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AC73EA1DC0EC8100E903EA /* ZCYUserMgr.m */; };
 		49AC73EF1DC0F09300E903EA /* ZCYTimeTableHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AC73EE1DC0F09300E903EA /* ZCYTimeTableHelper.m */; };
 		49AC73FD1DC201EA00E903EA /* ZCYTimeTableModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AC73FC1DC201EA00E903EA /* ZCYTimeTableModel.m */; };
@@ -33,7 +35,6 @@
 /* Begin PBXFileReference section */
 		1189500E1074EECD137C3468 /* libPods-在重邮.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-在重邮.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		493744141DB1C1F700E49E4E /* 在重邮.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "在重邮.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		493744BF1DB1E6DE00E49E4E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		4951C8781DBA409700E5AC63 /* ZCYAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYAppDelegate.h; sourceTree = "<group>"; };
 		4951C8791DBA409700E5AC63 /* ZCYAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYAppDelegate.m; sourceTree = "<group>"; };
 		4951C87D1DBA409700E5AC63 /* ZCYBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYBaseViewController.h; sourceTree = "<group>"; };
@@ -56,6 +57,16 @@
 		4951C89B1DBA409700E5AC63 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4951C89D1DBA409700E5AC63 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4951C89E1DBA409700E5AC63 /* ZCYInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ZCYInfo.plist; sourceTree = "<group>"; };
+		499232C91DC487AA00B17B54 /* ZCYProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYProgressHUD.h; sourceTree = "<group>"; };
+		499232CA1DC487AA00B17B54 /* ZCYProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYProgressHUD.m; sourceTree = "<group>"; };
+		499232CC1DC494E400B17B54 /* DTPerformanceSession.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DTPerformanceSession.framework; path = Library/Frameworks/DTPerformanceSession.framework; sourceTree = DEVELOPER_DIR; };
+		499232CD1DC494E400B17B54 /* InterfaceBuilderKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InterfaceBuilderKit.framework; path = Library/Frameworks/InterfaceBuilderKit.framework; sourceTree = DEVELOPER_DIR; };
+		499232CE1DC494E400B17B54 /* XcodeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XcodeKit.framework; path = Library/Frameworks/XcodeKit.framework; sourceTree = DEVELOPER_DIR; };
+		499232CF1DC494E400B17B54 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		499232D81DC4A28C00B17B54 /* ZCYCourseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYCourseView.h; sourceTree = "<group>"; };
+		499232D91DC4A28C00B17B54 /* ZCYCourseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYCourseView.m; sourceTree = "<group>"; };
+		499232DE1DC4ECBC00B17B54 /* ZCYCourseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYCourseViewController.h; sourceTree = "<group>"; };
+		499232DF1DC4ECBC00B17B54 /* ZCYCourseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYCourseViewController.m; sourceTree = "<group>"; };
 		49AC73E91DC0EC8100E903EA /* ZCYUserMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYUserMgr.h; sourceTree = "<group>"; };
 		49AC73EA1DC0EC8100E903EA /* ZCYUserMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYUserMgr.m; sourceTree = "<group>"; };
 		49AC73ED1DC0F09300E903EA /* ZCYTimeTableHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYTimeTableHelper.h; sourceTree = "<group>"; };
@@ -93,7 +104,6 @@
 		4937440B1DB1C1F700E49E4E = {
 			isa = PBXGroup;
 			children = (
-				493744BF1DB1E6DE00E49E4E /* Default-568h@2x.png */,
 				4951C8751DBA409700E5AC63 /* 在重邮 */,
 				493744151DB1C1F700E49E4E /* Products */,
 				DE8FDDA178AEC12746377F8F /* Pods */,
@@ -149,6 +159,8 @@
 				49AC74021DC2092300E903EA /* BaseRequest */,
 				49AC73E91DC0EC8100E903EA /* ZCYUserMgr.h */,
 				49AC73EA1DC0EC8100E903EA /* ZCYUserMgr.m */,
+				499232C91DC487AA00B17B54 /* ZCYProgressHUD.h */,
+				499232CA1DC487AA00B17B54 /* ZCYProgressHUD.m */,
 			);
 			path = BuinessMgr;
 			sourceTree = "<group>";
@@ -180,6 +192,7 @@
 		4951C8831DBA409700E5AC63 /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
+				499232DD1DC4ECA400B17B54 /* Course */,
 				49B730981DBF933300F438BD /* Function */,
 				4951C8841DBA409700E5AC63 /* ZCYHomePageViewController.h */,
 				4951C8851DBA409700E5AC63 /* ZCYHomePageViewController.m */,
@@ -262,6 +275,7 @@
 		4951C8961DBA409700E5AC63 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				499232D71DC4A28C00B17B54 /* HomePage */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -289,6 +303,24 @@
 				4951C89E1DBA409700E5AC63 /* ZCYInfo.plist */,
 			);
 			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		499232D71DC4A28C00B17B54 /* HomePage */ = {
+			isa = PBXGroup;
+			children = (
+				499232D81DC4A28C00B17B54 /* ZCYCourseView.h */,
+				499232D91DC4A28C00B17B54 /* ZCYCourseView.m */,
+			);
+			path = HomePage;
+			sourceTree = "<group>";
+		};
+		499232DD1DC4ECA400B17B54 /* Course */ = {
+			isa = PBXGroup;
+			children = (
+				499232DE1DC4ECBC00B17B54 /* ZCYCourseViewController.h */,
+				499232DF1DC4ECBC00B17B54 /* ZCYCourseViewController.m */,
+			);
+			path = Course;
 			sourceTree = "<group>";
 		};
 		49AC73EC1DC0F06100E903EA /* Helper */ = {
@@ -327,6 +359,10 @@
 		5434925B5381CD43A936643C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				499232CC1DC494E400B17B54 /* DTPerformanceSession.framework */,
+				499232CD1DC494E400B17B54 /* InterfaceBuilderKit.framework */,
+				499232CE1DC494E400B17B54 /* XcodeKit.framework */,
+				499232CF1DC494E400B17B54 /* XCTest.framework */,
 				1189500E1074EECD137C3468 /* libPods-在重邮.a */,
 			);
 			name = Frameworks;
@@ -403,7 +439,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4951C8C31DBA484800E5AC63 /* Default-568h@2x.png in Resources */,
 				4951C8A71DBA409700E5AC63 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -469,16 +504,19 @@
 				49B730A71DBF949E00F438BD /* ZCYHydroelectricViewController.m in Sources */,
 				49B730A61DBF949A00F438BD /* ZCYSchoolCardViewController.m in Sources */,
 				49B730A51DBF949400F438BD /* ZCYClassViewController.m in Sources */,
+				499232CB1DC487AA00B17B54 /* ZCYProgressHUD.m in Sources */,
 				4951C8BD1DBA41D000E5AC63 /* main.m in Sources */,
 				4951C8B41DBA41C900E5AC63 /* ZCYHomePageViewController.m in Sources */,
 				4951C8B61DBA41C900E5AC63 /* ZCYInformationViewController.m in Sources */,
 				4951C8B81DBA41C900E5AC63 /* ZCYSettingsViewController.m in Sources */,
 				4951C8BA1DBA41C900E5AC63 /* UIColor+Additions.m in Sources */,
 				4951C8B21DBA41AB00E5AC63 /* ZCYAppDelegate.m in Sources */,
+				499232E01DC4ECBC00B17B54 /* ZCYCourseViewController.m in Sources */,
 				4951C8AC1DBA41A500E5AC63 /* ZCYBaseViewController.m in Sources */,
 				49AC74081DC37EAE00E903EA /* NSDate+Utilities.m in Sources */,
 				49AC73FD1DC201EA00E903EA /* ZCYTimeTableModel.m in Sources */,
 				4951C8AE1DBA41A500E5AC63 /* ZCYHomeTabBarController.m in Sources */,
+				499232DA1DC4A28C00B17B54 /* ZCYCourseView.m in Sources */,
 				49AC73EB1DC0EC8100E903EA /* ZCYUserMgr.m in Sources */,
 				4951C8B01DBA41A500E5AC63 /* ZCYNavigationController.m in Sources */,
 			);
@@ -593,7 +631,9 @@
 			baseConfigurationReference = B9A8BE7DC58BA8111526991E /* Pods-在重邮.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = YLLJA83YGF;
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/在重邮/Classes/Support/ZCYPrefix.pch";
 				INFOPLIST_FILE = "在重邮/SupportingFiles/ZCYInfo.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -607,7 +647,9 @@
 			baseConfigurationReference = 66C2A3B14195ED8D12228F00 /* Pods-在重邮.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = YLLJA83YGF;
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/在重邮/Classes/Support/ZCYPrefix.pch";
 				INFOPLIST_FILE = "在重邮/SupportingFiles/ZCYInfo.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

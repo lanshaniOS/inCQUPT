@@ -11,6 +11,7 @@
 @interface ZCYUserMgr : NSObject
 
 @property (strong, nonatomic) NSString *studentNumber;  /**< 学号 */
+@property (strong, nonatomic) NSArray *courseArray;  /**< 课程总述 */
 
 + (ZCYUserMgr *)sharedMgr;
 
