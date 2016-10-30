@@ -28,6 +28,10 @@
 @end
 
 @implementation ZCYHomePageViewController
+{
+    CGFloat y_oldContentOffset;
+    BOOL _isTop;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -62,9 +66,10 @@
 - (void)initUI
 {
     self.view.backgroundColor = kAppBg_Color;
+    _isTop = YES;
+    [self initBackgroundScrollView];
     [self initHeaderView];
     [self initFunctionCollectionView];
-    [self initBackgroundScrollView];
     [self initCourseScrollView];
     [self initCardView];
 }
@@ -81,12 +86,11 @@
     self.backgroundScrollView.delegate = self;
     self.backgroundScrollView.scrollEnabled = YES;
     self.backgroundScrollView.showsVerticalScrollIndicator = NO;
-    self.backgroundScrollView.contentSize = CGSizeMake(self.view.frame.size.width, 550);
+    self.backgroundScrollView.contentSize = CGSizeMake(self.view.frame.size.width, 900);
     self.backgroundScrollView.contentOffset = CGPointMake(0, 0);
     [self.view addSubview:self.backgroundScrollView];
     [self.backgroundScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.right.and.bottom.equalTo(self.view);
-        make.top.equalTo(self.functionCollectionView.mas_bottom).with.offset(1);
+        make.left.and.right.and.top.and.bottom.equalTo(self.view);
     }];
     
     
@@ -95,16 +99,16 @@
 - (void)initHeaderView
 {
     self.backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_main_bg"]];
-    [self.view addSubview:self.backgroundImageView];
+    [self.backgroundScrollView addSubview:self.backgroundImageView];
     [self.backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.right.equalTo(self.view);
-        make.top.equalTo(self.view).with.offset(-20);
+        make.top.equalTo(self.backgroundScrollView).with.offset(-20);
         make.height.mas_equalTo(255);
     }];
 
     UILabel *topicLabel = [[UILabel alloc] init];
     [self setLabel:topicLabel withText:@"首页" andTextColor:kCommonWhite_Color andTextFont:kFont(kStandardPx(60))];
-    [self.view addSubview:topicLabel];
+    [self.backgroundScrollView addSubview:topicLabel];
     [topicLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.backgroundImageView).with.offset(50);
         make.left.equalTo(self.view).with.offset(18);
@@ -114,7 +118,7 @@
     
     self.timeLabel = [[UILabel alloc] init];
     [self setLabel:self.timeLabel withText: [NSString stringWithFormat:@"星期%@ %@月%@号", @([NSDate date].week), @([NSDate date].month), @([NSDate date].day)] andTextColor:kCommonWhite_Color andTextFont:kFont(kStandardPx(22))];
-    [self.view addSubview:self.timeLabel];
+    [self.backgroundScrollView addSubview:self.timeLabel];
     [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topicLabel.mas_bottom).with.offset(15);
         make.left.equalTo(self.view).with.offset(20);
@@ -126,7 +130,7 @@
     line.backgroundColor = kCommonWhite_Color;
     line.layer.masksToBounds = YES;
     line.layer.cornerRadius = 1;
-    [self.view addSubview:line];
+    [self.backgroundScrollView addSubview:line];
     [line mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.timeLabel.mas_bottom).with.offset(18);
         make.left.equalTo(self.timeLabel);
@@ -150,7 +154,7 @@
     
     [self setLabel:self.summaryLabel withText:@"" andTextColor:kCommonWhite_Color andTextFont:kFont(kStandardPx(36))];
     self.summaryLabel.attributedText = attributedString;
-    [self.view addSubview:self.summaryLabel];
+    [self.backgroundScrollView addSubview:self.summaryLabel];
     [self.summaryLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(line.mas_bottom).with.offset(13);
         make.left.equalTo(self.view).with.offset(20);
@@ -173,7 +177,7 @@
     self.functionCollectionView.scrollEnabled = NO;
     self.functionCollectionView.delegate = self;
     self.functionCollectionView.dataSource = self;
-    [self.view addSubview:self.functionCollectionView];
+    [self.backgroundScrollView addSubview:self.functionCollectionView];
     [self.functionCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.backgroundImageView.mas_bottom);
         make.left.and.right.equalTo(self.view);
@@ -182,7 +186,7 @@
     
     UIView *grayLine = [[UIView alloc] init];
     grayLine.backgroundColor = [UIColor colorWithRGBHex:0xd8d8d8];
-    [self.view addSubview:grayLine];
+    [self.backgroundScrollView addSubview:grayLine];
     [grayLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.right.equalTo(self.view);
         make.top.equalTo(self.functionCollectionView.mas_bottom);
@@ -198,7 +202,7 @@
     topicView.font = [UIFont systemFontOfSize:20 weight:2];
     [self.backgroundScrollView addSubview:topicView];
     [topicView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.backgroundScrollView).with.offset(15);
+        make.top.equalTo(self.backgroundScrollView).with.offset(370);
         make.height.mas_equalTo(25);
         make.width.mas_equalTo(90);
         make.left.equalTo(self.view).with.offset(20);
@@ -293,7 +297,49 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    NSLog(@"111");
+//    NSLog(@"%f", self.backgroundImageView.contentScaleFactor);
+    if (scrollView.panGestureRecognizer.state != 0)
+    {
+        if (scrollView.contentOffset.y < y_oldContentOffset) //下拉
+        {
+            
+            if (_isTop)
+            {
+                if (scrollView.contentOffset.y == -20.0f)
+                {
+                    [self.backgroundImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                        make.left.and.right.equalTo(self.view);
+                        make.top.equalTo(self.view).with.offset(-20);
+                        make.height.mas_equalTo(255);
+                    }];
+                    _isTop = NO;
+                }
+                
+            } else {
+                
+                    [self.backgroundImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                        make.left.and.right.equalTo(self.view);
+                        make.top.equalTo(self.backgroundScrollView).with.offset(-20);
+                        make.height.mas_equalTo(255);
+                    }];
+            }
+            
+        } else { //上拉
+    
+            if (scrollView.contentOffset.y == -20.0f)
+            {
+                _isTop = YES;
+            }
+                [self.backgroundImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    make.left.and.right.equalTo(self.view);
+                    make.top.equalTo(self.backgroundScrollView).with.offset(-20);
+                    make.height.mas_equalTo(255);
+                }];
+//            }
+        }
+
+    }
+    y_oldContentOffset = scrollView.contentOffset.y;
 }
 
 - (void)updateUIWithArray:(NSArray *)courseArray
