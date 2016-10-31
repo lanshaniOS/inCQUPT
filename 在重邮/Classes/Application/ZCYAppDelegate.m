@@ -8,6 +8,7 @@
 
 #import "ZCYAppDelegate.h"
 #import "ZCYHomeTabBarController.h"
+#import "ZCYLoginViewController.h"
 
 @interface ZCYAppDelegate ()
 
@@ -21,8 +22,17 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = kCommonWhite_Color;
     
-    ZCYHomeTabBarController *tabBarC = [[ZCYHomeTabBarController alloc] init];
-    self.window.rootViewController = tabBarC;
+    NSData *userMgr = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERMGR"];
+    ZCYUserMgr *sharedMgr = [NSKeyedUnarchiver unarchiveObjectWithData:userMgr];
+    if ([sharedMgr.studentNumber  isEqualToString: @""] || sharedMgr.studentNumber == nil)
+    {
+        ZCYLoginViewController *loginVC = [[ZCYLoginViewController alloc] init];
+        self.window.rootViewController = loginVC;
+    } else {
+        ZCYHomeTabBarController *tabBarC = [[ZCYHomeTabBarController alloc] init];
+        self.window.rootViewController = tabBarC;
+
+    }
     [self.window makeKeyAndVisible];
     
     return YES;

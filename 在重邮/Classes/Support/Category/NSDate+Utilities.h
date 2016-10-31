@@ -13,6 +13,7 @@
 @property (readonly) NSInteger week;
 @property (readonly) NSInteger month;
 @property (readonly) NSInteger day;
+@property (readonly) NSString *weekString;
 
 //返回单例
 + (NSCalendar *)currentCalendar;

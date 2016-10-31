@@ -28,6 +28,10 @@
 @end
 
 @implementation ZCYHomePageViewController
+{
+    CGFloat y_oldContentOffset;
+    BOOL _isTop;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -38,20 +42,6 @@
 {
     [super viewWillAppear:animated];
     [self setNavigationBar];
-    @weakify(self);
-    [ZCYTimeTableHelper getTimeTableWithStdNumber:@"2014213913" withCompeletionBlock:^(NSError *error, NSArray *array) {
-        @strongify(self);
-        if (error)
-        {
-            [[ZCYProgressHUD sharedHUD] showWithText:[error localizedDescription] inView:self.view Delay:1.0f];
-            NSLog(@"%@", [error localizedDescription]);
-            return;
-        }
-        [ZCYUserMgr sharedMgr].courseArray = array;
-        [self updateUIWithArray:array];
-        
-    }];
-
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -59,19 +49,26 @@
     [super viewDidAppear:animated];
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    self.navigationController.navigationBar.alpha = 1.0f;
+}
 - (void)initUI
 {
     self.view.backgroundColor = kAppBg_Color;
+    _isTop = YES;
+    [self initBackgroundScrollView];
     [self initHeaderView];
     [self initFunctionCollectionView];
-    [self initBackgroundScrollView];
     [self initCourseScrollView];
     [self initCardView];
 }
 
 - (void)setNavigationBar
 {
-    self.navigationController.navigationBar.hidden = YES;
+    self.navigationController.automaticallyAdjustsScrollViewInsets = NO;
+//    self.navigationController.navigationBar.hidden = YES;
 }
 
 - (void)initBackgroundScrollView
@@ -81,12 +78,11 @@
     self.backgroundScrollView.delegate = self;
     self.backgroundScrollView.scrollEnabled = YES;
     self.backgroundScrollView.showsVerticalScrollIndicator = NO;
-    self.backgroundScrollView.contentSize = CGSizeMake(self.view.frame.size.width, 550);
+    self.backgroundScrollView.contentSize = CGSizeMake(self.view.frame.size.width, 900);
     self.backgroundScrollView.contentOffset = CGPointMake(0, 0);
     [self.view addSubview:self.backgroundScrollView];
     [self.backgroundScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.right.and.bottom.equalTo(self.view);
-        make.top.equalTo(self.functionCollectionView.mas_bottom).with.offset(1);
+        make.left.and.right.and.top.and.bottom.equalTo(self.view);
     }];
     
     
@@ -95,16 +91,17 @@
 - (void)initHeaderView
 {
     self.backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_main_bg"]];
-    [self.view addSubview:self.backgroundImageView];
+    [self.backgroundScrollView addSubview:self.backgroundImageView];
     [self.backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.right.equalTo(self.view);
-        make.top.equalTo(self.view).with.offset(-20);
+        make.top.equalTo(self.backgroundScrollView).with.offset(-20);
         make.height.mas_equalTo(255);
     }];
-
+    
     UILabel *topicLabel = [[UILabel alloc] init];
-    [self setLabel:topicLabel withText:@"首页" andTextColor:kCommonWhite_Color andTextFont:kFont(kStandardPx(60))];
-    [self.view addSubview:topicLabel];
+    [self setLabel:topicLabel withText:@"首页" andTextColor:kCommonWhite_Color andTextFont:kFont(kStandardPx(80))];
+    topicLabel.font = [UIFont systemFontOfSize:kStandardPx(80) weight:3.0f];
+    [self.backgroundScrollView addSubview:topicLabel];
     [topicLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.backgroundImageView).with.offset(50);
         make.left.equalTo(self.view).with.offset(18);
@@ -113,8 +110,8 @@
     }];
     
     self.timeLabel = [[UILabel alloc] init];
-    [self setLabel:self.timeLabel withText: [NSString stringWithFormat:@"星期%@ %@月%@号", @([NSDate date].week), @([NSDate date].month), @([NSDate date].day)] andTextColor:kCommonWhite_Color andTextFont:kFont(kStandardPx(22))];
-    [self.view addSubview:self.timeLabel];
+    [self setLabel:self.timeLabel withText: [NSString stringWithFormat:@"星期%@ %@月%@号", [NSDate date].weekString, @([NSDate date].month), @([NSDate date].day)] andTextColor:kCommonWhite_Color andTextFont:kFont(kStandardPx(22))];
+    [self.backgroundScrollView addSubview:self.timeLabel];
     [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topicLabel.mas_bottom).with.offset(15);
         make.left.equalTo(self.view).with.offset(20);
@@ -126,7 +123,7 @@
     line.backgroundColor = kCommonWhite_Color;
     line.layer.masksToBounds = YES;
     line.layer.cornerRadius = 1;
-    [self.view addSubview:line];
+    [self.backgroundScrollView addSubview:line];
     [line mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.timeLabel.mas_bottom).with.offset(18);
         make.left.equalTo(self.timeLabel);
@@ -135,29 +132,30 @@
     }];
     
     self.summaryLabel = [[UILabel alloc] init];
-    
-    NSArray *todayCourseArray = [ZCYUserMgr sharedMgr].courseArray[[NSDate date].week - 1];
-    
     __block NSUInteger courseNum = 0;
-    [todayCourseArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSArray *array = obj;
-        if (array.count != 0 && array != nil)
+    if (!([ZCYUserMgr sharedMgr].courseArray == nil || [ZCYUserMgr sharedMgr].courseArray.count == 0))
+    {
+        NSArray *todayCourseArray = [ZCYUserMgr sharedMgr].courseArray[[NSDate date].week - 1];
+        
+        [todayCourseArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSArray *array = obj;
+            if (array.count != 0 && array != nil)
             courseNum = courseNum + 2;
-    }];
-    
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"今天只有%02ld节课，爽到爆炸", courseNum]];
-    [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Futura" size:kStandardPx(64)] range:NSMakeRange(4, 2)];
+        }];
+    }
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"今天只有 %02ld 节课，爽到爆炸", courseNum]];
+    [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Futura" size:kStandardPx(64)] range:NSMakeRange(5, 2)];
     
     [self setLabel:self.summaryLabel withText:@"" andTextColor:kCommonWhite_Color andTextFont:kFont(kStandardPx(36))];
     self.summaryLabel.attributedText = attributedString;
-    [self.view addSubview:self.summaryLabel];
+    [self.backgroundScrollView addSubview:self.summaryLabel];
     [self.summaryLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(line.mas_bottom).with.offset(13);
         make.left.equalTo(self.view).with.offset(20);
         make.right.equalTo(self.view);
         make.height.mas_equalTo(20);
     }];
-
+    
 }
 
 - (void)initFunctionCollectionView
@@ -173,7 +171,7 @@
     self.functionCollectionView.scrollEnabled = NO;
     self.functionCollectionView.delegate = self;
     self.functionCollectionView.dataSource = self;
-    [self.view addSubview:self.functionCollectionView];
+    [self.backgroundScrollView addSubview:self.functionCollectionView];
     [self.functionCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.backgroundImageView.mas_bottom);
         make.left.and.right.equalTo(self.view);
@@ -182,7 +180,7 @@
     
     UIView *grayLine = [[UIView alloc] init];
     grayLine.backgroundColor = [UIColor colorWithRGBHex:0xd8d8d8];
-    [self.view addSubview:grayLine];
+    [self.backgroundScrollView addSubview:grayLine];
     [grayLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.right.equalTo(self.view);
         make.top.equalTo(self.functionCollectionView.mas_bottom);
@@ -198,7 +196,7 @@
     topicView.font = [UIFont systemFontOfSize:20 weight:2];
     [self.backgroundScrollView addSubview:topicView];
     [topicView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.backgroundScrollView).with.offset(15);
+        make.top.equalTo(self.backgroundScrollView).with.offset(350);
         make.height.mas_equalTo(25);
         make.width.mas_equalTo(90);
         make.left.equalTo(self.view).with.offset(20);
@@ -230,9 +228,14 @@
         make.width.mas_equalTo(70);
     }];
     self.courseScrollView = [[UIScrollView alloc] init];
-//    self.courseScrollView.delegate = self;
-    NSArray *todayCourseArray = [ZCYUserMgr sharedMgr].courseArray[[NSDate date].week - 1];
-    self.courseScrollView.contentSize = CGSizeMake((todayCourseArray.count+3)*((self.view.frame.size.width-40)/2) + 20, 230);
+    //    self.courseScrollView.delegate = self;
+    NSArray *todayCourseArray = [NSArray array];
+    
+    if (!([ZCYUserMgr sharedMgr].courseArray == nil || [ZCYUserMgr sharedMgr].courseArray.count == 0))
+    {
+        todayCourseArray = [ZCYUserMgr sharedMgr].courseArray[[NSDate date].week - 1];
+    }
+    self.courseScrollView.contentSize = CGSizeMake((todayCourseArray.count)*((self.view.frame.size.width-40)/2) + 20, 230);
     self.courseScrollView.scrollEnabled = YES;
     self.courseScrollView.showsHorizontalScrollIndicator = NO;
     self.courseScrollView.showsVerticalScrollIndicator = NO;
@@ -244,21 +247,41 @@
         make.left.and.right.equalTo(self.view);
     }];
     
-    NSArray <UIColor *> *colorArray = @[kCommonGreen_Color, kCommonYellow_Color, kCommonPink_Color, kDeepGreen_Color, kDeepYellow_Color, kDeepPink_Color];
-    
-    for (NSInteger i = 0; i<todayCourseArray.count+3; i++)
-    {
-        ZCYTimeTableModel *model = todayCourseArray[i];
-        ZCYCourseView *courseView = [[ZCYCourseView alloc] initWithCourseName:model.courseName andClassID:model.classId];
-        [courseView setTextColor:colorArray[i+3] andBackgroundColor:colorArray[i]];
-        [self.courseScrollView addSubview:courseView];
-        [courseView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.courseScrollView).with.offset(i*(self.view.frame.size.width-40)/2 + 20);
-            make.top.equalTo(self.courseScrollView).with.offset(13);
-            make.width.mas_equalTo((self.view.frame.size.width-40)/2);
-            make.height.mas_equalTo((self.view.frame.size.width-40)/2 - 15);
-        }];
-    }
+    NSArray <UIColor *> *commonArray = @[kCommonGreen_Color, kCommonYellow_Color, kCommonPink_Color];
+    NSArray <UIColor *> *deepArray = @[kDeepGreen_Color, kDeepYellow_Color, kDeepPink_Color];
+    __block NSInteger index = 0;
+    [todayCourseArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSArray *array = obj;
+        if (array == nil || array.count == 0)
+        {
+            //        UILabel *tipLabel = [[UILabel alloc] init];
+            //        tipLabel.text = @"今天没课哦";
+            //        tipLabel.textColor = kDeepGray_Color;
+            //        tipLabel.font = [UIFont systemFontOfSize:20 weight:2];
+            //        tipLabel.textAlignment = NSTextAlignmentCenter;
+            //        [self.courseScrollView addSubview:tipLabel];
+            //        [tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            //            make.centerX.equalTo(self.view);
+            //            make.centerY.equalTo(self.courseScrollView);
+            //            make.width.mas_equalTo(100);
+            //            make.height.mas_equalTo(26);
+            //        }];
+        } else {
+            ZCYTimeTableModel *model = array[0];
+            ZCYCourseView *courseView = [[ZCYCourseView alloc] initWithCourseName:model.courseName andClassID:model.coursePlace andCourseTime:idx];
+            [courseView setTextColor:deepArray[index%3] andBackgroundColor:commonArray[index%3]];
+            [self.courseScrollView addSubview:courseView];
+            self.courseScrollView.contentSize = CGSizeMake((index+1)*(self.view.frame.size.width-30)/2 , (self.view.frame.size.width-40)/2 - 15);
+            [courseView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self.courseScrollView).with.offset(index*(self.view.frame.size.width-40)/2 + 20);
+                make.top.equalTo(self.courseScrollView);
+                make.width.mas_equalTo((self.view.frame.size.width-40)/2);
+                make.height.mas_equalTo((self.view.frame.size.width-40)/2 - 15);
+            }];
+            index++;
+        }
+    }];
+
     
     UIView *grayLine = [[UIView alloc] init];
     grayLine.backgroundColor = [UIColor colorWithRGBHex:0xd8d8d8];
@@ -276,7 +299,7 @@
     self.cardView.backgroundColor = kCommonWhite_Color;
     [self.backgroundScrollView addSubview:self.cardView];
     [self.cardView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.courseScrollView.mas_bottom);
+        make.top.equalTo(self.courseScrollView.mas_bottom).with.offset(1);
         make.left.and.right.equalTo(self.view);
         make.height.mas_equalTo(210);
     }];
@@ -291,27 +314,74 @@
     }];
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    if (scrollView.contentOffset.y == -20)
+    {
+        _isTop = YES;
+    }
+}
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    NSLog(@"111");
+    self.navigationController.navigationBar.alpha = (scrollView.contentOffset.y+20)/355 * 2.0;
+    
+    if (scrollView.contentOffset.y <= -20.0f)
+    {
+        _isTop = YES;
+    } else {
+        _isTop = NO;
+    }
+        if (scrollView.contentOffset.y < y_oldContentOffset) //下拉
+        {
+            
+            if (_isTop)
+            {
+            
+                [self.backgroundImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    make.left.and.right.equalTo(self.view);
+                    make.top.equalTo(self.view);
+                    make.height.mas_equalTo(255);
+                }];
+            } else {
+                
+                [self.backgroundImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    make.left.and.right.equalTo(self.view);
+                    make.top.equalTo(self.backgroundScrollView).with.offset(-20);
+                    make.height.mas_equalTo(255);
+                }];
+                
+            }
+        } else { //上拉
+            
+            if (!_isTop)
+            [self.backgroundImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.and.right.equalTo(self.view);
+                make.top.equalTo(self.backgroundScrollView).with.offset(-20);
+                make.height.mas_equalTo(255);
+            }];
+           
+        }
+    
+    y_oldContentOffset = scrollView.contentOffset.y;
 }
 
 - (void)updateUIWithArray:(NSArray *)courseArray
 {
-    self.timeLabel.text = [NSString stringWithFormat:@"星期%@ %@月%@号", @([NSDate date].week), @([NSDate date].month), @([NSDate date].day)];
     
-    NSArray *todayCourseArray = [ZCYUserMgr sharedMgr].courseArray[[NSDate date].week - 2];
+    self.timeLabel.text = [NSString stringWithFormat:@"星期%@ %@月%@号", [NSDate date].weekString, @([NSDate date].month), @([NSDate date].day)];
+    
+    NSArray *todayCourseArray = courseArray[[NSDate date].week - 1];
     
     __block NSUInteger courseNum = 0;
     
     [todayCourseArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSArray *array = obj;
         if (array.count != 0 && array != nil)
-            courseNum = courseNum + 2;
+        courseNum = courseNum + 2;
     }];
 
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"今天只有%02ld节课，爽到爆炸", courseNum]];
-    [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Futura" size:kStandardPx(64)] range:NSMakeRange(4, 2)];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"今天只有 %02ld 节课，爽到爆炸", courseNum]];
+    [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Futura" size:kStandardPx(64)] range:NSMakeRange(5, 2)];
     
     self.summaryLabel.attributedText = attributedString;
     
@@ -320,22 +390,45 @@
         [subview removeFromSuperview];
     }
     
-    NSArray <UIColor *> *colorArray = @[kCommonGreen_Color, kCommonYellow_Color, kCommonPink_Color, kDeepGreen_Color, kDeepYellow_Color, kDeepPink_Color];
+    NSArray <UIColor *> *commonArray = @[kCommonGreen_Color, kCommonYellow_Color, kCommonPink_Color];
+    NSArray <UIColor *> *deepArray = @[kDeepGreen_Color, kDeepYellow_Color, kDeepPink_Color];
+    __block NSInteger index = 0;
     
-    for (NSInteger i = 0; i<todayCourseArray.count+3; i++)
-    {
-        ZCYTimeTableModel *model = todayCourseArray[i];
-        ZCYCourseView *courseView = [[ZCYCourseView alloc] initWithCourseName:model.courseName andClassID:model.classId];
-        [courseView setTextColor:colorArray[i+3] andBackgroundColor:colorArray[i]];
-        [self.courseScrollView addSubview:courseView];
-        [courseView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.courseScrollView).with.offset(i*(self.view.frame.size.width-40)/2 + 20);
-            make.top.equalTo(self.courseScrollView);
-            make.width.mas_equalTo((self.view.frame.size.width-40)/2);
-            make.height.mas_equalTo((self.view.frame.size.width-40)/2 - 15);
-        }];
-    }
+    [todayCourseArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSArray *array = obj;
+        if (array == nil || array.count == 0)
+        {
+            //        UILabel *tipLabel = [[UILabel alloc] init];
+            //        tipLabel.text = @"今天没课哦";
+            //        tipLabel.textColor = kDeepGray_Color;
+            //        tipLabel.font = [UIFont systemFontOfSize:20 weight:2];
+            //        tipLabel.textAlignment = NSTextAlignmentCenter;
+            //        [self.courseScrollView addSubview:tipLabel];
+            //        [tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            //            make.centerX.equalTo(self.view);
+            //            make.centerY.equalTo(self.courseScrollView);
+            //            make.width.mas_equalTo(100);
+            //            make.height.mas_equalTo(26);
+            //        }];
+        } else {
+            //        for (NSInteger i = 0; i<array.count; i++)
+            //        {
+            ZCYTimeTableModel *model = array[0];
+            ZCYCourseView *courseView = [[ZCYCourseView alloc] initWithCourseName:model.courseName andClassID:model.coursePlace andCourseTime:idx];
+            [courseView setTextColor:deepArray[index%3] andBackgroundColor:commonArray[index%3]];
+            [self.courseScrollView addSubview:courseView];
+            self.courseScrollView.contentSize = CGSizeMake((index+1)*(self.view.frame.size.width-30)/2 , (self.view.frame.size.width-40)/2 - 15);
+            [courseView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self.courseScrollView).with.offset(index*(self.view.frame.size.width-40)/2 + 20);
+                make.top.equalTo(self.courseScrollView);
+                make.width.mas_equalTo((self.view.frame.size.width-40)/2);
+                make.height.mas_equalTo((self.view.frame.size.width-40)/2 - 15);
+            }];
+            index++;
+            //        }
+        }
 
+    }];
 }
 
 #pragma mark - 点击事件

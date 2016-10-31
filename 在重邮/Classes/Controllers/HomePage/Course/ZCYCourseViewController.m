@@ -18,6 +18,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = kCommonWhite_Color;
     self.title = @"课表";
+    self.navigationController.navigationBar.alpha = 1.0f;
     self.navigationController.navigationBar.hidden = NO;
     // Do any additional setup after loading the view.
 }

@@ -9,6 +9,10 @@
 #import "ZCYTimeTableModel.h"
 #import "NSObject+YYModel.h"
 
+@interface ZCYTimeTableModel() <NSCoding>
+
+@end
+
 @implementation ZCYTimeTableModel
 
 + (NSDictionary<NSString *, id> *)modelCustomPropertyMapper
@@ -26,4 +30,33 @@
              };
 }
 
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.courseTime forKey:@"COURSETIME"];
+    [aCoder encodeObject:self.classId forKey:@"CLASSID"];
+    [aCoder encodeObject:self.courseId forKey:@"COURSEID"];
+    [aCoder encodeObject:self.courseWeek forKey:@"COURSEWEEK"];
+    [aCoder encodeObject:self.courseTeacher forKey:@"COURSETEACHER"];
+    [aCoder encodeObject:self.courseType forKey:@"COURSETYPE"];
+    [aCoder encodeObject:self.courseCredit forKey:@"COURSECREDIT"];
+    [aCoder encodeObject:self.coursePlace forKey:@"COURSEPLASE"];
+    [aCoder encodeObject:self.courseName forKey:@"COURSENAME"];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super init])
+    {
+        self.courseTime = [aDecoder decodeObjectForKey:@"COURSETIME"];
+        self.classId = [aDecoder decodeObjectForKey:@"CLASSID"];
+        self.courseId = [aDecoder decodeObjectForKey:@"COURSEID"];
+        self.courseWeek = [aDecoder decodeObjectForKey:@"COURSEWEEK"];
+        self.courseTeacher = [aDecoder decodeObjectForKey:@"COURSETEACHER"];
+        self.courseType = [aDecoder decodeObjectForKey:@"COURSETYPE"];
+        self.courseCredit = [aDecoder decodeObjectForKey:@"COURSECREDIT"];
+        self.coursePlace = [aDecoder decodeObjectForKey:@"COURSEPLASE"];
+        self.courseName = [aDecoder decodeObjectForKey:@"COURSENAME"];
+    }
+    return self;
+}
 @end

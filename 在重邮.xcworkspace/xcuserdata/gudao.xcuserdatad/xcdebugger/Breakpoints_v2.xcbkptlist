@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "&#x5728;&#x91cd;&#x90ae;/Classes/Controllers/HomePage/ZCYHomePageViewController.m"
-            timestampString = "499616536.433756"
+            filePath = "&#x5728;&#x91cd;&#x90ae;/Classes/Controllers/ZCYLoginViewControoler.m"
+            timestampString = "499442522.94113"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "335"
-            endingLineNumber = "335"
-            landmarkName = "-scrollViewDidScroll:"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "-initUI"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "&#x5728;&#x91cd;&#x90ae;/Classes/Controllers/HomePage/ZCYHomePageViewController.m"
-            timestampString = "499616536.433756"
+            filePath = "&#x5728;&#x91cd;&#x90ae;/Classes/Controllers/ZCYLoginViewControoler.m"
+            timestampString = "499442616.181588"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "332"
-            endingLineNumber = "332"
-            landmarkName = "-scrollViewDidScroll:"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "-TFinit"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

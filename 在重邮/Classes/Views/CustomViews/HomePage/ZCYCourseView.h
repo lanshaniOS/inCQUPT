@@ -12,7 +12,7 @@
 
 @property (strong, nonatomic) UILabel *timeLabel;  /**< 时间标签 */
 
-- (instancetype)initWithCourseName:(NSString *)courseName andClassID:(NSString *)classID;
+- (instancetype)initWithCourseName:(NSString *)courseName andClassID:(NSString *)classID andCourseTime:(NSInteger)courseTime;
 
 - (void)setTextColor:(UIColor *)textColor andBackgroundColor:(UIColor *)bgColor;
 @end

@@ -8,6 +8,10 @@
 
 #import "ZCYProgressHUD.h"
 
+@interface ZCYProgressHUD()
+
+@property (strong, nonatomic) MBProgressHUD *hud;  /**< hud */
+@end
 @implementation ZCYProgressHUD
 
 + (ZCYProgressHUD *)sharedHUD
@@ -20,11 +24,22 @@
     return progressHUD;
 }
 
-- (void)showWithText:(NSString *)text inView:(UIView *)view Delay:(NSTimeInterval)delay
+- (void)showWithText:(NSString *)text inView:(UIView *)view
 {
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-    hud.labelText = text;
-    hud.mode = MBProgressHUDModeText;
-    [hud hide:YES afterDelay:delay];
+    self.hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    self.hud.labelText = text;
+    self.hud.mode = MBProgressHUDModeText;
+}
+
+- (void)rotateWithText:(NSString *)text inView:(UIView *)view
+{
+    self.hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    self.hud.labelText = text;
+    self.hud.mode = MBProgressHUDModeIndeterminate;
+}
+
+- (void)hideAfterDelay:(NSTimeInterval)delay
+{
+    [self.hud hide:YES afterDelay:delay];
 }
 @end
