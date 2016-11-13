@@ -12,6 +12,8 @@
 
 + (ZCYNetworkHelperMgr *)sharedMgr;
 
-- (void)requestWithData:(NSDictionary *)data andCompeletionBlock:(void(^)(NSError *error, id response,NSURLSessionDataTask *task))compeletionBlock andURLPath:(NSString *)urlPath;
+- (void)requestWithData:(NSDictionary *)data andCompletionBlock:(void(^)(NSError *error, id response,NSURLSessionDataTask *task))completionBlock andURLPath:(NSString *)urlPath;
+
+- (void)wx_requestWithData:(NSDictionary *)data andCompletionBlock:(void(^)(NSError *, id, NSURLSessionDataTask *))completionBlock andURLPath:(NSString *)urlPath;
 
 @end

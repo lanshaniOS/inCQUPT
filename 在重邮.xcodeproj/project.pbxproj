@@ -17,9 +17,13 @@
 		4951C8B81DBA41C900E5AC63 /* ZCYSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C88B1DBA409700E5AC63 /* ZCYSettingsViewController.m */; };
 		4951C8BA1DBA41C900E5AC63 /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C8911DBA409700E5AC63 /* UIColor+Additions.m */; };
 		4951C8BD1DBA41D000E5AC63 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C89D1DBA409700E5AC63 /* main.m */; };
+		496EF5991DC78DD80028B5BA /* ZCYCardDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 496EF5981DC78DD80028B5BA /* ZCYCardDetailViewController.m */; };
+		496EF59C1DC78F4F0028B5BA /* ZCYCardHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 496EF59B1DC78F4F0028B5BA /* ZCYCardHelper.m */; };
+		496F14DC1DD0B6B3000FA790 /* ZCYUserValidateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 496F14DB1DD0B6B3000FA790 /* ZCYUserValidateHelper.m */; };
 		499232CB1DC487AA00B17B54 /* ZCYProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 499232CA1DC487AA00B17B54 /* ZCYProgressHUD.m */; };
 		499232DA1DC4A28C00B17B54 /* ZCYCourseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 499232D91DC4A28C00B17B54 /* ZCYCourseView.m */; };
 		499232E01DC4ECBC00B17B54 /* ZCYCourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 499232DF1DC4ECBC00B17B54 /* ZCYCourseViewController.m */; };
+		499B36721DC8E00B00CE2461 /* ZCYLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 499B36711DC8E00B00CE2461 /* ZCYLineChart.m */; };
 		49AC73EB1DC0EC8100E903EA /* ZCYUserMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AC73EA1DC0EC8100E903EA /* ZCYUserMgr.m */; };
 		49AC73EF1DC0F09300E903EA /* ZCYTimeTableHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AC73EE1DC0F09300E903EA /* ZCYTimeTableHelper.m */; };
 		49AC73FD1DC201EA00E903EA /* ZCYTimeTableModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AC73FC1DC201EA00E903EA /* ZCYTimeTableModel.m */; };
@@ -58,6 +62,12 @@
 		4951C89B1DBA409700E5AC63 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4951C89D1DBA409700E5AC63 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4951C89E1DBA409700E5AC63 /* ZCYInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ZCYInfo.plist; sourceTree = "<group>"; };
+		496EF5971DC78DD80028B5BA /* ZCYCardDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYCardDetailViewController.h; sourceTree = "<group>"; };
+		496EF5981DC78DD80028B5BA /* ZCYCardDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYCardDetailViewController.m; sourceTree = "<group>"; };
+		496EF59A1DC78F4F0028B5BA /* ZCYCardHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYCardHelper.h; sourceTree = "<group>"; };
+		496EF59B1DC78F4F0028B5BA /* ZCYCardHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYCardHelper.m; sourceTree = "<group>"; };
+		496F14DA1DD0B6B3000FA790 /* ZCYUserValidateHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYUserValidateHelper.h; sourceTree = "<group>"; };
+		496F14DB1DD0B6B3000FA790 /* ZCYUserValidateHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYUserValidateHelper.m; sourceTree = "<group>"; };
 		499232C91DC487AA00B17B54 /* ZCYProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYProgressHUD.h; sourceTree = "<group>"; };
 		499232CA1DC487AA00B17B54 /* ZCYProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYProgressHUD.m; sourceTree = "<group>"; };
 		499232CC1DC494E400B17B54 /* DTPerformanceSession.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DTPerformanceSession.framework; path = Library/Frameworks/DTPerformanceSession.framework; sourceTree = DEVELOPER_DIR; };
@@ -68,6 +78,8 @@
 		499232D91DC4A28C00B17B54 /* ZCYCourseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYCourseView.m; sourceTree = "<group>"; };
 		499232DE1DC4ECBC00B17B54 /* ZCYCourseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYCourseViewController.h; sourceTree = "<group>"; };
 		499232DF1DC4ECBC00B17B54 /* ZCYCourseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYCourseViewController.m; sourceTree = "<group>"; };
+		499B36701DC8E00B00CE2461 /* ZCYLineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYLineChart.h; sourceTree = "<group>"; };
+		499B36711DC8E00B00CE2461 /* ZCYLineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYLineChart.m; sourceTree = "<group>"; };
 		49AC73E91DC0EC8100E903EA /* ZCYUserMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYUserMgr.h; sourceTree = "<group>"; };
 		49AC73EA1DC0EC8100E903EA /* ZCYUserMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYUserMgr.m; sourceTree = "<group>"; };
 		49AC73ED1DC0F09300E903EA /* ZCYTimeTableHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYTimeTableHelper.h; sourceTree = "<group>"; };
@@ -196,6 +208,7 @@
 		4951C8831DBA409700E5AC63 /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
+				496EF5931DC78DB20028B5BA /* Card */,
 				499232DD1DC4ECA400B17B54 /* Course */,
 				49B730981DBF933300F438BD /* Function */,
 				4951C8841DBA409700E5AC63 /* ZCYHomePageViewController.h */,
@@ -279,6 +292,7 @@
 		4951C8961DBA409700E5AC63 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				499C0AEF1DCA278700E2F61D /* Course */,
 				499232D71DC4A28C00B17B54 /* HomePage */,
 			);
 			path = CustomViews;
@@ -309,11 +323,22 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
+		496EF5931DC78DB20028B5BA /* Card */ = {
+			isa = PBXGroup;
+			children = (
+				496EF5971DC78DD80028B5BA /* ZCYCardDetailViewController.h */,
+				496EF5981DC78DD80028B5BA /* ZCYCardDetailViewController.m */,
+			);
+			path = Card;
+			sourceTree = "<group>";
+		};
 		499232D71DC4A28C00B17B54 /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
 				499232D81DC4A28C00B17B54 /* ZCYCourseView.h */,
 				499232D91DC4A28C00B17B54 /* ZCYCourseView.m */,
+				499B36701DC8E00B00CE2461 /* ZCYLineChart.h */,
+				499B36711DC8E00B00CE2461 /* ZCYLineChart.m */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -327,11 +352,22 @@
 			path = Course;
 			sourceTree = "<group>";
 		};
+		499C0AEF1DCA278700E2F61D /* Course */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Course;
+			sourceTree = "<group>";
+		};
 		49AC73EC1DC0F06100E903EA /* Helper */ = {
 			isa = PBXGroup;
 			children = (
 				49AC73ED1DC0F09300E903EA /* ZCYTimeTableHelper.h */,
 				49AC73EE1DC0F09300E903EA /* ZCYTimeTableHelper.m */,
+				496EF59A1DC78F4F0028B5BA /* ZCYCardHelper.h */,
+				496EF59B1DC78F4F0028B5BA /* ZCYCardHelper.m */,
+				496F14DA1DD0B6B3000FA790 /* ZCYUserValidateHelper.h */,
+				496F14DB1DD0B6B3000FA790 /* ZCYUserValidateHelper.m */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -514,6 +550,8 @@
 				49B730A81DBF94A300F438BD /* ZCYPropertyRepairViewController.m in Sources */,
 				49AC73EF1DC0F09300E903EA /* ZCYTimeTableHelper.m in Sources */,
 				49CD413A1DC745530024011D /* ZCYLoginViewController.m in Sources */,
+				496F14DC1DD0B6B3000FA790 /* ZCYUserValidateHelper.m in Sources */,
+				496EF5991DC78DD80028B5BA /* ZCYCardDetailViewController.m in Sources */,
 				49AC74051DC2092300E903EA /* ZCYNetworkHelperMgr.m in Sources */,
 				49B730A71DBF949E00F438BD /* ZCYHydroelectricViewController.m in Sources */,
 				49B730A61DBF949A00F438BD /* ZCYSchoolCardViewController.m in Sources */,
@@ -525,9 +563,11 @@
 				4951C8B81DBA41C900E5AC63 /* ZCYSettingsViewController.m in Sources */,
 				4951C8BA1DBA41C900E5AC63 /* UIColor+Additions.m in Sources */,
 				4951C8B21DBA41AB00E5AC63 /* ZCYAppDelegate.m in Sources */,
+				499B36721DC8E00B00CE2461 /* ZCYLineChart.m in Sources */,
 				499232E01DC4ECBC00B17B54 /* ZCYCourseViewController.m in Sources */,
 				4951C8AC1DBA41A500E5AC63 /* ZCYBaseViewController.m in Sources */,
 				49AC74081DC37EAE00E903EA /* NSDate+Utilities.m in Sources */,
+				496EF59C1DC78F4F0028B5BA /* ZCYCardHelper.m in Sources */,
 				49AC73FD1DC201EA00E903EA /* ZCYTimeTableModel.m in Sources */,
 				4951C8AE1DBA41A500E5AC63 /* ZCYHomeTabBarController.m in Sources */,
 				499232DA1DC4A28C00B17B54 /* ZCYCourseView.m in Sources */,

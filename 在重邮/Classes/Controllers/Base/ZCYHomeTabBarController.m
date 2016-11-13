@@ -38,7 +38,10 @@
         
         ZCYNavigationController *naviController = [[ZCYNavigationController alloc] initWithRootViewController:viewController];
         
+        
+        naviController.navigationBar.tintColor = kDeepGreen_Color;
         naviController.tabBarItem.title = itemDic[@"name"];
+        naviController.navigationBar.backgroundColor = kCommonLightGray_Color;
         naviController.tabBarItem.image = [[UIImage imageNamed:itemDic[@"icon"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         naviController.tabBarItem.selectedImage = [[UIImage imageNamed:itemDic[@"icon_s"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         
@@ -51,7 +54,7 @@
 - (NSArray *)tabbarDefines
 {
     NSArray *defineArray = @[
-                             @{@"name" : @"主页",
+                             @{@"name" : @"今日",
                                @"icon" : @"icon_mainHome",
                                @"icon_s" : @"icon_mainHome_f",
                                @"viewController_class" : NSStringFromClass([ZCYHomePageViewController class])} ,

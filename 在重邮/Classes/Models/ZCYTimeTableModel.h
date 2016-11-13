@@ -19,5 +19,6 @@
 @property (strong, nonatomic) NSString *courseTeacher;  /**< 上课老师 */
 @property (strong, nonatomic) NSString *courseType;  /**< 课程种类（选修，必修） */
 @property (strong, nonatomic) NSString *courseCredit;  /**< 课程学分 */
+@property (strong, nonatomic) NSArray *courseWeeks;  /**< 课周数 */
 
 @end

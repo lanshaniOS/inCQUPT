@@ -8,7 +8,8 @@
 
 #import "ZCYNetworkHelperMgr.h"
 
-static const NSString * URL = @"http://we.cqupt.edu.cn";
+static const NSString * URL = @"httpS://we.cqu.pt";
+static const NSString *WXURL = @"http://wx.cqupt.edu.cn";
 
 @implementation ZCYNetworkHelperMgr
 
@@ -22,24 +23,46 @@ static const NSString * URL = @"http://we.cqupt.edu.cn";
     return networkHelper;
 }
 
-- (void)requestWithData:(NSDictionary *)data andCompeletionBlock:(void (^)(NSError *, id, NSURLSessionDataTask *))compeletionBlock andURLPath:(NSString *)urlPath
+- (void)requestWithData:(NSDictionary *)data andCompletionBlock:(void (^)(NSError *, id, NSURLSessionDataTask *))completionBlock andURLPath:(NSString *)urlPath
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager GET:[NSString stringWithFormat:@"%@%@",URL,urlPath] parameters:data progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        if (compeletionBlock)
+        if (completionBlock)
         {
-            compeletionBlock(nil, responseObject, task);
+            completionBlock(nil, responseObject, task);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         
-        if (compeletionBlock)
+        if (completionBlock)
         {
-            compeletionBlock(error, nil, task);
+            completionBlock(error, nil, task);
         }
     }];
+}
+
+- (void)wx_requestWithData:(NSDictionary *)data andCompletionBlock:(void(^)(NSError *, id, NSURLSessionDataTask *))completionBlock andURLPath:(NSString *)urlPath
+{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:[NSString stringWithFormat:@"%@%@",WXURL,urlPath] parameters:data progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        if (completionBlock)
+        {
+            completionBlock(nil, responseObject, task);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        
+        if (completionBlock)
+        {
+            completionBlock(error, nil, task);
+        }
+    }];
+
 }
 @end

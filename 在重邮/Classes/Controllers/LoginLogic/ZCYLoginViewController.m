@@ -9,6 +9,7 @@
 #import "ZCYLoginViewController.h"
 #import "ZCYHomeTabBarController.h"
 #import "ZCYTimeTableHelper.h"
+#import "ZCYUserValidateHelper.h"
 
 @interface ZCYLoginViewController ()<UITextFieldDelegate>
 
@@ -72,8 +73,14 @@
     underline1.backgroundColor = kCommonBorder_Color;
     self.accountTF = [[UITextField alloc]init];
     self.accountTF.delegate  = self;
-    self.accountTF.placeholder = @"学号";
+    self.accountTF.placeholder = @"   一卡通统一识别码";
+    self.accountTF.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"private_userNumber"];
+    self.accountTF.clearButtonMode = UITextFieldViewModeAlways;
     self.accountTF.font = kFont(kStandardPx(32));
+    UIImageView *usernameImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_username"]];
+    usernameImageView.frame = CGRectMake(0, 0, 15, 20);
+    self.accountTF.leftView = usernameImageView;
+    self.accountTF.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:self.accountTF];
     [self.accountTF mas_makeConstraints:^(MASConstraintMaker *make) {
 
@@ -93,7 +100,12 @@
     underline2.backgroundColor = kCommonBorder_Color;
     self.passwordTF = [[UITextField alloc]init];
     self.passwordTF.delegate = self;
-    self.passwordTF.placeholder = @"密码";
+    self.passwordTF.placeholder = @"   身份证后6位";
+    UIImageView *passwordImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_password"]];
+    passwordImageView.frame = CGRectMake(0, 0, 15, 20);
+    self.passwordTF.leftView = passwordImageView;
+    self.passwordTF.leftViewMode = UITextFieldViewModeAlways;
+    self.passwordTF.clearButtonMode = UITextFieldViewModeAlways;
     self.passwordTF.font = kFont(kStandardPx(32));
     [self.passwordTF setSecureTextEntry:YES];
     [self.view addSubview:self.passwordTF];
@@ -142,36 +154,63 @@
 
 - (void)pushToHomePage
 {
+    if ([self.accountTF.text  isEqualToString: @""] || [self.passwordTF.text isEqualToString:@""])
+    {
+        [[ZCYProgressHUD sharedHUD] showWithText:@"账号或密码不能为空" inView:self.view hideAfterDelay:1];
+        return;
+    }
     [ZCYUserMgr sharedMgr].studentNumber = self.accountTF.text;
     
     ZCYHomeTabBarController *tabBarC = [[ZCYHomeTabBarController alloc] init];
     [[ZCYProgressHUD sharedHUD] rotateWithText:@"登录中" inView:self.view];
     @weakify(self);
-    [ZCYTimeTableHelper getTimeTableWithStdNumber:self.accountTF.text withCompeletionBlock:^(NSError *error, NSArray *array) {
-        @strongify(self);
+    [ZCYUserValidateHelper getUserInfoWithUserName:self.accountTF.text andPassword:self.passwordTF.text andCompletionBlock:^(NSError *error, id response) {
+        @strongify(self)
         if (error)
         {
-            [[ZCYProgressHUD sharedHUD] showWithText:[error localizedDescription] inView:self.view];
-            [[ZCYProgressHUD sharedHUD] hideAfterDelay:1.0f];
+            [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0f];
+            [[ZCYProgressHUD sharedHUD] showWithText:[error localizedDescription] inView:self.view hideAfterDelay:1.0f];
             return;
         }
-        
-        [ZCYUserMgr sharedMgr].courseArray = array;
-        
-        ZCYUserMgr *userMgr = [ZCYUserMgr sharedMgr];
-        NSData *archiveUserData = [NSKeyedArchiver archivedDataWithRootObject:userMgr];
-        [[NSUserDefaults standardUserDefaults] setObject:archiveUserData forKey:@"USERMGR"];
-        [[ZCYProgressHUD sharedHUD] hideAfterDelay:0];
-        [self presentViewController:tabBarC animated:YES completion:nil];
-    }];
+        if ([response[@"status"] longValue] == 50002)
+        {
+            [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0f];
+            [[ZCYProgressHUD sharedHUD] showWithText:@"用户名或密码错误" inView:self.view hideAfterDelay:1.0f];
+        } else if ([response[@"status"] longValue] == 200) {
+            NSDictionary *userMessage = response[@"result"];
+            [[ZCYUserMgr sharedMgr] yy_modelSetWithDictionary:userMessage];
+                [ZCYTimeTableHelper getTimeTableWithStdNumber:[ZCYUserMgr sharedMgr].studentNumber withCompeletionBlock:^(NSError *error, NSArray *array) {
+                    @strongify(self);
+                    
+                    if (error)
+                    {
+                        [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0f];
 
-   
+                        [[ZCYProgressHUD sharedHUD] showWithText:[error localizedDescription] inView:self.view hideAfterDelay:1.0f];
+                        return;
+                    }
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0f];
+
+                        [ZCYUserMgr sharedMgr].courseArray = array;
+                        ZCYUserMgr *userMgr = [ZCYUserMgr sharedMgr];
+                        NSData *archiveUserData = [NSKeyedArchiver archivedDataWithRootObject:userMgr];
+                        [[NSUserDefaults standardUserDefaults] setObject:archiveUserData forKey:@"USERMGR"];
+                         [[ZCYProgressHUD sharedHUD] showWithText:@"登录成功" inView:self.view hideAfterDelay:0.0f];
+                        [[NSUserDefaults standardUserDefaults] setObject:self.accountTF.text forKey:@"private_userNumber"];
+                        [NSThread sleepForTimeInterval:1.0f];
+                        [self presentViewController:tabBarC animated:YES completion:nil];
+                    });
+            }];
+
+        }
+    }];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark - UITextFieldDelegate
+#pragma mark - UITextFieldDelegdate
 // 随着键盘上移
 //-(void)textFieldDidBeginEditing:(UITextField *)textField{
 //    [self.topImage mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -214,7 +253,7 @@
     [self.topImage setNeedsUpdateConstraints];
     [self.topImage updateConstraintsIfNeeded];
     
-    [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.5f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         
         [self.topImage.superview layoutIfNeeded];
     } completion:^(BOOL finished) {
@@ -232,7 +271,7 @@
         make.top.equalTo(self.view);
     }];
     
-    [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.5f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         [self.topImage.superview layoutIfNeeded];
     } completion:^(BOOL finished) {
     }];

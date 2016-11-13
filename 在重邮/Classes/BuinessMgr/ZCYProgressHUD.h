@@ -12,7 +12,7 @@
 
 + (ZCYProgressHUD *)sharedHUD;
 
-- (void)showWithText:(NSString *)text inView:(UIView *)view;
+- (void)showWithText:(NSString *)text inView:(UIView *)view hideAfterDelay:(NSTimeInterval)delay;
 
 - (void)rotateWithText:(NSString *)text inView:(UIView *)view;
 

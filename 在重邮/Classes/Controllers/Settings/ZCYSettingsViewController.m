@@ -7,6 +7,7 @@
 //
 
 #import "ZCYSettingsViewController.h"
+#import "ZCYLoginViewController.h"
 
 @interface ZCYSettingsViewController ()
 
@@ -17,8 +18,36 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    UIButton *logoutButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    logoutButton.backgroundColor = kDeepGreen_Color;
+    [logoutButton setTitle:@"退出登陆" forState:UIControlStateNormal];
+    [logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:logoutButton];
+    [logoutButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.and.centerY.equalTo(self.view);
+        make.size.mas_offset(CGSizeMake(80, 30));
+    }];
 }
 
+- (void)logout
+{
+    NSData *userMgr = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERMGR"];
+    ZCYUserMgr *sharedMgr = [NSKeyedUnarchiver unarchiveObjectWithData:userMgr];
+    sharedMgr = nil;
+    NSData *archiveUserData = [NSKeyedArchiver archivedDataWithRootObject:sharedMgr];
+    [[NSUserDefaults standardUserDefaults] setObject:archiveUserData forKey:@"USERMGR"];
+    
+    CATransition *animation = [CATransition animation];
+    animation.duration = 0.3;
+    animation.timingFunction = UIViewAnimationCurveEaseInOut;
+    animation.type = kCATransitionReveal;
+    //animation.type = kCATransitionPush;
+    animation.subtype = kCATransitionFromBottom;
+    [self.view.window.layer addAnimation:animation forKey:nil];
+//    self.modalTransitionStyle = UIModalTransitionStylePartialCurl;
+    ZCYLoginViewController *loginVC = [[ZCYLoginViewController alloc] init];
+    [self presentViewController:loginVC animated:NO completion:nil];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

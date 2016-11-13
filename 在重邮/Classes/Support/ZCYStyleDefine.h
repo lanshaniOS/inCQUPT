@@ -32,10 +32,14 @@ static const int ddLogLevel = DDLogLevelInfo;
 
 #define kCommonGreen_Color              [UIColor colorWithRGBHex:0xc2ffb6]
 #define kDeepGreen_Color                [UIColor colorWithRGBHex:0x56db3c]
+#define kCourseGreen_Color              [UIColor colorWithRGBHex:0x34bb62]
+
 #define kCommonYellow_Color             [UIColor colorWithRGBHex:0xfbff9b]
 #define kDeepYellow_Color               [UIColor colorWithRGBHex:0xccb800]
+
 #define kCommonPink_Color               [UIColor colorWithRGBHex:0xf7c1ff]
 #define kDeepPink_Color                 [UIColor colorWithRGBHex:0xe84fff]
+
 #define kDeepGray_Color                 [UIColor colorWithRGBHex:0x666666]
 
 #define kCommonRed_Color                [UIColor colorWithRGBHex:0xf86365]

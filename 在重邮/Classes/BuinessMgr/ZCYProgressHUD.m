@@ -24,11 +24,12 @@
     return progressHUD;
 }
 
-- (void)showWithText:(NSString *)text inView:(UIView *)view
+- (void)showWithText:(NSString *)text inView:(UIView *)view hideAfterDelay:(NSTimeInterval)delay
 {
     self.hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     self.hud.labelText = text;
     self.hud.mode = MBProgressHUDModeText;
+    [self.hud hide:YES afterDelay:delay];
 }
 
 - (void)rotateWithText:(NSString *)text inView:(UIView *)view

@@ -33,6 +33,21 @@ static const unsigned componentFlags = (NSCalendarUnitYear| NSCalendarUnitMonth 
     return components.weekday;
 }
 
+- (NSInteger)schoolWeek
+{
+    NSDate *today = [NSDate date];
+    
+    NSDateFormatter *date = [[NSDateFormatter alloc] init];
+    [date setDateFormat:@"yyyy-MM-dd"];
+    NSDate *oneWeek = [date dateFromString:@"2016-09-04"];
+    
+    NSTimeInterval oneWeekTime = [oneWeek timeIntervalSince1970];
+    NSTimeInterval todayTime = [today timeIntervalSince1970];
+    NSInteger weekTime = (todayTime - oneWeekTime)/86400;
+    
+    return weekTime%7 == 0 ? weekTime/7 : weekTime/7+1;
+}
+
 - (NSString *)weekString
 {
     switch ([NSDate date].week) {

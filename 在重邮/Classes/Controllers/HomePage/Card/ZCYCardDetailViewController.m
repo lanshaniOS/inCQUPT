@@ -1,35 +1,30 @@
 //
-//  ZCYNavigationController.m
+//  ZCYCardDetailViewController.m
 //  在重邮
 //
-//  Created by 周维康 on 16/10/15.
+//  Created by 周维康 on 16/10/31.
 //  Copyright © 2016年 周维康. All rights reserved.
 //
 
-#import "ZCYNavigationController.h"
+#import "ZCYCardDetailViewController.h"
 
-@interface ZCYNavigationController ()
+@interface ZCYCardDetailViewController ()
 
 @end
 
-@implementation ZCYNavigationController
+@implementation ZCYCardDetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.view.backgroundColor = kCommonWhite_Color;
+    self.title = @"一卡通详情";
 }
 
-#pragma mark- override
-- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
-    if (self.viewControllers > 0)
-    {
-        viewController.hidesBottomBarWhenPushed = YES;
-    }
-    [super pushViewController:viewController animated:YES];
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
-
 
 /*
 #pragma mark - Navigation

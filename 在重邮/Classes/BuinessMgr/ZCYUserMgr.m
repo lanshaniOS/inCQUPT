@@ -30,6 +30,10 @@ static ZCYUserMgr *sharedMgr = nil;
 {
     [aCoder encodeObject:self.studentNumber forKey:@"STUDENTNUMBER"];
     [aCoder encodeObject:self.courseArray forKey:@"COURSEARRAY"];
+    [aCoder encodeObject:self.schoolName forKey:@"SCHOOLNAME"];
+    [aCoder encodeObject:self.eduType forKey:@"EDUTYPE"];
+    [aCoder encodeObject:self.eduMajor forKey:@"EDUMAJOR"];
+    [aCoder encodeObject:self.userName forKey:@"USERNAME"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -39,7 +43,23 @@ static ZCYUserMgr *sharedMgr = nil;
     {
         self.studentNumber = [aDecoder decodeObjectForKey:@"STUDENTNUMBER"];
         self.courseArray = [aDecoder decodeObjectForKey:@"COURSEARRAY"];
+        self.schoolName = [aDecoder decodeObjectForKey:@"SCHOOLNAME"];
+        self.eduType = [aDecoder decodeObjectForKey:@"EDUTYPE"];
+        self.eduMajor = [aDecoder decodeObjectForKey:@"EDUMAJOR"];
+        self.userName = [aDecoder decodeObjectForKey:@"USERNAME"];
+
     }
     return self;
+}
+
++ (NSDictionary<NSString *, id> *)modelCustomPropertyMapper
+{
+    return @{
+             NSStringFromSelector(@selector(schoolName)) : @"school",
+             NSStringFromSelector(@selector(eduType)) : @"edutype",
+             NSStringFromSelector(@selector(eduMajor)) : @"edumajor",
+             NSStringFromSelector(@selector(userName)) : @"name",
+             NSStringFromSelector(@selector(studentNumber)) : @"userNumber"
+             };
 }
 @end

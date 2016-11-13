@@ -26,7 +26,8 @@
              NSStringFromSelector(@selector(courseType)) : @"type",
              NSStringFromSelector(@selector(courseCredit)) : @"xf",
              NSStringFromSelector(@selector(coursePlace)) : @"place",
-             NSStringFromSelector(@selector(courseName)) : @"name"
+             NSStringFromSelector(@selector(courseName)) : @"name",
+             @"courseWeeks": @"weeks"
              };
 }
 
@@ -41,6 +42,7 @@
     [aCoder encodeObject:self.courseCredit forKey:@"COURSECREDIT"];
     [aCoder encodeObject:self.coursePlace forKey:@"COURSEPLASE"];
     [aCoder encodeObject:self.courseName forKey:@"COURSENAME"];
+    [aCoder encodeObject:self.courseWeeks forKey:@"COURSEWEEKS"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -56,6 +58,7 @@
         self.courseCredit = [aDecoder decodeObjectForKey:@"COURSECREDIT"];
         self.coursePlace = [aDecoder decodeObjectForKey:@"COURSEPLASE"];
         self.courseName = [aDecoder decodeObjectForKey:@"COURSENAME"];
+        self.courseWeeks = [aDecoder decodeObjectForKey:@"COURSEWEEKS"];
     }
     return self;
 }
