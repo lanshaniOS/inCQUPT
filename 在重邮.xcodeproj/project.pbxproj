@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		492E231C1DD8B0530083F135 /* UIView+Radius.m in Sources */ = {isa = PBXBuildFile; fileRef = 492E231B1DD8B0530083F135 /* UIView+Radius.m */; };
 		4951C8A71DBA409700E5AC63 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4951C8991DBA409700E5AC63 /* Assets.xcassets */; };
 		4951C8AC1DBA41A500E5AC63 /* ZCYBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C87E1DBA409700E5AC63 /* ZCYBaseViewController.m */; };
 		4951C8AE1DBA41A500E5AC63 /* ZCYHomeTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C8801DBA409700E5AC63 /* ZCYHomeTabBarController.m */; };
@@ -39,6 +40,8 @@
 
 /* Begin PBXFileReference section */
 		1189500E1074EECD137C3468 /* libPods-在重邮.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-在重邮.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		492E231A1DD8B0530083F135 /* UIView+Radius.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Radius.h"; sourceTree = "<group>"; };
+		492E231B1DD8B0530083F135 /* UIView+Radius.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Radius.m"; sourceTree = "<group>"; };
 		493744141DB1C1F700E49E4E /* 在重邮.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "在重邮.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4951C8781DBA409700E5AC63 /* ZCYAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYAppDelegate.h; sourceTree = "<group>"; };
 		4951C8791DBA409700E5AC63 /* ZCYAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYAppDelegate.m; sourceTree = "<group>"; };
@@ -269,6 +272,8 @@
 				4951C8911DBA409700E5AC63 /* UIColor+Additions.m */,
 				49AC74061DC37EAE00E903EA /* NSDate+Utilities.h */,
 				49AC74071DC37EAE00E903EA /* NSDate+Utilities.m */,
+				492E231A1DD8B0530083F135 /* UIView+Radius.h */,
+				492E231B1DD8B0530083F135 /* UIView+Radius.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -567,6 +572,7 @@
 				499232E01DC4ECBC00B17B54 /* ZCYCourseViewController.m in Sources */,
 				4951C8AC1DBA41A500E5AC63 /* ZCYBaseViewController.m in Sources */,
 				49AC74081DC37EAE00E903EA /* NSDate+Utilities.m in Sources */,
+				492E231C1DD8B0530083F135 /* UIView+Radius.m in Sources */,
 				496EF59C1DC78F4F0028B5BA /* ZCYCardHelper.m in Sources */,
 				49AC73FD1DC201EA00E903EA /* ZCYTimeTableModel.m in Sources */,
 				4951C8AE1DBA41A500E5AC63 /* ZCYHomeTabBarController.m in Sources */,

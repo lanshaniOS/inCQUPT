@@ -12,10 +12,11 @@
 
 @interface ZCYCourseViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
-@property (strong, nonatomic) UIScrollView *backgroundScrollView;  /**< <#comment#> */
+@property (strong, nonatomic) UIScrollView *backgroundScrollView;  /**<  滑动背景 */
+@property (strong, nonatomic) UIView *leftTimeView;  /**< 左部上课节数 */
 @property (strong, nonatomic) UIView *headerView;  /**< 顶部周次条 */
 @property (strong, nonatomic) UICollectionView *courseCollectionView;  /**< 课表 */
-
+@property (strong, nonatomic) UIView *bottomView;  /**< 底部 */
 @end
 
 @implementation ZCYCourseViewController
@@ -37,8 +38,10 @@
     self.title = @"课表";
     self.navigationController.navigationBar.alpha = 1.0f;
     [self initBackgroundView];
-    [self initHeaderView];
     [self initCourseCollectionView];
+    [self initHeaderView];
+    [self initLeftTimeView];
+    [self initBottomView];
 }
 
 - (void)initHeaderView
@@ -76,10 +79,11 @@
 - (void)initBackgroundView
 {
     self.backgroundScrollView = [[UIScrollView alloc] init];
-    self.backgroundScrollView.contentSize = CGSizeMake(_courseWidth*7 + 28 + 3, self.view.frame.size.height - 159 + 7);
+    self.backgroundScrollView.contentSize = CGSizeMake(_courseWidth*7 + 28 + 3, 27+_courseWidth*6*1.26 + 3);
     self.backgroundScrollView.showsHorizontalScrollIndicator = NO;
     self.backgroundScrollView.showsVerticalScrollIndicator = NO;
     self.backgroundScrollView.scrollEnabled = YES;
+    self.backgroundScrollView.directionalLockEnabled = YES;
     [self.view addSubview:self.backgroundScrollView];
     [self.backgroundScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.right.top.equalTo(self.view);
@@ -100,14 +104,65 @@
     self.courseCollectionView.showsHorizontalScrollIndicator = NO;
     [self.backgroundScrollView addSubview:self.courseCollectionView];
     [self.courseCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.headerView.mas_bottom);
+        make.top.equalTo(self.backgroundScrollView).with.offset(27);
         make.left.equalTo(self.backgroundScrollView).with.offset(28);
-        make.height.mas_equalTo(7*1.26*_courseWidth + 3.5 - 68);
+        make.height.mas_equalTo(6*1.26*_courseWidth + 3);
         make.width.mas_equalTo(7*_courseWidth+3);
     }];
 
 }
 
+- (void)initBottomView
+{
+    self.bottomView = [[UIView alloc] init];
+    self.bottomView.backgroundColor = kCommonLightGray_Color;
+    self.bottomView.layer.shadowOpacity = 0.5;// 阴影透明度
+    
+    self.bottomView.layer.shadowColor = [UIColor grayColor].CGColor;// 阴影的颜色
+    
+    self.bottomView.layer.shadowRadius = 3;// 阴影扩散的范围控制
+    
+    self.bottomView.layer.shadowOffset= CGSizeMake(1, 1);// 阴影的范围
+    self.bottomView.layer.borderWidth = 2.0;
+    self.bottomView.layer.borderColor = kCommonGray_Color.CGColor;
+    
+    [self.bottomView setRadius:kStandardPx(18)];
+    [self.view addSubview:self.bottomView];
+    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.view);
+        make.height.mas_equalTo(68);
+        make.left.and.right.equalTo(self.view);
+    }];
+    
+    
+}
+- (void)initLeftTimeView
+{
+    CGFloat _timeLabelWidth = _courseWidth * 1.26 / 2;
+    self.leftTimeView = [[UIView alloc] init];
+    self.leftTimeView.backgroundColor = kCommonLightGray_Color;
+    [self.backgroundScrollView addSubview:self.leftTimeView];
+    [self.leftTimeView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.width.mas_equalTo(28);
+        make.top.equalTo(self.backgroundScrollView).with.offset(27);
+        make.bottom.equalTo(self.courseCollectionView);
+    }];
+    for (NSUInteger index = 1; index <= 12; index++)
+    {
+        UILabel *indexLabel = [[UILabel alloc] init];
+        indexLabel.text = [NSString stringWithFormat:@"%@", @(index)];
+        indexLabel.textAlignment = NSTextAlignmentCenter;
+        indexLabel.textColor = kText_Color_Default;
+        indexLabel.font = kFont(kStandardPx(26));
+        [self.leftTimeView addSubview:indexLabel];
+        [indexLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.and.right.equalTo(self.leftTimeView);
+            make.top.equalTo(self.leftTimeView).with.offset((index - 1)*_timeLabelWidth);
+            make.height.mas_equalTo(_timeLabelWidth);
+        }];
+    }
+}
 #pragma mark - UICollectionViewDelegate&UICollectionViewDataSource
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -142,8 +197,7 @@
             if ([model.courseWeeks[i] integerValue] == [NSDate date].schoolWeek)
             {
                 [self setCollectionViewCell:cell withColor:cellColor andCourseName:model.courseName andClassID:model.coursePlace];
-                [self setCell:cell WithRadius:2.5f];
-                
+                [cell setRadius:5.0f];
             }
         }
     }];
@@ -222,7 +276,7 @@
     courseeLabel.textAlignment = NSTextAlignmentCenter;
     courseeLabel.text = [NSString stringWithFormat:@"%@", courseName];
     courseeLabel.textColor = kCommonWhite_Color;
-    courseeLabel.font = kFont(kStandardPx(24));
+    courseeLabel.font = kFont(kStandardPx(24*self.view.frame.size.width/375));
     courseeLabel.numberOfLines = 0;
     [cell addSubview:courseeLabel];
     [courseeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -234,7 +288,7 @@
     UILabel *classIDLabel = [[UILabel alloc] init];
     classIDLabel.text = [NSString stringWithFormat:@"%@", classPlaceString];
     classIDLabel.textColor = kCommonWhite_Color;
-    classIDLabel.font = kFont(kStandardPx(24));
+    classIDLabel.font = kFont(kStandardPx(24*self.view.frame.size.width/375));
     classIDLabel.textAlignment = NSTextAlignmentCenter;
     classIDLabel.numberOfLines = 0;
     [cell addSubview:classIDLabel];
@@ -252,14 +306,5 @@
         make.left.and.right.equalTo(cell);
         make.height.mas_equalTo(0.5);
     }];
-}
-
-- (void)setCell:(UICollectionViewCell *)cell WithRadius:(CGFloat)radius
-{
-    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:cell.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(radius, radius)];
-    CAShapeLayer *layer = [[CAShapeLayer alloc] init];
-    layer.frame = cell.bounds;
-    layer.path = path.CGPath;
-    cell.layer.mask = layer;
 }
 @end

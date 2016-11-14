@@ -25,6 +25,7 @@
 #import "AFNetworking.h"
 #import "YYModel.h"
 #import "NSDate+Utilities.h"
+#import "UIView+Radius.h"
 #import "ZCYProgressHUD.h"
 #import "MBProgressHUD.h"
 #import "ZCYUserMgr.h"
