@@ -29,5 +29,6 @@
 #import "ZCYProgressHUD.h"
 #import "MBProgressHUD.h"
 #import "ZCYUserMgr.h"
+#import "UILabel+Common.h"
 
 #endif

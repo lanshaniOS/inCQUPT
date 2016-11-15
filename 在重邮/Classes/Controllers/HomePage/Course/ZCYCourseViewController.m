@@ -17,6 +17,7 @@
 @property (strong, nonatomic) UIView *headerView;  /**< 顶部周次条 */
 @property (strong, nonatomic) UICollectionView *courseCollectionView;  /**< 课表 */
 @property (strong, nonatomic) UIView *bottomView;  /**< 底部 */
+@property (strong, nonatomic) UIPickerView *weekPicker;  /**< 周数选择 */
 @end
 
 @implementation ZCYCourseViewController
@@ -51,8 +52,8 @@
     [self.backgroundScrollView addSubview:self.headerView];
     [self.headerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view).with.offset(64);
-        make.left.equalTo(self.backgroundScrollView);
-        make.width.mas_equalTo(_courseWidth*7 + 3);
+        make.left.equalTo(self.backgroundScrollView).with.offset(-200);
+        make.width.mas_equalTo(1000);
         make.height.mas_equalTo(27);
     }];
     
@@ -90,6 +91,7 @@
         make.bottom.equalTo(self.view).with.offset(-68);
     }];
 }
+
 - (void)initCourseCollectionView
 {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -115,26 +117,66 @@
 - (void)initBottomView
 {
     self.bottomView = [[UIView alloc] init];
+
     self.bottomView.backgroundColor = kCommonLightGray_Color;
-    self.bottomView.layer.shadowOpacity = 0.5;// 阴影透明度
-    
-    self.bottomView.layer.shadowColor = [UIColor grayColor].CGColor;// 阴影的颜色
-    
-    self.bottomView.layer.shadowRadius = 3;// 阴影扩散的范围控制
-    
-    self.bottomView.layer.shadowOffset= CGSizeMake(1, 1);// 阴影的范围
-    self.bottomView.layer.borderWidth = 2.0;
-    self.bottomView.layer.borderColor = kCommonGray_Color.CGColor;
-    
-    [self.bottomView setRadius:kStandardPx(18)];
+    self.bottomView.alpha = 0.7f;
+    self.bottomView.layer.shadowOpacity = 0.8f;
+    self.bottomView.layer.shadowColor = [UIColor grayColor].CGColor;
+    self.bottomView.layer.shadowRadius = 3;
+    self.bottomView.layer.shadowOffset= CGSizeMake(0, -0.5);
+    self.bottomView.layer.cornerRadius = kStandardPx(18);
     [self.view addSubview:self.bottomView];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.view);
-        make.height.mas_equalTo(68);
+        make.bottom.equalTo(self.view).with.offset(kStandardPx(18)/2);
+        make.height.mas_equalTo(68+kStandardPx(18)/2);
         make.left.and.right.equalTo(self.view);
     }];
     
+    UILabel *weekLabel = [[UILabel alloc] init];
+    weekLabel.textColor = kCommonText_Color;
+    weekLabel.text = [NSString stringWithFormat:@"第%@周", [NSDate date].schoolWeekString];
+    [weekLabel sizeToFit];
+    weekLabel.font = kFont(kStandardPx(40));
+    [self.bottomView addSubview:weekLabel];
+    [weekLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).with.offset(16);
+        make.centerY.equalTo(self.bottomView);
+        
+        make.height.mas_offset(20);
+    }];
     
+    UILabel *dayLabel = [[UILabel alloc] init];
+    [dayLabel setFont:kFont(kStandardPx(30)) andText:[NSString stringWithFormat:@"星期%@", [NSDate date].weekString] andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    [dayLabel sizeToFit];
+    [self.bottomView addSubview:dayLabel];
+    [dayLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weekLabel.mas_right).with.offset(10);
+        make.bottom.equalTo(weekLabel);
+        
+    }];
+    
+    UIView *line = [[UIView alloc] init];
+    line.backgroundColor = kCommonGray_Color;
+    line.layer.cornerRadius = kStandardPx(5);
+    [self.bottomView addSubview:line];
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.bottomView);
+        make.top.equalTo(self.bottomView).with.offset(6);
+        make.size.mas_equalTo(CGSizeMake(36, 5));
+    }];
+    
+    UIButton *weekButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [weekButton setTitle:@"选择周次" forState:UIControlStateNormal];
+    [weekButton setTitleColor:kDeepGreen_Color forState:UIControlStateNormal];
+    weekButton.titleLabel.font = kFont(kStandardPx(34));
+    [weekButton addTarget:self action:@selector(showWeekSelectedView) forControlEvents:UIControlEventTouchUpInside];
+    [self.bottomView addSubview:weekButton];
+    [weekButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.bottomView).with.offset(-16);
+        make.bottom.equalTo(weekLabel);
+        make.width.mas_equalTo(74);
+        make.height.mas_equalTo(20);
+    }];
 }
 - (void)initLeftTimeView
 {
@@ -145,8 +187,8 @@
     [self.leftTimeView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view);
         make.width.mas_equalTo(28);
-        make.top.equalTo(self.backgroundScrollView).with.offset(27);
-        make.bottom.equalTo(self.courseCollectionView);
+        make.top.equalTo(self.backgroundScrollView).with.offset(-500);
+        make.bottom.equalTo(self.courseCollectionView).with.offset(500);
     }];
     for (NSUInteger index = 1; index <= 12; index++)
     {
@@ -158,10 +200,16 @@
         [self.leftTimeView addSubview:indexLabel];
         [indexLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.and.right.equalTo(self.leftTimeView);
-            make.top.equalTo(self.leftTimeView).with.offset((index - 1)*_timeLabelWidth);
+            make.top.equalTo(self.backgroundScrollView).with.offset((index - 1)*_timeLabelWidth + 27);
             make.height.mas_equalTo(_timeLabelWidth);
         }];
     }
+}
+
+- (void)initWeekPickerView
+{
+    self.weekPicker = [[UIPickerView alloc] init];
+    
 }
 #pragma mark - UICollectionViewDelegate&UICollectionViewDataSource
 
@@ -229,6 +277,13 @@
 {
     return 0.5f;
 }
+
+#pragma mark - 点击事件
+- (void)showWeekSelectedView
+{
+    
+}
+
 #pragma mark - TOOL
 
 - (void)setView:(UIView *)view WithNum:(NSString *)numString andSegColor:(UIColor *)color shouldShowSeg:(BOOL)showSeg

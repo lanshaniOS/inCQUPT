@@ -15,6 +15,8 @@
 @property (readonly) NSInteger day;
 @property (readonly) NSString *weekString;
 @property (readonly) NSInteger schoolWeek;
+@property (readonly) NSString *schoolWeekString;
+
 //返回单例
 + (NSCalendar *)currentCalendar;
 

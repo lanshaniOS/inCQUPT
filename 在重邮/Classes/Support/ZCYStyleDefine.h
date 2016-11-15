@@ -82,7 +82,7 @@ static const int ddLogLevel = DDLogLevelInfo;
 #define kPageControl_CurrentGray        [UIColor colorWithRGBHex:0xc4c4c4]
 #define kPageControl_Gray               [UIColor colorWithRGBHex:0xe1e1e1]
 
-
+#define kTransparentColor               [UIColor clearColor]
 
 #define kNavBar_TitleColor              [UIColor whiteColor]
 #define kNavBar_TitleHighlightColor     [UIColor grayColor]

@@ -191,7 +191,6 @@
                     }
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0f];
-
                         [ZCYUserMgr sharedMgr].courseArray = array;
                         ZCYUserMgr *userMgr = [ZCYUserMgr sharedMgr];
                         NSData *archiveUserData = [NSKeyedArchiver archivedDataWithRootObject:userMgr];

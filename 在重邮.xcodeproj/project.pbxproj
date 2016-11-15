@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		49061F581DDB4F7B00E2923A /* UILabel+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 49061F571DDB4F7B00E2923A /* UILabel+Common.m */; };
 		492E231C1DD8B0530083F135 /* UIView+Radius.m in Sources */ = {isa = PBXBuildFile; fileRef = 492E231B1DD8B0530083F135 /* UIView+Radius.m */; };
 		4951C8A71DBA409700E5AC63 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4951C8991DBA409700E5AC63 /* Assets.xcassets */; };
 		4951C8AC1DBA41A500E5AC63 /* ZCYBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C87E1DBA409700E5AC63 /* ZCYBaseViewController.m */; };
@@ -40,6 +41,8 @@
 
 /* Begin PBXFileReference section */
 		1189500E1074EECD137C3468 /* libPods-在重邮.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-在重邮.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		49061F561DDB4F7B00E2923A /* UILabel+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Common.h"; sourceTree = "<group>"; };
+		49061F571DDB4F7B00E2923A /* UILabel+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Common.m"; sourceTree = "<group>"; };
 		492E231A1DD8B0530083F135 /* UIView+Radius.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Radius.h"; sourceTree = "<group>"; };
 		492E231B1DD8B0530083F135 /* UIView+Radius.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Radius.m"; sourceTree = "<group>"; };
 		493744141DB1C1F700E49E4E /* 在重邮.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "在重邮.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -274,6 +277,8 @@
 				49AC74071DC37EAE00E903EA /* NSDate+Utilities.m */,
 				492E231A1DD8B0530083F135 /* UIView+Radius.h */,
 				492E231B1DD8B0530083F135 /* UIView+Radius.m */,
+				49061F561DDB4F7B00E2923A /* UILabel+Common.h */,
+				49061F571DDB4F7B00E2923A /* UILabel+Common.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -565,6 +570,7 @@
 				4951C8BD1DBA41D000E5AC63 /* main.m in Sources */,
 				4951C8B41DBA41C900E5AC63 /* ZCYHomePageViewController.m in Sources */,
 				4951C8B61DBA41C900E5AC63 /* ZCYInformationViewController.m in Sources */,
+				49061F581DDB4F7B00E2923A /* UILabel+Common.m in Sources */,
 				4951C8B81DBA41C900E5AC63 /* ZCYSettingsViewController.m in Sources */,
 				4951C8BA1DBA41C900E5AC63 /* UIColor+Additions.m in Sources */,
 				4951C8B21DBA41AB00E5AC63 /* ZCYAppDelegate.m in Sources */,
