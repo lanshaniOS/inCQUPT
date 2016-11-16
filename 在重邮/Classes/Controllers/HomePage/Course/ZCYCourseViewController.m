@@ -10,7 +10,7 @@
 #import "ZCYTimeTableModel.h"
 
 
-@interface ZCYCourseViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface ZCYCourseViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (strong, nonatomic) UIScrollView *backgroundScrollView;  /**<  滑动背景 */
 @property (strong, nonatomic) UIView *leftTimeView;  /**< 左部上课节数 */
@@ -23,6 +23,7 @@
 @implementation ZCYCourseViewController
 {
     CGFloat _courseWidth;
+    NSArray *_weekArray;
 }
 
 - (void)viewDidLoad {
@@ -209,8 +210,37 @@
 - (void)initWeekPickerView
 {
     self.weekPicker = [[UIPickerView alloc] init];
-    
+    _weekArray = @[@"一", @"二", @"三", @"四", @"五", @"六", @"七", @"八", @"九", @"十", @"十一", @"十二", @"十三", @"十四", @"十五", @"十六", @"十七", @"十八", @"十九", @"二十", @"二十一 "];
+    self.weekPicker.dataSource = self;
+    self.weekPicker.delegate = self;
 }
+
+#pragma mark - UIPickerViewDelegate & UIPickerViewDataSource
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return _weekArray.count;
+}
+
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+{
+    return 80;
+}
+
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
+{
+    return self.view.frame.size.width;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return _weekArray[row];
+}
+
 #pragma mark - UICollectionViewDelegate&UICollectionViewDataSource
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
