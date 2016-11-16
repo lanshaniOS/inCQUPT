@@ -123,12 +123,13 @@
     self.bottomView = [[UIView alloc] init];
 
     self.bottomView.backgroundColor = kCommonLightGray_Color;
-    self.bottomView.alpha = 0.85f;
+    self.bottomView.alpha = 0.9f;
     self.bottomView.layer.shadowOpacity = 0.8f;
     self.bottomView.layer.shadowColor = [UIColor grayColor].CGColor;
     self.bottomView.layer.shadowRadius = 3;
     self.bottomView.layer.shadowOffset= CGSizeMake(0, -0.5);
     self.bottomView.layer.cornerRadius = kStandardPx(18);
+    
     [self.view addSubview:self.bottomView];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.view).with.offset(kStandardPx(18)/2);
@@ -183,6 +184,29 @@
     }];
     
     self.finishButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.finishButton setTitle:@"完成" forState:UIControlStateNormal];
+    [self.finishButton setTitleColor:kDeepGreen_Color forState:UIControlStateNormal];
+    [self.finishButton addTarget:self action:@selector(hideWeekSelectedView) forControlEvents:UIControlEventTouchUpInside];
+    self.finishButton.titleLabel.font = kFont(kStandardPx(34));
+    self.finishButton.hidden = YES;
+    [self.bottomView addSubview:self.finishButton];
+    [self.finishButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.bottomView).with.offset(-16);
+        make.bottom.equalTo(weekLabel);
+        make.width.mas_equalTo(74);
+        make.height.mas_equalTo(20);
+    }];
+    
+    UISwipeGestureRecognizer *upGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(showWeekSelectedView)];
+    upGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
+    [self.bottomView addGestureRecognizer:upGestureRecognizer];
+    
+    UISwipeGestureRecognizer *downGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(hideWeekSelectedView)];
+    downGestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
+    [self.bottomView addGestureRecognizer:downGestureRecognizer];
+    
+    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleWeekSelectedView:)];
+    [self.bottomView addGestureRecognizer:panGestureRecognizer];
 }
 - (void)initLeftTimeView
 {
@@ -222,7 +246,7 @@
     [self.view addSubview:self.weekPicker];
     [self.weekPicker mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.right.equalTo(self.bottomView);
-        make.top.equalTo(self.bottomView.mas_bottom);
+        make.top.equalTo(self.bottomView.mas_bottom).with.offset(-kStandardPx(18)/2);
         make.height.mas_equalTo(215);
     }];
 }
@@ -240,7 +264,7 @@
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
-    return 70;
+    return 35;
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
@@ -320,12 +344,28 @@
     return 0.5f;
 }
 
+#pragma mark - 手势
+- (void)handleWeekSelectedView:(UIPanGestureRecognizer *)gestureRecognizer
+{
+    NSLog(@"%f, %f", self.bottomView.frame.origin.y, self.view.frame.size.height);
+    if (gestureRecognizer.state != UIGestureRecognizerStateFailed && gestureRecognizer.state != UIGestureRecognizerStateEnded && self.bottomView.frame.origin.y <= self.view.frame.size
+        .height+kStandardPx(18)/2 && self.bottomView.frame.origin.y >= self.view.frame.size.height-215 - kStandardPx(18)/2 - 4.8)
+    {
+        
+        CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view.superview];
+        [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.view).with.offset(point.y - self.bottomView.frame.origin.y);
+        }];
+    }
+}
+
 #pragma mark - 点击事件
 - (void)showWeekSelectedView
 {
     self.weekButton.hidden = YES;
+    self.finishButton.hidden = NO;
     
-    [UIView animateWithDuration:0.5f animations:^{
+    [UIView animateWithDuration:0.3f animations:^{
         [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self.view).with.offset(-215);
         }];
@@ -334,6 +374,18 @@
     
 }
 
+- (void)hideWeekSelectedView
+{
+    self.weekButton.hidden = NO;
+    self.finishButton.hidden = YES;
+    
+    [UIView animateWithDuration:0.3f animations:^{
+        [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.view).with.offset(kStandardPx(18)/2);
+        }];
+        [self.bottomView.superview layoutIfNeeded];
+    }];
+}
 #pragma mark - TOOL
 
 - (void)setView:(UIView *)view WithNum:(NSString *)numString andSegColor:(UIColor *)color shouldShowSeg:(BOOL)showSeg
