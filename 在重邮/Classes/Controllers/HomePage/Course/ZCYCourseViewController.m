@@ -18,6 +18,8 @@
 @property (strong, nonatomic) UICollectionView *courseCollectionView;  /**< 课表 */
 @property (strong, nonatomic) UIView *bottomView;  /**< 底部 */
 @property (strong, nonatomic) UIPickerView *weekPicker;  /**< 周数选择 */
+@property (strong, nonatomic) UIButton *weekButton;  /**< 选择周次按钮 */
+@property (strong, nonatomic) UIButton *finishButton;  /**< 完成周次选择按钮 */
 @end
 
 @implementation ZCYCourseViewController
@@ -44,6 +46,7 @@
     [self initHeaderView];
     [self initLeftTimeView];
     [self initBottomView];
+    [self initWeekPickerView];
 }
 
 - (void)initHeaderView
@@ -120,7 +123,7 @@
     self.bottomView = [[UIView alloc] init];
 
     self.bottomView.backgroundColor = kCommonLightGray_Color;
-    self.bottomView.alpha = 0.7f;
+    self.bottomView.alpha = 0.85f;
     self.bottomView.layer.shadowOpacity = 0.8f;
     self.bottomView.layer.shadowColor = [UIColor grayColor].CGColor;
     self.bottomView.layer.shadowRadius = 3;
@@ -157,7 +160,7 @@
     }];
     
     UIView *line = [[UIView alloc] init];
-    line.backgroundColor = kCommonGray_Color;
+    line.backgroundColor = kDeepGray_Color;
     line.layer.cornerRadius = kStandardPx(5);
     [self.bottomView addSubview:line];
     [line mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -166,18 +169,20 @@
         make.size.mas_equalTo(CGSizeMake(36, 5));
     }];
     
-    UIButton *weekButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [weekButton setTitle:@"选择周次" forState:UIControlStateNormal];
-    [weekButton setTitleColor:kDeepGreen_Color forState:UIControlStateNormal];
-    weekButton.titleLabel.font = kFont(kStandardPx(34));
-    [weekButton addTarget:self action:@selector(showWeekSelectedView) forControlEvents:UIControlEventTouchUpInside];
-    [self.bottomView addSubview:weekButton];
-    [weekButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.weekButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.weekButton setTitle:@"选择周次" forState:UIControlStateNormal];
+    [self.weekButton setTitleColor:kDeepGreen_Color forState:UIControlStateNormal];
+    self.weekButton.titleLabel.font = kFont(kStandardPx(34));
+    [self.weekButton addTarget:self action:@selector(showWeekSelectedView) forControlEvents:UIControlEventTouchUpInside];
+    [self.bottomView addSubview:self.weekButton];
+    [self.weekButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.bottomView).with.offset(-16);
         make.bottom.equalTo(weekLabel);
         make.width.mas_equalTo(74);
         make.height.mas_equalTo(20);
     }];
+    
+    self.finishButton = [UIButton buttonWithType:UIButtonTypeCustom];
 }
 - (void)initLeftTimeView
 {
@@ -210,9 +215,16 @@
 - (void)initWeekPickerView
 {
     self.weekPicker = [[UIPickerView alloc] init];
-    _weekArray = @[@"一", @"二", @"三", @"四", @"五", @"六", @"七", @"八", @"九", @"十", @"十一", @"十二", @"十三", @"十四", @"十五", @"十六", @"十七", @"十八", @"十九", @"二十", @"二十一 "];
+    _weekArray = @[@"一", @"二", @"三", @"四", @"五", @"六", @"七", @"八", @"九", @"十", @"十一", @"十二", @"十三", @"十四", @"十五", @"十六", @"十七", @"十八", @"十九", @"二十", @"二十一"];
     self.weekPicker.dataSource = self;
     self.weekPicker.delegate = self;
+    self.weekPicker.backgroundColor = kCommonLightGray_Color;
+    [self.view addSubview:self.weekPicker];
+    [self.weekPicker mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.and.right.equalTo(self.bottomView);
+        make.top.equalTo(self.bottomView.mas_bottom);
+        make.height.mas_equalTo(215);
+    }];
 }
 
 #pragma mark - UIPickerViewDelegate & UIPickerViewDataSource
@@ -228,7 +240,7 @@
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
-    return 80;
+    return 70;
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
@@ -311,6 +323,14 @@
 #pragma mark - 点击事件
 - (void)showWeekSelectedView
 {
+    self.weekButton.hidden = YES;
+    
+    [UIView animateWithDuration:0.5f animations:^{
+        [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.view).with.offset(-215);
+        }];
+        [self.bottomView.superview layoutIfNeeded];
+    }];
     
 }
 
