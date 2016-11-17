@@ -26,6 +26,8 @@
 {
     CGFloat _courseWidth;
     NSArray *_weekArray;
+    CGFloat y_oldPanpoint;
+    CGFloat sum_yOffset;
 }
 
 - (void)viewDidLoad {
@@ -34,6 +36,13 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.alpha = 1.0f;
+    self.navigationController.navigationBar.hidden = NO;
+    
+}
 #pragma mark - initUI
 - (void)initUI
 {
@@ -135,6 +144,13 @@
         make.bottom.equalTo(self.view).with.offset(kStandardPx(18)/2);
         make.height.mas_equalTo(68+kStandardPx(18)/2);
         make.left.and.right.equalTo(self.view);
+    }];
+    
+    UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
+    [self.bottomView addSubview:effectView];
+    [effectView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.and.top.and.left.equalTo(self.bottomView);
     }];
     
     UILabel *weekLabel = [[UILabel alloc] init];
@@ -347,15 +363,68 @@
 #pragma mark - 手势
 - (void)handleWeekSelectedView:(UIPanGestureRecognizer *)gestureRecognizer
 {
-    NSLog(@"%f, %f", self.bottomView.frame.origin.y, self.view.frame.size.height);
-    if (gestureRecognizer.state != UIGestureRecognizerStateFailed && gestureRecognizer.state != UIGestureRecognizerStateEnded && self.bottomView.frame.origin.y <= self.view.frame.size
-        .height+kStandardPx(18)/2 && self.bottomView.frame.origin.y >= self.view.frame.size.height-215 - kStandardPx(18)/2 - 4.8)
+    NSLog(@"%li", gestureRecognizer.state);
+   CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view.superview];
+    if (gestureRecognizer.state != UIGestureRecognizerStateFailed)
     {
+        if (y_oldPanpoint != 0)
+            sum_yOffset += point.y - y_oldPanpoint;
+        NSLog(@"%f, %f", point.y, y_oldPanpoint);
+        if (y_oldPanpoint != 0 && point.y > y_oldPanpoint) //下拉
+        {
+            
+            if (self.bottomView.frame.size.height+self.bottomView.frame.origin.y != self.view.frame.size.height + 4.5)
+            [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.bottom.equalTo(self.view).with.offset(sum_yOffset+kStandardPx(18)/2);
+            }];
+            
+            if (self.bottomView.frame.size.height+self.bottomView.frame.origin.y >= self.view.frame.size.height + kStandardPx(18)/2)
+            {
+                [self hideWeekSelectedView];
+            }
+            
+            
+            if (gestureRecognizer.state == 3)
+            {
+                [self hideWeekSelectedView];
+            }
+
+            point.y -= 0.5;
+        } else if (point.y < y_oldPanpoint){
+            if (sum_yOffset <= -215)
+            {
+                sum_yOffset = -215;
+            }
+            
+            if (sum_yOffset >= 215)
+            {
+                sum_yOffset = 215;
+            }
+
+            [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.bottom.equalTo(self.view).with.offset(sum_yOffset+kStandardPx(18)/2);
+            }];
+            
+            if (self.view.frame.size.height - self.bottomView.frame.origin.y - self.bottomView.frame.size.height >= 215)
+            {
+                [self showWeekSelectedView];
+            }
+            
+            if (gestureRecognizer.state == 3)
+            {
+                [self showWeekSelectedView];
+            }
+            point.y += 0.5;
+        }
+    
         
-        CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view.superview];
-        [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.view).with.offset(point.y - self.bottomView.frame.origin.y);
-        }];
+       
+    }
+    y_oldPanpoint = point.y;
+    if (gestureRecognizer.state == 3)
+    {
+        y_oldPanpoint = 0;
+        sum_yOffset = self.view.frame.size.height - self.bottomView.frame.origin.y - self.bottomView.frame.size.height;
     }
 }
 
@@ -364,7 +433,7 @@
 {
     self.weekButton.hidden = YES;
     self.finishButton.hidden = NO;
-    
+    sum_yOffset = 215;
     [UIView animateWithDuration:0.3f animations:^{
         [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self.view).with.offset(-215);
@@ -378,7 +447,7 @@
 {
     self.weekButton.hidden = NO;
     self.finishButton.hidden = YES;
-    
+    sum_yOffset = 0;
     [UIView animateWithDuration:0.3f animations:^{
         [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self.view).with.offset(kStandardPx(18)/2);
