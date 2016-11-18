@@ -59,6 +59,7 @@
 {
     [super viewDidDisappear:animated];
     self.navigationController.navigationBar.alpha = 1.0f;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)initUI
 {
@@ -615,10 +616,7 @@
      self.navigationController.navigationBar.alpha = (self.backgroundScrollView.contentOffset.y)/355 * 2.0;
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
+
 //设置基础标签
 -(void)setLabel:(UILabel *)label withText:(NSString *)text andTextColor:(UIColor *)textColor andTextFont:(UIFont *)textFont
 {

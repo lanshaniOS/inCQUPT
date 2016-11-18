@@ -20,6 +20,7 @@
 @property (strong, nonatomic) UIPickerView *weekPicker;  /**< 周数选择 */
 @property (strong, nonatomic) UIButton *weekButton;  /**< 选择周次按钮 */
 @property (strong, nonatomic) UIButton *finishButton;  /**< 完成周次选择按钮 */
+@property (strong, nonatomic) UIView *detailCourseView;  /**< 课程详情 */
 @end
 
 @implementation ZCYCourseViewController
@@ -32,6 +33,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.navigationBar.alpha = 1.0f;
+    self.navigationController.navigationBar.hidden = NO;
     [self initUI];
     // Do any additional setup after loading the view.
 }
@@ -132,8 +135,8 @@
     self.bottomView = [[UIView alloc] init];
 
     self.bottomView.backgroundColor = kCommonLightGray_Color;
-    self.bottomView.alpha = 0.9f;
-    self.bottomView.layer.shadowOpacity = 0.8f;
+    self.bottomView.alpha = 0.95f;
+    self.bottomView.layer.shadowOpacity = 0.95f;
     self.bottomView.layer.shadowColor = [UIColor grayColor].CGColor;
     self.bottomView.layer.shadowRadius = 3;
     self.bottomView.layer.shadowOffset= CGSizeMake(0, -0.5);
@@ -267,6 +270,7 @@
     }];
 }
 
+
 #pragma mark - UIPickerViewDelegate & UIPickerViewDataSource
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
@@ -320,6 +324,14 @@
     NSArray *colArray = courseArray[indexPath.section];
     
     cell.backgroundColor = kCommonWhite_Color;
+    if (colArray.count >= 2)
+    {
+        UIView *dotView = [[UIView alloc] init];
+        dotView.backgroundColor = kCommonWhite_Color;
+        dotView.frame = CGRectMake(cell.frame.size.width - 7.5, 2.5, 5, 5);
+        [dotView setRadius:2.5];
+        [cell addSubview:dotView];
+    }
     [colArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         ZCYTimeTableModel *model  = obj;
         for (NSUInteger i=0; i<model.courseWeeks.count; i++)
@@ -360,16 +372,21 @@
     return 0.5f;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *courseArray = [ZCYUserMgr sharedMgr].courseArray[indexPath.row];
+    NSArray *colArray = courseArray[indexPath.section];
+    
+}
+
 #pragma mark - 手势
 - (void)handleWeekSelectedView:(UIPanGestureRecognizer *)gestureRecognizer
 {
-    NSLog(@"%li", gestureRecognizer.state);
    CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view.superview];
     if (gestureRecognizer.state != UIGestureRecognizerStateFailed)
     {
         if (y_oldPanpoint != 0)
-            sum_yOffset += point.y - y_oldPanpoint;
-        NSLog(@"%f, %f", point.y, y_oldPanpoint);
+            sum_yOffset = sum_yOffset + point.y - y_oldPanpoint;
         if (y_oldPanpoint != 0 && point.y > y_oldPanpoint) //下拉
         {
             
@@ -424,7 +441,6 @@
     if (gestureRecognizer.state == 3)
     {
         y_oldPanpoint = 0;
-        sum_yOffset = self.view.frame.size.height - self.bottomView.frame.origin.y - self.bottomView.frame.size.height;
     }
 }
 
@@ -433,7 +449,8 @@
 {
     self.weekButton.hidden = YES;
     self.finishButton.hidden = NO;
-    sum_yOffset = 215;
+    sum_yOffset = -215;
+    self.backgroundScrollView.contentSize = CGSizeMake(_courseWidth*7 + 28 + 3, 27+_courseWidth*6*1.26 + 3 + 215);
     [UIView animateWithDuration:0.3f animations:^{
         [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self.view).with.offset(-215);
@@ -448,6 +465,7 @@
     self.weekButton.hidden = NO;
     self.finishButton.hidden = YES;
     sum_yOffset = 0;
+    self.backgroundScrollView.contentSize = CGSizeMake(_courseWidth*7 + 28 + 3, 27+_courseWidth*6*1.26 + 3);
     [UIView animateWithDuration:0.3f animations:^{
         [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self.view).with.offset(kStandardPx(18)/2);

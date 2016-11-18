@@ -16,5 +16,6 @@
     self.text = text;
     self.textColor = textColor;
     self.backgroundColor = bgColor;
+    [self sizeToFit];
 }
 @end

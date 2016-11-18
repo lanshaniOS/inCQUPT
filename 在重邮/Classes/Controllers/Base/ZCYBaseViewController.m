@@ -19,5 +19,8 @@
     // Do any additional setup after loading the view.
 }
 
-
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 @end
