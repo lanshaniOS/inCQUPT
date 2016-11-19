@@ -8,9 +8,10 @@
 
 #import "ZCYCourseViewController.h"
 #import "ZCYTimeTableModel.h"
+#import "ZCYDetailCourseView.h"
 
 
-@interface ZCYCourseViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIPickerViewDelegate, UIPickerViewDataSource>
+@interface ZCYCourseViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIPickerViewDelegate, UIPickerViewDataSource, ZCYDetailCourseCloseButtonTouchedDelegate>
 
 @property (strong, nonatomic) UIScrollView *backgroundScrollView;  /**<  滑动背景 */
 @property (strong, nonatomic) UIView *leftTimeView;  /**< 左部上课节数 */
@@ -20,7 +21,9 @@
 @property (strong, nonatomic) UIPickerView *weekPicker;  /**< 周数选择 */
 @property (strong, nonatomic) UIButton *weekButton;  /**< 选择周次按钮 */
 @property (strong, nonatomic) UIButton *finishButton;  /**< 完成周次选择按钮 */
-@property (strong, nonatomic) UIView *detailCourseView;  /**< 课程详情 */
+@property (strong, nonatomic) ZCYDetailCourseView *detailCourseView;  /**< 课程详情 */
+@property (strong, nonatomic) UIControl *backgroundControl;  /**< 背景控制 */
+
 @end
 
 @implementation ZCYCourseViewController
@@ -29,6 +32,9 @@
     NSArray *_weekArray;
     CGFloat y_oldPanpoint;
     CGFloat sum_yOffset;
+    CGFloat y_oldCourseViewPoint;
+    CGFloat sum_yCourseViewOffset;
+    BOOL _didTouchedFinishButton;
 }
 
 - (void)viewDidLoad {
@@ -59,6 +65,7 @@
     [self initLeftTimeView];
     [self initBottomView];
     [self initWeekPickerView];
+    [self initCourseDetailView];
 }
 
 - (void)initHeaderView
@@ -270,7 +277,22 @@
     }];
 }
 
-
+- (void)initCourseDetailView
+{
+    self.detailCourseView = [[ZCYDetailCourseView alloc] init];
+    self.detailCourseView.delegate = self;
+    sum_yCourseViewOffset = -360;
+    [self.view addSubview:self.detailCourseView];
+    self.detailCourseView.hidden = YES;
+    [self.detailCourseView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_bottom).with.offset(0);
+        make.left.and.right.equalTo(self.view);
+        make.height.mas_equalTo(554);
+    }];
+    
+    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleWithCourseDetailView:)];
+    [self.detailCourseView addGestureRecognizer:panGestureRecognizer];
+}
 #pragma mark - UIPickerViewDelegate & UIPickerViewDataSource
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
@@ -302,6 +324,10 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = [self.courseCollectionView dequeueReusableCellWithReuseIdentifier:@"courseCollctionViewCellID" forIndexPath:indexPath];
+    for (UIView *subview in cell.subviews)
+    {
+        [subview removeFromSuperview];
+    }
     
     UIColor *cellColor;
     switch (indexPath.section) {
@@ -332,11 +358,18 @@
         [dotView setRadius:2.5];
         [cell addSubview:dotView];
     }
+    NSInteger schoolWeek;
+    if (_didTouchedFinishButton)
+    {
+        schoolWeek = [self.weekPicker selectedRowInComponent:0]+1;
+    } else {
+        schoolWeek = [NSDate date].schoolWeek;
+    }
     [colArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         ZCYTimeTableModel *model  = obj;
         for (NSUInteger i=0; i<model.courseWeeks.count; i++)
         {
-            if ([model.courseWeeks[i] integerValue] == [NSDate date].schoolWeek)
+            if ([model.courseWeeks[i] integerValue] == schoolWeek)
             {
                 [self setCollectionViewCell:cell withColor:cellColor andCourseName:model.courseName andClassID:model.coursePlace];
                 [cell setRadius:5.0f];
@@ -374,9 +407,43 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     NSArray *courseArray = [ZCYUserMgr sharedMgr].courseArray[indexPath.row];
     NSArray *colArray = courseArray[indexPath.section];
+    __block BOOL haveCourse = NO;
     
+    NSUInteger schoolWeek;
+    
+    if (_didTouchedFinishButton)
+    {
+        schoolWeek = [self.weekPicker selectedRowInComponent:0]+1;
+    } else {
+        schoolWeek = [NSDate date].schoolWeek;
+    }
+    [colArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        ZCYTimeTableModel *model  = obj;
+        for (NSUInteger i=0; i<model.courseWeeks.count; i++)
+        {
+            if ([model.courseWeeks[i] integerValue] == schoolWeek)
+            {
+                haveCourse = YES;
+            }
+        }
+    }];
+    if (!haveCourse)
+    {
+        return;
+    }
+    self.bottomView.hidden = YES;
+    self.weekPicker.hidden = YES;
+    [self.detailCourseView updateUIWithCourseArray:colArray andCourseTime:indexPath.section andWeekNum:indexPath.row];
+    self.detailCourseView.hidden = NO;
+    [UIView animateWithDuration:0.3f animations:^{
+        [self.detailCourseView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view.mas_bottom).with.offset(-360);
+        }];
+        [self.detailCourseView.superview layoutIfNeeded];
+    }];
 }
 
 #pragma mark - 手势
@@ -433,9 +500,6 @@
             }
             point.y += 0.5;
         }
-    
-        
-       
     }
     y_oldPanpoint = point.y;
     if (gestureRecognizer.state == 3)
@@ -444,6 +508,110 @@
     }
 }
 
+- (void)handleWithCourseDetailView:(UIPanGestureRecognizer *)gestureRecognizer
+{
+    CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view.superview];
+    if (gestureRecognizer.state != UIGestureRecognizerStateFailed)
+    {
+        if (y_oldCourseViewPoint != 0)
+            sum_yCourseViewOffset = sum_yCourseViewOffset + point.y - y_oldCourseViewPoint;
+        if (y_oldCourseViewPoint != 0 && point.y > y_oldCourseViewPoint) //下拉
+        {
+
+            if (self.detailCourseView.frame.origin.y != self.view.frame.size.height - 78)
+                [self.detailCourseView mas_updateConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(self.view.mas_bottom).with.offset(sum_yCourseViewOffset);
+                }];
+            
+            if (self.detailCourseView.frame.origin.y >= self.view.frame.size.height-78)
+            {
+                [self hideDetailCourseView];
+            }
+
+            
+            if (gestureRecognizer.state == 3)
+            {
+                if (self.view.frame.size.height - self.detailCourseView.frame.origin.y >= 78 && self.view.frame.size.height - self.detailCourseView.frame.origin.y <= 360)
+                {
+                    [self hideDetailCourseView];
+                }
+
+                if (self.view.frame.size.height - self.detailCourseView.frame.origin.y >= 360)
+                {
+                    [self showDetailCourseView];
+                }
+
+            }
+            
+            point.y -= 0.5;
+        } else if (point.y < y_oldCourseViewPoint) { //上拉
+           
+            if (self.detailCourseView.frame.origin.y != self.view.frame.size.height - 554)
+                [self.detailCourseView mas_updateConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(self.view.mas_bottom).with.offset(sum_yCourseViewOffset);
+                }];
+            
+            if (self.view.frame.size.height - self.detailCourseView.frame.origin.y >= 554)
+            {
+                [self showAllDetailCourseView];
+            }
+            
+            
+            if (gestureRecognizer.state == 3)
+            {
+                if (self.view.frame.size.height - self.detailCourseView.frame.origin.y >= 360)
+                {
+                    [self showAllDetailCourseView];
+                } else if (self.view.frame.size.height - self.detailCourseView.frame.origin.y <= 360)
+                [self showDetailCourseView];
+                
+            }
+            point.y += 0.5;
+        }
+        
+        
+        
+    }
+    y_oldCourseViewPoint = point.y;
+    if (gestureRecognizer.state == 3)
+    {
+        y_oldCourseViewPoint = 0;
+    }
+
+}
+
+- (void)showDetailCourseView
+{
+    sum_yCourseViewOffset = -360;
+    [UIView animateWithDuration:0.3f animations:^{
+        [self.detailCourseView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view.mas_bottom).with.offset(-360);
+        }];
+        [self.detailCourseView.superview layoutIfNeeded];
+    }];
+}
+
+- (void)hideDetailCourseView
+{
+    sum_yCourseViewOffset = -78;
+    [UIView animateWithDuration:0.3f animations:^{
+        [self.detailCourseView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view.mas_bottom).with.offset(-78);
+        }];
+        [self.detailCourseView.superview layoutIfNeeded];
+    }];
+}
+
+- (void)showAllDetailCourseView
+{
+    sum_yCourseViewOffset = -554;
+    [UIView animateWithDuration:0.3f animations:^{
+        [self.detailCourseView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view.mas_bottom).with.offset(-554);
+        }];
+        [self.detailCourseView.superview layoutIfNeeded];
+    }];
+}
 #pragma mark - 点击事件
 - (void)showWeekSelectedView
 {
@@ -457,7 +625,7 @@
         }];
         [self.bottomView.superview layoutIfNeeded];
     }];
-    
+    _didTouchedFinishButton = YES;
 }
 
 - (void)hideWeekSelectedView
@@ -471,6 +639,20 @@
             make.bottom.equalTo(self.view).with.offset(kStandardPx(18)/2);
         }];
         [self.bottomView.superview layoutIfNeeded];
+    }];
+    [self.courseCollectionView reloadData];
+}
+
+#pragma mark - ZCYCloseButtonTouchedDelegate
+- (void)closeButtonDidPressed
+{
+    self.bottomView.hidden = NO;
+    self.weekPicker.hidden = NO;
+    [UIView animateWithDuration:0.3f animations:^{
+        [self.detailCourseView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view.mas_bottom).with.offset(0);
+        }];
+        [self.detailCourseView.superview layoutIfNeeded];
     }];
 }
 #pragma mark - TOOL
@@ -551,4 +733,5 @@
         make.height.mas_equalTo(0.5);
     }];
 }
+         
 @end

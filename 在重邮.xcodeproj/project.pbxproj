@@ -475,7 +475,6 @@
 				TargetAttributes = {
 					493744131DB1C1F700E49E4E = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = YLLJA83YGF;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -708,6 +707,7 @@
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/在重邮/Classes/Support/ZCYPrefix.pch";
 				INFOPLIST_FILE = "在重邮/SupportingFiles/ZCYInfo.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wakeen.ios.org.INCQUPT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -724,6 +724,7 @@
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/在重邮/Classes/Support/ZCYPrefix.pch";
 				INFOPLIST_FILE = "在重邮/SupportingFiles/ZCYInfo.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wakeen.ios.org.INCQUPT;
 				PRODUCT_NAME = "$(TARGET_NAME)";

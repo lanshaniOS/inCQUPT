@@ -8,6 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ZCYDetailCourseCloseButtonTouchedDelegate<NSObject>
+
+@required
+
+- (void)closeButtonDidPressed;
+
+@end
+
 @interface ZCYDetailCourseView : UIView
+
+@property (weak, nonatomic) id <ZCYDetailCourseCloseButtonTouchedDelegate>delegate;
+
+- (void)updateUIWithCourseArray:(NSArray *)courseArray andCourseTime:(NSInteger)courseTime andWeekNum:(NSUInteger)weekNum;
 
 @end
