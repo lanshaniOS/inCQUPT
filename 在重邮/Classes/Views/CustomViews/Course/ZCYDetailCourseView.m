@@ -23,6 +23,9 @@
 @property (strong, nonatomic) UILabel *teacherLabel;  /**< 教师名称 */
 @property (strong, nonatomic) UILabel *coursePlaceLabel;  /**< 上课地点 */
 @property (strong, nonatomic) UILabel *groupLabel;  /**< 上课班级 */
+@property (strong, nonatomic) UIButton *getCoursePicButton;  /**< 截取教务在线课表 */
+@property (strong, nonatomic) UIButton *setCourseStyle;  /**< 设置课表风格 */
+@property (strong, nonatomic) UIButton *reportErrorButton;  /**< 报告错误 */
 
 @property (strong, nonatomic) ZCYTimeTableModel *model;  /**< 课程数据 */
 @end
@@ -205,6 +208,72 @@
         make.left.equalTo(self.coursePlaceLabel);
         make.centerY.equalTo(groupImageView);
     }];
+    
+    self.getCoursePicButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.getCoursePicButton setTitle:@"截取全学期课表" forState:UIControlStateNormal];
+    [self.getCoursePicButton setTitleColor:kDeepGreen_Color forState:UIControlStateNormal];
+    self.getCoursePicButton.titleLabel.font = kFont(kStandardPx(32));
+    [self addSubview:self.getCoursePicButton];
+    [self.getCoursePicButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.weekLabel);
+        make.height.mas_equalTo(20);
+        make.width.mas_equalTo(120);
+        make.top.equalTo(self.groupLabel.mas_bottom).with.offset(40);
+    }];
+    
+    UIView *line1 = [[UIView alloc] init];
+    line1.backgroundColor = [UIColor grayColor];
+    [self addSubview:line1];
+    [line1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.weekLabel);
+        make.centerX.equalTo(self);
+        make.height.mas_equalTo(0.5);
+        make.top.equalTo(self.getCoursePicButton.mas_bottom).with.offset(20);
+    }];
+    
+    self.setCourseStyle = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.setCourseStyle setTitle:@"自定义课表主题" forState:UIControlStateNormal];
+    self.setCourseStyle.titleLabel.font = kFont(kStandardPx(32));
+    [self.setCourseStyle setTitleColor:kDeepGreen_Color forState:UIControlStateNormal];
+    [self addSubview:self.setCourseStyle];
+    [self.setCourseStyle mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.weekLabel);
+        make.height.mas_equalTo(20);
+        make.width.mas_equalTo(125);
+        make.top.equalTo(line1.mas_bottom).with.offset(20);
+    }];
+    
+    UIView *line2 = [[UIView alloc] init];
+    line2.backgroundColor = [UIColor grayColor];
+    [self addSubview:line2];
+    [line2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.weekLabel);
+        make.centerX.equalTo(self);
+        make.height.mas_equalTo(0.5);
+        make.top.equalTo(self.setCourseStyle.mas_bottom).with.offset(20);
+    }];
+    
+    self.reportErrorButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.reportErrorButton setTitle:@"报告错误" forState:UIControlStateNormal];
+    self.reportErrorButton.titleLabel.font = kFont(kStandardPx(32));
+    [self.reportErrorButton setTitleColor:kDeepGreen_Color forState:UIControlStateNormal];
+    [self addSubview:self.reportErrorButton];
+    [self.reportErrorButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.weekLabel);
+        make.height.mas_equalTo(20);
+        make.width.mas_equalTo(70);
+        make.top.equalTo(line2.mas_bottom).with.offset(20);
+    }];
+    
+    UIView *line3 = [[UIView alloc] init];
+    line3.backgroundColor = [UIColor grayColor];
+    [self addSubview:line3];
+    [line3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.weekLabel);
+        make.centerX.equalTo(self);
+        make.height.mas_equalTo(0.5);
+        make.top.equalTo(self.reportErrorButton.mas_bottom).with.offset(20);
+    }];
 }
 
 - (void)updateUIWithCourseArray:(NSArray *)courseArray andCourseTime:(NSInteger)courseTime andWeekNum:(NSUInteger)weekNum
@@ -214,12 +283,12 @@
     ZCYTimeTableModel *model = self.courseArray[0];
     for (NSInteger index = 0; index < self.courseArray.count; index++)
     {
-        
-        if (model.courseWeeks[index] == [model.courseWeeks lastObject])
+        ZCYTimeTableModel *weekModel = self.courseArray[index];
+        if (weekModel.courseWeeks[0] == [weekModel.courseWeeks lastObject])
         {
-            [self.segmentControl insertSegmentWithTitle:[NSString stringWithFormat:@"第 %@ 周",model.courseWeeks[index]] atIndex:index animated:YES];
+            [self.segmentControl insertSegmentWithTitle:[NSString stringWithFormat:@"第 %@ 周",weekModel.courseWeeks[0]] atIndex:index animated:YES];
         } else {
-            [self.segmentControl insertSegmentWithTitle:[NSString stringWithFormat:@"第 %@-%@ 周",model.courseWeeks[index], [model.courseWeeks lastObject]] atIndex:index animated:YES];
+            [self.segmentControl insertSegmentWithTitle:[NSString stringWithFormat:@"第 %@-%@ 周",weekModel.courseWeeks[0], [weekModel.courseWeeks lastObject]] atIndex:index animated:YES];
         }
     }
     

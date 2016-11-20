@@ -10,8 +10,9 @@
 #import "ZCYTimeTableModel.h"
 #import "ZCYDetailCourseView.h"
 
+static const float animationTime = 0.2f;
 
-@interface ZCYCourseViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIPickerViewDelegate, UIPickerViewDataSource, ZCYDetailCourseCloseButtonTouchedDelegate>
+@interface ZCYCourseViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIPickerViewDelegate, UIPickerViewDataSource, ZCYDetailCourseCloseButtonTouchedDelegate, UIScrollViewDelegate>
 
 @property (strong, nonatomic) UIScrollView *backgroundScrollView;  /**<  滑动背景 */
 @property (strong, nonatomic) UIView *leftTimeView;  /**< 左部上课节数 */
@@ -23,18 +24,21 @@
 @property (strong, nonatomic) UIButton *finishButton;  /**< 完成周次选择按钮 */
 @property (strong, nonatomic) ZCYDetailCourseView *detailCourseView;  /**< 课程详情 */
 @property (strong, nonatomic) UIControl *backgroundControl;  /**< 背景控制 */
+@property (strong, nonatomic) UILabel *weekLabel;  /**< 周数显示 */
 
 @end
 
 @implementation ZCYCourseViewController
 {
     CGFloat _courseWidth;
-    NSArray *_weekArray;
+    NSMutableArray *_weekArray;
     CGFloat y_oldPanpoint;
     CGFloat sum_yOffset;
     CGFloat y_oldCourseViewPoint;
     CGFloat sum_yCourseViewOffset;
+    NSIndexPath *old_selectedIndexPath;
     BOOL _didTouchedFinishButton;
+    BOOL _isFirstShowCourse;
 }
 
 - (void)viewDidLoad {
@@ -48,14 +52,23 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.headerView.hidden = NO;
     self.navigationController.navigationBar.alpha = 1.0f;
     self.navigationController.navigationBar.hidden = NO;
     
 }
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.headerView.hidden = YES;
+}
 #pragma mark - initUI
 - (void)initUI
 {
+    _isFirstShowCourse = YES;
     _courseWidth = (self.view.frame.size.width-28)/5;
+    old_selectedIndexPath = [[NSIndexPath alloc] init];
     self.view.backgroundColor = kCommonWhite_Color;
     self.title = @"课表";
     self.navigationController.navigationBar.alpha = 1.0f;
@@ -72,7 +85,7 @@
 {
     self.headerView = [[UIView alloc] init];
     self.headerView.backgroundColor = kCommonLightGray_Color;
-    [self.backgroundScrollView addSubview:self.headerView];
+    [self.view addSubview:self.headerView];
     [self.headerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view).with.offset(64);
         make.left.equalTo(self.backgroundScrollView).with.offset(-200);
@@ -94,7 +107,7 @@
         [self.headerView addSubview:numView];
         [numView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.mas_equalTo(_courseWidth + 0.5);
-            make.left.equalTo(self.backgroundScrollView.mas_left).with.offset(28+(index-1)*(_courseWidth + 0.5));
+            make.left.equalTo(self.headerView.mas_left).with.offset(200+28+(index-1)*(_courseWidth + 0.5));
             make.top.and.bottom.equalTo(self.headerView);
         }];
     }
@@ -104,6 +117,7 @@
 {
     self.backgroundScrollView = [[UIScrollView alloc] init];
     self.backgroundScrollView.contentSize = CGSizeMake(_courseWidth*7 + 28 + 3, 27+_courseWidth*6*1.26 + 3);
+    self.backgroundScrollView.delegate = self;
     self.backgroundScrollView.showsHorizontalScrollIndicator = NO;
     self.backgroundScrollView.showsVerticalScrollIndicator = NO;
     self.backgroundScrollView.scrollEnabled = YES;
@@ -163,13 +177,13 @@
         make.size.and.top.and.left.equalTo(self.bottomView);
     }];
     
-    UILabel *weekLabel = [[UILabel alloc] init];
-    weekLabel.textColor = kCommonText_Color;
-    weekLabel.text = [NSString stringWithFormat:@"第%@周", [NSDate date].schoolWeekString];
-    [weekLabel sizeToFit];
-    weekLabel.font = kFont(kStandardPx(40));
-    [self.bottomView addSubview:weekLabel];
-    [weekLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.weekLabel = [[UILabel alloc] init];
+    self.weekLabel.textColor = kCommonText_Color;
+    self.weekLabel.text = [NSString stringWithFormat:@"第%@周", [NSDate date].schoolWeekString];
+    [self.weekLabel sizeToFit];
+    self.weekLabel.font = kFont(kStandardPx(40));
+    [self.bottomView addSubview:self.weekLabel];
+    [self.weekLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).with.offset(16);
         make.centerY.equalTo(self.bottomView);
         
@@ -181,8 +195,8 @@
     [dayLabel sizeToFit];
     [self.bottomView addSubview:dayLabel];
     [dayLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weekLabel.mas_right).with.offset(10);
-        make.bottom.equalTo(weekLabel);
+        make.left.equalTo(self.weekLabel.mas_right).with.offset(10);
+        make.bottom.equalTo(self.weekLabel);
         
     }];
     
@@ -204,7 +218,7 @@
     [self.bottomView addSubview:self.weekButton];
     [self.weekButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.bottomView).with.offset(-16);
-        make.bottom.equalTo(weekLabel);
+        make.bottom.equalTo(self.weekLabel);
         make.width.mas_equalTo(74);
         make.height.mas_equalTo(20);
     }];
@@ -218,7 +232,7 @@
     [self.bottomView addSubview:self.finishButton];
     [self.finishButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.bottomView).with.offset(-16);
-        make.bottom.equalTo(weekLabel);
+        make.bottom.equalTo(self.weekLabel);
         make.width.mas_equalTo(74);
         make.height.mas_equalTo(20);
     }];
@@ -265,7 +279,8 @@
 - (void)initWeekPickerView
 {
     self.weekPicker = [[UIPickerView alloc] init];
-    _weekArray = @[@"一", @"二", @"三", @"四", @"五", @"六", @"七", @"八", @"九", @"十", @"十一", @"十二", @"十三", @"十四", @"十五", @"十六", @"十七", @"十八", @"十九", @"二十", @"二十一"];
+    _weekArray = [NSMutableArray arrayWithObjects:@"一", @"二", @"三", @"四", @"五", @"六", @"七", @"八", @"九", @"十", @"十一", @"十二", @"十三", @"十四", @"十五", @"十六", @"十七", @"十八", @"十九", @"二十", @"二十一", nil];
+    _weekArray[[NSDate date].schoolWeek - 1] = [NSString stringWithFormat:@"%@（本周)", [NSDate date].schoolWeekString];
     self.weekPicker.dataSource = self;
     self.weekPicker.delegate = self;
     self.weekPicker.backgroundColor = kCommonLightGray_Color;
@@ -359,12 +374,13 @@
         [cell addSubview:dotView];
     }
     NSInteger schoolWeek;
-    if (_didTouchedFinishButton)
+    if (_isFirstShowCourse)
     {
-        schoolWeek = [self.weekPicker selectedRowInComponent:0]+1;
-    } else {
         schoolWeek = [NSDate date].schoolWeek;
+    } else {
+        schoolWeek = [self.weekPicker selectedRowInComponent:0]+1;
     }
+    
     [colArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         ZCYTimeTableModel *model  = obj;
         for (NSUInteger i=0; i<model.courseWeeks.count; i++)
@@ -407,18 +423,22 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+//    [cell mas_remakeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.courseCollectionView).with.offset(indexPath.row*_courseWidth-10);
+//        make.top.equalTo(self.courseCollectionView).with.offset(indexPath.section*1.26*_courseWidth-10);
+//        make.size.mas_equalTo(CGSizeMake(_courseWidth+20, _courseWidth*1.26 + 0.5 +20));
+//    }];
     
     NSArray *courseArray = [ZCYUserMgr sharedMgr].courseArray[indexPath.row];
     NSArray *colArray = courseArray[indexPath.section];
     __block BOOL haveCourse = NO;
-    
-    NSUInteger schoolWeek;
-    
-    if (_didTouchedFinishButton)
+ 
+    NSInteger schoolWeek;
+    if (_isFirstShowCourse)
     {
-        schoolWeek = [self.weekPicker selectedRowInComponent:0]+1;
-    } else {
         schoolWeek = [NSDate date].schoolWeek;
+    } else {
+        schoolWeek = [self.weekPicker selectedRowInComponent:0]+1;
     }
     [colArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         ZCYTimeTableModel *model  = obj;
@@ -434,18 +454,54 @@
     {
         return;
     }
+    CGFloat x_offset = self.backgroundScrollView.contentOffset.x;
+    old_selectedIndexPath = indexPath;
+    if (indexPath.section != 0)
+        self.backgroundScrollView.contentOffset = CGPointMake(x_offset, _courseWidth*1.26*indexPath.section - 2.2*_courseWidth);
+    UICollectionViewCell *cell = [self.courseCollectionView cellForItemAtIndexPath:indexPath];
+    
+    cell.alpha = 0.5;
+    
     self.bottomView.hidden = YES;
     self.weekPicker.hidden = YES;
+    self.backgroundScrollView.contentSize = CGSizeMake(_courseWidth*7 + 28 + 3, 27+_courseWidth*6*1.26 + 3 + 360 - 68);
     [self.detailCourseView updateUIWithCourseArray:colArray andCourseTime:indexPath.section andWeekNum:indexPath.row];
     self.detailCourseView.hidden = NO;
-    [UIView animateWithDuration:0.3f animations:^{
-        [self.detailCourseView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.view.mas_bottom).with.offset(-360);
-        }];
-        [self.detailCourseView.superview layoutIfNeeded];
-    }];
+    [self showDetailCourseView];
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell *cell = [self.courseCollectionView cellForItemAtIndexPath:old_selectedIndexPath];
+    cell.alpha = 1.0f;
+    UIColor *cellColor;
+    switch (indexPath.section) {
+        case 0:
+        case 1:
+            cellColor = kCourseGreen_Color;
+            break;
+        case 2:
+        case 3:
+            cellColor = kCommonGolden_Color;
+            break;
+        case 4:
+        case 5:
+            cellColor = kDeepGray_Color;
+        default:
+            cellColor = kCommonRed_Color;
+            break;
+    }
+    cell.backgroundColor = cellColor;
+}
+
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
+    [self.headerView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.backgroundScrollView).with.offset(-scrollView.contentOffset.x - 200);
+    }];
+}
 #pragma mark - 手势
 - (void)handleWeekSelectedView:(UIPanGestureRecognizer *)gestureRecognizer
 {
@@ -461,7 +517,7 @@
             [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.bottom.equalTo(self.view).with.offset(sum_yOffset+kStandardPx(18)/2);
             }];
-            
+            _didTouchedFinishButton = NO;
             if (self.bottomView.frame.size.height+self.bottomView.frame.origin.y >= self.view.frame.size.height + kStandardPx(18)/2)
             {
                 [self hideWeekSelectedView];
@@ -489,6 +545,7 @@
                 make.bottom.equalTo(self.view).with.offset(sum_yOffset+kStandardPx(18)/2);
             }];
             
+            
             if (self.view.frame.size.height - self.bottomView.frame.origin.y - self.bottomView.frame.size.height >= 215)
             {
                 [self showWeekSelectedView];
@@ -496,6 +553,7 @@
             
             if (gestureRecognizer.state == 3)
             {
+                
                 [self showWeekSelectedView];
             }
             point.y += 0.5;
@@ -583,33 +641,46 @@
 - (void)showDetailCourseView
 {
     sum_yCourseViewOffset = -360;
-    [UIView animateWithDuration:0.3f animations:^{
+    self.backgroundScrollView.contentSize = CGSizeMake(_courseWidth*7 + 28 + 3, 27+_courseWidth*6*1.26 + 3 + 360 - 68);
+
+    [UIView animateWithDuration:animationTime delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
         [self.detailCourseView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.view.mas_bottom).with.offset(-360);
         }];
         [self.detailCourseView.superview layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        
     }];
 }
 
 - (void)hideDetailCourseView
 {
     sum_yCourseViewOffset = -78;
-    [UIView animateWithDuration:0.3f animations:^{
+    self.backgroundScrollView.contentSize = CGSizeMake(_courseWidth*7 + 28 + 3, 27+_courseWidth*6*1.26 + 3 + 10);
+    
+    [UIView animateWithDuration:animationTime delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
         [self.detailCourseView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.view.mas_bottom).with.offset(-78);
         }];
         [self.detailCourseView.superview layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        
     }];
 }
 
 - (void)showAllDetailCourseView
 {
     sum_yCourseViewOffset = -554;
-    [UIView animateWithDuration:0.3f animations:^{
+    self.backgroundScrollView.contentSize = CGSizeMake(_courseWidth*7 + 28 + 3, 27+_courseWidth*6*1.26 + 3 + 10);
+
+    [UIView animateWithDuration:animationTime delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
         [self.detailCourseView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.view.mas_bottom).with.offset(-554);
         }];
         [self.detailCourseView.superview layoutIfNeeded];
+
+    } completion:^(BOOL finished) {
+        
     }];
 }
 #pragma mark - 点击事件
@@ -619,7 +690,7 @@
     self.finishButton.hidden = NO;
     sum_yOffset = -215;
     self.backgroundScrollView.contentSize = CGSizeMake(_courseWidth*7 + 28 + 3, 27+_courseWidth*6*1.26 + 3 + 215);
-    [UIView animateWithDuration:0.3f animations:^{
+    [UIView animateWithDuration:animationTime animations:^{
         [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self.view).with.offset(-215);
         }];
@@ -633,14 +704,24 @@
     self.weekButton.hidden = NO;
     self.finishButton.hidden = YES;
     sum_yOffset = 0;
+    
     self.backgroundScrollView.contentSize = CGSizeMake(_courseWidth*7 + 28 + 3, 27+_courseWidth*6*1.26 + 3);
-    [UIView animateWithDuration:0.3f animations:^{
+    [UIView animateWithDuration:animationTime animations:^{
         [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self.view).with.offset(kStandardPx(18)/2);
         }];
         [self.bottomView.superview layoutIfNeeded];
     }];
-    [self.courseCollectionView reloadData];
+    if (_didTouchedFinishButton)
+    {
+        _isFirstShowCourse = NO;
+        if ([self.weekPicker selectedRowInComponent:0]+1 == [NSDate date].schoolWeek)
+            self.weekLabel.text = [NSString stringWithFormat:@"第%@周", [NSDate date].schoolWeekString];
+        else
+            self.weekLabel.text = [NSString stringWithFormat:@"第%@周", _weekArray[[self.weekPicker selectedRowInComponent:0]]];
+
+        [self.courseCollectionView reloadData];
+    }
 }
 
 #pragma mark - ZCYCloseButtonTouchedDelegate
@@ -648,7 +729,9 @@
 {
     self.bottomView.hidden = NO;
     self.weekPicker.hidden = NO;
-    [UIView animateWithDuration:0.3f animations:^{
+    UICollectionViewCell *cell = [self.courseCollectionView cellForItemAtIndexPath:old_selectedIndexPath];
+    cell.alpha = 1.0f;
+    [UIView animateWithDuration:0.2f animations:^{
         [self.detailCourseView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.view.mas_bottom).with.offset(0);
         }];
