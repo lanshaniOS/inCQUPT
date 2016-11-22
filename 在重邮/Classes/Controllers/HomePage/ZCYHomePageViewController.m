@@ -16,6 +16,7 @@
 #import "ZCYCourseView.h"
 #import "ZCYCourseViewController.h"
 #import "ZCYCardDetailViewController.h"
+#import "ZCYMoreFunctionViewController.h"
 #import "ZCYCardHelper.h"
 
 @interface ZCYHomePageViewController () <UIScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
@@ -566,7 +567,7 @@
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 4;
+    return 5;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath
@@ -595,7 +596,7 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 {
-    return (self.view.frame.size.width - 38*4 - 60) / 4;
+    return (self.view.frame.size.width - 38*5 - 60) / 5;
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
@@ -645,6 +646,11 @@
             @{@"funcName" : @"物业报修",
               @"iconName" : @"物业报修",
               @"nextController" : NSStringFromClass([ZCYPropertyRepairViewController class])},
+            
+            @{@"funcName" : @"更多",
+              @"iconName" : @"更多",
+              @"nextController" : NSStringFromClass([ZCYMoreFunctionViewController class])},
+            
             nil];
 }
 

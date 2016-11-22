@@ -36,6 +36,7 @@ static const float animationTime = 0.2f;
     CGFloat sum_yOffset;
     CGFloat y_oldCourseViewPoint;
     CGFloat sum_yCourseViewOffset;
+  
     NSIndexPath *old_selectedIndexPath;
     BOOL _didTouchedFinishButton;
     BOOL _isFirstShowCourse;
@@ -122,6 +123,7 @@ static const float animationTime = 0.2f;
     self.backgroundScrollView.showsVerticalScrollIndicator = NO;
     self.backgroundScrollView.scrollEnabled = YES;
     self.backgroundScrollView.directionalLockEnabled = YES;
+
     [self.view addSubview:self.backgroundScrollView];
     [self.backgroundScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.right.top.equalTo(self.view);
@@ -139,6 +141,7 @@ static const float animationTime = 0.2f;
     self.courseCollectionView.delegate = self;
     self.courseCollectionView.dataSource = self;
     self.courseCollectionView.scrollEnabled = NO;
+    
     self.courseCollectionView.showsVerticalScrollIndicator = NO;
     self.courseCollectionView.showsHorizontalScrollIndicator = NO;
     [self.backgroundScrollView addSubview:self.courseCollectionView];
@@ -146,7 +149,7 @@ static const float animationTime = 0.2f;
         make.top.equalTo(self.backgroundScrollView).with.offset(27);
         make.left.equalTo(self.backgroundScrollView).with.offset(28);
         make.height.mas_equalTo(6*1.26*_courseWidth + 3);
-        make.width.mas_equalTo(7*_courseWidth+3);
+        make.width.mas_equalTo(7*_courseWidth+3.5);
     }];
 
 }
@@ -343,7 +346,7 @@ static const float animationTime = 0.2f;
     {
         [subview removeFromSuperview];
     }
-    
+    cell.layer.cornerRadius = 0.0f;
     UIColor *cellColor;
     switch (indexPath.section) {
         case 0:
@@ -380,18 +383,32 @@ static const float animationTime = 0.2f;
     } else {
         schoolWeek = [self.weekPicker selectedRowInComponent:0]+1;
     }
-    
     [colArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    
         ZCYTimeTableModel *model  = obj;
         for (NSUInteger i=0; i<model.courseWeeks.count; i++)
         {
             if ([model.courseWeeks[i] integerValue] == schoolWeek)
             {
                 [self setCollectionViewCell:cell withColor:cellColor andCourseName:model.courseName andClassID:model.coursePlace];
-                [cell setRadius:5.0f];
+//                [cell setRadius:5.0f]; //影响性能
+                cell.layer.cornerRadius = 5.0f;
+                cell.layer.shouldRasterize = YES;
+                cell.layer.rasterizationScale = [UIScreen mainScreen].scale;
             }
         }
     }];
+    if(indexPath.section != 5)
+    {
+        UIView *grayView = [[UIView alloc] init];
+        grayView.backgroundColor = kCommonLightGray_Color;
+        [cell addSubview:grayView];
+        [grayView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(cell);
+            make.left.and.right.equalTo(cell);
+            make.height.mas_equalTo(1);
+        }];
+    }
     return cell;
    
 }
@@ -413,21 +430,16 @@ static const float animationTime = 0.2f;
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
-    return 0.5f;
+    return 0.5;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 {
-    return 0.5f;
+    return 0.5;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    [cell mas_remakeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self.courseCollectionView).with.offset(indexPath.row*_courseWidth-10);
-//        make.top.equalTo(self.courseCollectionView).with.offset(indexPath.section*1.26*_courseWidth-10);
-//        make.size.mas_equalTo(CGSizeMake(_courseWidth+20, _courseWidth*1.26 + 0.5 +20));
-//    }];
     
     NSArray *courseArray = [ZCYUserMgr sharedMgr].courseArray[indexPath.row];
     NSArray *colArray = courseArray[indexPath.section];
@@ -452,6 +464,7 @@ static const float animationTime = 0.2f;
     }];
     if (!haveCourse)
     {
+        old_selectedIndexPath = nil;
         return;
     }
     CGFloat x_offset = self.backgroundScrollView.contentOffset.x;
@@ -472,32 +485,45 @@ static const float animationTime = 0.2f;
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [self.courseCollectionView cellForItemAtIndexPath:old_selectedIndexPath];
-    cell.alpha = 1.0f;
-    UIColor *cellColor;
-    switch (indexPath.section) {
-        case 0:
-        case 1:
-            cellColor = kCourseGreen_Color;
-            break;
-        case 2:
-        case 3:
-            cellColor = kCommonGolden_Color;
-            break;
-        case 4:
-        case 5:
-            cellColor = kDeepGray_Color;
-        default:
-            cellColor = kCommonRed_Color;
-            break;
+    UICollectionViewCell *cell = [self.courseCollectionView cellForItemAtIndexPath:indexPath];
+//    if (cell.backgroundColor == kCommonWhite_Color)
+//    {
+//        return;
+//    }
+    if (old_selectedIndexPath)
+    {
+//        UICollectionViewCell *cell = [self.courseCollectionView cellForItemAtIndexPath:old_selectedIndexPath];
+        cell.alpha = 1.0f;
     }
-    cell.backgroundColor = cellColor;
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    
+  
+//    if (fabs(x_oldBGView - scrollView.contentOffset.x) > fabs(y_oldBGView - scrollView.contentOffset.y))
+//    {
+//        
+//        self.backgroundScrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, y_oldBGView);
+//        x_oldBGView = scrollView.contentOffset.x;
+//    } else if (fabs(x_oldBGView - scrollView.contentOffset.x) < fabs(y_oldBGView - scrollView.contentOffset.y)) {
+//        self.backgroundScrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, y_oldBGView);
+//        y_oldBGView = scrollView.contentOffset.y;
+//    } else {
+//        self.backgroundScrollView.contentOffset = CGPointMake(x_oldBGView, y_oldBGView);
+//    }
+//    x_oldBGView = scrollView.contentOffset.x;
+//    y_oldBGView = scrollView.contentOffset.y;
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+   
+}
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    
+   
     [self.headerView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.backgroundScrollView).with.offset(-scrollView.contentOffset.x - 200);
     }];
@@ -731,6 +757,7 @@ static const float animationTime = 0.2f;
     self.weekPicker.hidden = NO;
     UICollectionViewCell *cell = [self.courseCollectionView cellForItemAtIndexPath:old_selectedIndexPath];
     cell.alpha = 1.0f;
+    self.backgroundScrollView.contentSize = CGSizeMake(_courseWidth*7 + 28 + 3, 27+_courseWidth*6*1.26 + 3 + self.view.frame.size.height - self.weekPicker.frame.origin.y);
     [UIView animateWithDuration:0.2f animations:^{
         [self.detailCourseView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.view.mas_bottom).with.offset(0);
@@ -807,14 +834,7 @@ static const float animationTime = 0.2f;
         make.top.equalTo(courseeLabel.mas_bottom);
     }];
     
-    UIView *grayView = [[UIView alloc] init];
-    grayView.backgroundColor = kCommonLightGray_Color;
-    [cell addSubview:grayView];
-    [grayView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(cell);
-        make.left.and.right.equalTo(cell);
-        make.height.mas_equalTo(0.5);
-    }];
+    
 }
          
 @end

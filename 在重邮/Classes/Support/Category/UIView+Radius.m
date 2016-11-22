@@ -17,6 +17,8 @@
     layer.frame = self.bounds;
     layer.path = path.CGPath;
     self.layer.mask = layer;
+   
 }
+
 
 @end
