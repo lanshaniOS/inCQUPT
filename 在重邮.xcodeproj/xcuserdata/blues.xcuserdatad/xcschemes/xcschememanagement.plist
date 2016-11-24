@@ -7,7 +7,11 @@
 		<key>在重邮.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
+<<<<<<< HEAD
 			<integer>0</integer>
+=======
+			<integer>12</integer>
+>>>>>>> aab8627b21bee2dd67a9aceb8c51ad9f28e477a8
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
