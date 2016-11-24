@@ -8,6 +8,7 @@
 
 #import "ZCYUserMgr.h"
 
+
 @interface ZCYUserMgr() <NSCoding>
 
 @end
@@ -22,6 +23,8 @@ static ZCYUserMgr *sharedMgr = nil;
         sharedMgr = [[self alloc] init];
         sharedMgr.studentNumber = @"";
         sharedMgr.courseArray = [[NSArray alloc] init];
+//        sharedMgr.repairInfomation = [NSDictionary dictionary];
+//        sharedMgr.repairAddressChoices = [NSArray array];
     });
     return sharedMgr;
 }
@@ -34,6 +37,8 @@ static ZCYUserMgr *sharedMgr = nil;
     [aCoder encodeObject:self.eduType forKey:@"EDUTYPE"];
     [aCoder encodeObject:self.eduMajor forKey:@"EDUMAJOR"];
     [aCoder encodeObject:self.userName forKey:@"USERNAME"];
+    [aCoder encodeObject:self.repairInfomation forKey:@"REPAIRINFOMATION"];
+    [aCoder encodeObject:self.repairAddressChoices forKey:@"REPAIRADDRESS"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -47,7 +52,8 @@ static ZCYUserMgr *sharedMgr = nil;
         self.eduType = [aDecoder decodeObjectForKey:@"EDUTYPE"];
         self.eduMajor = [aDecoder decodeObjectForKey:@"EDUMAJOR"];
         self.userName = [aDecoder decodeObjectForKey:@"USERNAME"];
-
+        self.repairInfomation = [aDecoder decodeObjectForKey:@"REPAIRINFOMATION"];
+        self.repairAddressChoices = [aDecoder decodeObjectForKey:@"REPAIRADDRESS"];
     }
     return self;
 }
@@ -59,7 +65,7 @@ static ZCYUserMgr *sharedMgr = nil;
              NSStringFromSelector(@selector(eduType)) : @"edutype",
              NSStringFromSelector(@selector(eduMajor)) : @"edumajor",
              NSStringFromSelector(@selector(userName)) : @"name",
-             NSStringFromSelector(@selector(studentNumber)) : @"userNumber"
+             NSStringFromSelector(@selector(studentNumber)) : @"userNumber",
              };
 }
 @end

@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1365067D1DE5A447001F7FE7 /* ZCYRepairApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1365067C1DE5A447001F7FE7 /* ZCYRepairApplyViewController.m */; };
+		136506801DE5A46B001F7FE7 /* ZCYRepairDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1365067F1DE5A46B001F7FE7 /* ZCYRepairDetailViewController.m */; };
+		136506871DE5A4BD001F7FE7 /* ZCYRepairApplyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 136506821DE5A4BD001F7FE7 /* ZCYRepairApplyModel.m */; };
+		136506881DE5A4BD001F7FE7 /* ZCYRepairDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 136506841DE5A4BD001F7FE7 /* ZCYRepairDetailModel.m */; };
+		136506891DE5A4BD001F7FE7 /* ZCYRepairListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 136506861DE5A4BD001F7FE7 /* ZCYRepairListModel.m */; };
+		136506921DE5A521001F7FE7 /* ZCYGetRepairAdrressHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1365068B1DE5A521001F7FE7 /* ZCYGetRepairAdrressHelper.m */; };
+		136506931DE5A521001F7FE7 /* ZCYGetRepairApplyData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1365068D1DE5A521001F7FE7 /* ZCYGetRepairApplyData.m */; };
+		136506941DE5A521001F7FE7 /* ZCYRepairApplyHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1365068F1DE5A521001F7FE7 /* ZCYRepairApplyHelper.m */; };
+		136506951DE5A521001F7FE7 /* ZCYRepairlistHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 136506911DE5A521001F7FE7 /* ZCYRepairlistHelper.m */; };
+		1365069F1DE5A64D001F7FE7 /* BXDetailCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1365069E1DE5A64D001F7FE7 /* BXDetailCellView.m */; };
+		136506A21DE5A690001F7FE7 /* BaoXiuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 136506A11DE5A690001F7FE7 /* BaoXiuCell.m */; };
+		136506A51DE5E3CC001F7FE7 /* ZCYRepairDetailHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 136506A41DE5E3CC001F7FE7 /* ZCYRepairDetailHelper.m */; };
 		49061F581DDB4F7B00E2923A /* UILabel+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 49061F571DDB4F7B00E2923A /* UILabel+Common.m */; };
 		49061F5B1DDF325E00E2923A /* ZCYDetailCourseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49061F5A1DDF325E00E2923A /* ZCYDetailCourseView.m */; };
 		492E231C1DD8B0530083F135 /* UIView+Radius.m in Sources */ = {isa = PBXBuildFile; fileRef = 492E231B1DD8B0530083F135 /* UIView+Radius.m */; };
@@ -43,6 +55,30 @@
 
 /* Begin PBXFileReference section */
 		1189500E1074EECD137C3468 /* libPods-在重邮.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-在重邮.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1365067B1DE5A435001F7FE7 /* ZCYRepairApplyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCYRepairApplyViewController.h; sourceTree = "<group>"; };
+		1365067C1DE5A447001F7FE7 /* ZCYRepairApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYRepairApplyViewController.m; sourceTree = "<group>"; };
+		1365067E1DE5A460001F7FE7 /* ZCYRepairDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCYRepairDetailViewController.h; sourceTree = "<group>"; };
+		1365067F1DE5A46B001F7FE7 /* ZCYRepairDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYRepairDetailViewController.m; sourceTree = "<group>"; };
+		136506811DE5A4BD001F7FE7 /* ZCYRepairApplyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYRepairApplyModel.h; sourceTree = "<group>"; };
+		136506821DE5A4BD001F7FE7 /* ZCYRepairApplyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYRepairApplyModel.m; sourceTree = "<group>"; };
+		136506831DE5A4BD001F7FE7 /* ZCYRepairDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYRepairDetailModel.h; sourceTree = "<group>"; };
+		136506841DE5A4BD001F7FE7 /* ZCYRepairDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYRepairDetailModel.m; sourceTree = "<group>"; };
+		136506851DE5A4BD001F7FE7 /* ZCYRepairListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYRepairListModel.h; sourceTree = "<group>"; };
+		136506861DE5A4BD001F7FE7 /* ZCYRepairListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYRepairListModel.m; sourceTree = "<group>"; };
+		1365068A1DE5A521001F7FE7 /* ZCYGetRepairAdrressHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYGetRepairAdrressHelper.h; sourceTree = "<group>"; };
+		1365068B1DE5A521001F7FE7 /* ZCYGetRepairAdrressHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYGetRepairAdrressHelper.m; sourceTree = "<group>"; };
+		1365068C1DE5A521001F7FE7 /* ZCYGetRepairApplyData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYGetRepairApplyData.h; sourceTree = "<group>"; };
+		1365068D1DE5A521001F7FE7 /* ZCYGetRepairApplyData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYGetRepairApplyData.m; sourceTree = "<group>"; };
+		1365068E1DE5A521001F7FE7 /* ZCYRepairApplyHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYRepairApplyHelper.h; sourceTree = "<group>"; };
+		1365068F1DE5A521001F7FE7 /* ZCYRepairApplyHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYRepairApplyHelper.m; sourceTree = "<group>"; };
+		136506901DE5A521001F7FE7 /* ZCYRepairlistHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYRepairlistHelper.h; sourceTree = "<group>"; };
+		136506911DE5A521001F7FE7 /* ZCYRepairlistHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYRepairlistHelper.m; sourceTree = "<group>"; };
+		1365069D1DE5A64D001F7FE7 /* BXDetailCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BXDetailCellView.h; path = RepairViews/BXDetailCellView.h; sourceTree = "<group>"; };
+		1365069E1DE5A64D001F7FE7 /* BXDetailCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BXDetailCellView.m; path = RepairViews/BXDetailCellView.m; sourceTree = "<group>"; };
+		136506A01DE5A690001F7FE7 /* BaoXiuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaoXiuCell.h; path = RepairViews/BaoXiuCell.h; sourceTree = "<group>"; };
+		136506A11DE5A690001F7FE7 /* BaoXiuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaoXiuCell.m; path = RepairViews/BaoXiuCell.m; sourceTree = "<group>"; };
+		136506A31DE5E3CC001F7FE7 /* ZCYRepairDetailHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYRepairDetailHelper.h; sourceTree = "<group>"; };
+		136506A41DE5E3CC001F7FE7 /* ZCYRepairDetailHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYRepairDetailHelper.m; sourceTree = "<group>"; };
 		49061F561DDB4F7B00E2923A /* UILabel+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Common.h"; sourceTree = "<group>"; };
 		49061F571DDB4F7B00E2923A /* UILabel+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Common.m"; sourceTree = "<group>"; };
 		49061F591DDF325E00E2923A /* ZCYDetailCourseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYDetailCourseView.h; sourceTree = "<group>"; };
@@ -128,6 +164,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1365069C1DE5A603001F7FE7 /* PepairView */ = {
+			isa = PBXGroup;
+			children = (
+				136506A01DE5A690001F7FE7 /* BaoXiuCell.h */,
+				136506A11DE5A690001F7FE7 /* BaoXiuCell.m */,
+				1365069D1DE5A64D001F7FE7 /* BXDetailCellView.h */,
+				1365069E1DE5A64D001F7FE7 /* BXDetailCellView.m */,
+			);
+			name = PepairView;
+			sourceTree = "<group>";
+		};
 		4937440B1DB1C1F700E49E4E = {
 			isa = PBXGroup;
 			children = (
@@ -254,6 +301,12 @@
 			children = (
 				49AC73FB1DC201EA00E903EA /* ZCYTimeTableModel.h */,
 				49AC73FC1DC201EA00E903EA /* ZCYTimeTableModel.m */,
+				136506811DE5A4BD001F7FE7 /* ZCYRepairApplyModel.h */,
+				136506821DE5A4BD001F7FE7 /* ZCYRepairApplyModel.m */,
+				136506831DE5A4BD001F7FE7 /* ZCYRepairDetailModel.h */,
+				136506841DE5A4BD001F7FE7 /* ZCYRepairDetailModel.m */,
+				136506851DE5A4BD001F7FE7 /* ZCYRepairListModel.h */,
+				136506861DE5A4BD001F7FE7 /* ZCYRepairListModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -310,6 +363,7 @@
 		4951C8961DBA409700E5AC63 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				1365069C1DE5A603001F7FE7 /* PepairView */,
 				499C0AEF1DCA278700E2F61D /* Course */,
 				499232D71DC4A28C00B17B54 /* HomePage */,
 			);
@@ -388,6 +442,16 @@
 				496EF59B1DC78F4F0028B5BA /* ZCYCardHelper.m */,
 				496F14DA1DD0B6B3000FA790 /* ZCYUserValidateHelper.h */,
 				496F14DB1DD0B6B3000FA790 /* ZCYUserValidateHelper.m */,
+				1365068A1DE5A521001F7FE7 /* ZCYGetRepairAdrressHelper.h */,
+				1365068B1DE5A521001F7FE7 /* ZCYGetRepairAdrressHelper.m */,
+				1365068C1DE5A521001F7FE7 /* ZCYGetRepairApplyData.h */,
+				1365068D1DE5A521001F7FE7 /* ZCYGetRepairApplyData.m */,
+				1365068E1DE5A521001F7FE7 /* ZCYRepairApplyHelper.h */,
+				1365068F1DE5A521001F7FE7 /* ZCYRepairApplyHelper.m */,
+				136506901DE5A521001F7FE7 /* ZCYRepairlistHelper.h */,
+				136506911DE5A521001F7FE7 /* ZCYRepairlistHelper.m */,
+				136506A31DE5E3CC001F7FE7 /* ZCYRepairDetailHelper.h */,
+				136506A41DE5E3CC001F7FE7 /* ZCYRepairDetailHelper.m */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -412,6 +476,10 @@
 				49B730A01DBF939000F438BD /* ZCYHydroelectricViewController.m */,
 				49B730A21DBF941700F438BD /* ZCYPropertyRepairViewController.h */,
 				49B730A31DBF941700F438BD /* ZCYPropertyRepairViewController.m */,
+				1365067E1DE5A460001F7FE7 /* ZCYRepairDetailViewController.h */,
+				1365067F1DE5A46B001F7FE7 /* ZCYRepairDetailViewController.m */,
+				1365067B1DE5A435001F7FE7 /* ZCYRepairApplyViewController.h */,
+				1365067C1DE5A447001F7FE7 /* ZCYRepairApplyViewController.m */,
 			);
 			path = Function;
 			sourceTree = "<group>";
@@ -566,33 +634,45 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				136506931DE5A521001F7FE7 /* ZCYGetRepairApplyData.m in Sources */,
 				49B730A81DBF94A300F438BD /* ZCYPropertyRepairViewController.m in Sources */,
 				49AC73EF1DC0F09300E903EA /* ZCYTimeTableHelper.m in Sources */,
 				49CD413A1DC745530024011D /* ZCYLoginViewController.m in Sources */,
 				496F14DC1DD0B6B3000FA790 /* ZCYUserValidateHelper.m in Sources */,
 				496EF5991DC78DD80028B5BA /* ZCYCardDetailViewController.m in Sources */,
+				136506801DE5A46B001F7FE7 /* ZCYRepairDetailViewController.m in Sources */,
 				49AC74051DC2092300E903EA /* ZCYNetworkHelperMgr.m in Sources */,
 				49B730A71DBF949E00F438BD /* ZCYHydroelectricViewController.m in Sources */,
 				49B730A61DBF949A00F438BD /* ZCYSchoolCardViewController.m in Sources */,
 				49B730A51DBF949400F438BD /* ZCYClassViewController.m in Sources */,
+				136506951DE5A521001F7FE7 /* ZCYRepairlistHelper.m in Sources */,
 				499232CB1DC487AA00B17B54 /* ZCYProgressHUD.m in Sources */,
 				4951C8BD1DBA41D000E5AC63 /* main.m in Sources */,
 				4951C8B41DBA41C900E5AC63 /* ZCYHomePageViewController.m in Sources */,
 				498D310F1DE4659B00C30828 /* ZCYMoreFunctionViewController.m in Sources */,
 				4951C8B61DBA41C900E5AC63 /* ZCYInformationViewController.m in Sources */,
+				136506921DE5A521001F7FE7 /* ZCYGetRepairAdrressHelper.m in Sources */,
 				49061F581DDB4F7B00E2923A /* UILabel+Common.m in Sources */,
 				4951C8B81DBA41C900E5AC63 /* ZCYSettingsViewController.m in Sources */,
+				136506A21DE5A690001F7FE7 /* BaoXiuCell.m in Sources */,
+				1365069F1DE5A64D001F7FE7 /* BXDetailCellView.m in Sources */,
 				4951C8BA1DBA41C900E5AC63 /* UIColor+Additions.m in Sources */,
 				4951C8B21DBA41AB00E5AC63 /* ZCYAppDelegate.m in Sources */,
 				499B36721DC8E00B00CE2461 /* ZCYLineChart.m in Sources */,
 				499232E01DC4ECBC00B17B54 /* ZCYCourseViewController.m in Sources */,
+				136506A51DE5E3CC001F7FE7 /* ZCYRepairDetailHelper.m in Sources */,
 				4951C8AC1DBA41A500E5AC63 /* ZCYBaseViewController.m in Sources */,
+				136506881DE5A4BD001F7FE7 /* ZCYRepairDetailModel.m in Sources */,
 				49AC74081DC37EAE00E903EA /* NSDate+Utilities.m in Sources */,
+				136506891DE5A4BD001F7FE7 /* ZCYRepairListModel.m in Sources */,
+				136506871DE5A4BD001F7FE7 /* ZCYRepairApplyModel.m in Sources */,
 				492E231C1DD8B0530083F135 /* UIView+Radius.m in Sources */,
 				496EF59C1DC78F4F0028B5BA /* ZCYCardHelper.m in Sources */,
 				49AC73FD1DC201EA00E903EA /* ZCYTimeTableModel.m in Sources */,
 				4951C8AE1DBA41A500E5AC63 /* ZCYHomeTabBarController.m in Sources */,
 				49061F5B1DDF325E00E2923A /* ZCYDetailCourseView.m in Sources */,
+				1365067D1DE5A447001F7FE7 /* ZCYRepairApplyViewController.m in Sources */,
+				136506941DE5A521001F7FE7 /* ZCYRepairApplyHelper.m in Sources */,
 				499232DA1DC4A28C00B17B54 /* ZCYCourseView.m in Sources */,
 				49AC73EB1DC0EC8100E903EA /* ZCYUserMgr.m in Sources */,
 				4951C8B01DBA41A500E5AC63 /* ZCYNavigationController.m in Sources */,
@@ -709,14 +789,29 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = YLLJA83YGF;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/在重邮/Classes/Support/ZCYPrefix.pch";
 				INFOPLIST_FILE = "在重邮/SupportingFiles/ZCYInfo.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AFNetworking\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/CocoaLumberjack\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/FMDB\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/JSPatch\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/MBProgressHUD\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/SDWebImage\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/MJRefresh\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Masonry\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/YYImage\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/YYModel\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/YYText\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = wakeen.ios.org.INCQUPT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -726,7 +821,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = YLLJA83YGF;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/在重邮/Classes/Support/ZCYPrefix.pch";
 				INFOPLIST_FILE = "在重邮/SupportingFiles/ZCYInfo.plist";
@@ -734,6 +829,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wakeen.ios.org.INCQUPT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

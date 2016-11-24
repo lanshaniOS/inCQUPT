@@ -9,12 +9,11 @@
 #import "ZCYAppDelegate.h"
 #import "ZCYHomeTabBarController.h"
 #import "ZCYLoginViewController.h"
-#import "ZCYNavigationController.h"
-#import "ZCYCourseViewController.h"
+#import "ZCYUserMgr.h"
+#import "ZCYGetRepairApplyData.h"
+#import "ZCYGetRepairAdrressHelper.h"
 
 @interface ZCYAppDelegate ()
-
-@property (strong, nonatomic)  ZCYHomeTabBarController *tabBarC;  /**< TabbarVC */
 
 @end
 
@@ -23,18 +22,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = kCommonWhite_Color;
     
-    UIApplicationShortcutIcon *shareIcon = [UIApplicationShortcutIcon iconWithType:UIApplicationShortcutIconTypeShare];
-    UIMutableApplicationShortcutItem *shareItem = [[UIMutableApplicationShortcutItem alloc] initWithType:@"shareItem" localizedTitle:@"分享"];
-    shareItem.icon = shareIcon;
-    
-    UIApplicationShortcutIcon *courseIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"课表"];
-    UIApplicationShortcutItem *courseItem = [[UIApplicationShortcutItem alloc] initWithType:@"courseItem" localizedTitle:@"课表" localizedSubtitle:nil icon:courseIcon userInfo:nil];
-    
-    application.shortcutItems = @[shareItem, courseItem];
     NSData *userMgr = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERMGR"];
     ZCYUserMgr *sharedMgr = [NSKeyedUnarchiver unarchiveObjectWithData:userMgr];
     if ([sharedMgr.studentNumber  isEqualToString: @""] || sharedMgr.studentNumber == nil)
@@ -42,24 +32,31 @@
         ZCYLoginViewController *loginVC = [[ZCYLoginViewController alloc] init];
         self.window.rootViewController = loginVC;
     } else {
-        self.tabBarC = [[ZCYHomeTabBarController alloc] init];
-        self.window.rootViewController = self.tabBarC;
+        ZCYHomeTabBarController *tabBarC = [[ZCYHomeTabBarController alloc] init];
+        self.window.rootViewController = tabBarC;
 
     }
-    
     [self.window makeKeyAndVisible];
     
-    return YES;
-}
-
-- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler
-{
-    if ([shortcutItem.type isEqualToString:@"courseItem"])
-    {
-        ZCYNavigationController *navigationC = self.tabBarC.viewControllers[0];
-        ZCYCourseViewController *courseVC = [[ZCYCourseViewController alloc] init];
-        [navigationC pushViewController:courseVC animated:NO];
+    if ([ZCYUserMgr sharedMgr].repairInfomation == nil) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            [ZCYGetRepairApplyData getRepairApplyDataFromeNet:^(NSError *error, NSDictionary *dic) {
+                [ZCYUserMgr sharedMgr].repairInfomation = [NSDictionary dictionaryWithDictionary:dic];
+                NSLog(@"%@",dic);
+            }];
+        });
     }
+    
+    if ([ZCYUserMgr sharedMgr].repairAddressChoices == nil) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            [ZCYGetRepairAdrressHelper getRepairAdrressFromeNet:^(NSError *error, NSArray *arr) {
+                [ZCYUserMgr sharedMgr].repairAddressChoices = [NSArray arrayWithArray:arr];
+                NSLog(@"===%@",arr);
+            }];
+        });
+    }
+    
+    return YES;
 }
 
 

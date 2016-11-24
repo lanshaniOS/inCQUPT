@@ -18,7 +18,7 @@
                               @"userName" : username,
                               @"password" : password
                               };
-    [[ZCYNetworkHelperMgr sharedMgr] wx_requestWithData:userDic andCompletionBlock:^(NSError *error, id response, NSURLSessionDataTask *task) {
+    [[ZCYNetworkHelperMgr sharedMgr] wx_requestPostWithData:userDic andCompletionBlock:^(NSError *error, id response, NSURLSessionDataTask *task) {
         if (error)
         {
             completionBlock(error, nil);

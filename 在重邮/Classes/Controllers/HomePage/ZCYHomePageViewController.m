@@ -19,6 +19,7 @@
 #import "ZCYMoreFunctionViewController.h"
 #import "ZCYCardHelper.h"
 
+
 @interface ZCYHomePageViewController () <UIScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (strong, nonatomic) UIScrollView *backgroundScrollView;  /**< 背景下拉板 */
@@ -52,6 +53,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     self.navigationController.navigationBar.alpha = (self.backgroundScrollView.contentOffset.y)/355 * 2.0;
+    
     [super viewDidAppear:animated];
    
 }

@@ -16,6 +16,8 @@
 @property (strong, nonatomic) NSString *userName;  /**< 用户名称 */
 @property (strong, nonatomic) NSString *eduType;  /**< 教育水平（本科生、研究生） */
 @property (strong, nonatomic) NSString *eduMajor;  /**< 专业 */
+@property (nonatomic,strong) NSDictionary *repairInfomation;
+@property (nonatomic,strong) NSArray *repairAddressChoices;
 
 + (ZCYUserMgr *)sharedMgr;
 

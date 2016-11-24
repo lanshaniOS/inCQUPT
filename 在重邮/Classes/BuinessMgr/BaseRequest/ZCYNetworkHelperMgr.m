@@ -44,6 +44,7 @@ static const NSString *WXURL = @"http://wx.cqupt.edu.cn";
     }];
 }
 
+
 - (void)wx_requestWithData:(NSDictionary *)data andCompletionBlock:(void(^)(NSError *, id, NSURLSessionDataTask *))completionBlock andURLPath:(NSString *)urlPath
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
