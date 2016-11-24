@@ -7,7 +7,7 @@
 //
 
 #import "ZCYUserValidateHelper.h"
-
+#import "ZCYNetworkHelperMgr.h"
 
 
 @implementation ZCYUserValidateHelper
