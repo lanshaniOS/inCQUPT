@@ -195,6 +195,11 @@
                         ZCYUserMgr *userMgr = [ZCYUserMgr sharedMgr];
                         NSData *archiveUserData = [NSKeyedArchiver archivedDataWithRootObject:userMgr];
                         [[NSUserDefaults standardUserDefaults] setObject:archiveUserData forKey:@"USERMGR"];
+                        
+                        //共享数据
+                        NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.wakeen.ios.dog"];
+                        [userDefaults setObject:archiveUserData forKey:@"shared_usermgr"];
+                        
                          [[ZCYProgressHUD sharedHUD] showWithText:@"登录成功" inView:self.view hideAfterDelay:0.0f];
                         [[NSUserDefaults standardUserDefaults] setObject:self.accountTF.text forKey:@"private_userNumber"];
                         [NSThread sleepForTimeInterval:1.0f];

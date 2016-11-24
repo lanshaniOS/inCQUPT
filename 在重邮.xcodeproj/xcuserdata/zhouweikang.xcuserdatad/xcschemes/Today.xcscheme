@@ -15,9 +15,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "498D31141DE5717800C30828"
-               BuildableName = "share.appex"
-               BlueprintName = "share"
+               BlueprintIdentifier = "49ECE7231DE5D68700163D5C"
+               BuildableName = "Today.appex"
+               BlueprintName = "Today"
                ReferencedContainer = "container:&#x5728;&#x91cd;&#x90ae;.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,9 +47,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "498D31141DE5717800C30828"
-            BuildableName = "share.appex"
-            BlueprintName = "share"
+            BlueprintIdentifier = "49ECE7231DE5D68700163D5C"
+            BuildableName = "Today.appex"
+            BlueprintName = "Today"
             ReferencedContainer = "container:&#x5728;&#x91cd;&#x90ae;.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -68,19 +68,32 @@
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
       <RemoteRunnable
-         runnableDebuggingMode = "1"
-         BundleIdentifier = "wakeen.ios.org.INCQUPT"
-         RemotePath = "/Users/zhouweikang/Library/Developer/CoreSimulator/Devices/F610BDA3-A32A-43CB-8593-B3404D113E82/data/Containers/Bundle/Application/27CBED47-CEF7-41DF-88E5-BE1961634A5D/&#x5728;&#x91cd;&#x90ae;.app">
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.springboard">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "49ECE7231DE5D68700163D5C"
+            BuildableName = "Today.appex"
+            BlueprintName = "Today"
+            ReferencedContainer = "container:&#x5728;&#x91cd;&#x90ae;.xcodeproj">
+         </BuildableReference>
       </RemoteRunnable>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "493744131DB1C1F700E49E4E"
-            BuildableName = "&#x5728;&#x91cd;&#x90ae;.app"
-            BlueprintName = "&#x5728;&#x91cd;&#x90ae;"
+            BlueprintIdentifier = "49ECE7231DE5D68700163D5C"
+            BuildableName = "Today.appex"
+            BlueprintName = "Today"
             ReferencedContainer = "container:&#x5728;&#x91cd;&#x90ae;.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "OS_ACTIVITY_MODE"
+            value = "disable"
+            isEnabled = "NO">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
