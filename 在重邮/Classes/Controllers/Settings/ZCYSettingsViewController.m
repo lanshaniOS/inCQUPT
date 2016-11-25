@@ -34,6 +34,10 @@
     NSData *userMgr = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERMGR"];
     ZCYUserMgr *sharedMgr = [NSKeyedUnarchiver unarchiveObjectWithData:userMgr];
     sharedMgr = nil;
+    //清空共享数据
+    NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.wakeen.ios.dog"];
+    [userDefaults setObject:nil forKey:@"shared_usermgr"];
+    //清空用户数据
     NSData *archiveUserData = [NSKeyedArchiver archivedDataWithRootObject:sharedMgr];
     [[NSUserDefaults standardUserDefaults] setObject:archiveUserData forKey:@"USERMGR"];
     

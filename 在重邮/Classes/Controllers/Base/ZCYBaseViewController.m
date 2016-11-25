@@ -20,6 +20,12 @@
     self.view.backgroundColor = kCommonWhite_Color;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.alpha = 1.0f;
+    self.navigationController.navigationBar.hidden = NO;
+}
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
