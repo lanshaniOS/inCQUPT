@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "19B42D07E0C49ED4AA5B16D9A4137881CD59F4D1",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "29B841A78ADB181D932ACCBF90F3137F04DB4B84" : 9223372036854775807,
+    "19B42D07E0C49ED4AA5B16D9A4137881CD59F4D1" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "980DBF5E-747C-4FDC-9BAC-626D7035D393",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "29B841A78ADB181D932ACCBF90F3137F04DB4B84" : "..\/ZWKCharts-master",
+    "19B42D07E0C49ED4AA5B16D9A4137881CD59F4D1" : "%E5%9C%A8%E9%87%8D%E9%82%AE\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "在重邮",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "在重邮.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/lanshaniOS\/inCQUPT.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "19B42D07E0C49ED4AA5B16D9A4137881CD59F4D1"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Wakeen96\/ZWKCharts.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "29B841A78ADB181D932ACCBF90F3137F04DB4B84"
+    }
+  ]
+}

@@ -12,4 +12,5 @@
 
 - (void)setCellWithBookName:(NSString *)bookName andLendTime:(NSString *)lendTime andBackTime:(NSString *)backTime;
 
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier WithBookName:(NSString *)bookName andLendTime:(NSString *)lendTime andBackTime:(NSString *)backTime andWidth:(CGFloat)width;
 @end

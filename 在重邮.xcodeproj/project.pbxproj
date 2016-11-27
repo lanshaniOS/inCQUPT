@@ -55,6 +55,8 @@
 		49A1D13C1DE86D7800C93F74 /* ZCYLendBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A1D13B1DE86D7800C93F74 /* ZCYLendBookViewController.m */; };
 		49A1D1401DE8792300C93F74 /* ZCYLendingBookHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A1D13F1DE8792300C93F74 /* ZCYLendingBookHelper.m */; };
 		49A1D1441DE87F9100C93F74 /* ZCYLendingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A1D1431DE87F9100C93F74 /* ZCYLendingTableViewCell.m */; };
+		49A810941DE9D23C00B0183C /* ZWKBarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A810911DE9D23C00B0183C /* ZWKBarChart.m */; };
+		49A810951DE9D23C00B0183C /* ZWKPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A810931DE9D23C00B0183C /* ZWKPieChart.m */; };
 		49AC73EB1DC0EC8100E903EA /* ZCYUserMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AC73EA1DC0EC8100E903EA /* ZCYUserMgr.m */; };
 		49AC73EF1DC0F09300E903EA /* ZCYTimeTableHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AC73EE1DC0F09300E903EA /* ZCYTimeTableHelper.m */; };
 		49AC73FD1DC201EA00E903EA /* ZCYTimeTableModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AC73FC1DC201EA00E903EA /* ZCYTimeTableModel.m */; };
@@ -180,6 +182,10 @@
 		49A1D13F1DE8792300C93F74 /* ZCYLendingBookHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYLendingBookHelper.m; sourceTree = "<group>"; };
 		49A1D1421DE87F9100C93F74 /* ZCYLendingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYLendingTableViewCell.h; sourceTree = "<group>"; };
 		49A1D1431DE87F9100C93F74 /* ZCYLendingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYLendingTableViewCell.m; sourceTree = "<group>"; };
+		49A810901DE9D23C00B0183C /* ZWKBarChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWKBarChart.h; sourceTree = "<group>"; };
+		49A810911DE9D23C00B0183C /* ZWKBarChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWKBarChart.m; sourceTree = "<group>"; };
+		49A810921DE9D23C00B0183C /* ZWKPieChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWKPieChart.h; sourceTree = "<group>"; };
+		49A810931DE9D23C00B0183C /* ZWKPieChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWKPieChart.m; sourceTree = "<group>"; };
 		49AC73E91DC0EC8100E903EA /* ZCYUserMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYUserMgr.h; sourceTree = "<group>"; };
 		49AC73EA1DC0EC8100E903EA /* ZCYUserMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYUserMgr.m; sourceTree = "<group>"; };
 		49AC73ED1DC0F09300E903EA /* ZCYTimeTableHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYTimeTableHelper.h; sourceTree = "<group>"; };
@@ -457,6 +463,7 @@
 		4951C8971DBA409700E5AC63 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				49A8108F1DE9D23C00B0183C /* ZWKCharts */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
@@ -543,6 +550,18 @@
 				49A1D1431DE87F9100C93F74 /* ZCYLendingTableViewCell.m */,
 			);
 			path = LendingRecord;
+			sourceTree = "<group>";
+		};
+		49A8108F1DE9D23C00B0183C /* ZWKCharts */ = {
+			isa = PBXGroup;
+			children = (
+				49A810901DE9D23C00B0183C /* ZWKBarChart.h */,
+				49A810911DE9D23C00B0183C /* ZWKBarChart.m */,
+				49A810921DE9D23C00B0183C /* ZWKPieChart.h */,
+				49A810931DE9D23C00B0183C /* ZWKPieChart.m */,
+			);
+			name = ZWKCharts;
+			path = "../../../../ZWKCharts-master/ZWKCharts";
 			sourceTree = "<group>";
 		};
 		49AC73EC1DC0F06100E903EA /* Helper */ = {
@@ -849,6 +868,7 @@
 				49AC73EF1DC0F09300E903EA /* ZCYTimeTableHelper.m in Sources */,
 				49CD413A1DC745530024011D /* ZCYLoginViewController.m in Sources */,
 				496F14DC1DD0B6B3000FA790 /* ZCYUserValidateHelper.m in Sources */,
+				49A810941DE9D23C00B0183C /* ZWKBarChart.m in Sources */,
 				496EF5991DC78DD80028B5BA /* ZCYCardDetailViewController.m in Sources */,
 				49A1D13C1DE86D7800C93F74 /* ZCYLendBookViewController.m in Sources */,
 				49AC74051DC2092300E903EA /* ZCYNetworkHelperMgr.m in Sources */,
@@ -858,6 +878,7 @@
 				499232CB1DC487AA00B17B54 /* ZCYProgressHUD.m in Sources */,
 				4951C8BD1DBA41D000E5AC63 /* main.m in Sources */,
 				4951C8B41DBA41C900E5AC63 /* ZCYHomePageViewController.m in Sources */,
+				49A810951DE9D23C00B0183C /* ZWKPieChart.m in Sources */,
 				498D310F1DE4659B00C30828 /* ZCYMoreFunctionViewController.m in Sources */,
 				4951C8B61DBA41C900E5AC63 /* ZCYInformationViewController.m in Sources */,
 				49061F581DDB4F7B00E2923A /* UILabel+Common.m in Sources */,
