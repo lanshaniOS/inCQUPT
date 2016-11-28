@@ -18,11 +18,15 @@
 @property (strong, nonatomic) NSString *debtString;  /**< 欠债总数 */
 @property (strong, nonatomic) NSString *historyString;  /**< 总共借书总数 */
 @property (strong, nonatomic) UILabel *tipLabel;  /**< 没有借书的提示 */
+@property (strong, nonatomic) UIView *topView;  /**< 顶部 */
 
 
 @end
 
 @implementation ZCYLendBookViewController
+{
+    BOOL _userHaveData;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -35,11 +39,30 @@
     return @"借阅信息";
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if ([ZCYUserMgr sharedMgr].lendBookDic)
+    {
+        _userHaveData = YES;
+        self.tipLabel.hidden = YES;
+        self.bookList = [ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"book_list"];
+        self.debtString = [ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"dbet"];
+        self.totalBookString = [ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"books_num"];
+        self.historyString = [ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"history"];
+        
+    } else {
+        _userHaveData = NO;
+        self.tipLabel.hidden = NO;
+    }
+    [self getBooklistWithStudentNum:[ZCYUserMgr sharedMgr].studentNumber];
+}
+
 - (void)initUI
 {
     [self initMainTableView];
     [self initTipLabel];
-    [self getBooklistWithStudentNum:[ZCYUserMgr sharedMgr].studentNumber];
+    [self initTopView];
 }
 
 - (void)initMainTableView
@@ -52,10 +75,80 @@
     [self.view addSubview:self.mainTableView];
     [self.mainTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.right.and.bottom.equalTo(self.view);
-        make.top.equalTo(self.view).with.offset(0);
+        make.top.equalTo(self.view).with.offset(100);
     }];
 }
 
+- (void)initTopView
+{
+    self.topView = [[UIView alloc] init];
+    self.topView.backgroundColor = kCommonWhite_Color;
+    
+    [self.view addSubview:self.topView];
+    [self.topView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_top).with.offset(64);
+        make.left.and.right.equalTo(self.view);
+        make.height.mas_equalTo(100);
+    }];
+    NSArray *numArray;
+    if (![[ZCYUserMgr sharedMgr].lendBookDic  isEqual: @{}])
+    {
+        numArray = @[[ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"history"], [ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"books_num"], [ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"dbet"]];
+    } else {
+        numArray = @[@"0", @"0", @"0"];
+    }
+    NSArray *nameArray = @[@"累计借书", @"已借书数", @"欠款金额"];
+    NSArray *unitArray = @[@"册", @"册", @"元"];
+    NSArray <UIColor *>*colorArray = @[kDeepGreen_Color, [UIColor colorWithRGBHex:0x32d2b1], [UIColor colorWithRGBHex:0xfc3545]];
+    for (NSInteger index = 0; index < 3; index++) {
+        UIView *detailView = [[UIView alloc] init];
+        [self setView:detailView WithTitle:nameArray[index] andNumber:numArray[index] andUnit:unitArray[index] andTextColor:colorArray[index]];
+        [self.topView addSubview:detailView];
+        if (index == 0)
+        {
+            [detailView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(_topView).with.offset(20);
+                make.width.mas_equalTo(77);
+                make.top.equalTo(self.topView).with.offset(30);
+                make.bottom.equalTo(self.topView).with.offset(-30);
+            }];
+        } else if (index == 1) {
+            [detailView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerX.equalTo(self.topView);
+                make.width.mas_equalTo(77);
+                make.top.equalTo(self.topView).with.offset(30);
+                make.bottom.equalTo(self.topView).with.offset(-30);
+            }];
+        } else {
+            [detailView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.equalTo(_topView).with.offset(-20);
+                make.width.mas_equalTo(77);
+                make.top.equalTo(self.topView).with.offset(30);
+                make.bottom.equalTo(self.topView).with.offset(-30);
+            }];
+        }
+            
+        if (index != 2)
+        {
+            UIView *line = [[UIView alloc] init];
+            line.backgroundColor = kCommonGray_Color;
+            [self.topView addSubview:line];
+            [line mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.equalTo(detailView).with.offset((self.view.frame.size.width - 40 - 77*3)/4);
+                make.centerY.equalTo(detailView);
+                make.size.mas_equalTo(CGSizeMake(1, 30));
+            }];
+        }
+    }
+    UIView *grayLine = [[UIView alloc] init];
+    grayLine.backgroundColor = kDeepGray_Color;
+    [self.view addSubview:grayLine];
+    [grayLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.and.right.equalTo(self.view);
+        make.top.equalTo(self.topView.mas_bottom);
+        make.height.mas_equalTo(0.5);
+    }];
+}
 - (void)initTipLabel
 {
     self.tipLabel = [[UILabel alloc] init];
@@ -65,20 +158,7 @@
         make.centerY.and.centerX.equalTo(self.view);
     }];
 }
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    if ([ZCYUserMgr sharedMgr].lendBookDic)
-    {
-        self.tipLabel.hidden = YES;
-        self.bookList = [ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"book_list"];
-        self.debtString = [ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"dbet"];
-        self.totalBookString = [ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"books_num"];
-        self.historyString = [ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"history"];
-    } else {
-        self.tipLabel.hidden = NO;
-    }
-}
+
 #pragma mark - UITableViewDelegate&&UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -104,10 +184,17 @@
 #pragma mark - tools
 - (void)getBooklistWithStudentNum:(NSString *)studentNumber
 {
+    if (!_userHaveData)
+    {
+        self.tipLabel.text = @"数据加载中...";
+        self.tipLabel.hidden = NO;
+    }
     [ZCYLendingBookHelper getLendingRecordWithStdNumber:[ZCYUserMgr sharedMgr].studentNumber withCompeletionBlock:^(NSError *error, NSDictionary *response) {
         if (error)
         {
             DDLogError(@"%@", error);
+            if (!_userHaveData)
+            self.tipLabel.text = @"网络开小差啦～～～";
             return;
         }
         self.bookList = response[@"data"][@"book_list"];
@@ -115,15 +202,42 @@
         self.totalBookString = response[@"data"][@"books_num"];
         self.historyString = response[@"data"][@"history"];
         [ZCYUserMgr sharedMgr].lendBookDic = response;
-        
         if ([response[@"data"][@"book_list"]  isEqual: @""])
         {
+            self.tipLabel.text = @"本学期没有借书记录哦～～～";
             self.tipLabel.hidden = NO;
         } else {
             self.tipLabel.hidden = YES;
             [self.mainTableView reloadData];
-            
         }
+        self.topView = nil;
+        [self initTopView];
+    }];
+}
+
+- (void)setView:(UIView *)bgView WithTitle:(NSString *)title andNumber:(NSString *)number andUnit:(NSString *)perUnit andTextColor:(UIColor *)color
+{
+    UILabel *nameLabel = [[UILabel alloc] init];
+    [nameLabel setFont:kFont(kStandardPx(36)) andText:title andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    [bgView addSubview:nameLabel];
+    [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.and.top.equalTo(bgView);
+    }];
+    
+    UILabel *numLabel = [[UILabel alloc] init];
+    [numLabel setFont:kFont(kStandardPx(34)) andText:number andTextColor:color andBackgroundColor:kTransparentColor];
+    [bgView addSubview:numLabel];
+    [numLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(nameLabel);
+        make.bottom.equalTo(bgView.mas_bottom).with.offset(10);
+    }];
+    
+    UILabel *unitLabel = [[UILabel alloc] init];
+    [unitLabel setFont:kFont(kStandardPx(28)) andText:perUnit andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    [bgView addSubview:unitLabel];
+    [unitLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(numLabel.mas_right).with.offset(5);
+        make.bottom.equalTo(numLabel).with.offset(-1);
     }];
 }
 @end

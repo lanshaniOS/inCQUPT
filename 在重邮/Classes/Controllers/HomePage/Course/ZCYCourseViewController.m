@@ -281,35 +281,41 @@ static const float animationTime = 0.2f;
 
 - (void)initWeekPickerView
 {
-    self.weekPicker = [[UIPickerView alloc] init];
-    _weekArray = [NSMutableArray arrayWithObjects:@"一", @"二", @"三", @"四", @"五", @"六", @"七", @"八", @"九", @"十", @"十一", @"十二", @"十三", @"十四", @"十五", @"十六", @"十七", @"十八", @"十九", @"二十", @"二十一", nil];
-    _weekArray[[NSDate date].schoolWeek - 1] = [NSString stringWithFormat:@"%@（本周)", [NSDate date].schoolWeekString];
-    self.weekPicker.dataSource = self;
-    self.weekPicker.delegate = self;
-    self.weekPicker.backgroundColor = kCommonLightGray_Color;
-    [self.view addSubview:self.weekPicker];
-    [self.weekPicker mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.right.equalTo(self.bottomView);
-        make.top.equalTo(self.bottomView.mas_bottom).with.offset(-kStandardPx(18)/2);
-        make.height.mas_equalTo(215);
-    }];
+    if (!_weekPicker)
+    {
+        self.weekPicker = [[UIPickerView alloc] init];
+        _weekArray = [NSMutableArray arrayWithObjects:@"一", @"二", @"三", @"四", @"五", @"六", @"七", @"八", @"九", @"十", @"十一", @"十二", @"十三", @"十四", @"十五", @"十六", @"十七", @"十八", @"十九", @"二十", @"二十一", nil];
+        _weekArray[[NSDate date].schoolWeek - 1] = [NSString stringWithFormat:@"%@（本周)", [NSDate date].schoolWeekString];
+        self.weekPicker.dataSource = self;
+        self.weekPicker.delegate = self;
+        self.weekPicker.backgroundColor = kCommonLightGray_Color;
+        [self.view addSubview:self.weekPicker];
+        [self.weekPicker mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.and.right.equalTo(self.bottomView);
+            make.top.equalTo(self.bottomView.mas_bottom).with.offset(-kStandardPx(18)/2);
+            make.height.mas_equalTo(215);
+        }];
+    }
 }
 
 - (void)initCourseDetailView
 {
-    self.detailCourseView = [[ZCYDetailCourseView alloc] init];
-    self.detailCourseView.delegate = self;
-    sum_yCourseViewOffset = -360;
-    [self.view addSubview:self.detailCourseView];
-    self.detailCourseView.hidden = YES;
-    [self.detailCourseView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_bottom).with.offset(0);
-        make.left.and.right.equalTo(self.view);
-        make.height.mas_equalTo(554);
-    }];
-    
-    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleWithCourseDetailView:)];
-    [self.detailCourseView addGestureRecognizer:panGestureRecognizer];
+    if (!_detailCourseView)
+    {
+        self.detailCourseView = [[ZCYDetailCourseView alloc] init];
+        self.detailCourseView.delegate = self;
+        sum_yCourseViewOffset = -360;
+        [self.view addSubview:self.detailCourseView];
+        self.detailCourseView.hidden = YES;
+        [self.detailCourseView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view.mas_bottom).with.offset(0);
+            make.left.and.right.equalTo(self.view);
+            make.height.mas_equalTo(554);
+        }];
+        
+        UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleWithCourseDetailView:)];
+        [self.detailCourseView addGestureRecognizer:panGestureRecognizer];
+    }
 }
 #pragma mark - UIPickerViewDelegate & UIPickerViewDataSource
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView

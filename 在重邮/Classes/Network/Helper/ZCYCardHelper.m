@@ -18,7 +18,7 @@
             completionBlock(error, nil);
             return;
         }
-        completionBlock(nil, response);
+        completionBlock(nil, response[@"data"]);
     } andURLPath:@"/api/get_yktcost.php"];
 }
 @end
