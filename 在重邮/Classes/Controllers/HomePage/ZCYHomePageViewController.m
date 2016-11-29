@@ -7,7 +7,6 @@
 //
 
 #import "ZCYHomePageViewController.h"
-#import "ZCYClassViewController.h"
 #import "ZCYSchoolCardViewController.h"
 #import "ZCYHydroelectricViewController.h"
 #import "ZCYPropertyRepairViewController.h"
@@ -18,6 +17,11 @@
 #import "ZCYCardDetailViewController.h"
 #import "ZCYMoreFunctionViewController.h"
 #import "ZCYCardHelper.h"
+#import "ZCYCardDetailViewController.h"
+#import "ZCYLendBookViewController.h"
+#import "ZCYEmptyClassViewController.h"
+#import "ZCYStudentSearchViewController.h"
+#import "ZCYExaminationViewController.h"
 
 @interface ZCYHomePageViewController () <UIScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
@@ -201,7 +205,7 @@
     [self.functionCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.backgroundImageView.mas_bottom);
         make.left.and.right.equalTo(self.view);
-        make.height.mas_equalTo(100);
+        make.height.mas_equalTo(150);
     }];
     
     UIView *grayLine = [[UIView alloc] init];
@@ -222,7 +226,7 @@
     topicView.font = [UIFont systemFontOfSize:20 weight:2];
     [self.backgroundScrollView addSubview:topicView];
     [topicView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.backgroundScrollView).with.offset(115+self.view.frame.size.width * 255/375);
+        make.top.equalTo(self.backgroundScrollView).with.offset(165+self.view.frame.size.width * 255/375);
         make.height.mas_equalTo(25);
         make.width.mas_equalTo(90);
         make.left.equalTo(self.view).with.offset(20);
@@ -562,27 +566,27 @@
 #pragma mark - UICollectionViewDelegate & UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 1;
+    return 2;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 5;
+    return 4;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
     
     UICollectionViewCell *cell = [self.functionCollectionView dequeueReusableCellWithReuseIdentifier:@"functionCollectionViewCellID" forIndexPath:indexPath];
-    UIImageView *functionImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[self functionDefines][indexPath.row][@"iconName"]]];
+    UIImageView *functionImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[self functionDefines][indexPath.section*4 + indexPath.row][@"iconName"]]];
     functionImageView.frame = cell.bounds;
     
     [cell addSubview:functionImageView];
     
     UILabel *nameLabel = [[UILabel alloc] init];
-    nameLabel.frame = CGRectMake(cell.bounds.origin.x - 5, cell.bounds.origin.y+48, cell.bounds.size.width + 10, 15);
+    nameLabel.frame = CGRectMake(cell.bounds.origin.x - 10, cell.bounds.origin.y+43, cell.bounds.size.width + 20, 15);
     nameLabel.font = kFont(kStandardPx(22));
     nameLabel.textColor = kText_Color_Default;
-    nameLabel.text = [self functionDefines][indexPath.row][@"funcName"];
+    nameLabel.text = [self functionDefines][indexPath.section*4 + indexPath.row][@"funcName"];
     nameLabel.textAlignment = NSTextAlignmentCenter;
     [cell addSubview:nameLabel];
     return cell;
@@ -595,16 +599,16 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 {
-    return (self.view.frame.size.width - 38*5 - 60) / 5;
+    return (self.view.frame.size.width - 38*4 - 60) / 4;
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(20, 30, 0, 30);
+    return UIEdgeInsetsMake(10, 30, 15, 30);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *classString = [self functionDefines][indexPath.row][@"nextController"];
+    NSString *classString = [self functionDefines][indexPath.section*4 + indexPath.row][@"nextController"];
     Class vcClass = NSClassFromString(classString);
     UIViewController *nextViewController = [[vcClass alloc] init];
     [self.navigationController pushViewController:nextViewController animated:YES];
@@ -636,7 +640,7 @@
             
             @{@"funcName" : @"一卡通",
               @"iconName" : @"一卡通",
-              @"nextController" : NSStringFromClass([ZCYSchoolCardViewController class])},
+              @"nextController" : NSStringFromClass([ZCYCardDetailViewController class])},
             
             @{@"funcName" : @"水电查询",
               @"iconName" : @"水电查询",
@@ -646,10 +650,21 @@
               @"iconName" : @"物业报修",
               @"nextController" : NSStringFromClass([ZCYPropertyRepairViewController class])},
             
-            @{@"funcName" : @"更多",
-              @"iconName" : @"更多",
-              @"nextController" : NSStringFromClass([ZCYMoreFunctionViewController class])},
+            @{@"funcName" : @"借阅信息",
+              @"iconName" : @"借阅信息",
+              @"nextController" : NSStringFromClass([ZCYLendBookViewController class])},
             
+            @{@"funcName" : @"学生查询",
+              @"iconName" : @"学生查询",
+              @"nextController" : NSStringFromClass([ZCYStudentSearchViewController class])},
+            
+            @{@"funcName" : @"考试查询",
+              @"iconName" : @"考试查询",
+              @"nextController" : NSStringFromClass([ZCYExaminationViewController class])},
+            
+            @{@"funcName" : @"空教室",
+              @"iconName" : @"空教室",
+              @"nextController" : NSStringFromClass([ZCYEmptyClassViewController class])},
             nil];
 }
 

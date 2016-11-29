@@ -22,7 +22,6 @@ static ZCYUserMgr *sharedMgr = nil;
         sharedMgr = [[self alloc] init];
         sharedMgr.studentNumber = @"";
         sharedMgr.courseArray = [[NSArray alloc] init];
-        sharedMgr.lendBookDic = [[NSDictionary alloc] init];
     });
     return sharedMgr;
 }

@@ -91,7 +91,7 @@
         make.height.mas_equalTo(100);
     }];
     NSArray *numArray;
-    if (![[ZCYUserMgr sharedMgr].lendBookDic  isEqual: @{}])
+    if ([ZCYUserMgr sharedMgr].lendBookDic)
     {
         numArray = @[[ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"history"], [ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"books_num"], [ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"dbet"]];
     } else {

@@ -44,6 +44,7 @@
             self.tipLabel.text = @"网络开小差啦～～～";
         } else {
             self.tipLabel.hidden = YES;
+            self.balanceString = array[0][@"balance"];
             [self initBottomView];
         }
     }];
@@ -94,7 +95,7 @@
     [self.bottomView addSubview:self.balanceLabel];
     [self.balanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).with.offset(16);
-        make.top.equalTo(self.bottomView).with.offset(15);
+        make.top.equalTo(self.bottomView).with.offset(10);
     }];
     
     self.closeDayLabel = [[UILabel alloc] init];
@@ -102,7 +103,7 @@
     [self.bottomView addSubview:self.closeDayLabel];
     [self.closeDayLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.balanceLabel);
-        make.top.equalTo(self.balanceLabel.mas_bottom).with.offset(5);
+        make.top.equalTo(self.balanceLabel.mas_bottom).with.offset(2);
     }];
     
     UIView *line = [[UIView alloc] init];
