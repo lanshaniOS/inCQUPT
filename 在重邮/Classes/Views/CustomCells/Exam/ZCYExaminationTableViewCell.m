@@ -49,10 +49,10 @@
     }];
     
     self.courseNameLabel = [[UILabel alloc] init];
-    [self.courseNameLabel setFont:kFont(kStandardPx(50)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    [self.courseNameLabel setFont:kFont(kStandardPx(40)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
     [self addSubview:self.courseNameLabel];
     [self.courseNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self).with.offset(24);
+        make.top.equalTo(self).with.offset(18);
         make.left.equalTo(dayLabel.mas_right).with.offset(18);
     }];
     
@@ -61,7 +61,7 @@
     [self addSubview:self.examTimeLabel];
     [self.examTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.courseNameLabel);
-        make.top.equalTo(self.courseNameLabel.mas_bottom).with.offset(6);
+        make.top.equalTo(self.courseNameLabel.mas_bottom).with.offset(4);
     }];
     
     self.dateLabel = [[UILabel alloc] init];
@@ -69,24 +69,26 @@
     [self addSubview:self.dateLabel];
     [self.dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.examTimeLabel);
-        make.top.equalTo(self.examTimeLabel.mas_bottom).with.offset(6);
+        make.top.equalTo(self.examTimeLabel.mas_bottom).with.offset(4);
     }];
     
     self.examAttrLabel = [[UILabel alloc] init];
     [self.examAttrLabel setFont:kFont(kStandardPx(26)) andText:@"" andTextColor:kCommonWhite_Color andBackgroundColor:kDeepGreen_Color];
-    self.examAttrLabel.layer.cornerRadius = 2.0f;
+    self.examAttrLabel.textAlignment = NSTextAlignmentCenter;
+    self.examAttrLabel.layer.cornerRadius = 4.0f;
+    self.examAttrLabel.layer.masksToBounds = YES;
     [self addSubview:self.examAttrLabel];
     [self.examAttrLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.courseNameLabel.mas_right).with.offset(6);
         make.bottom.equalTo(self.courseNameLabel);
-        make.size.mas_equalTo(CGSizeMake(20, 40));
+        make.size.mas_equalTo(CGSizeMake(34, 17));
     }];
     
     self.classIDLabel = [[UILabel alloc] init];
-    [self.classIDLabel setFont:kFont(50) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    [self.classIDLabel setFont:kFont(kStandardPx(40)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
     [self addSubview:self.classIDLabel];
     [self.classIDLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self).with.offset(30);
+        make.right.equalTo(self).with.offset(-15);
         make.bottom.equalTo(self.courseNameLabel);
     }];
     
@@ -95,17 +97,26 @@
     [self addSubview:self.sitIDLabel];
     [self.sitIDLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.classIDLabel);
-        make.top.equalTo(self.classIDLabel.mas_bottom).with.offset(6);
+        make.top.equalTo(self.classIDLabel.mas_bottom).with.offset(3);
+    }];
+    
+    UIView *grayLine = [[UIView alloc] init];
+    grayLine.backgroundColor = kCommonGray_Color;
+    [self addSubview:grayLine];
+    [grayLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.and.left.and.right.equalTo(self);
+        make.height.mas_equalTo(0.5);
     }];
 }
 
 - (void)setCellWithExamInfo:(NSDictionary *)examInfo
 {
-    self.courseNameLabel.text = examInfo[@"couese"];
-    self.leavingDayLabel.text = examInfo[@"days"];
+    self.courseNameLabel.text = examInfo[@"course"];
+    self.leavingDayLabel.text = [NSString stringWithFormat:@"%@", examInfo[@"days"]];
     self.examTimeLabel.text = [NSString stringWithFormat:@"第 %@ 周 星期%@ %@", examInfo[@"week"], examInfo[@"day"], examInfo[@"time"]];
-    self.sitIDLabel.text = examInfo[@"number"];
-    self.dateLabel.text = examInfo[@"date"];
-    self.classIDLabel = examInfo[@"room"];
+    self.examAttrLabel.text = examInfo[@"type"];
+    self.sitIDLabel.text = [NSString stringWithFormat:@"座位号%@",examInfo[@"number"]];
+//    self.dateLabel.text = examInfo[@"date"];
+    self.classIDLabel.text = examInfo[@"room"];
 }
 @end

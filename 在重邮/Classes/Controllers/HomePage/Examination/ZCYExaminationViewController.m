@@ -33,6 +33,12 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    if ([ZCYUserMgr sharedMgr].examRecord)
+    {
+        self.tipLabel.hidden = YES;
+        self.examArray = [ZCYUserMgr sharedMgr].examRecord;
+        [self.examTableView reloadData];
+    }
     [super viewWillAppear:animated];
     [ZCYExaminationHelper getExamRecordWithStdNumber:[ZCYUserMgr sharedMgr].studentNumber withCompeletionBlock:^(NSError *error, NSArray *array) {
         if (error)
@@ -42,6 +48,7 @@
         } else {
            
             self.examArray = array;
+            [ZCYUserMgr sharedMgr].examRecord = array;
             if (self.examArray.count == 0)
             {
                 self.tipLabel.hidden = NO;
@@ -69,8 +76,9 @@
     [self.segmentControl addTarget:self action:@selector(changeSegmentValue) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:self.segmentControl];
     [self.segmentControl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.right.equalTo(self.view);
-        make.top.equalTo(self.view).with.offset(64);
+        make.left.equalTo(self.view).with.offset(4);
+        make.right.equalTo(self.view).with.offset(-4);
+        make.top.equalTo(self.view).with.offset(66);
         make.height.mas_equalTo(30);
     }];
 
@@ -110,6 +118,10 @@
     return self.examArray.count;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 84;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ZCYExaminationTableViewCell *cell = [[ZCYExaminationTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ZCYExaminationTableViewCellIdentifier"];

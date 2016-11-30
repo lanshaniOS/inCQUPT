@@ -17,6 +17,7 @@
 @property (strong, nonatomic) NSString *eduType;  /**< 教育水平（本科生、研究生） */
 @property (strong, nonatomic) NSString *eduMajor;  /**< 专业 */
 @property (strong, nonatomic) NSDictionary *lendBookDic;  /**< 借阅信息 */
+@property (strong, nonatomic) NSArray *examRecord;  /**< 考试安排 */
 
 + (ZCYUserMgr *)sharedMgr;
 

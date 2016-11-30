@@ -366,6 +366,7 @@ static const float animationTime = 0.2f;
         case 4:
         case 5:
             cellColor = kDeepGray_Color;
+            break;
         default:
             cellColor = kCommonRed_Color;
             break;
