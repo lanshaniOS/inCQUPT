@@ -9,13 +9,21 @@
 #import "ZCYExaminationViewController.h"
 #import "ZCYExaminationHelper.h"
 #import "ZCYExaminationTableViewCell.h"
+#import "ZCYExamResitTableViewCell.h"
+#import "ZCYExamScoreTableViewCell.h"
+#import "ZCYExamScoreHelper.h"
 
-@interface ZCYExaminationViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface ZCYExaminationViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
 
+@property (strong, nonatomic) UIScrollView *backgroundScrollView;  /**< 滑动背景板 */
 @property (strong, nonatomic) UITableView *examTableView;  /**< 背景下啦  */
 @property (strong, nonatomic) UISegmentedControl *segmentControl;  /**< 顶部导航条 */
-@property (strong, nonatomic) UILabel  *tipLabel;  /**< 提示 */
+@property (strong, nonatomic) UILabel  *examTipLabel;  /**< 提示 */
 @property (strong, nonatomic) NSArray *examArray;  /**< 考试安排数组 */
+@property (strong, nonatomic) UITableView *scoreTableView;  /**< 分数查询 */
+@property (strong, nonatomic) UITableView *resitTableView;  /**< 补考 */
+@property (strong, nonatomic) NSArray *resitArray;  /**< 补考数组 */
+@property (strong, nonatomic) NSArray *scoreArray;  /**< 成绩数组 */
 @end
 
 @implementation ZCYExaminationViewController
@@ -35,7 +43,7 @@
 {
     if ([ZCYUserMgr sharedMgr].examRecord)
     {
-        self.tipLabel.hidden = YES;
+        self.examTipLabel.hidden = YES;
         self.examArray = [ZCYUserMgr sharedMgr].examRecord;
         [self.examTableView reloadData];
     }
@@ -43,7 +51,7 @@
     [ZCYExaminationHelper getExamRecordWithStdNumber:[ZCYUserMgr sharedMgr].studentNumber withCompeletionBlock:^(NSError *error, NSArray *array) {
         if (error)
         {
-            self.tipLabel.text = @"您的网络似乎在开小差哟～～～";
+            self.examTipLabel.text = @"您的网络似乎在开小差哟～～～";
             return;
         } else {
            
@@ -51,10 +59,10 @@
             [ZCYUserMgr sharedMgr].examRecord = array;
             if (self.examArray.count == 0)
             {
-                self.tipLabel.hidden = NO;
-                self.tipLabel.text = @"最近都没有考试哦～～～";
+                self.examTipLabel.hidden = NO;
+                self.examTipLabel.text = @"最近都没有考试哦～～～";
             } else {
-                self.tipLabel.hidden = YES;
+                self.examTipLabel.hidden = YES;
             }
             [self.examTableView reloadData];
         }
@@ -69,7 +77,7 @@
 
 - (void)initSegmentControl
 {
-    self.segmentControl = [[UISegmentedControl alloc] initWithItems:@[@"考试安排", @"补考安排", @"成绩查询"]];
+    self.segmentControl = [[UISegmentedControl alloc] initWithItems:@[@"考试安排", @"成绩查询"]];
     self.segmentControl.tintColor = kDeepGreen_Color;
     
     self.segmentControl.selectedSegmentIndex = 0;
@@ -85,25 +93,65 @@
 }
 - (void)initExamTableView
 {
+    self.backgroundScrollView = [[UIScrollView alloc] init];
+    self.backgroundScrollView.pagingEnabled = YES;
+    self.backgroundScrollView.bounces = NO;
+    self.backgroundScrollView.showsHorizontalScrollIndicator = NO;
+    self.backgroundScrollView.delegate = self;
+    self.backgroundScrollView.contentSize = CGSizeMake(self.view.frame.size.width * 2, self.view.frame.size.height - 100);
+    self.backgroundScrollView.contentOffset = CGPointMake(0, 0);
+    [self.view addSubview:self.backgroundScrollView];
+    [self.backgroundScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.and.right.and.bottom.equalTo(self.view);
+        make.top.equalTo(self.view).with.offset(100);
+    }];
     self.examTableView = [[UITableView alloc] init];
     self.examTableView.delegate = self;
     self.examTableView.dataSource = self;
     self.examTableView.allowsSelection = NO;
     self.examTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:self.examTableView];
+    [self.backgroundScrollView addSubview:self.examTableView];
     [self.examTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.right.and.bottom.equalTo(self.view);
+        make.left.equalTo(self.backgroundScrollView);
+        make.width.mas_equalTo(self.view.frame.size.width);
         make.top.equalTo(self.view).with.offset(100);
+        make.height.mas_offset(self.view.frame.size.height - 100);
     }];
+    
+    self.scoreTableView = [[UITableView alloc] init];
+    self.scoreTableView.delegate = self;
+    self.scoreTableView.dataSource = self;
+    self.scoreTableView.allowsSelection = NO;
+    self.scoreTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.backgroundScrollView addSubview:self.scoreTableView];
+    [self.scoreTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.examTableView.mas_right);
+        make.width.and.top.and.bottom.equalTo(self.examTableView);
+    }];
+    
+//    self.resitTableView = [[UITableView alloc] init];
+//    self.resitTableView.delegate = self;
+//    self.resitTableView.dataSource = self;
+//    self.resitTableView.allowsSelection = NO;
+//    self.resitTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    [self.backgroundScrollView addSubview:self.resitTableView];
+//    [self.resitTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.scoreTableView.mas_right);
+//        make.width.and.top.and.bottom.equalTo(self.examTableView);
+//    }];
+
 }
 
 - (void)initTipLabel
 {
-    self.tipLabel = [[UILabel alloc] init];
-    [self.tipLabel setFont:kFont(kStandardPx(50)) andText:@"获取数据中..." andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
-    [self.view addSubview:self.tipLabel];
-    [self.tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.and.centerX.equalTo(self.view);
+    self.examTipLabel = [[UILabel alloc] init];
+    [self.examTipLabel setFont:kFont(kStandardPx(50)) andText:@"获取数据中..." andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
+    self.examTipLabel.textAlignment = NSTextAlignmentCenter;
+    [self.backgroundScrollView addSubview:self.examTipLabel];
+    [self.examTipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.backgroundScrollView);
+        make.centerY.equalTo(self.backgroundScrollView);
+        make.width.mas_equalTo(self.view.frame.size.width);
     }];
 }
 
@@ -115,7 +163,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.examArray.count;
+    if (tableView == self.examTableView) {
+        return self.examArray.count;
+    } else if (tableView == self.resitTableView) {
+        return self.resitArray.count;
+    } else {
+        return self.scoreArray.count;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -124,13 +178,46 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ZCYExaminationTableViewCell *cell = [[ZCYExaminationTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ZCYExaminationTableViewCellIdentifier"];
-    [cell setCellWithExamInfo:self.examArray[indexPath.row]];
-    return cell;
+    if (tableView == self.examTableView) {
+        ZCYExaminationTableViewCell *cell = [[ZCYExaminationTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ZCYExaminationTableViewCellIdentifier"];
+        [cell setCellWithExamInfo:self.examArray[indexPath.row]];
+        return cell;
+    } else if (tableView == self.resitTableView) {
+        ZCYExamResitTableViewCell *cell = [[ZCYExamResitTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ZCYExamResitTableViewCellIdentifier"];
+        return cell;
+    } else {
+        ZCYExamScoreTableViewCell *cell = [[ZCYExamScoreTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ZCYExamScoreTableViewCellIdentifier"];
+        [cell setCellWithScoreInfo:self.scoreArray[indexPath.row]];
+        return cell;
+    }
+    
+}
+
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    self.segmentControl.selectedSegmentIndex = scrollView.contentOffset.x/self.view.frame.size.width;
+//    if (self.segmentControl.selectedSegmentIndex == 1)
+//    {
+//        [ZCYExamScoreHelper getExamScoreWithStdNumber:[ZCYUserMgr sharedMgr].studentNumber withCompeletionBlock:^(NSError *error, NSArray *array) {
+//            if (error)
+//            {
+//                self.tipLabel.text = [error localizedDescription];
+//                return;
+//            }
+//            if (array.count == 0)
+//            {
+//                
+//                return;
+//            }
+//            self.scoreArray = array;
+//            [self.scoreTableView reloadData];
+//        }];
+//    }
 }
 #pragma mark - 点击事件
 - (void)changeSegmentValue
 {
-    
+    self.backgroundScrollView.contentOffset = CGPointMake(self.segmentControl.selectedSegmentIndex*self.view.frame.size.width, 0);
 }
 @end

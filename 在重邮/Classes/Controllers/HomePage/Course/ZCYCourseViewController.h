@@ -10,4 +10,6 @@
 
 @interface ZCYCourseViewController : ZCYBaseViewController
 
+- (instancetype)initWithStudentNumber:(NSString *)studentNumber;
+
 @end

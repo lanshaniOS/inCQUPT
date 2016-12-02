@@ -27,14 +27,15 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = kCommonWhite_Color;
     
-    UIApplicationShortcutIcon *shareIcon = [UIApplicationShortcutIcon iconWithType:UIApplicationShortcutIconTypeShare];
-    UIMutableApplicationShortcutItem *shareItem = [[UIMutableApplicationShortcutItem alloc] initWithType:@"shareItem" localizedTitle:@"分享"];
-    shareItem.icon = shareIcon;
-    
-    UIApplicationShortcutIcon *courseIcon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"课表"];
-    UIApplicationShortcutItem *courseItem = [[UIApplicationShortcutItem alloc] initWithType:@"courseItem" localizedTitle:@"课表" localizedSubtitle:nil icon:courseIcon userInfo:nil];
-    
-    application.shortcutItems = @[shareItem, courseItem];
+    UIApplicationShortcutIcon *courseIcon1 = [UIApplicationShortcutIcon iconWithTemplateImageName:@"3D_课表"];
+    UIApplicationShortcutItem *courseItem1 = [[UIApplicationShortcutItem alloc] initWithType:@"courseItem1" localizedTitle:@"课表查询" localizedSubtitle:nil icon:courseIcon1 userInfo:nil];
+    UIApplicationShortcutIcon *courseIcon2 = [UIApplicationShortcutIcon iconWithTemplateImageName:@"3D_考试"];
+    UIApplicationShortcutItem *courseItem2 = [[UIApplicationShortcutItem alloc] initWithType:@"courseItem2" localizedTitle:@"考试查询" localizedSubtitle:nil icon:courseIcon2 userInfo:nil];
+    UIApplicationShortcutIcon *courseIcon3 = [UIApplicationShortcutIcon iconWithTemplateImageName:@"3D_学生查询"];
+    UIApplicationShortcutItem *courseItem3 = [[UIApplicationShortcutItem alloc] initWithType:@"courseItem3" localizedTitle:@"学生查询" localizedSubtitle:nil icon:courseIcon3 userInfo:nil];
+    UIApplicationShortcutIcon *courseIcon4 = [UIApplicationShortcutIcon iconWithTemplateImageName:@"3D_教室"];
+    UIApplicationShortcutItem *courseItem4 = [[UIApplicationShortcutItem alloc] initWithType:@"courseItem4" localizedTitle:@"空教室查询" localizedSubtitle:nil icon:courseIcon4 userInfo:nil];
+    application.shortcutItems = @[courseItem1, courseItem2, courseItem3, courseItem4];
     NSData *userMgr = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERMGR"];
     ZCYUserMgr *sharedMgr = [NSKeyedUnarchiver unarchiveObjectWithData:userMgr];
     if ([sharedMgr.studentNumber  isEqualToString: @""] || sharedMgr.studentNumber == nil)
@@ -54,7 +55,7 @@
 
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler
 {
-    if ([shortcutItem.type isEqualToString:@"courseItem"])
+    if ([shortcutItem.type isEqualToString:@"courseItem1"])
     {
         ZCYNavigationController *navigationC = self.tabBarC.viewControllers[0];
         ZCYCourseViewController *courseVC = [[ZCYCourseViewController alloc] init];

@@ -58,7 +58,7 @@
         make.top.mas_equalTo(self.view);
         make.height.mas_equalTo(255);
     }];
-  self.logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"zcy-appIcon-180"]];
+  self.logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AppIcon"]];
     [self.view addSubview:self.logoImage];
     [self.logoImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.and.height.mas_equalTo(92);
@@ -177,6 +177,7 @@
             [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0f];
             [[ZCYProgressHUD sharedHUD] showWithText:@"用户名或密码错误" inView:self.view hideAfterDelay:1.0f];
         } else if ([response[@"status"] longValue] == 200) {
+            [[NSUserDefaults standardUserDefaults] setObject:self.accountTF.text forKey:@"ZCYUSERPASSWORD"];
             NSDictionary *userMessage = response[@"result"];
             [[ZCYUserMgr sharedMgr] yy_modelSetWithDictionary:userMessage];
                 [ZCYTimeTableHelper getTimeTableWithStdNumber:[ZCYUserMgr sharedMgr].studentNumber withCompeletionBlock:^(NSError *error, NSArray *array) {

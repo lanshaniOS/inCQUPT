@@ -8,6 +8,7 @@
 
 #import "ZCYCardDetailViewController.h"
 #import "ZCYCardHelper.h"
+#import "ZCYBezierPath.h"
 
 @interface ZCYCardDetailViewController ()
 
@@ -18,6 +19,8 @@
 @property (strong, nonatomic) UILabel *tipLabel;  /**< 提示 */
 @property (strong, nonatomic) NSString *balanceString;  /**< 余额 */
 @property (strong, nonatomic) UIButton *finishButton;  /**< 完成按钮 */
+@property (strong, nonatomic) NSArray *cardArray;  /**< 消费 */
+@property (strong, nonatomic) NSMutableArray *balanceArray;  /**< 消费数组 */
 
 @end
 
@@ -38,16 +41,36 @@
 {
 
     [self initTipLabel];
-    [ZCYCardHelper getCardDetailWithCardID:@"1639777" withCompletionBlock:^(NSError *error, NSArray *array) {
+    [ZCYCardHelper getCardDetailWithCardID:[[NSUserDefaults standardUserDefaults] objectForKey:@"private_userNumber"] withCompletionBlock:^(NSError *error, NSArray *array) {
         if (error)
         {
             self.tipLabel.text = @"网络开小差啦～～～";
         } else {
             self.tipLabel.hidden = YES;
             self.balanceString = array[0][@"balance"];
+            self.cardArray = array;
             [self initBottomView];
+            
+            NSMutableArray <NSValue *> *pointArray = [NSMutableArray array];
+            for (NSInteger index = 0; index<10; index++)
+            {
+                CGFloat y = [self.cardArray[index][@"balance"] floatValue];
+                [pointArray addObject:[NSValue valueWithCGPoint:CGPointMake(self.view.frame.size.width/10 * index, (self.view.frame.size.height - 68 - y*6.67))]];
+            }
+            ZCYBezierPath *path = [[ZCYBezierPath alloc] initWithPointArray:pointArray];
+            [path drawThirdBezierPathWithWidth:self.view.frame.size.width];
+            path.backgroundColor = kCommonWhite_Color;
+            [self.view addSubview:path];
+            [path mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self.view).with.offset(self.view.frame.size.width/5/2);
+                make.bottom.equalTo(self.view).with.offset(-68);
+                make.right.equalTo(self.view);
+                make.top.equalTo(self.view).with.offset(64);
+            }];
+            
         }
     }];
+    
 }
 
 - (void)initTipLabel
@@ -164,5 +187,26 @@
 - (void)hidePayDetailedView
 {
     
+}
+
+#pragma mark - 冒泡排序
+- (NSArray *)bubbleSortWithArray:(NSMutableArray *)mutableArray
+{
+    float bubble[10] = {[mutableArray[0] floatValue], [mutableArray[1] floatValue], [mutableArray[2] floatValue], [mutableArray[3] floatValue], [mutableArray[4] floatValue], [mutableArray[5] floatValue], [mutableArray[6] floatValue], [mutableArray[7] floatValue], [mutableArray[8] floatValue], [mutableArray[9] floatValue]};
+    
+    for (int i = 0; i<10; i++)
+    {
+        for (int j = 0; j<10-i; j++)
+        {
+            float temp;
+            if (bubble[j] > bubble[j+1])
+            {
+                temp = bubble[j];
+                bubble[j] = bubble[j+1];
+                bubble[j+1] = temp;
+            }
+        }
+    }
+    return @[@(bubble[0]), @(bubble[1]), @(bubble[2]), @(bubble[3]), @(bubble[4]), @(bubble[5]), @(bubble[6]), @(bubble[7]), @(bubble[8]), @(bubble[9])];
 }
 @end

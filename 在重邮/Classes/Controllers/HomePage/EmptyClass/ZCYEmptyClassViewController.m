@@ -7,6 +7,7 @@
 //
 
 #import "ZCYEmptyClassViewController.h"
+#import "ZCYEmptyClassHelpr.h"
 
 static const float animationTime = 0.15f;
 
@@ -25,6 +26,14 @@ static const float animationTime = 0.15f;
 @property (strong, nonatomic) UIButton *fourButton;  /**< 四教 */
 @property (strong, nonatomic) UIButton *fiveButton;  /**< 五教 */
 @property (strong, nonatomic) UIButton *eightButton;  /**< 八教 */
+@property (strong, nonatomic) UIView *showEmptyHouseView;  /**< 空教室 */
+@property (strong, nonatomic) UILabel *oneLabel;  /**< 一楼 */
+@property (strong, nonatomic) UILabel *twoLabel;  /**< 二楼 */
+@property (strong, nonatomic) UILabel *threeLabel;  /**< 三楼 */
+@property (strong, nonatomic) UILabel *fourLabel;  /**< 四楼 */
+@property (strong, nonatomic) UILabel *fiveLabel;  /**< 五楼 */
+@property (strong, nonatomic) UILabel *tipLabel;  /**< 提示框 */
+@property (strong, nonatomic) UIControl *backgroundControl;  /**< 北京视图 */
 
 @end
 
@@ -37,6 +46,7 @@ static const float animationTime = 0.15f;
     NSArray *_shcoolWeekArray;
     NSArray *_weekArray;
     NSArray *_sectionArray;
+    NSInteger _selectedBuilding;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -59,6 +69,7 @@ static const float animationTime = 0.15f;
 {
     _screenWidth = self.view.frame.size.width;
     _screenHeight = self.view.frame.size.height;
+    _selectedBuilding = 2;
     _shcoolWeekArray = [NSArray arrayWithObjects:@"一", @"二", @"三", @"四", @"五", @"六", @"七", @"八", @"九", @"十", @"十一", @"十二", @"十三", @"十四", @"十五", @"十六", @"十七", @"十八", @"十九", @"二十", nil];
     _weekArray = [NSArray arrayWithObjects:@"一", @"二", @"三", @"四", @"五", @"六", @"七", nil];
     _sectionArray = [NSArray arrayWithObjects:@"1-2节", @"3-4节", @"5-6节", @"7-8节", @"9-10节", @"11-12节", nil];
@@ -66,6 +77,7 @@ static const float animationTime = 0.15f;
     [self initClassIDButton];
     [self initBottomView];
     [self initTimePicker];
+    [self initEmptyClassView];
 }
 
 - (void)initBackgroundView
@@ -93,7 +105,7 @@ static const float animationTime = 0.15f;
     [self.view addSubview:self.bottomView];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.view).with.offset(kStandardPx(18)/2);
-        make.height.mas_equalTo(68+kStandardPx(18)/2);
+        make.height.mas_equalTo(68);
         make.left.and.right.equalTo(self.view);
     }];
     
@@ -232,8 +244,75 @@ static const float animationTime = 0.15f;
         make.left.and.right.equalTo(self.view);
         make.height.mas_equalTo(215);
     }];
+   
 }
 
+- (void)initEmptyClassView
+{
+    self.showEmptyHouseView = [[UIView alloc] init];
+    self.showEmptyHouseView.backgroundColor = kCommonLightGray_Color;
+    [self.view addSubview:self.showEmptyHouseView];
+    [self.showEmptyHouseView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.view.mas_bottom).with.offset(-215 - 68);
+        make.height.mas_equalTo(200);
+        make.left.and.right.equalTo(self.view);
+    }];
+    
+    self.oneLabel = [[UILabel alloc] init];
+    [self.oneLabel setFont:kFont(kStandardPx(20)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    self.oneLabel.numberOfLines = 0;
+    [self.showEmptyHouseView addSubview:self.oneLabel];
+    
+    self.twoLabel = [[UILabel alloc] init];
+    [self.twoLabel setFont:kFont(kStandardPx(20)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    self.twoLabel.numberOfLines = 0;
+    [self.showEmptyHouseView addSubview:self.twoLabel];
+    
+    self.threeLabel = [[UILabel alloc] init];
+    [self.threeLabel setFont:kFont(kStandardPx(20)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    self.threeLabel.numberOfLines = 0;
+    [self.showEmptyHouseView addSubview:self.threeLabel];
+    
+    self.fourLabel = [[UILabel alloc] init];
+    [self.fourLabel setFont:kFont(kStandardPx(20)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    self.fourLabel.numberOfLines = 0;
+    [self.showEmptyHouseView addSubview:self.fourLabel];
+    
+    self.fiveLabel = [[UILabel alloc] init];
+    [self.fiveLabel setFont:kFont(kStandardPx(20)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    self.fiveLabel.numberOfLines = 0;
+    [self.showEmptyHouseView addSubview:self.fiveLabel];
+    
+    NSArray *viewArray = @[self.oneLabel, self.twoLabel, self.threeLabel, self.fourLabel, self.fiveLabel];
+    [viewArray mas_distributeViewsAlongAxis:MASAxisTypeVertical withFixedSpacing:8 leadSpacing:10 tailSpacing:10];
+    [viewArray mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@(15));
+        make.width.mas_equalTo(self.view.frame.size.width - 15);
+    }];
+    
+    self.tipLabel = [[UILabel alloc] init];
+    [self.tipLabel setFont:kFont(kStandardPx(40)) andText:@"加载中..." andTextColor:kCommonText_Color andBackgroundColor:kCommonLightGray_Color];
+    self.tipLabel.textAlignment = NSTextAlignmentCenter;
+    [self.showEmptyHouseView addSubview:self.tipLabel];
+    self.showEmptyHouseView.hidden = YES;
+    [self.tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.and.top.and.bottom.and.right.equalTo(self.showEmptyHouseView);
+    }];
+    
+    self.showEmptyHouseView.hidden = YES;
+    
+    self.backgroundControl = [[UIControl alloc] init];
+    self.backgroundControl.backgroundColor = kCommonText_Color;
+    self.backgroundControl.alpha = 0.8;
+    [self.backgroundControl addTarget:self action:@selector(hideTimePickerView) forControlEvents:UIControlEventTouchUpInside];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.backgroundControl];
+    [self.backgroundControl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.and.right.and.top.equalTo([UIApplication sharedApplication].keyWindow);
+        make.bottom.equalTo([UIApplication sharedApplication].keyWindow).with.offset(-215 - 68 - 200);
+    }];
+    self.backgroundControl.hidden = YES;
+    
+}
 #pragma mark - UIPickerViewDelegate && UIPickerViewDataSource
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -245,9 +324,14 @@ static const float animationTime = 0.15f;
 {
     if (component == 0)
     {
-        return _shcoolWeekArray.count;
+        return _shcoolWeekArray.count - [NSDate date].schoolWeek + 1;
     } else if (component == 1) {
-        return _weekArray.count;
+        if ([self.timePicker selectedRowInComponent:0] != 0)
+        {
+            return _weekArray.count;
+        } else {
+            return _weekArray.count - [NSDate date].week;
+        }
     } else {
         return _sectionArray.count;
     }
@@ -267,18 +351,30 @@ static const float animationTime = 0.15f;
 {
     if (component == 0)
     {
-        return [NSString stringWithFormat:@"第%@周", _shcoolWeekArray[row]];
+        return [NSString stringWithFormat:@"第%@周", _shcoolWeekArray[row + [NSDate date].schoolWeek - 1]];
     } else if (component == 1) {
-        return [NSString stringWithFormat:@"星期%@", _weekArray[row]];
+        if ([self.timePicker selectedRowInComponent:0] != 0)
+        {
+            return [NSString stringWithFormat:@"星期%@", _weekArray[row]];
+        } else {
+            return [NSString stringWithFormat:@"星期%@", _weekArray[row + [NSDate date].week - 1]];
+        }
     } else {
         return [NSString stringWithFormat:@"%@", _sectionArray[row]];
     }
 
 }
 
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    [self.timePicker reloadComponent:1];
+    NSInteger week = [self.timePicker selectedRowInComponent:0] == 0 ? [self.timePicker selectedRowInComponent:1] + [NSDate date].week + 1 : [self.timePicker selectedRowInComponent:1];
+    [self getEmptyHouseWithBuilding:_selectedBuilding andSchoolWeek:[self.timePicker selectedRowInComponent:0] + [NSDate date].schoolWeek + 1 andWeek:week andSection:[self.timePicker selectedRowInComponent:2]];
+}
 #pragma mark - 点击事件
 - (void)clickTwo
 {
+    _selectedBuilding = 2;
     self.twoButton.selected = YES;
     self.threeButton.selected = NO;
     self.fourButton.selected = NO;
@@ -290,6 +386,7 @@ static const float animationTime = 0.15f;
 
 - (void)clickThree
 {
+    _selectedBuilding = 3;
     self.twoButton.selected = NO;
     self.threeButton.selected = YES;
     self.fourButton.selected = NO;
@@ -302,6 +399,7 @@ static const float animationTime = 0.15f;
 
 - (void)clickFive
 {
+    _selectedBuilding = 5;
     self.twoButton.selected = NO;
     self.threeButton.selected = NO;
     self.fourButton.selected = NO;
@@ -314,6 +412,7 @@ static const float animationTime = 0.15f;
 
 - (void)clickFour
 {
+    _selectedBuilding = 4;
     self.twoButton.selected = NO;
     self.threeButton.selected = NO;
     self.fourButton.selected = YES;
@@ -326,6 +425,7 @@ static const float animationTime = 0.15f;
 
 - (void)clickEight
 {
+    _selectedBuilding = 8;
     self.twoButton.selected = NO;
     self.threeButton.selected = NO;
     self.fourButton.selected = NO;
@@ -338,6 +438,7 @@ static const float animationTime = 0.15f;
 - (void)showTimePickerView
 {
     self.selectedTimeButton.hidden = YES;
+    self.backgroundControl.hidden = NO;
     self.finishButton.hidden = NO;
     sum_yOffset = -215;
     [UIView animateWithDuration:animationTime animations:^{
@@ -347,12 +448,15 @@ static const float animationTime = 0.15f;
         [self.bottomView.superview layoutIfNeeded];
     }];
 
+    self.showEmptyHouseView.hidden = NO;
+    NSInteger week = [self.timePicker selectedRowInComponent:0] == 0 ? [self.timePicker selectedRowInComponent:1] + [NSDate date].week + 1 : [self.timePicker selectedRowInComponent:1];
+    [self getEmptyHouseWithBuilding:_selectedBuilding andSchoolWeek:[self.timePicker selectedRowInComponent:0] + [NSDate date].schoolWeek + 1 andWeek:week andSection:[self.timePicker selectedRowInComponent:2]];
 }
 
 - (void)hideTimePickerView
 {
-    [self.timePicker selectedRowInComponent:0];
-    [self.timePicker selectedRowInComponent:1];
+    self.showEmptyHouseView.hidden = YES;
+    self.backgroundControl.hidden = YES;
     self.weekTimeLabel.text = [NSString stringWithFormat:@"第%@周 星期%@", _shcoolWeekArray[[self.timePicker selectedRowInComponent:0]], _weekArray[[self.timePicker selectedRowInComponent:1]]];
     self.selectedTimeButton.hidden = NO;
     self.finishButton.hidden = YES;
@@ -426,5 +530,38 @@ static const float animationTime = 0.15f;
     {
         y_oldPanpoint = 0;
     }
+}
+
+#pragma mark - network
+- (void)getEmptyHouseWithBuilding:(NSInteger)building andSchoolWeek:(NSInteger)schoolWeek
+                          andWeek:(NSInteger)week andSection:(NSInteger)section
+{
+    self.tipLabel.hidden = NO;
+    self.tipLabel.text = @"加载中...";
+    [ZCYEmptyClassHelpr getEmptyClassWithBuilding:building andSchoolWeek:schoolWeek andWeek:week andSection:section withCompletionBlock:^(NSError *error, NSArray *array) {
+        self.tipLabel.hidden = YES;
+        if (error)
+        {
+            self.tipLabel.hidden = NO;
+            self.tipLabel.text = @"似乎没有数据哟...";
+            return;
+        }
+        
+        self.oneLabel.text = [NSString stringWithFormat:@"一楼: %@",[self stringWithArrary:array[0][@"room"]]];
+        self.twoLabel.text = [NSString stringWithFormat:@"二楼: %@",[self stringWithArrary:array[1][@"room"]]];
+        self.threeLabel.text = [NSString stringWithFormat:@"三楼: %@",[self stringWithArrary:array[2][@"room"]]];
+        self.fourLabel.text = [NSString stringWithFormat:@"四楼: %@",[self stringWithArrary:array[3][@"room"]]];
+        self.fiveLabel.text = [NSString stringWithFormat:@"五楼: %@",[self stringWithArrary:array[4][@"room"]]];
+    }];
+}
+
+- (NSString *)stringWithArrary:(NSArray *)array
+{
+    NSMutableString *mutableString = [[NSMutableString alloc] init];
+    for (NSString *string in array)
+    {
+         [mutableString appendString:[NSString stringWithFormat:@"%@ | ", string]];
+    }
+    return mutableString;
 }
 @end

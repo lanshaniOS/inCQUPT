@@ -50,10 +50,12 @@
     
     self.courseNameLabel = [[UILabel alloc] init];
     [self.courseNameLabel setFont:kFont(kStandardPx(40)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    self.courseNameLabel.adjustsFontSizeToFitWidth = YES;
     [self addSubview:self.courseNameLabel];
     [self.courseNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).with.offset(18);
         make.left.equalTo(dayLabel.mas_right).with.offset(18);
+        make.width.mas_equalTo(170*self.frame.size.width/375);
     }];
     
     self.examTimeLabel = [[UILabel alloc] init];

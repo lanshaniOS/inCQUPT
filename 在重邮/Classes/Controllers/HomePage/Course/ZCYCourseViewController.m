@@ -9,6 +9,7 @@
 #import "ZCYCourseViewController.h"
 #import "ZCYTimeTableModel.h"
 #import "ZCYDetailCourseView.h"
+#import "ZCYTimeTableHelper.h"
 
 static const float animationTime = 0.2f;
 
@@ -25,7 +26,8 @@ static const float animationTime = 0.2f;
 @property (strong, nonatomic) ZCYDetailCourseView *detailCourseView;  /**< 课程详情 */
 @property (strong, nonatomic) UIControl *backgroundControl;  /**< 背景控制 */
 @property (strong, nonatomic) UILabel *weekLabel;  /**< 周数显示 */
-
+@property (strong, nonatomic) NSString *studentNumber;  /**< 学号 */
+@property (strong, nonatomic) NSArray *courseArray;  /**< 课程数组 */
 @end
 
 @implementation ZCYCourseViewController
@@ -42,6 +44,15 @@ static const float animationTime = 0.2f;
     BOOL _isFirstShowCourse;
 }
 
+- (instancetype)initWithStudentNumber:(NSString *)studentNumber
+{
+    if ([super init])
+    {
+        self.studentNumber = studentNumber;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBar.alpha = 1.0f;
@@ -56,9 +67,29 @@ static const float animationTime = 0.2f;
     self.headerView.hidden = NO;
     self.navigationController.navigationBar.alpha = 1.0f;
     self.navigationController.navigationBar.hidden = NO;
-    
+    if (self.studentNumber && ![self.studentNumber  isEqual: @""])
+    {
+        [[ZCYProgressHUD sharedHUD] rotateWithText:@"获取课表中" inView:self.view];
+        [ZCYTimeTableHelper getTimeTableWithStdNumber:self.studentNumber withCompeletionBlock:^(NSError *error, NSArray *array) {
+            [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0f];
+            if (error)
+            {
+                [[ZCYProgressHUD sharedHUD] showWithText:[error localizedDescription] inView:self.view hideAfterDelay:1.0f];
+                return;
+            }
+            self.courseArray = array;
+            [self.courseCollectionView reloadData];
+        }];
+    } else {
+        self.courseArray = [ZCYUserMgr sharedMgr].courseArray;
+    }
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.weekPicker selectRow:[NSDate date].schoolWeek-1 inComponent:0 animated:NO];
+}
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -371,7 +402,7 @@ static const float animationTime = 0.2f;
             cellColor = kCommonRed_Color;
             break;
     }
-    NSArray *courseArray = [ZCYUserMgr sharedMgr].courseArray[indexPath.row];
+    NSArray *courseArray = self.courseArray[indexPath.row];
     NSArray *colArray = courseArray[indexPath.section];
     
     cell.backgroundColor = kCommonWhite_Color;
@@ -448,7 +479,7 @@ static const float animationTime = 0.2f;
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSArray *courseArray = [ZCYUserMgr sharedMgr].courseArray[indexPath.row];
+    NSArray *courseArray = self.courseArray[indexPath.row];
     NSArray *colArray = courseArray[indexPath.section];
     __block BOOL haveCourse = NO;
  

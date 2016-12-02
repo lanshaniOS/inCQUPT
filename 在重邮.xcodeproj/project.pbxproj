@@ -71,6 +71,13 @@
 		49EA61311DEDAA2D003A548A /* ZCYStudentSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EA61301DEDAA2D003A548A /* ZCYStudentSearchViewController.m */; };
 		49EA61361DEDB526003A548A /* ZCYExaminationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EA61351DEDB526003A548A /* ZCYExaminationHelper.m */; };
 		49EA613A1DEDB688003A548A /* ZCYExaminationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EA61391DEDB688003A548A /* ZCYExaminationTableViewCell.m */; };
+		49EA613E1DF0075B003A548A /* ZCYStudentSeachHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EA613D1DF0075B003A548A /* ZCYStudentSeachHelper.m */; };
+		49EA61411DF0222B003A548A /* ZCYStudentDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EA61401DF0222B003A548A /* ZCYStudentDetailViewController.m */; };
+		49EA61441DF046C5003A548A /* ZCYEmptyClassHelpr.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EA61431DF046C5003A548A /* ZCYEmptyClassHelpr.m */; };
+		49EA61471DF05FBE003A548A /* ZCYExamScoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EA61461DF05FBE003A548A /* ZCYExamScoreTableViewCell.m */; };
+		49EA614A1DF05FCD003A548A /* ZCYExamResitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EA61491DF05FCD003A548A /* ZCYExamResitTableViewCell.m */; };
+		49EA614D1DF0652B003A548A /* ZCYExamScoreHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EA614C1DF0652B003A548A /* ZCYExamScoreHelper.m */; };
+		49EA61501DF17877003A548A /* ZCYBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EA614F1DF17877003A548A /* ZCYBezierPath.m */; };
 		49ECE7261DE5D68700163D5C /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49ECE7251DE5D68700163D5C /* NotificationCenter.framework */; };
 		49ECE72A1DE5D68700163D5C /* ZCYTodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49ECE7291DE5D68700163D5C /* ZCYTodayViewController.m */; };
 		49ECE7311DE5D68700163D5C /* Today.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 49ECE7241DE5D68700163D5C /* Today.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -218,6 +225,20 @@
 		49EA61351DEDB526003A548A /* ZCYExaminationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYExaminationHelper.m; sourceTree = "<group>"; };
 		49EA61381DEDB688003A548A /* ZCYExaminationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYExaminationTableViewCell.h; sourceTree = "<group>"; };
 		49EA61391DEDB688003A548A /* ZCYExaminationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYExaminationTableViewCell.m; sourceTree = "<group>"; };
+		49EA613C1DF0075B003A548A /* ZCYStudentSeachHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYStudentSeachHelper.h; sourceTree = "<group>"; };
+		49EA613D1DF0075B003A548A /* ZCYStudentSeachHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYStudentSeachHelper.m; sourceTree = "<group>"; };
+		49EA613F1DF0222B003A548A /* ZCYStudentDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZCYStudentDetailViewController.h; path = ../../../Network/Helper/StudentSearch/ZCYStudentDetailViewController.h; sourceTree = "<group>"; };
+		49EA61401DF0222B003A548A /* ZCYStudentDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZCYStudentDetailViewController.m; path = ../../../Network/Helper/StudentSearch/ZCYStudentDetailViewController.m; sourceTree = "<group>"; };
+		49EA61421DF046C5003A548A /* ZCYEmptyClassHelpr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYEmptyClassHelpr.h; sourceTree = "<group>"; };
+		49EA61431DF046C5003A548A /* ZCYEmptyClassHelpr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYEmptyClassHelpr.m; sourceTree = "<group>"; };
+		49EA61451DF05FBE003A548A /* ZCYExamScoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYExamScoreTableViewCell.h; sourceTree = "<group>"; };
+		49EA61461DF05FBE003A548A /* ZCYExamScoreTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYExamScoreTableViewCell.m; sourceTree = "<group>"; };
+		49EA61481DF05FCD003A548A /* ZCYExamResitTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYExamResitTableViewCell.h; sourceTree = "<group>"; };
+		49EA61491DF05FCD003A548A /* ZCYExamResitTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYExamResitTableViewCell.m; sourceTree = "<group>"; };
+		49EA614B1DF0652B003A548A /* ZCYExamScoreHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYExamScoreHelper.h; sourceTree = "<group>"; };
+		49EA614C1DF0652B003A548A /* ZCYExamScoreHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYExamScoreHelper.m; sourceTree = "<group>"; };
+		49EA614E1DF17877003A548A /* ZCYBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYBezierPath.h; sourceTree = "<group>"; };
+		49EA614F1DF17877003A548A /* ZCYBezierPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYBezierPath.m; sourceTree = "<group>"; };
 		49ECE7241DE5D68700163D5C /* Today.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Today.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		49ECE7251DE5D68700163D5C /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		49ECE7281DE5D68700163D5C /* ZCYTodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCYTodayViewController.h; sourceTree = "<group>"; };
@@ -469,6 +490,8 @@
 			children = (
 				499C0AEF1DCA278700E2F61D /* Course */,
 				499232D71DC4A28C00B17B54 /* HomePage */,
+				49EA614E1DF17877003A548A /* ZCYBezierPath.h */,
+				49EA614F1DF17877003A548A /* ZCYBezierPath.m */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -580,6 +603,7 @@
 		49AC73EC1DC0F06100E903EA /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				49EA613B1DF00744003A548A /* StudentSearch */,
 				49EA61331DEDB50A003A548A /* Exam */,
 				49A1D13D1DE8790500C93F74 /* LendingBook */,
 				49AC73ED1DC0F09300E903EA /* ZCYTimeTableHelper.h */,
@@ -588,6 +612,8 @@
 				496EF59B1DC78F4F0028B5BA /* ZCYCardHelper.m */,
 				496F14DA1DD0B6B3000FA790 /* ZCYUserValidateHelper.h */,
 				496F14DB1DD0B6B3000FA790 /* ZCYUserValidateHelper.m */,
+				49EA61421DF046C5003A548A /* ZCYEmptyClassHelpr.h */,
+				49EA61431DF046C5003A548A /* ZCYEmptyClassHelpr.m */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -652,6 +678,8 @@
 			children = (
 				49EA612F1DEDAA2D003A548A /* ZCYStudentSearchViewController.h */,
 				49EA61301DEDAA2D003A548A /* ZCYStudentSearchViewController.m */,
+				49EA613F1DF0222B003A548A /* ZCYStudentDetailViewController.h */,
+				49EA61401DF0222B003A548A /* ZCYStudentDetailViewController.m */,
 			);
 			name = StudentSearch;
 			path = "在重邮/Classes/Controllers/HomePage/StudentSearch";
@@ -662,6 +690,8 @@
 			children = (
 				49EA61341DEDB526003A548A /* ZCYExaminationHelper.h */,
 				49EA61351DEDB526003A548A /* ZCYExaminationHelper.m */,
+				49EA614B1DF0652B003A548A /* ZCYExamScoreHelper.h */,
+				49EA614C1DF0652B003A548A /* ZCYExamScoreHelper.m */,
 			);
 			path = Exam;
 			sourceTree = "<group>";
@@ -671,8 +701,21 @@
 			children = (
 				49EA61381DEDB688003A548A /* ZCYExaminationTableViewCell.h */,
 				49EA61391DEDB688003A548A /* ZCYExaminationTableViewCell.m */,
+				49EA61451DF05FBE003A548A /* ZCYExamScoreTableViewCell.h */,
+				49EA61461DF05FBE003A548A /* ZCYExamScoreTableViewCell.m */,
+				49EA61481DF05FCD003A548A /* ZCYExamResitTableViewCell.h */,
+				49EA61491DF05FCD003A548A /* ZCYExamResitTableViewCell.m */,
 			);
 			path = Exam;
+			sourceTree = "<group>";
+		};
+		49EA613B1DF00744003A548A /* StudentSearch */ = {
+			isa = PBXGroup;
+			children = (
+				49EA613C1DF0075B003A548A /* ZCYStudentSeachHelper.h */,
+				49EA613D1DF0075B003A548A /* ZCYStudentSeachHelper.m */,
+			);
+			path = StudentSearch;
 			sourceTree = "<group>";
 		};
 		49ECE7271DE5D68700163D5C /* Today */ = {
@@ -932,9 +975,11 @@
 				49EA612A1DEDA975003A548A /* ZCYExaminationViewController.m in Sources */,
 				49CD413A1DC745530024011D /* ZCYLoginViewController.m in Sources */,
 				496F14DC1DD0B6B3000FA790 /* ZCYUserValidateHelper.m in Sources */,
+				49EA61501DF17877003A548A /* ZCYBezierPath.m in Sources */,
 				49A810941DE9D23C00B0183C /* ZWKBarChart.m in Sources */,
 				496EF5991DC78DD80028B5BA /* ZCYCardDetailViewController.m in Sources */,
 				49A1D13C1DE86D7800C93F74 /* ZCYLendBookViewController.m in Sources */,
+				49EA61441DF046C5003A548A /* ZCYEmptyClassHelpr.m in Sources */,
 				49AC74051DC2092300E903EA /* ZCYNetworkHelperMgr.m in Sources */,
 				49B730A71DBF949E00F438BD /* ZCYHydroelectricViewController.m in Sources */,
 				49B730A61DBF949A00F438BD /* ZCYSchoolCardViewController.m in Sources */,
@@ -946,6 +991,7 @@
 				49A810951DE9D23C00B0183C /* ZWKPieChart.m in Sources */,
 				498D310F1DE4659B00C30828 /* ZCYMoreFunctionViewController.m in Sources */,
 				4951C8B61DBA41C900E5AC63 /* ZCYInformationViewController.m in Sources */,
+				49EA61471DF05FBE003A548A /* ZCYExamScoreTableViewCell.m in Sources */,
 				49061F581DDB4F7B00E2923A /* UILabel+Common.m in Sources */,
 				4951C8B81DBA41C900E5AC63 /* ZCYSettingsViewController.m in Sources */,
 				49EA61311DEDAA2D003A548A /* ZCYStudentSearchViewController.m in Sources */,
@@ -956,11 +1002,15 @@
 				499B36721DC8E00B00CE2461 /* ZCYLineChart.m in Sources */,
 				499232E01DC4ECBC00B17B54 /* ZCYCourseViewController.m in Sources */,
 				4951C8AC1DBA41A500E5AC63 /* ZCYBaseViewController.m in Sources */,
+				49EA614D1DF0652B003A548A /* ZCYExamScoreHelper.m in Sources */,
 				49AC74081DC37EAE00E903EA /* NSDate+Utilities.m in Sources */,
+				49EA614A1DF05FCD003A548A /* ZCYExamResitTableViewCell.m in Sources */,
 				492E231C1DD8B0530083F135 /* UIView+Radius.m in Sources */,
 				496EF59C1DC78F4F0028B5BA /* ZCYCardHelper.m in Sources */,
+				49EA61411DF0222B003A548A /* ZCYStudentDetailViewController.m in Sources */,
 				49AC73FD1DC201EA00E903EA /* ZCYTimeTableModel.m in Sources */,
 				4951C8AE1DBA41A500E5AC63 /* ZCYHomeTabBarController.m in Sources */,
+				49EA613E1DF0075B003A548A /* ZCYStudentSeachHelper.m in Sources */,
 				49061F5B1DDF325E00E2923A /* ZCYDetailCourseView.m in Sources */,
 				499232DA1DC4A28C00B17B54 /* ZCYCourseView.m in Sources */,
 				49AC73EB1DC0EC8100E903EA /* ZCYUserMgr.m in Sources */,
