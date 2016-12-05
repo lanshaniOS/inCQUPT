@@ -16,11 +16,12 @@
 @property (strong, nonatomic) UILabel *balanceLabel;  /**< 余额 */
 @property (strong, nonatomic) UIButton *payDetailButton;  /**< 消费详情 */
 @property (strong, nonatomic) UILabel *closeDayLabel;  /**< 截止日期 */
-@property (strong, nonatomic) UILabel *tipLabel;  /**< 提示 */
+//@property (strong, nonatomic) UILabel *tipLabel;  /**< 提示 */
 @property (strong, nonatomic) NSString *balanceString;  /**< 余额 */
 @property (strong, nonatomic) UIButton *finishButton;  /**< 完成按钮 */
 @property (strong, nonatomic) NSArray *cardArray;  /**< 消费 */
 @property (strong, nonatomic) NSMutableArray *balanceArray;  /**< 消费数组 */
+@property (strong, nonatomic) UIScrollView *backgroundScrollView;  /**< 背景滑动 */
 
 @end
 
@@ -40,47 +41,145 @@
 - (void)initUI
 {
 
-    [self initTipLabel];
+//    [self initTipLabel];
+    [self initBezierView];
+}
+
+//- (void)initTipLabel
+//{
+//    self.tipLabel = [[UILabel alloc] init];
+//    [self.tipLabel setFont:kFont(kStandardPx(50)) andText:@"获取数据中..." andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
+//    [self.view addSubview:self.tipLabel];
+//    [self.tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.and.centerX.equalTo(self.view);
+//    }];
+//}
+
+- (void)initBezierView
+{
+    self.backgroundScrollView = [[UIScrollView alloc] init];
+    self.backgroundScrollView.contentSize = CGSizeMake(self.view.frame.size.width*2, self.view.frame.size.height - 64 - 68);
+    self.backgroundScrollView.bounces = NO;
+    self.backgroundScrollView.showsVerticalScrollIndicator = NO;
+    self.backgroundScrollView.showsHorizontalScrollIndicator = NO;
+    self.backgroundScrollView.contentOffset = CGPointMake(self.view.frame.size.width, 0);
+    [self.view addSubview:self.backgroundScrollView];
+    [self.backgroundScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.and.right.equalTo(self.view);
+        make.top.equalTo(self.view).with.offset(64);
+        make.bottom.equalTo(self.view).with.offset(-68);
+    }];
+    [[ZCYProgressHUD sharedHUD] rotateWithText:@"数据加载中..." inView:self.view];
     [ZCYCardHelper getCardDetailWithCardID:[[NSUserDefaults standardUserDefaults] objectForKey:@"private_userNumber"] withCompletionBlock:^(NSError *error, NSArray *array) {
+        [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0f];
         if (error)
         {
-            self.tipLabel.text = @"网络开小差啦～～～";
+            [[ZCYProgressHUD sharedHUD] showWithText:[error localizedDescription] inView:self.view hideAfterDelay:1.0f];
+//            self.tipLabel.text = @"网络开小差啦～～～";
         } else {
-            self.tipLabel.hidden = YES;
+//            self.tipLabel.hidden = YES;
             self.balanceString = array[0][@"balance"];
             self.cardArray = array;
             [self initBottomView];
-            
+            NSMutableArray *balcanceArray = [NSMutableArray array];
             NSMutableArray <NSValue *> *pointArray = [NSMutableArray array];
             for (NSInteger index = 0; index<10; index++)
             {
-                CGFloat y = [self.cardArray[index][@"balance"] floatValue];
-                [pointArray addObject:[NSValue valueWithCGPoint:CGPointMake(self.view.frame.size.width/10 * index, (self.view.frame.size.height - 68 - y*6.67))]];
+                [balcanceArray addObject:self.cardArray[index][@"balance"]];
             }
+            NSArray *sortArray = [self bubbleSortWithArray:balcanceArray];
+            
+            NSInteger max = 1;
+//            NSInteger first = [sortArray[0] integerValue];
+            NSInteger last = [sortArray[9] integerValue];
+//            for (NSInteger index = 0; ; index++)
+//            {
+//                if (first / 10 == 0)
+//                {
+//                    min = first * min;
+//                    break;
+//                } else {
+//                    
+//                    first = first / 10;
+//                    min = min *10;
+//                }
+//            }
+            for (NSInteger index = 0; ; index++)
+            {
+                if (last / 10 == 0)
+                {
+                    max = max * last;
+                    break;
+                } else {
+                    last = last / 10;
+                    max = max*10;
+                }
+            }
+            
+            for (NSInteger index = 0; index<10; index++)
+            {
+
+                CGFloat y = [self.cardArray[9-index][@"balance"] floatValue];
+                [pointArray addObject:[NSValue valueWithCGPoint:CGPointMake(self.view.frame.size.width/4.5 * index, self.view.frame.size.height - 128 - 64 - ((self.view.frame.size.height - 128 - 64)/(max + 10)*y))]];
+                UILabel *dayLabel = [[UILabel alloc] init];
+                NSString *string = [self.cardArray[9-index][@"time"] substringWithRange:NSMakeRange(5, 5)];
+                dayLabel.textAlignment = NSTextAlignmentCenter;
+                [dayLabel setFont:kFont(kStandardPx(30)) andText:string andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
+                [self.backgroundScrollView addSubview:dayLabel];
+                [dayLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.equalTo(self.backgroundScrollView).with.offset(index * self.view.frame.size.width/4.5);
+                    make.width.mas_equalTo(self.view.frame.size.width/4.5);
+                    make.bottom.equalTo(self.view).with.offset(-68);
+                    make.height.mas_equalTo(60);
+                }];
+                
+            }
+            
             ZCYBezierPath *path = [[ZCYBezierPath alloc] initWithPointArray:pointArray];
-            [path drawThirdBezierPathWithWidth:self.view.frame.size.width];
+            CAShapeLayer *layer = [path drawThirdBezierPathWithWidth:self.view.frame.size.width andHeight:self.view.frame.size.height];
             path.backgroundColor = kCommonWhite_Color;
-            [self.view addSubview:path];
+            
+            [self.backgroundScrollView addSubview:path];
             [path mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(self.view).with.offset(self.view.frame.size.width/5/2);
-                make.bottom.equalTo(self.view).with.offset(-68);
-                make.right.equalTo(self.view);
+                make.left.equalTo(self.backgroundScrollView);
+//                make.bottom.equalTo(self.backgroundScrollView.mas_bottom).with.offset(-60);
+                make.width.mas_equalTo(self.view.frame.size.width*2);
+                make.height.mas_equalTo(self.view.frame.size.height - 128 - 64);
                 make.top.equalTo(self.view).with.offset(64);
             }];
+            
+            for (NSInteger index = 0; index < 10; index++) {
+                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+                button.backgroundColor = kCommonGray_Color;
+                [button setTag:10000+index];
+                [button addTarget:self action:@selector(clickLine:) forControlEvents:UIControlEventTouchUpInside];
+                [self.backgroundScrollView addSubview:button];
+                [button mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.equalTo(self.backgroundScrollView).with.offset(self.view.frame.size.width/4.5*index);
+                    make.width.mas_equalTo(1);
+                    make.height.mas_equalTo(self.view.frame.size.height - 68 - 64);
+                    make.top.equalTo(self.view).with.offset(64);
+                }];
+                
+            }
+            
+//            UIView *topLine = [[UIView alloc] init];
+//            topLine.
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"渐变图"]];
+//            imageView.backgroundColor = kCommonRed_Color;
+            imageView.layer.mask = layer;
+            [self.backgroundScrollView addSubview:imageView];
+            [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self.backgroundScrollView);
+                make.width.mas_equalTo(self.view.frame.size.width*2);
+                make.top.equalTo(self.view).with.offset(64);
+                make.bottom.equalTo(self.view).with.offset(-128);
+            }];
+            
             
         }
     }];
     
-}
-
-- (void)initTipLabel
-{
-    self.tipLabel = [[UILabel alloc] init];
-    [self.tipLabel setFont:kFont(kStandardPx(50)) andText:@"获取数据中..." andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
-    [self.view addSubview:self.tipLabel];
-    [self.tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.and.centerX.equalTo(self.view);
-    }];
 }
 
 - (void)initBottomView
@@ -166,6 +265,7 @@
         make.height.mas_equalTo(20);
     }];
     
+    
 //    UISwipeGestureRecognizer *upGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(showWeekSelectedView)];
 //    upGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
 //    [self.bottomView addGestureRecognizer:upGestureRecognizer];
@@ -189,24 +289,33 @@
     
 }
 
-#pragma mark - 冒泡排序
+- (void)clickLine:(UIButton *)button
+{
+    if (button.tag == 10001)
+    {
+        NSLog(@"aaaà");
+    }
+}
+
+#pragma mark - TOOLS
 - (NSArray *)bubbleSortWithArray:(NSMutableArray *)mutableArray
 {
     float bubble[10] = {[mutableArray[0] floatValue], [mutableArray[1] floatValue], [mutableArray[2] floatValue], [mutableArray[3] floatValue], [mutableArray[4] floatValue], [mutableArray[5] floatValue], [mutableArray[6] floatValue], [mutableArray[7] floatValue], [mutableArray[8] floatValue], [mutableArray[9] floatValue]};
     
     for (int i = 0; i<10; i++)
     {
-        for (int j = 0; j<10-i; j++)
+        for (int j = 0; j<10-i - 1; j++)
         {
-            float temp;
+            
             if (bubble[j] > bubble[j+1])
             {
+                float temp = 0;
                 temp = bubble[j];
                 bubble[j] = bubble[j+1];
                 bubble[j+1] = temp;
             }
         }
     }
-    return @[@(bubble[0]), @(bubble[1]), @(bubble[2]), @(bubble[3]), @(bubble[4]), @(bubble[5]), @(bubble[6]), @(bubble[7]), @(bubble[8]), @(bubble[9])];
+    return @[[NSNumber numberWithFloat:bubble[0]], @(bubble[1]), @(bubble[2]), @(bubble[3]), @(bubble[4]), @(bubble[5]), @(bubble[6]), @(bubble[7]), @(bubble[8]), @(bubble[9])];
 }
 @end

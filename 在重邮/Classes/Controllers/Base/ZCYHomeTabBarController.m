@@ -41,10 +41,11 @@
         
         naviController.navigationBar.tintColor = kDeepGreen_Color;
         naviController.tabBarItem.title = itemDic[@"name"];
-        naviController.navigationBar.backgroundColor = kCommonLightGray_Color;
+        naviController.navigationBar.barTintColor = kNavBar_Color;
+//        [naviController.navigationBar setBackgroundImage:kNavbar_BgImage forBarMetrics:UIBarMetricsDefault];
         naviController.tabBarItem.image = [[UIImage imageNamed:itemDic[@"icon"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         naviController.tabBarItem.selectedImage = [[UIImage imageNamed:itemDic[@"icon_s"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        
+        naviController.navigationBar.barStyle = UIStatusBarStyleLightContent;
         [viewControllers addObject:naviController];
     }
     self.viewControllers = viewControllers;

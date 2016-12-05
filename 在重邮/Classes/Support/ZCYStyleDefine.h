@@ -71,6 +71,9 @@ static const int ddLogLevel = DDLogLevelInfo;
 #define KText_Color_White               [UIColor colorWithRGBHex:0xffffff]
 #define kText_Color_RealLightGreen      [UIColor colorWithRGBHex:0x9d9d9d]
 
+#define kNavBar_Color                   [UIColor colorWithRGBHex:0x2ac99a]
+#define kNavbar_BgImage                 [UIImage imageWithColor:kNavBar_Color]
+
 #define kGray_Line_Color                [UIColor colorWithRGBHex:0xdfdfdf]
 #define kGray_Background_Color          [UIColor colorWithRGBHex:0xf0f0f0]
 
@@ -87,7 +90,6 @@ static const int ddLogLevel = DDLogLevelInfo;
 #define kNavBar_TitleColor              [UIColor whiteColor]
 #define kNavBar_TitleHighlightColor     [UIColor grayColor]
 
-#define kNavbar_BgImage                 [UIImage imageWithColor:kNavBar_Color]
 #define kTabbar_BgImage                 [UIImage imageWithColor:[UIColor whiteColor]]
 
 #ifndef weakify

@@ -10,7 +10,7 @@
 
 @interface ZCYBezierPath : UIView
 
-- (void)drawThirdBezierPathWithWidth:(CGFloat)screenWidth;
+- (CAShapeLayer *)drawThirdBezierPathWithWidth:(CGFloat)screenWidth andHeight:(CGFloat)screenHeight;
 
 - (instancetype)initWithPointArray:(NSArray <NSValue *> *)array;
 @end

@@ -10,6 +10,9 @@
 		49061F581DDB4F7B00E2923A /* UILabel+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 49061F571DDB4F7B00E2923A /* UILabel+Common.m */; };
 		49061F5B1DDF325E00E2923A /* ZCYDetailCourseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49061F5A1DDF325E00E2923A /* ZCYDetailCourseView.m */; };
 		492E231C1DD8B0530083F135 /* UIView+Radius.m in Sources */ = {isa = PBXBuildFile; fileRef = 492E231B1DD8B0530083F135 /* UIView+Radius.m */; };
+		49403FD61DF58DA400AF47D0 /* ZCYUserDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49403FD51DF58DA400AF47D0 /* ZCYUserDetailViewController.m */; };
+		49403FD91DF5905F00AF47D0 /* ZCYAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49403FD81DF5905F00AF47D0 /* ZCYAlertView.m */; };
+		49403FDC1DF5C40500AF47D0 /* UIImage+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 49403FDB1DF5C40500AF47D0 /* UIImage+Additions.m */; };
 		4951C8A71DBA409700E5AC63 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4951C8991DBA409700E5AC63 /* Assets.xcassets */; };
 		4951C8AC1DBA41A500E5AC63 /* ZCYBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C87E1DBA409700E5AC63 /* ZCYBaseViewController.m */; };
 		4951C8AE1DBA41A500E5AC63 /* ZCYHomeTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4951C8801DBA409700E5AC63 /* ZCYHomeTabBarController.m */; };
@@ -121,6 +124,12 @@
 		492E231A1DD8B0530083F135 /* UIView+Radius.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Radius.h"; sourceTree = "<group>"; };
 		492E231B1DD8B0530083F135 /* UIView+Radius.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Radius.m"; sourceTree = "<group>"; };
 		493744141DB1C1F700E49E4E /* 在重邮.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "在重邮.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		49403FD41DF58DA400AF47D0 /* ZCYUserDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYUserDetailViewController.h; sourceTree = "<group>"; };
+		49403FD51DF58DA400AF47D0 /* ZCYUserDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYUserDetailViewController.m; sourceTree = "<group>"; };
+		49403FD71DF5905F00AF47D0 /* ZCYAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYAlertView.h; sourceTree = "<group>"; };
+		49403FD81DF5905F00AF47D0 /* ZCYAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYAlertView.m; sourceTree = "<group>"; };
+		49403FDA1DF5C40500AF47D0 /* UIImage+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Additions.h"; sourceTree = "<group>"; };
+		49403FDB1DF5C40500AF47D0 /* UIImage+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Additions.m"; sourceTree = "<group>"; };
 		4951C8781DBA409700E5AC63 /* ZCYAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYAppDelegate.h; sourceTree = "<group>"; };
 		4951C8791DBA409700E5AC63 /* ZCYAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYAppDelegate.m; sourceTree = "<group>"; };
 		4951C87D1DBA409700E5AC63 /* ZCYBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYBaseViewController.h; sourceTree = "<group>"; };
@@ -421,6 +430,8 @@
 			children = (
 				4951C88A1DBA409700E5AC63 /* ZCYSettingsViewController.h */,
 				4951C88B1DBA409700E5AC63 /* ZCYSettingsViewController.m */,
+				49403FD41DF58DA400AF47D0 /* ZCYUserDetailViewController.h */,
+				49403FD51DF58DA400AF47D0 /* ZCYUserDetailViewController.m */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -463,6 +474,8 @@
 				492E231B1DD8B0530083F135 /* UIView+Radius.m */,
 				49061F561DDB4F7B00E2923A /* UILabel+Common.h */,
 				49061F571DDB4F7B00E2923A /* UILabel+Common.m */,
+				49403FDA1DF5C40500AF47D0 /* UIImage+Additions.h */,
+				49403FDB1DF5C40500AF47D0 /* UIImage+Additions.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -492,6 +505,8 @@
 				499232D71DC4A28C00B17B54 /* HomePage */,
 				49EA614E1DF17877003A548A /* ZCYBezierPath.h */,
 				49EA614F1DF17877003A548A /* ZCYBezierPath.m */,
+				49403FD71DF5905F00AF47D0 /* ZCYAlertView.h */,
+				49403FD81DF5905F00AF47D0 /* ZCYAlertView.m */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -974,6 +989,7 @@
 				49AC73EF1DC0F09300E903EA /* ZCYTimeTableHelper.m in Sources */,
 				49EA612A1DEDA975003A548A /* ZCYExaminationViewController.m in Sources */,
 				49CD413A1DC745530024011D /* ZCYLoginViewController.m in Sources */,
+				49403FD61DF58DA400AF47D0 /* ZCYUserDetailViewController.m in Sources */,
 				496F14DC1DD0B6B3000FA790 /* ZCYUserValidateHelper.m in Sources */,
 				49EA61501DF17877003A548A /* ZCYBezierPath.m in Sources */,
 				49A810941DE9D23C00B0183C /* ZWKBarChart.m in Sources */,
@@ -986,6 +1002,7 @@
 				49EA61361DEDB526003A548A /* ZCYExaminationHelper.m in Sources */,
 				49EA613A1DEDB688003A548A /* ZCYExaminationTableViewCell.m in Sources */,
 				499232CB1DC487AA00B17B54 /* ZCYProgressHUD.m in Sources */,
+				49403FD91DF5905F00AF47D0 /* ZCYAlertView.m in Sources */,
 				4951C8BD1DBA41D000E5AC63 /* main.m in Sources */,
 				4951C8B41DBA41C900E5AC63 /* ZCYHomePageViewController.m in Sources */,
 				49A810951DE9D23C00B0183C /* ZWKPieChart.m in Sources */,
@@ -1015,6 +1032,7 @@
 				499232DA1DC4A28C00B17B54 /* ZCYCourseView.m in Sources */,
 				49AC73EB1DC0EC8100E903EA /* ZCYUserMgr.m in Sources */,
 				4951C8B01DBA41A500E5AC63 /* ZCYNavigationController.m in Sources */,
+				49403FDC1DF5C40500AF47D0 /* UIImage+Additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -48,21 +48,22 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.alpha = (self.backgroundScrollView.contentOffset.y)/355 * 2.0;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
+//    self.navigationController.navigationBar.alpha = (self.backgroundScrollView.contentOffset.y)/355 * 2.0;
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
-{[super viewDidAppear:animated];
-    self.navigationController.navigationBar.alpha = (self.backgroundScrollView.contentOffset.y)/355 * 2.0;
+{
+    [super viewDidAppear:animated];
+//    self.navigationController.navigationBar.alpha = (self.backgroundScrollView.contentOffset.y)/355 * 2.0;
    
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    self.navigationController.navigationBar.alpha = 1.0f;
+//    self.navigationController.navigationBar.alpha = 1.0f;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)initUI
@@ -442,7 +443,7 @@
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    self.navigationController.navigationBar.alpha = (scrollView.contentOffset.y)/355 * 2.0;
+//    self.navigationController.navigationBar.alpha = (scrollView.contentOffset.y)/355 * 2.0;
     
     if (scrollView.contentOffset. y <= 0.0f)
     {
@@ -615,10 +616,10 @@
 }
 #pragma mark - tools
 
-- (void)becomeActive
-{
-     self.navigationController.navigationBar.alpha = (self.backgroundScrollView.contentOffset.y)/355 * 2.0;
-}
+//- (void)becomeActive
+//{
+//     self.navigationController.navigationBar.alpha = (self.backgroundScrollView.contentOffset.y)/355 * 2.0;
+//}
 
 
 //设置基础标签

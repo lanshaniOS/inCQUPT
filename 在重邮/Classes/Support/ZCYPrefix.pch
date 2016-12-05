@@ -30,5 +30,6 @@
 #import "MBProgressHUD.h"
 #import "ZCYUserMgr.h"
 #import "UILabel+Common.h"
+#import "UIImage+Additions.h"
 
 #endif

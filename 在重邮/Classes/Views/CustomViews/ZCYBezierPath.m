@@ -27,6 +27,7 @@
     CGPoint _nightPoint;
     CGPoint _tenPoint;
     CGFloat _screenWidth;
+    CGFloat _screenHeight;
 }
 
 - (instancetype)initWithPointArray:(NSArray <NSValue *> *)array
@@ -49,12 +50,13 @@
 }
 - (void)drawRect:(CGRect)rect
 {
-    [self drawThirdBezierPathWithWidth:_screenWidth];
+    [self drawThirdBezierPathWithWidth:_screenWidth andHeight:_screenHeight];
 }
 
-- (void)drawThirdBezierPathWithWidth:(CGFloat)screenWidth
+- (CAShapeLayer *)drawThirdBezierPathWithWidth:(CGFloat)screenWidth andHeight:(CGFloat)screenHeight
 {
     _screenWidth = screenWidth;
+    _screenHeight = screenHeight;
     UIBezierPath *path = [UIBezierPath bezierPath];
     
     [path moveToPoint:_onePoint];
@@ -69,17 +71,23 @@
     NSArray *nightLineArray = [self getControlPointWithFirstPoint:_nightPoint andSecondPoint:_tenPoint];
     
     NSArray *lineArray = @[@"", oneLineArray, twoLineArray, threeLineArray, fourLineArray, fiveLineArray, sixLineArray, sevenLineArray, eightLineArray, nightLineArray];
+    
+    [path moveToPoint:CGPointMake(0, _screenHeight-128-64)];
+    [path addLineToPoint:_onePoint];
     for (NSInteger index = 1; index < 10; index++)
     {
         [path addCurveToPoint:[self.pointArray[index] CGPointValue] controlPoint1:[lineArray[index][0] CGPointValue] controlPoint2:[lineArray[index][1] CGPointValue]];
     }
+    [path addLineToPoint:_tenPoint];
+    [path addLineToPoint:CGPointMake(_screenWidth*2, _screenHeight - 128 - 64)];
+    
     for (NSInteger index = 0; index<10; index++)
     {
         UIView *pointView = [[UIView alloc] init];
-        pointView.frame = CGRectMake((index)*screenWidth/10, [self.pointArray[index] CGPointValue].y, 5, 5);
+        pointView.frame = CGRectMake((index)*screenWidth/4.5 - 3.5, [self.pointArray[index] CGPointValue].y - 4, 8, 8);
         pointView.layer.masksToBounds = YES;
         pointView.backgroundColor = kDeepGreen_Color;
-        pointView.layer.cornerRadius = 2.5;
+        pointView.layer.cornerRadius = 4;
         [self addSubview:pointView];
 
     }
@@ -89,9 +97,12 @@
     
     UIColor *strokeColor = kDeepGreen_Color;
     [strokeColor set];
-    
+//    [path closePath];
     [path stroke];
 
+    CAShapeLayer *layer = [CAShapeLayer layer];
+    layer.path = path.CGPath;
+    return layer;
 }
 
 - (NSArray *)getControlPointWithFirstPoint:(CGPoint)firstPoint andSecondPoint:(CGPoint)secondPoint
