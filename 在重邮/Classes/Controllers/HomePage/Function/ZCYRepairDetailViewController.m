@@ -8,7 +8,7 @@
 
 #import "ZCYRepairDetailViewController.h"
 #import "Masonry.h"
-#import "BXDetailCellView.h"
+#import "ZCYRepairDetailCellView.h"
 #import "ZCYStyleDefine.h"
 
 #define kNavigationHeight self.navigationController.navigationBar.frame.size.height
@@ -37,7 +37,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"详情";
-    self.view.backgroundColor = [UIColor redColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self initScrollView];
     [self addYCFirstView];
@@ -67,6 +66,7 @@
         make.top.left.mas_equalTo(10);
     }];
     
+    
     _CLDetailView = [[UIView alloc]init];
     _CLDetailView.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:_CLDetailView];
@@ -78,7 +78,7 @@
     }];
     
     //异常
-    BXDetailCellView *YCView = [[BXDetailCellView alloc]init];
+    ZCYRepairDetailCellView *YCView = [[ZCYRepairDetailCellView alloc]init];
     YCView.BXtitleLabel.text = @"维修";
     YCView.BXCLRLabel.text = @"老师";
     YCView.BXtimeLabel.text = @"11554121315";

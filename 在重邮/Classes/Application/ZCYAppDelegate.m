@@ -42,7 +42,6 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             [ZCYGetRepairApplyData getRepairApplyDataFromeNet:^(NSError *error, NSDictionary *dic) {
                 [ZCYUserMgr sharedMgr].repairInfomation = [NSDictionary dictionaryWithDictionary:dic];
-                NSLog(@"%@",dic);
             }];
         });
     }
@@ -51,7 +50,6 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             [ZCYGetRepairAdrressHelper getRepairAdrressFromeNet:^(NSError *error, NSArray *arr) {
                 [ZCYUserMgr sharedMgr].repairAddressChoices = [NSArray arrayWithArray:arr];
-                NSLog(@"===%@",arr);
             }];
         });
     }

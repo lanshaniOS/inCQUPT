@@ -8,7 +8,7 @@
 
 #import "ZCYPropertyRepairViewController.h"
 #import "ZCYRepairListModel.h"
-#import "BaoXiuCell.h"
+#import "ZCYRepairCell.h"
 #import "ZCYStyleDefine.h"
 #import "ZCYRepairlistHelper.h"
 #import "ZCYUserMgr.h"
@@ -112,7 +112,7 @@
         headCell.textLabel.textColor = [UIColor blackColor];
         return headCell;
     }else{
-        BaoXiuCell *cell = [[BaoXiuCell alloc]init];
+        ZCYRepairCell *cell = [[ZCYRepairCell alloc]init];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         ZCYRepairListModel *model = _arr[indexPath.row];
         cell.BXID = model.wx_djh;
@@ -137,16 +137,7 @@
     
 }
 
-//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    if (section == 0) {
-//        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 20)];
-//        view.backgroundColor = [UIColor redColor];
-//        return view;
-//    }
-//    return nil;
-//
-//}
+
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -167,7 +158,7 @@
     } completion:^(BOOL finished) {
         sender.backgroundColor = [UIColor whiteColor];
     }];
-    BaoXiuCell *BXCell = (BaoXiuCell *)sender.superview;
+    ZCYRepairCell *BXCell = (ZCYRepairCell *)sender.superview;
     NSIndexPath *cellIndexPath = [_tableView indexPathForCell:BXCell];
     ZCYRepairListModel *model = _arr[cellIndexPath.row];
     ZCYRepairDetailViewController *detailVC = [[ZCYRepairDetailViewController alloc]init];

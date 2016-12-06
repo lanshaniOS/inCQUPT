@@ -6,7 +6,7 @@
 //  Copyright © 2016年 周维康. All rights reserved.
 //
 
-#import "BaoXiuCell.h"
+#import "ZCYRepairCell.h"
 #import "Masonry.h"
 #import "ZCYStyleDefine.h"
 
@@ -18,7 +18,7 @@
 #define BXHeadViewHeight 50
 #define BXDetailButtonHeight 40
 
-@interface BaoXiuCell()
+@interface ZCYRepairCell()
 
 @property (nonatomic,strong) UIView *headView;
 @property (nonatomic,strong) UIView *contentsView;
@@ -34,7 +34,7 @@
 
 @end
 
-@implementation BaoXiuCell
+@implementation ZCYRepairCell
 
 -(instancetype)init
 {

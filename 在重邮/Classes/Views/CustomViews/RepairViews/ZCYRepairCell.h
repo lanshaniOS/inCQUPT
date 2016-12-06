@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ZCYBaoXiuCell : UITableViewCell
+@interface ZCYRepairCell : UITableViewCell
 
 
 @property (nonatomic,strong)NSString *BXID;

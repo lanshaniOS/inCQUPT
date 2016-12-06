@@ -16,7 +16,7 @@
 {
     [[ZCYNetworkHelperMgr sharedMgr]wx_requestWithData:data andCompletionBlock:^(NSError *error, id respect, NSURLSessionDataTask *task) {
         NSString *message = respect[@"message"];
-        NSLog(@"%@",respect);
+        NSLog(@"%@",message);
         compeletionBlock(error,message);
     } andURLPath:@"/api/bx/bx.php"];
 }

@@ -12,9 +12,11 @@
 #import "ZCYRepairApplyModel.h"
 #import "ZCYRepairApplyHelper.h"
 #import "ZCYUserMgr.h"
+#import "ZCYRepairShowView.h"
 
 #define kCellHeight 50
 #define kselfWidth CGRectGetWidth(self.view.frame)
+
 @interface ZCYRepairApplyViewController ()<UITextViewDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong)UIView *firstTable;
@@ -26,17 +28,18 @@
 @property (nonatomic,strong)UITextField *numberText;
 @property (nonatomic,strong)UITextView *contentText;
 @property (nonatomic,strong)NSArray *LXArray;
-@property (nonatomic,strong)NSDictionary *LXDict;
-@property (nonatomic,strong)NSMutableArray *choicedXmArray;
+@property (nonatomic,strong)NSArray *choicedXmArray;
 @property (nonatomic,strong)NSArray *QYMArray;
-@property (nonatomic,strong)UITableView *choicedTableView;
+@property (nonatomic,strong)ZCYRepairShowView *showView;
+@property (nonatomic,strong)NSDictionary *choicedInfo;
+@property (nonatomic,strong)NSDictionary *choicedQY;
 
 @end
 
 typedef enum tableType{
-    FWLXTable,
-    FWXMTable,
-    FWQYTable,
+    FWLXTable = 0,
+    FWXMTable = 1,
+    FWQYTable = 2,
 }tableType;
 
 @implementation ZCYRepairApplyViewController
@@ -45,15 +48,10 @@ typedef enum tableType{
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //    _LXArray = @[@"水",@"电",@"光源类",@"木工",@"电器",@"泥水",@"管道疏通",@"换表",@"多媒体设备"];
-    //    _LXDict = @{@"水":@[@"水龙头",@"水管",@"水阀"],@"电":@[@"室内用电维修",@"公共区域用电维修"],@"光源类":@[@"路灯",@"室内照明灯"],@"木工":@[@"门窗、锁",@"桌、椅、家具",@"窗帘",@"黑板",@"配钥匙"],@"电器":@[@"开关",@"插座",@"教室多媒体设备",@"电风扇",@"开水器"],@"泥水":@[@"土建维修"],@"管道疏通":@[@"疏通"],@"换表":@[@"换水表",@"换电表",@"高压表"],@"多媒体设备":@[@"教室投影仪设备",@"投影仪故障",@"电脑硬件故障",@"软件故障",@"网络故障",@"音响系统故障",@"电源故障",@"其他故障"]};
-    //    _QYMArray = @[@"住宅区",@"教学区",@"校园公共区",@"办公区",@"学生公寓区"];
-    NSLog(@"%@",[ZCYUserMgr sharedMgr].repairInfomation);
-    
     _repairDates = [NSDictionary dictionaryWithDictionary:[ZCYUserMgr sharedMgr].repairInfomation];
     _LXArray = [_repairDates allKeys];
-    _choicedXmArray = [NSMutableArray array];
-    // Do any additional setup after loading the view.
+    _QYMArray = [NSArray arrayWithArray:[ZCYUserMgr sharedMgr].repairAddressChoices];
+    
     self.view.backgroundColor = kCommonLightGray_Color;
     self.title = @"服务申报";
     [self addFirstView];
@@ -184,102 +182,52 @@ typedef enum tableType{
 
 -(void)choiceFWQY
 {
-    //    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"选择服务区域" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    //    for (int i = 0; i < _QYMArray.count; i++) {
-    //        [self QYMaddAlertActionWithTitle:_QYMArray[i] inAler:alert];
-    //    }
-    //    [self presentViewController:alert animated:YES completion:nil];
     myTableType = FWQYTable;
-    _choicedTableView.alpha = 1;
-    [_choicedTableView reloadData];
+    [self addChoiceTableView];
+    _showView.alpha = 0.9;
+    _showView.title= @"服务区域";
+    [_showView.contentTable reloadData];
 }
-
--(void)QYMaddAlertActionWithTitle:(NSString *)title inAler:(UIAlertController *)alert
-{
-    //    UIAlertAction *action = [UIAlertAction actionWithTitle:title style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-    //        [_FWQYButton setTitle:title forState:UIControlStateNormal];
-    //    }];
-    //    [alert addAction:action];
-    
-}
-
 
 -(void)choiceFWXM
 {
-    
-    //    if (_choicedXmArray.count > 0) {
-    //        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"集体服务项目" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    //        for (int i = 0; i < _choicedXmArray.count; i++) {
-    //            [self FWXMaddAlertActionWithTitle:_choicedXmArray[i] inAler:alert];
-    //        }
-    //        [self presentViewController:alert animated:YES completion:nil];
-    //    }else{
-    //        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"请先选择服务类型" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    //        [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
-    //        [self presentViewController:alert animated:YES completion:nil];
-    //    }
-    _choicedTableView.alpha = 1;
+    if (_choicedXmArray.count == 0 ||_choicedXmArray == nil) {
+        [[ZCYProgressHUD sharedHUD] showWithText:@"请先选择服务类型" inView:self.view hideAfterDelay:1];
+        return;
+    }
     myTableType = FWXMTable;
-    [_choicedTableView reloadData];
+    [self addChoiceTableView];
+    _showView.alpha = 0.9;
+    
+    _showView.title = @"服务项目";
+    [_showView.contentTable reloadData];
 }
-
--(void)FWXMaddAlertActionWithTitle:(NSString *)title inAler:(UIAlertController *)alert
-{
-    //    UIAlertAction *action = [UIAlertAction actionWithTitle:title style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-    //        [_FWXMButton setTitle:title forState:UIControlStateNormal];
-    //    }];
-    //    [alert addAction:action];
-}
-
 
 -(void)choiceFWLX
 {
-    //    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"服务类型" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    //    for (int i = 0; i < _LXArray.count; i++) {
-    //        [self FWLXaddAlertActionWithTitle:_LXArray[i] inAler:alert];
-    //    }
-    //
-    //    [self presentViewController:alert animated:YES completion:nil];
-    
     myTableType = FWLXTable;
-    _choicedTableView.alpha = 1;
-    [_choicedTableView reloadData];
+    [self addChoiceTableView];
+    _showView.alpha = 0.9;
+    _showView.title = @"服务类型";
+    [_showView.contentTable reloadData];
     
 }
-
--(void)FWLXaddAlertActionWithTitle:(NSString *)title inAler:(UIAlertController *)alert
-{
-    //    UIAlertAction *action = [UIAlertAction actionWithTitle:title style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-    //        [_FWLXButton setTitle:title forState:UIControlStateNormal];
-    //        NSLog(@"%@",title);
-    //        NSArray *arr = _repairDates[title];
-    //        [_choicedXmArray removeAllObjects];
-    //        for (int i = 0; i < arr.count; i++) {
-    //            NSDictionary *detail = arr[i];
-    ////            NSDictionary *dic = detail[2];
-    //            NSLog(@"%@",detail[@"Name"]);
-    ////            [_choicedXmArray addObject:dic[@"Name"]];
-    //        }
-    //
-    //    }];
-    //    [alert addAction:action];
-}
-
-
 
 
 -(void)addChoiceTableView
 {
-    UITableView *tableView = [[UITableView alloc]init];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    tableView.alpha = 0;
-    [self.view addSubview:tableView];
-    [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(self.view);
-        make.left.right.mas_equalTo(50);
-        make.height.mas_equalTo(220);
+    _showView = [[ZCYRepairShowView alloc]init];
+    _showView.contentTable.delegate = self;
+    _showView.contentTable.dataSource = self;
+    [self.view addSubview:_showView];
+    [_showView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(60);
+        make.right.mas_equalTo(-60);
+        make.centerX.equalTo(self.view);
+        make.centerY.equalTo(self.view).offset(-60);
+        make.height.mas_equalTo(200);
     }];
+    
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -299,9 +247,11 @@ typedef enum tableType{
     if (myTableType == FWLXTable) {
         cell.textLabel.text = _LXArray[indexPath.row];
     }else if (myTableType == FWXMTable){
-        cell.textLabel.text = _choicedXmArray[indexPath.row];
+        NSDictionary *dic = _choicedXmArray[indexPath.row];
+        cell.textLabel.text = dic[@"Name"];
     }else{
-        cell.textLabel.text = _QYMArray[indexPath.row];
+        NSDictionary *dic = _QYMArray[indexPath.row];
+        cell.textLabel.text = dic[@"Name"];
     }
     return cell;
 }
@@ -310,16 +260,22 @@ typedef enum tableType{
 {
     if (myTableType == FWLXTable) {
         [_FWLXButton setTitle:_LXArray[indexPath.row] forState:UIControlStateNormal];
+        NSString *key = _LXArray[indexPath.row];
+        NSArray *detailArr = [NSArray arrayWithArray:_repairDates[key]];
+        _choicedXmArray = [NSArray arrayWithArray:detailArr];
     }else if (myTableType == FWXMTable){
-        [_FWXMButton setTitle:_choicedXmArray[indexPath.row] forState:UIControlStateNormal];
+        NSDictionary *dic = _choicedXmArray[indexPath.row];
+        _choicedInfo = [NSDictionary dictionaryWithDictionary:dic];
+        [_FWXMButton setTitle:_choicedInfo[@"Name"] forState:UIControlStateNormal];
     }else{
-        [_FWQYButton setTitle:_QYMArray[indexPath.row] forState:UIControlStateNormal];
+        NSDictionary *dic = _QYMArray[indexPath.row];
+        _choicedQY = [NSDictionary dictionaryWithDictionary:dic];
+        [_FWQYButton setTitle:dic[@"Name"] forState:UIControlStateNormal];
     }
-    tableView.alpha = 0;
+    [_showView removeFromSuperview];
+    _showView = nil;
+    _showView.contentTable = nil;
 }
-
-
-
 
 
 
@@ -468,7 +424,8 @@ typedef enum tableType{
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
-    _choicedTableView.alpha = 0;
+    [self.showView removeFromSuperview];
+    _showView = nil;
 }
 
 -(void)commitAplly
@@ -493,16 +450,21 @@ typedef enum tableType{
         [[ZCYProgressHUD sharedHUD] showWithText:@"请输入联系电话" inView:self.view hideAfterDelay:1];
         return;
     }
+    if ([_contentText.text length] > 20) {
+        [[ZCYProgressHUD sharedHUD] showWithText:@"输入内容请少于20字" inView:self.view hideAfterDelay:1];
+        return;
+    }
+    
     NSString *studentId = [ZCYUserMgr sharedMgr].studentNumber;
     NSString *name = [ZCYUserMgr sharedMgr].userName;
-    NSString *categoryId = _FWLXButton.titleLabel.text;
-    NSString *specificId = _FWXMButton.titleLabel.text;
+    NSString *CategoryId = _choicedInfo[@"CategId"];
+    NSString *SpecificId = _choicedInfo[@"Id"];
     NSString *phone = _numberText.text;
-    NSString *addressId = _FWQYButton.titleLabel.text;
+    NSString *AddressId = _choicedQY[@"Id"];
     NSString *address = _addressText.text;
-    NSString *content = _contentText.text;
+    NSString *title = _contentText.text;
     
-    NSDictionary *dic = [ZCYRepairApplyModel initToDataWithId:studentId name:name Ip:@"172.22.113.200" title:content CategoryId:categoryId specificId:specificId phone:phone addressId:addressId content:content address:address];
+    NSDictionary *dic = [ZCYRepairApplyModel initToDataWithId:studentId name:name Ip:@"172.22.113.200" title:title CategoryId:CategoryId specificId:SpecificId phone:phone addressId:AddressId content:title address:address];
     
     [ZCYRepairApplyHelper CommitRepairApplyWithData:dic andCompeletionBlock:^(NSError *erro, NSString *str) {
         if ([str isEqualToString:@"OK"]) {

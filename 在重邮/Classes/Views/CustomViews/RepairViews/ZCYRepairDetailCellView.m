@@ -6,11 +6,11 @@
 //  Copyright © 2016年 周维康. All rights reserved.
 //
 
-#import "BXDetailCellView.h"
+#import "ZCYRepairDetailCellView.h"
 #import "Masonry.h"
 #import "ZCYStyleDefine.h"
 #define kheightSpace 7
-@implementation BXDetailCellView
+@implementation ZCYRepairDetailCellView
 
 
 -(instancetype)init

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BXDetailCellView : UIView
+@interface ZCYRepairDetailCellView : UIView
 
 @property (nonatomic,strong) UILabel *BXtitleLabel;
 @property (nonatomic,strong) UILabel *BXCLRLabel;

@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RepairShowView : UIView
+@interface ZCYRepairShowView : UIView
+
+@property (nonatomic,strong)NSString *title;
+@property (nonatomic,strong)UITableView *contentTable;
 
 @end
