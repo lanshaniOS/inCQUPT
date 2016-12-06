@@ -12,4 +12,5 @@
 
 + (UIImage *)imageWithColor:(UIColor *)color;
 
++ (UIImage *)blurImage:(UIImage *)image WithBlurNumber:(CGFloat)number;
 @end

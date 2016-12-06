@@ -48,6 +48,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.navigationController.navigationBar.hidden = YES;
 //    self.navigationController.navigationBar.alpha = (self.backgroundScrollView.contentOffset.y)/355 * 2.0;
 //    
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];

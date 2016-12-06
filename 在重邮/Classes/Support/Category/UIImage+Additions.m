@@ -26,4 +26,16 @@
     return image;
 }
 
++ (UIImage *)blurImage:(UIImage *)image WithBlurNumber:(CGFloat)number
+{
+    CIContext *context = [CIContext contextWithOptions:nil];
+    CIImage *inputImage = [CIImage imageWithCGImage:image.CGImage];
+    CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
+    [filter setValue:inputImage forKey:kCIInputImageKey];
+    CIImage *result = [filter valueForKey:kCIOutputImageKey];
+    CGImageRef outImage = [context createCGImage:result fromRect:[result extent]];
+    UIImage *blurImage = [UIImage imageWithCGImage:outImage];
+    CGImageRelease(outImage);
+    return blurImage;
+}
 @end

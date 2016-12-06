@@ -41,11 +41,11 @@
         
         naviController.navigationBar.tintColor = kDeepGreen_Color;
         naviController.tabBarItem.title = itemDic[@"name"];
-        naviController.navigationBar.barTintColor = kNavBar_Color;
+        naviController.navigationBar.barTintColor = kCommonLightGray_Color;
 //        [naviController.navigationBar setBackgroundImage:kNavbar_BgImage forBarMetrics:UIBarMetricsDefault];
         naviController.tabBarItem.image = [[UIImage imageNamed:itemDic[@"icon"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         naviController.tabBarItem.selectedImage = [[UIImage imageNamed:itemDic[@"icon_s"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        naviController.navigationBar.barStyle = UIStatusBarStyleLightContent;
+//        naviController.navigationBar.barStyle = UIStatusBarStyleLightContent;
         [viewControllers addObject:naviController];
     }
     self.viewControllers = viewControllers;
@@ -59,10 +59,10 @@
                                @"icon" : @"icon_mainHome",
                                @"icon_s" : @"icon_mainHome_f",
                                @"viewController_class" : NSStringFromClass([ZCYHomePageViewController class])} ,
-                             @{@"name" : @"资讯",
-                               @"icon" : @"icon_mainNews",
-                               @"icon_s" : @"icon_mainNews_f",
-                               @"viewController_class" : NSStringFromClass([ZCYInformationViewController class])} ,
+//                             @{@"name" : @"资讯",
+//                               @"icon" : @"icon_mainNews",
+//                               @"icon_s" : @"icon_mainNews_f",
+//                               @"viewController_class" : NSStringFromClass([ZCYInformationViewController class])} ,
                              @{@"name" : @"更多",
                                @"icon" : @"icon_mainMore",
                                @"icon_s" : @"icon_mainMore_f",

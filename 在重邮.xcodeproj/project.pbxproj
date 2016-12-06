@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		49061F581DDB4F7B00E2923A /* UILabel+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 49061F571DDB4F7B00E2923A /* UILabel+Common.m */; };
 		49061F5B1DDF325E00E2923A /* ZCYDetailCourseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49061F5A1DDF325E00E2923A /* ZCYDetailCourseView.m */; };
+		492C932D1DF6F2FC0071DB63 /* ZCYCardDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 492C932C1DF6F2FC0071DB63 /* ZCYCardDetailView.m */; };
 		492E231C1DD8B0530083F135 /* UIView+Radius.m in Sources */ = {isa = PBXBuildFile; fileRef = 492E231B1DD8B0530083F135 /* UIView+Radius.m */; };
 		49403FD61DF58DA400AF47D0 /* ZCYUserDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49403FD51DF58DA400AF47D0 /* ZCYUserDetailViewController.m */; };
 		49403FD91DF5905F00AF47D0 /* ZCYAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49403FD81DF5905F00AF47D0 /* ZCYAlertView.m */; };
@@ -121,6 +122,8 @@
 		49061F571DDB4F7B00E2923A /* UILabel+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Common.m"; sourceTree = "<group>"; };
 		49061F591DDF325E00E2923A /* ZCYDetailCourseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYDetailCourseView.h; sourceTree = "<group>"; };
 		49061F5A1DDF325E00E2923A /* ZCYDetailCourseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYDetailCourseView.m; sourceTree = "<group>"; };
+		492C932B1DF6F2FC0071DB63 /* ZCYCardDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYCardDetailView.h; sourceTree = "<group>"; };
+		492C932C1DF6F2FC0071DB63 /* ZCYCardDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYCardDetailView.m; sourceTree = "<group>"; };
 		492E231A1DD8B0530083F135 /* UIView+Radius.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Radius.h"; sourceTree = "<group>"; };
 		492E231B1DD8B0530083F135 /* UIView+Radius.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Radius.m"; sourceTree = "<group>"; };
 		493744141DB1C1F700E49E4E /* 在重邮.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "在重邮.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -311,6 +314,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		492C932A1DF6F2CD0071DB63 /* Card */ = {
+			isa = PBXGroup;
+			children = (
+				492C932B1DF6F2FC0071DB63 /* ZCYCardDetailView.h */,
+				492C932C1DF6F2FC0071DB63 /* ZCYCardDetailView.m */,
+			);
+			path = Card;
+			sourceTree = "<group>";
+		};
 		4937440B1DB1C1F700E49E4E = {
 			isa = PBXGroup;
 			children = (
@@ -501,6 +513,7 @@
 		4951C8961DBA409700E5AC63 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				492C932A1DF6F2CD0071DB63 /* Card */,
 				499C0AEF1DCA278700E2F61D /* Course */,
 				499232D71DC4A28C00B17B54 /* HomePage */,
 				49EA614E1DF17877003A548A /* ZCYBezierPath.h */,
@@ -1002,6 +1015,7 @@
 				49EA61361DEDB526003A548A /* ZCYExaminationHelper.m in Sources */,
 				49EA613A1DEDB688003A548A /* ZCYExaminationTableViewCell.m in Sources */,
 				499232CB1DC487AA00B17B54 /* ZCYProgressHUD.m in Sources */,
+				492C932D1DF6F2FC0071DB63 /* ZCYCardDetailView.m in Sources */,
 				49403FD91DF5905F00AF47D0 /* ZCYAlertView.m in Sources */,
 				4951C8BD1DBA41D000E5AC63 /* main.m in Sources */,
 				4951C8B41DBA41C900E5AC63 /* ZCYHomePageViewController.m in Sources */,

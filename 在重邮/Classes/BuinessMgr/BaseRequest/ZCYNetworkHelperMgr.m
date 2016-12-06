@@ -8,7 +8,7 @@
 
 #import "ZCYNetworkHelperMgr.h"
 
-static const NSString * URL = @"httpS://we.cqu.pt";
+static const NSString * URL = @"https://we.cqu.pt";
 static const NSString *WXURL = @"http://wx.cqupt.edu.cn";
 
 @implementation ZCYNetworkHelperMgr

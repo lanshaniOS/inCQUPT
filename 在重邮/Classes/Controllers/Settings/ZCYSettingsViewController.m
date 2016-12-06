@@ -43,7 +43,7 @@
 
 - (void)initUserHeaderView
 {
-    self.topImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_main_bg"]];
+    self.topImageView = [[UIImageView alloc] initWithImage:[UIImage blurImage:[UIImage imageWithColor:kCommonLightGray_Color] WithBlurNumber:5.0f]];
     [self.view addSubview:self.topImageView];
     [self.topImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.right.equalTo(self.view);
@@ -51,13 +51,14 @@
         make.height.mas_equalTo(215*self.view.frame.size.height/667);
     }];
     
-    self.headImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AppIcon"]];
-    self.headImageView.layer.cornerRadius = 30.f;
+    self.headImageView = [[UIImageView alloc] initWithImage:[UIImage imageWithColor:kCommonGray_Color]];
+    self.headImageView.layer.cornerRadius = 45.f;
+    self.headImageView.layer.masksToBounds = YES;
     [self.view addSubview:self.headImageView];
     [self.headImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
         make.centerY.equalTo(self.topImageView);
-        make.size.mas_equalTo(CGSizeMake(60, 60));
+        make.size.mas_equalTo(CGSizeMake(90, 90));
     }];
     
     self.headerView = [[UIView alloc] init];
@@ -100,7 +101,7 @@
     [self setView:aboutView withImageName:@"关于我们" andFuncName:@"关于我们"];
     [self.view addSubview:aboutView];
     [aboutView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(feedView.mas_bottom);
+        make.top.equalTo(feedView.mas_bottom).with.offset(1);
         make.left.and.right.equalTo(self.view);
         make.height.mas_equalTo(50);
     }];
@@ -166,12 +167,12 @@
     [view addSubview:imageView];
     [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(view).with.offset(15);
-        make.size.mas_equalTo(CGSizeMake(40, 40));
-        make.top.equalTo(view).with.offset(5);
+        make.size.mas_equalTo(CGSizeMake(30, 30));
+        make.top.equalTo(view).with.offset(10);
     }];
     
     UILabel *funcLabel = [[UILabel alloc] init];
-    [funcLabel setFont:kFont(kStandardPx(40)) andText:funcName andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    [funcLabel setFont:kFont(kStandardPx(30)) andText:funcName andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
     [view addSubview:funcLabel];
     [funcLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(imageView.mas_right).with.offset(20);
@@ -180,10 +181,10 @@
     
     UILabel *nextLabel = [[UILabel alloc] init];
     [nextLabel setFont:kFont(kStandardPx(40)) andText:@">" andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
-    [self.headerView addSubview:nextLabel];
+    [view addSubview:nextLabel];
     [nextLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.headerView).with.offset(-15);
-        make.centerY.equalTo(self.headerView);
+        make.right.equalTo(view).with.offset(-15);
+        make.centerY.equalTo(view);
     }];
 }
 #pragma mark - ZCYAlertViewDelegate

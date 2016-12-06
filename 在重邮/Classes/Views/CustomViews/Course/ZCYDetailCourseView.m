@@ -210,7 +210,7 @@
     }];
     
     self.getCoursePicButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.getCoursePicButton setTitle:@"截取全学期课表" forState:UIControlStateNormal];
+    [self.getCoursePicButton setTitle:@"截取全学期课表(待开发)" forState:UIControlStateNormal];
     [self.getCoursePicButton setTitleColor:kDeepGreen_Color forState:UIControlStateNormal];
     self.getCoursePicButton.titleLabel.font = kFont(kStandardPx(32));
     [self addSubview:self.getCoursePicButton];
@@ -232,7 +232,7 @@
     }];
     
     self.setCourseStyle = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.setCourseStyle setTitle:@"自定义课表主题" forState:UIControlStateNormal];
+    [self.setCourseStyle setTitle:@"自定义课表主题(待开发)" forState:UIControlStateNormal];
     self.setCourseStyle.titleLabel.font = kFont(kStandardPx(32));
     [self.setCourseStyle setTitleColor:kDeepGreen_Color forState:UIControlStateNormal];
     [self addSubview:self.setCourseStyle];
@@ -254,7 +254,7 @@
     }];
     
     self.reportErrorButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.reportErrorButton setTitle:@"报告错误" forState:UIControlStateNormal];
+    [self.reportErrorButton setTitle:@"报告错误(待开发)" forState:UIControlStateNormal];
     self.reportErrorButton.titleLabel.font = kFont(kStandardPx(32));
     [self.reportErrorButton setTitleColor:kDeepGreen_Color forState:UIControlStateNormal];
     [self addSubview:self.reportErrorButton];

@@ -9,6 +9,7 @@
 #import "ZCYCardDetailViewController.h"
 #import "ZCYCardHelper.h"
 #import "ZCYBezierPath.h"
+#import "ZCYCardDetailView.h"
 
 @interface ZCYCardDetailViewController ()
 
@@ -22,10 +23,14 @@
 @property (strong, nonatomic) NSArray *cardArray;  /**< 消费 */
 @property (strong, nonatomic) NSMutableArray *balanceArray;  /**< 消费数组 */
 @property (strong, nonatomic) UIScrollView *backgroundScrollView;  /**< 背景滑动 */
-
+@property (strong, nonatomic) ZCYCardDetailView *cardDetailView;  /**< 一卡通详情 */
 @end
 
 @implementation ZCYCardDetailViewController
+{
+    CGFloat y_oldPanpoint;
+    CGFloat sum_yOffset;
+}
 
 - (NSString *)title
 {
@@ -81,6 +86,8 @@
             self.balanceString = array[0][@"balance"];
             self.cardArray = array;
             [self initBottomView];
+            [self initCardDetailView];
+            
             NSMutableArray *balcanceArray = [NSMutableArray array];
             NSMutableArray <NSValue *> *pointArray = [NSMutableArray array];
             for (NSInteger index = 0; index<10; index++)
@@ -151,8 +158,6 @@
             for (NSInteger index = 0; index < 10; index++) {
                 UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
                 button.backgroundColor = kCommonGray_Color;
-                [button setTag:10000+index];
-                [button addTarget:self action:@selector(clickLine:) forControlEvents:UIControlEventTouchUpInside];
                 [self.backgroundScrollView addSubview:button];
                 [button mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.left.equalTo(self.backgroundScrollView).with.offset(self.view.frame.size.width/4.5*index);
@@ -163,8 +168,23 @@
                 
             }
             
-//            UIView *topLine = [[UIView alloc] init];
-//            topLine.
+            UIView *topLine = [[UIView alloc] init];
+            topLine.backgroundColor = kCommonGray_Color;
+            [self.view addSubview:topLine];
+            [topLine mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.and.right.equalTo(self.view);
+                make.top.equalTo(self.view).with.offset(self.view.frame.size.height - 128 - 64 - ((self.view.frame.size.height - 128 - 64)/(max + 10)*[sortArray[9] floatValue])+60);
+                make.height.mas_equalTo(1);
+            }];
+            
+            UILabel *topLabel = [[UILabel alloc] init];
+            [topLabel setFont:kFont(kStandardPx(24)) andText:[NSString stringWithFormat:@"¥ %@",@(max)] andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
+            [self.view addSubview:topLabel];
+            [topLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(topLine.mas_bottom).with.offset(2);
+                make.right.equalTo(self.view.mas_right).with.offset(-5);
+            }];
+            
             UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"渐变图"]];
 //            imageView.backgroundColor = kCommonRed_Color;
             imageView.layer.mask = layer;
@@ -266,37 +286,115 @@
     }];
     
     
-//    UISwipeGestureRecognizer *upGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(showWeekSelectedView)];
-//    upGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
-//    [self.bottomView addGestureRecognizer:upGestureRecognizer];
-//    
-//    UISwipeGestureRecognizer *downGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(hideWeekSelectedView)];
-//    downGestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
-//    [self.bottomView addGestureRecognizer:downGestureRecognizer];
-//    
-//    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleWeekSelectedView:)];
-//    [self.bottomView addGestureRecognizer:panGestureRecognizer];
+    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleWithCardDetailView:)];
+    [self.bottomView addGestureRecognizer:panGestureRecognizer];
 }
 
+- (void)initCardDetailView
+{
+    self.cardDetailView = [[ZCYCardDetailView alloc] initWithCardArray:self.cardArray];
+    [self.view addSubview:self.cardDetailView];
+    [self.cardDetailView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.and.right.equalTo(self.view);
+        make.top.equalTo(self.bottomView.mas_bottom);
+        make.height.mas_equalTo(380);
+    }];
+}
 #pragma mark - 点击事件
 - (void)showPayDetailedView
 {
-    
+    self.finishButton.hidden = NO;
+    self.payDetailButton.hidden = YES;
+    sum_yOffset = -380;
+    [UIView animateWithDuration:0.2f animations:^{
+        [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.view).with.offset(-380);
+        }];
+
+        [self.bottomView.superview layoutIfNeeded];
+    }];
 }
 
 - (void)hidePayDetailedView
 {
-    
+    self.finishButton.hidden = YES;
+    self.payDetailButton.hidden = NO;
+    sum_yOffset = 0;
+    [UIView animateWithDuration:0.2f animations:^{
+        [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.view).with.offset(0);
+        }];
+        
+        [self.bottomView.superview layoutIfNeeded];
+    }];
 }
 
-- (void)clickLine:(UIButton *)button
+- (void)handleWithCardDetailView:(UIPanGestureRecognizer *)gestureRecognizer
 {
-    if (button.tag == 10001)
+    CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view.superview];
+    if (gestureRecognizer.state != UIGestureRecognizerStateFailed)
     {
-        NSLog(@"aaaà");
+        if (y_oldPanpoint != 0)
+            sum_yOffset = sum_yOffset + point.y - y_oldPanpoint;
+        if (y_oldPanpoint != 0 && point.y > y_oldPanpoint) //下拉
+        {
+            
+            if (self.bottomView.frame.size.height+self.bottomView.frame.origin.y != self.view.frame.size.height + 4.5)
+                [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
+                    make.bottom.equalTo(self.view).with.offset(sum_yOffset);
+                }];
+            if (self.bottomView.frame.size.height+self.bottomView.frame.origin.y >= self.view.frame.size.height)
+            {
+                [self hidePayDetailedView];
+            }
+            
+            
+            if (gestureRecognizer.state == 3)
+            {
+                [self hidePayDetailedView];
+            }
+            
+            point.y -= 0.5;
+        } else if (point.y < y_oldPanpoint){
+            if (sum_yOffset <= -380)
+            {
+                sum_yOffset = -380;
+            }
+            
+            if (sum_yOffset >= 380)
+            {
+                sum_yOffset = 380;
+            }
+            
+            [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.bottom.equalTo(self.view).with.offset(sum_yOffset);
+            }];
+            
+            
+            if (self.view.frame.size.height - self.bottomView.frame.origin.y - self.bottomView.frame.size.height >= 380)
+            {
+                [self showPayDetailedView];
+            }
+            
+            if (gestureRecognizer.state == 3)
+            {
+                
+                [self showPayDetailedView];
+            }
+            point.y += 0.5;
+        }
+    }
+    y_oldPanpoint = point.y;
+    if (gestureRecognizer.state == 3)
+    {
+        y_oldPanpoint = 0;
     }
 }
 
+- (void)handleWeekSelectedView:(UIPanGestureRecognizer *)gestureRecognizer
+{
+    
+}
 #pragma mark - TOOLS
 - (NSArray *)bubbleSortWithArray:(NSMutableArray *)mutableArray
 {
