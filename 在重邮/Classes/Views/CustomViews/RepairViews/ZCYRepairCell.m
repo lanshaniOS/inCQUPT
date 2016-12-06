@@ -36,20 +36,6 @@
 
 @implementation BaoXiuCell
 
-//-(instancetype)initWithFrame:(CGRect)frame{
-//    if (self = [super initWithFrame:frame]) {
-//        self.backgroundColor = [UIColor whiteColor];
-//        [self addView];
-//        [self addline];
-//        [self initHeadView];
-//        [self initFirstLine];
-//        [self initDetailButton];
-//        [self initContentsView];
-//        
-//    }
-//    return self;
-//}
-
 -(instancetype)init
 {
     if (self = [super init]) {
@@ -111,7 +97,7 @@
 {
     UIView *lucidView = [[UIView alloc]init];
     lucidView.backgroundColor = kCommonLightGray_Color;
-    [self addSubview:lucidView];
+    [self.contentView addSubview:lucidView];
     [lucidView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(0);
         make.left.right.mas_equalTo(0);
@@ -123,7 +109,7 @@
 {
     UIView *view = [[UIView alloc]init];
     view.backgroundColor = kText_Color_LightGray;
-    [self addSubview:view];
+    [self.contentView addSubview:view];
     [view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(20);
         make.left.right.mas_equalTo(0);
@@ -133,7 +119,7 @@
 -(void)initHeadView
 {
     _headView = [[UIView alloc]init];
-    [self addSubview:_headView];
+    [self.contentView addSubview:_headView];
     [_headView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(20);
         make.left.right.mas_equalTo(0);
@@ -254,8 +240,6 @@
     }];
 }
 
-
-
 -(void)initDetailButton
 {
     _detailButton = [[UIButton alloc]init];
@@ -266,8 +250,6 @@
     [self.contentView addSubview:_detailButton];
     [_detailButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.and.left.and.right.mas_equalTo(0);
-        make.bottom.mas_equalTo(0);
-        make.size.height.mas_equalTo(40);
     }];
 }
 

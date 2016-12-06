@@ -25,7 +25,7 @@
         [_BXtitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self).with.offset(5);
             make.top.equalTo(self).with.offset(kheightSpace);
-            make.height.mas_equalTo(20);
+            make.height.mas_lessThanOrEqualTo(20);
         }];
         
         UILabel *label1 = [[UILabel alloc]init];
@@ -37,7 +37,7 @@
         [label1 mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_BXtitleLabel.mas_bottom).offset(kheightSpace);
             make.left.equalTo(self).offset(5);
-            make.height.mas_equalTo(20);
+            make.height.mas_lessThanOrEqualTo(20);
             
         }];
         _BXCLRLabel = [[UILabel alloc]init];
@@ -48,7 +48,7 @@
         [_BXCLRLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.mas_right).offset(-10);
             make.centerY.equalTo(label1);
-            make.height.mas_equalTo(20);
+            make.height.mas_lessThanOrEqualTo(20);
 
         }];
         
@@ -61,7 +61,7 @@
         [label2 mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(label1.mas_bottom).offset(kheightSpace);
             make.left.equalTo(self).with.offset(5);
-            make.height.mas_equalTo(20);
+            make.height.mas_lessThanOrEqualTo(20);
             
         }];
         _BXtimeLabel = [[UILabel alloc]init];
@@ -71,7 +71,7 @@
         [_BXtimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.mas_right).offset(-10);
             make.centerY.equalTo(label2);
-            make.height.mas_equalTo(20);
+            make.height.mas_lessThanOrEqualTo(20);
 
         }];
         
@@ -84,7 +84,7 @@
         [label3 mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(label2.mas_bottom).offset(kheightSpace);
             make.left.equalTo(self).offset(5);
-            make.height.mas_equalTo(20);
+            make.height.mas_lessThanOrEqualTo(20);
             
         }];
         UIView *lineView = [[UIView alloc]init];
