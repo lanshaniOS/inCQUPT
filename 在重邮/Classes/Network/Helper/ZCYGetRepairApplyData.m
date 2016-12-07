@@ -19,7 +19,6 @@
             completionBlock(error,nil);
         }else{
             NSDictionary *dic = response[@"data"];
-            NSLog(@"%@",dic);
             completionBlock(nil,dic);
         }
     } andURLPath:@"/api/bx/get_repair_type.php"];

@@ -12,12 +12,11 @@
 #import "ZCYRepairApplyModel.h"
 #import "ZCYRepairApplyHelper.h"
 #import "ZCYUserMgr.h"
-#import "ZCYRepairShowView.h"
 
 #define kCellHeight 50
 #define kselfWidth CGRectGetWidth(self.view.frame)
 
-@interface ZCYRepairApplyViewController ()<UITextViewDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface ZCYRepairApplyViewController ()<UITextFieldDelegate,UITextViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 
 @property (nonatomic,strong)UIView *firstTable;
 @property (nonatomic,strong)UIView *secondTable;
@@ -30,9 +29,9 @@
 @property (nonatomic,strong)NSArray *LXArray;
 @property (nonatomic,strong)NSArray *choicedXmArray;
 @property (nonatomic,strong)NSArray *QYMArray;
-@property (nonatomic,strong)ZCYRepairShowView *showView;
 @property (nonatomic,strong)NSDictionary *choicedInfo;
 @property (nonatomic,strong)NSDictionary *choicedQY;
+@property (nonatomic,strong)UIPickerView *pickView;
 
 @end
 
@@ -183,10 +182,11 @@ typedef enum tableType{
 -(void)choiceFWQY
 {
     myTableType = FWQYTable;
+    if (_pickView != nil) {
+        [_pickView removeFromSuperview];
+        _pickView = nil;
+    }
     [self addChoiceTableView];
-    _showView.alpha = 0.9;
-    _showView.title= @"服务区域";
-    [_showView.contentTable reloadData];
 }
 
 -(void)choiceFWXM
@@ -196,42 +196,46 @@ typedef enum tableType{
         return;
     }
     myTableType = FWXMTable;
+    if (_pickView != nil) {
+        [_pickView removeFromSuperview];
+        _pickView = nil;
+    }
     [self addChoiceTableView];
-    _showView.alpha = 0.9;
     
-    _showView.title = @"服务项目";
-    [_showView.contentTable reloadData];
 }
 
 -(void)choiceFWLX
 {
     myTableType = FWLXTable;
+    if (_pickView != nil) {
+        [_pickView removeFromSuperview];
+        _pickView = nil;
+    }
     [self addChoiceTableView];
-    _showView.alpha = 0.9;
-    _showView.title = @"服务类型";
-    [_showView.contentTable reloadData];
     
 }
 
 
 -(void)addChoiceTableView
 {
-    _showView = [[ZCYRepairShowView alloc]init];
-    _showView.contentTable.delegate = self;
-    _showView.contentTable.dataSource = self;
-    [self.view addSubview:_showView];
-    [_showView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(60);
-        make.right.mas_equalTo(-60);
-        make.centerX.equalTo(self.view);
-        make.centerY.equalTo(self.view).offset(-60);
-        make.height.mas_equalTo(200);
-    }];
     
+    self.pickView = [[UIPickerView alloc]init];
+    _pickView.delegate = self;
+    _pickView.dataSource = self;
+    _pickView.backgroundColor = LGray_Line_Color;
+    [self.view addSubview:_pickView];
+    [_pickView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.mas_equalTo(0);
+        make.height.mas_equalTo(160);
+    }];
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
     if (myTableType == FWLXTable) {
         return _LXArray.count;
     }else if (myTableType == FWXMTable){
@@ -241,43 +245,36 @@ typedef enum tableType{
     }
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [[UITableViewCell alloc]init];
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
     if (myTableType == FWLXTable) {
-        cell.textLabel.text = _LXArray[indexPath.row];
+        return _LXArray[row];
     }else if (myTableType == FWXMTable){
-        NSDictionary *dic = _choicedXmArray[indexPath.row];
-        cell.textLabel.text = dic[@"Name"];
+        NSDictionary *dic = _choicedXmArray[row];
+        return dic[@"Name"];
     }else{
-        NSDictionary *dic = _QYMArray[indexPath.row];
-        cell.textLabel.text = dic[@"Name"];
+        NSDictionary *dic = _QYMArray[row];
+        return dic[@"Name"];
     }
-    return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     if (myTableType == FWLXTable) {
-        [_FWLXButton setTitle:_LXArray[indexPath.row] forState:UIControlStateNormal];
-        NSString *key = _LXArray[indexPath.row];
+        [_FWLXButton setTitle:_LXArray[row] forState:UIControlStateNormal];
+        NSString *key = _LXArray[row];
         NSArray *detailArr = [NSArray arrayWithArray:_repairDates[key]];
         _choicedXmArray = [NSArray arrayWithArray:detailArr];
     }else if (myTableType == FWXMTable){
-        NSDictionary *dic = _choicedXmArray[indexPath.row];
+        NSDictionary *dic = _choicedXmArray[row];
         _choicedInfo = [NSDictionary dictionaryWithDictionary:dic];
         [_FWXMButton setTitle:_choicedInfo[@"Name"] forState:UIControlStateNormal];
     }else{
-        NSDictionary *dic = _QYMArray[indexPath.row];
+        NSDictionary *dic = _QYMArray[row];
         _choicedQY = [NSDictionary dictionaryWithDictionary:dic];
         [_FWQYButton setTitle:dic[@"Name"] forState:UIControlStateNormal];
     }
-    [_showView removeFromSuperview];
-    _showView = nil;
-    _showView.contentTable = nil;
+    //    [_pickView removeFromSuperview];
+    //    _pickView = nil;
 }
-
-
 
 
 
@@ -312,6 +309,7 @@ typedef enum tableType{
         make.centerY.equalTo(cell1);
     }];
     _addressText = [[UITextField alloc]init];
+    _addressText.delegate = self;
     _addressText.placeholder = @"请输入地址";
     [cell1 addSubview:_addressText];
     [_addressText mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -343,6 +341,7 @@ typedef enum tableType{
         make.centerY.equalTo(cell2);
     }];
     _numberText = [[UITextField alloc]init];
+    _numberText.delegate = self;
     _numberText.placeholder = @"请输入联系电话";
     [cell2 addSubview:_numberText];
     [_numberText mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -387,14 +386,27 @@ typedef enum tableType{
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
+    if (_pickView != nil) {
+        
+        [_pickView removeFromSuperview];
+        _pickView = nil;
+        
+    }
     if ([_contentText.text isEqualToString:@"  请输入"]) {
         _contentText.text = @"";
         _contentText.textColor = [UIColor blackColor];
         _contentText.font = [UIFont systemFontOfSize:18];
     }
+    //滑动效果（动画）
+    NSTimeInterval animationDuration = 0.30f;
+    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView setAnimationDuration:animationDuration];
     
+    //将视图的Y坐标向上移动，以使下面腾出地方用于软键盘的显示
+    self.view.frame = CGRectMake(0.0f, -100.0f, self.view.frame.size.width, self.view.frame.size.height);
+    
+    [UIView commitAnimations];
 }
-
 
 -(void)textViewDidEndEditing:(UITextView *)textView
 {
@@ -403,7 +415,50 @@ typedef enum tableType{
         _contentText.textColor = kText_Color_Gray;
         _contentText.font = [UIFont systemFontOfSize:20];
     }
+    
+    //滑动效果
+    NSTimeInterval animationDuration = 0.30f;
+    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    
+    //恢复屏幕
+    self.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);//64-216
+    
+    [UIView commitAnimations];
+    
 }
+
+
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField{
+    
+    if (_pickView != nil) {
+        [_pickView removeFromSuperview];
+        _pickView = nil;
+    }
+    //滑动效果（动画）
+    NSTimeInterval animationDuration = 0.30f;
+    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    
+    //将视图的Y坐标向上移动，以使下面腾出地方用于软键盘的显示
+    self.view.frame = CGRectMake(0.0f, -100.0f, self.view.frame.size.width, self.view.frame.size.height);//64-216
+    
+    [UIView commitAnimations];
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField{
+    //滑动效果
+    NSTimeInterval animationDuration = 0.30f;
+    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    
+    //恢复屏幕
+    self.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);//64-216
+    
+    [UIView commitAnimations];
+}
+
 
 -(void)addCommitButton
 {
@@ -424,8 +479,8 @@ typedef enum tableType{
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
-    [self.showView removeFromSuperview];
-    _showView = nil;
+    [self.pickView removeFromSuperview];
+    _pickView = nil;
 }
 
 -(void)commitAplly
@@ -455,19 +510,23 @@ typedef enum tableType{
         return;
     }
     
-    NSString *studentId = [ZCYUserMgr sharedMgr].studentNumber;
+    NSString *studentId = [ZCYUserMgr sharedMgr].yktID;
     NSString *name = [ZCYUserMgr sharedMgr].userName;
     NSString *CategoryId = _choicedInfo[@"CategId"];
     NSString *SpecificId = _choicedInfo[@"Id"];
     NSString *phone = _numberText.text;
     NSString *AddressId = _choicedQY[@"Id"];
     NSString *address = _addressText.text;
-    NSString *title = _contentText.text;
-    
+    NSString *content = _contentText.text;
+    NSString *title =  content.length > 10 ? [content substringToIndex:10]:content;
+    NSLog(@"%@ %@ %@ %@ %@ %@ %@ %@",studentId,name,CategoryId,SpecificId,phone,AddressId,address,title);
     NSDictionary *dic = [ZCYRepairApplyModel initToDataWithId:studentId name:name Ip:@"172.22.113.200" title:title CategoryId:CategoryId specificId:SpecificId phone:phone addressId:AddressId content:title address:address];
-    
     [ZCYRepairApplyHelper CommitRepairApplyWithData:dic andCompeletionBlock:^(NSError *erro, NSString *str) {
-        if ([str isEqualToString:@"OK"]) {
+        if (erro) {
+            [[ZCYProgressHUD sharedHUD] showWithText:@"提交错误" inView:self.view hideAfterDelay:1];
+            return ;
+        }
+        if ([str isEqualToString:@"ok"]) {
             [[ZCYProgressHUD sharedHUD] showWithText:@"提交成功" inView:self.view hideAfterDelay:1];
         }else{
             [[ZCYProgressHUD sharedHUD] showWithText:@"提交错误" inView:self.view hideAfterDelay:1];

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ZCYRepairDetailViewController : UIViewController
+
 @property (nonatomic,strong)NSString *BXId;
 
 @end

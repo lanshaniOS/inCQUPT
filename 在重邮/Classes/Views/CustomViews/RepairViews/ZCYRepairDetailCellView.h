@@ -10,9 +10,9 @@
 
 @interface ZCYRepairDetailCellView : UIView
 
-@property (nonatomic,strong) UILabel *BXtitleLabel;
-@property (nonatomic,strong) UILabel *BXCLRLabel;
-@property (nonatomic,strong) UILabel *BXtimeLabel;
-@property (nonatomic,strong) UILabel *BXBZLabel;
+@property (nonatomic,strong) NSString *BXtitle;
+@property (nonatomic,strong) NSString *BXCLR;
+@property (nonatomic,strong) NSString *BXtime;
+@property (nonatomic,strong) NSString *BXBZ;
 
 @end

@@ -9,10 +9,11 @@
 #import "ZCYRepairDetailHelper.h"
 #import "ZCYNetworkHelperMgr.h"
 #import "ZCYUserMgr.h"
+#import "ZCYRepairDetailModel.h"
 
 @implementation ZCYRepairDetailHelper
 
-+(void)getrepairDetailWithBXId:(NSString *)BXId withComplitionBlock:(void (^)(NSError *,NSDictionary *))complitionBlock
++(void)getrepairDetailWithBXId:(NSString *)BXId withComplitionBlock:(void (^)(NSError *,ZCYRepairDetailModel *))complitionBlock
 {
     NSDictionary *dic = @{@"yktID":[ZCYUserMgr sharedMgr].studentNumber,@"bxID":BXId};
     [[ZCYNetworkHelperMgr sharedMgr] requestWithData:dic andCompletionBlock:^(NSError *error, id response, NSURLSessionDataTask *task) {
@@ -20,7 +21,9 @@
             complitionBlock(error,nil);
         }else{
             NSDictionary *dic = response[@"data"];
-            complitionBlock(nil,dic);
+            ZCYRepairDetailModel *model = [[ZCYRepairDetailModel alloc]init];
+            [model yy_modelSetWithDictionary:dic];
+            complitionBlock(nil,model);
         }
     } andURLPath:@"/api/bx/get_repair_detail.php"];
 }

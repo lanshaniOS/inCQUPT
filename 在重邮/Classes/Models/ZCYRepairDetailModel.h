@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface ZCYRepairDetailModel : NSObject
+
 @property (nonatomic,strong)NSString *wx_djh; //报修记录ID
 @property (nonatomic,strong)NSString *wx_bxlxm; //报修类型
 @property (nonatomic,strong)NSString *wx_wxztm; //报修状态
@@ -18,5 +19,6 @@
 @property (nonatomic,strong)NSString *wx_bxdh;    //报修电话
 @property (nonatomic,strong)NSString *wx_bxr;   //报修人
 @property (nonatomic,strong)NSString *wx_bxnr;  //报修内容
+@property (nonatomic,strong)NSString *wx_slr;  //处理人
 
 @end

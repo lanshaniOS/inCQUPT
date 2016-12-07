@@ -40,7 +40,6 @@
 -(void)initUIAndData
 {
     [ZCYRepairlistHelper getBXListWithStdNumber:[ZCYUserMgr sharedMgr].studentNumber withCompeletionBlock:^(NSError *error, NSArray *arr) {
-        NSLog(@"------%@",arr);
         if (error) {
             [[ZCYProgressHUD sharedHUD] showWithText:[NSString stringWithFormat:@"%@",error] inView:self.view hideAfterDelay:1];
         }
@@ -108,14 +107,13 @@
         UITableViewCell *headCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"head"];
         headCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         headCell.textLabel.text = @"服务申报";
-        //      headCell.imageView.image = [UIImage imageNamed:@"angle-right"];
         headCell.textLabel.textColor = [UIColor blackColor];
         return headCell;
     }else{
         ZCYRepairCell *cell = [[ZCYRepairCell alloc]init];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         ZCYRepairListModel *model = _arr[indexPath.row];
-        cell.BXID = model.wx_djh;
+        cell.BXID = model.wx_bt;
         cell.BXStates = model.wx_wxztm;
         cell.BXfwlx = model.wx_bxlxm;
         cell.BXfwxm = model.wx_bxnr;

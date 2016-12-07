@@ -84,12 +84,16 @@
     _statusLabel.text = BXStates;
     if ([BXStates isEqualToString:@"待审核"]) {
         _statusLabel.textColor = kDeepPink_Color;
+        _image.image = [UIImage imageNamed:@"50"];
     }else if ([BXStates isEqualToString:@"已受理"]){
         _statusLabel.textColor = kCommonGolden_Color;
+        _image.image = [UIImage imageNamed:@"49"];
     }else if ([BXStates isEqualToString:@"已派出"]){
         _statusLabel.textColor = kDeepGreen_Color;
+        _image.image = [UIImage imageNamed:@"52"];
     }else{
         _statusLabel.textColor = kDeepGray_Color;
+        _image.image = [UIImage imageNamed:@"51"];
     }
 }
 
@@ -129,8 +133,8 @@
     _image = [[UIImageView alloc]init];
     [_headView addSubview:_image];
     [_image mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(40, 40));
-        make.left.mas_equalTo(BXSideSpace);
+        make.size.mas_equalTo(CGSizeMake(30, 30));
+        make.left.mas_equalTo(10);
         make.centerY.equalTo(_headView);
     }];
     
@@ -140,7 +144,7 @@
     _IDLabel.textColor = kText_Color_Gray;
     [_headView addSubview:_IDLabel];
     [_IDLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(_image.mas_right).offset(5);
+        make.left.equalTo(_image.mas_right).offset(10);
         make.centerY.equalTo(_headView);
     }];
     

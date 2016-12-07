@@ -14,10 +14,7 @@
 @property (nonatomic,strong)NSString *wx_bxlxm; //报修类型
 @property (nonatomic,strong)NSString *wx_wxztm; //报修状态
 @property (nonatomic,strong)NSString *wx_bxsj;   //报修时间
-//@property (nonatomic,strong)NSString *wx_fwqym;   //服务区域
-//@property (nonatomic,strong)NSString *wx_bxdd;    //报修地址
-//@property (nonatomic,strong)NSString *wx_bxdh;    //报修电话
-//@property (nonatomic,strong)NSString *wx_bxr;   //报修人
+@property (nonatomic,strong)NSString *wx_bt;   //标题
 @property (nonatomic,strong)NSString *wx_bxnr;  //报修内容
 
 @end

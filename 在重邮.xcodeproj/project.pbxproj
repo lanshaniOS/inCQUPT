@@ -19,7 +19,7 @@
 		1365069F1DE5A64D001F7FE7 /* ZCYRepairDetailCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1365069E1DE5A64D001F7FE7 /* ZCYRepairDetailCellView.m */; };
 		136506A21DE5A690001F7FE7 /* ZCYRepairCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 136506A11DE5A690001F7FE7 /* ZCYRepairCell.m */; };
 		136506A51DE5E3CC001F7FE7 /* ZCYRepairDetailHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 136506A41DE5E3CC001F7FE7 /* ZCYRepairDetailHelper.m */; };
-		136506AB1DE84C18001F7FE7 /* ZCYRepairShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 136506AA1DE84C18001F7FE7 /* ZCYRepairShowView.m */; };
+		13E2B82A1DF7B75000EE666B /* ZCYRepairGDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E2B8291DF7B75000EE666B /* ZCYRepairGDView.m */; };
 		49061F581DDB4F7B00E2923A /* UILabel+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 49061F571DDB4F7B00E2923A /* UILabel+Common.m */; };
 		49061F5B1DDF325E00E2923A /* ZCYDetailCourseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49061F5A1DDF325E00E2923A /* ZCYDetailCourseView.m */; };
 		492E231C1DD8B0530083F135 /* UIView+Radius.m in Sources */ = {isa = PBXBuildFile; fileRef = 492E231B1DD8B0530083F135 /* UIView+Radius.m */; };
@@ -80,8 +80,8 @@
 		136506A11DE5A690001F7FE7 /* ZCYRepairCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZCYRepairCell.m; path = RepairViews/ZCYRepairCell.m; sourceTree = "<group>"; };
 		136506A31DE5E3CC001F7FE7 /* ZCYRepairDetailHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYRepairDetailHelper.h; sourceTree = "<group>"; };
 		136506A41DE5E3CC001F7FE7 /* ZCYRepairDetailHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYRepairDetailHelper.m; sourceTree = "<group>"; };
-		136506A91DE84C18001F7FE7 /* ZCYRepairShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYRepairShowView.h; sourceTree = "<group>"; };
-		136506AA1DE84C18001F7FE7 /* ZCYRepairShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYRepairShowView.m; sourceTree = "<group>"; };
+		13E2B8281DF7B75000EE666B /* ZCYRepairGDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYRepairGDView.h; sourceTree = "<group>"; };
+		13E2B8291DF7B75000EE666B /* ZCYRepairGDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYRepairGDView.m; sourceTree = "<group>"; };
 		49061F561DDB4F7B00E2923A /* UILabel+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Common.h"; sourceTree = "<group>"; };
 		49061F571DDB4F7B00E2923A /* UILabel+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Common.m"; sourceTree = "<group>"; };
 		49061F591DDF325E00E2923A /* ZCYDetailCourseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYDetailCourseView.h; sourceTree = "<group>"; };
@@ -174,8 +174,8 @@
 				136506A11DE5A690001F7FE7 /* ZCYRepairCell.m */,
 				1365069D1DE5A64D001F7FE7 /* ZCYRepairDetailCellView.h */,
 				1365069E1DE5A64D001F7FE7 /* ZCYRepairDetailCellView.m */,
-				136506A91DE84C18001F7FE7 /* ZCYRepairShowView.h */,
-				136506AA1DE84C18001F7FE7 /* ZCYRepairShowView.m */,
+				13E2B8281DF7B75000EE666B /* ZCYRepairGDView.h */,
+				13E2B8291DF7B75000EE666B /* ZCYRepairGDView.m */,
 			);
 			name = PepairView;
 			sourceTree = "<group>";
@@ -650,10 +650,10 @@
 				49B730A71DBF949E00F438BD /* ZCYHydroelectricViewController.m in Sources */,
 				49B730A61DBF949A00F438BD /* ZCYSchoolCardViewController.m in Sources */,
 				49B730A51DBF949400F438BD /* ZCYClassViewController.m in Sources */,
+				13E2B82A1DF7B75000EE666B /* ZCYRepairGDView.m in Sources */,
 				136506951DE5A521001F7FE7 /* ZCYRepairlistHelper.m in Sources */,
 				499232CB1DC487AA00B17B54 /* ZCYProgressHUD.m in Sources */,
 				4951C8BD1DBA41D000E5AC63 /* main.m in Sources */,
-				136506AB1DE84C18001F7FE7 /* ZCYRepairShowView.m in Sources */,
 				4951C8B41DBA41C900E5AC63 /* ZCYHomePageViewController.m in Sources */,
 				498D310F1DE4659B00C30828 /* ZCYMoreFunctionViewController.m in Sources */,
 				4951C8B61DBA41C900E5AC63 /* ZCYInformationViewController.m in Sources */,

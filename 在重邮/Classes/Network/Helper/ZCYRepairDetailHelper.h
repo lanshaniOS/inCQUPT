@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+@class ZCYRepairDetailModel;
+
 @interface ZCYRepairDetailHelper : NSObject
 
-+(void)getrepairDetailWithBXId:(NSString *)BXId withComplitionBlock:(void (^)(NSError *,NSDictionary *))complitionBlock;
++(void)getrepairDetailWithBXId:(NSString *)BXId withComplitionBlock:(void (^)(NSError *,ZCYRepairDetailModel *))complitionBlock;
 
 @end

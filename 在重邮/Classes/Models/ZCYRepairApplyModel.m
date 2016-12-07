@@ -15,7 +15,7 @@
 +(NSDictionary *)initToDataWithId:(NSString *)studentId name:(NSString *)name Ip:(NSString *)ip title:(NSString *)title CategoryId:(NSString *)categoryId specificId:(NSString *)specificId phone:(NSString *)phone addressId:(NSString *)addressId content:(NSString   *)content address:(NSString *)address
 {
     
-    return @{@"Id":studentId,@"Name":name,@"Ip":ip,@"Title":title,@"SpecificId":specificId,@"AddressId":addressId,@"Phone":phone,@"Content":content,@"Address":address};
+    return @{@"ID":studentId,@"Name":name,@"Title":title,@"Ip":ip,@"SpecificId":specificId,@"AddressId":addressId,@"Phone":phone,@"Content":content,@"Address":address};
 }
 
 

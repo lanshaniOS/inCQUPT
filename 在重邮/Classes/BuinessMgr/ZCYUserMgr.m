@@ -39,6 +39,7 @@ static ZCYUserMgr *sharedMgr = nil;
     [aCoder encodeObject:self.userName forKey:@"USERNAME"];
     [aCoder encodeObject:self.repairInfomation forKey:@"REPAIRINFOMATION"];
     [aCoder encodeObject:self.repairAddressChoices forKey:@"REPAIRADDRESS"];
+    [aCoder encodeObject:self.yktID forKey:@"YKTID"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -54,6 +55,7 @@ static ZCYUserMgr *sharedMgr = nil;
         self.userName = [aDecoder decodeObjectForKey:@"USERNAME"];
         self.repairInfomation = [aDecoder decodeObjectForKey:@"REPAIRINFOMATION"];
         self.repairAddressChoices = [aDecoder decodeObjectForKey:@"REPAIRADDRESS"];
+        self.yktID = [aDecoder decodeObjectForKey:@"YKTID"];
     }
     return self;
 }

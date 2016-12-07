@@ -160,7 +160,7 @@
         return;
     }
     [ZCYUserMgr sharedMgr].studentNumber = self.accountTF.text;
-    
+    [ZCYUserMgr sharedMgr].yktID = self.accountTF.text;
     ZCYHomeTabBarController *tabBarC = [[ZCYHomeTabBarController alloc] init];
     [[ZCYProgressHUD sharedHUD] rotateWithText:@"登录中" inView:self.view];
     @weakify(self);

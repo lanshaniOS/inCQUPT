@@ -10,6 +10,7 @@
 
 @interface ZCYUserMgr : NSObject
 
+@property (nonatomic,strong) NSString *yktID;
 @property (strong, nonatomic) NSString *studentNumber;  /**< 学号 */
 @property (strong, nonatomic) NSArray *courseArray;  /**< 课程总述 */
 @property (strong, nonatomic) NSString *schoolName;  /**< 学校名称 */
