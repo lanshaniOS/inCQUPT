@@ -115,7 +115,7 @@
     }];
     
     UILabel *timeLabel = [[UILabel alloc] init];
-    NSString *timeString = [self.cardArray[indexPath.row][@"time"] substringWithRange:NSMakeRange(5, 12)];
+    NSString *timeString = [self.cardArray[indexPath.row][@"time"] substringWithRange:NSMakeRange(5, 14)];
     [timeLabel setFont:kFont(kStandardPx(36)) andText:timeString andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
     [cell addSubview:timeLabel];
     [timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -151,7 +151,7 @@
     typeLabel.layer.masksToBounds = YES;
     [cell addSubview:typeLabel];
     [typeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(moneyLabel.mas_left).with.offset(-15);
+        make.right.equalTo(moneyLabel.mas_left).with.offset(-10);
         make.centerY.equalTo(cell);
         make.size.mas_equalTo(CGSizeMake(34, 17));
     }];

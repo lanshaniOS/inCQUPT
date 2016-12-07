@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NSString *eduMajor;  /**< 专业 */
 @property (strong, nonatomic) NSDictionary *lendBookDic;  /**< 借阅信息 */
 @property (strong, nonatomic) NSArray *examRecord;  /**< 考试安排 */
+@property (strong, nonatomic) NSArray *dormitoryArray;  /**< 寝室 */
 
 + (ZCYUserMgr *)sharedMgr;
 

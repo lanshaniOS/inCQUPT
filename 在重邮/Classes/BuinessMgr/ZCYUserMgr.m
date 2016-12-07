@@ -34,6 +34,7 @@ static ZCYUserMgr *sharedMgr = nil;
     [aCoder encodeObject:self.eduType forKey:@"EDUTYPE"];
     [aCoder encodeObject:self.eduMajor forKey:@"EDUMAJOR"];
     [aCoder encodeObject:self.userName forKey:@"USERNAME"];
+    [aCoder encodeObject:self.dormitoryArray forKey:@"DORMITORYARRAY"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -47,7 +48,7 @@ static ZCYUserMgr *sharedMgr = nil;
         self.eduType = [aDecoder decodeObjectForKey:@"EDUTYPE"];
         self.eduMajor = [aDecoder decodeObjectForKey:@"EDUMAJOR"];
         self.userName = [aDecoder decodeObjectForKey:@"USERNAME"];
-
+        self.dormitoryArray = [aDecoder decodeObjectForKey:@"DORMITORYARRAY"];
     }
     return self;
 }

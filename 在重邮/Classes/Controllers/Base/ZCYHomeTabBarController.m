@@ -63,7 +63,7 @@
 //                               @"icon" : @"icon_mainNews",
 //                               @"icon_s" : @"icon_mainNews_f",
 //                               @"viewController_class" : NSStringFromClass([ZCYInformationViewController class])} ,
-                             @{@"name" : @"更多",
+                             @{@"name" : @"个人中心",
                                @"icon" : @"icon_mainMore",
                                @"icon_s" : @"icon_mainMore_f",
                                @"viewController_class" : NSStringFromClass([ZCYSettingsViewController class])}];

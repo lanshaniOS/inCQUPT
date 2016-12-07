@@ -370,6 +370,16 @@ static const float animationTime = 0.15f;
     [self.timePicker reloadComponent:1];
     NSInteger week = [self.timePicker selectedRowInComponent:0] == 0 ? [self.timePicker selectedRowInComponent:1] + [NSDate date].week + 1 : [self.timePicker selectedRowInComponent:1];
     [self getEmptyHouseWithBuilding:_selectedBuilding andSchoolWeek:[self.timePicker selectedRowInComponent:0] + [NSDate date].schoolWeek + 1 andWeek:week andSection:[self.timePicker selectedRowInComponent:2]];
+    
+    NSString *weekString;
+    if ([self.timePicker selectedRowInComponent:0] == 0)
+    {
+        weekString = _weekArray[[self.timePicker selectedRowInComponent:1] + [NSDate date].week - 1];
+    } else {
+        weekString = _weekArray[[self.timePicker selectedRowInComponent:1]];
+    }
+    self.weekTimeLabel.text = [NSString stringWithFormat:@"第%@周 星期%@", _shcoolWeekArray[[self.timePicker selectedRowInComponent:0] + [NSDate date].schoolWeek - 1], weekString];
+
 }
 #pragma mark - 点击事件
 - (void)clickTwo
@@ -457,7 +467,14 @@ static const float animationTime = 0.15f;
 {
     self.showEmptyHouseView.hidden = YES;
     self.backgroundControl.hidden = YES;
-    self.weekTimeLabel.text = [NSString stringWithFormat:@"第%@周 星期%@", _shcoolWeekArray[[self.timePicker selectedRowInComponent:0]], _weekArray[[self.timePicker selectedRowInComponent:1]]];
+    NSString *weekString;
+    if ([self.timePicker selectedRowInComponent:0] == 0)
+    {
+        weekString = _weekArray[[self.timePicker selectedRowInComponent:1] + [NSDate date].week - 1];
+    } else {
+        weekString = _weekArray[[self.timePicker selectedRowInComponent:1]];
+    }
+    self.weekTimeLabel.text = [NSString stringWithFormat:@"第%@周 星期%@", _shcoolWeekArray[[self.timePicker selectedRowInComponent:0] + [NSDate date].schoolWeek - 1], weekString];
     self.selectedTimeButton.hidden = NO;
     self.finishButton.hidden = YES;
     sum_yOffset = 0;

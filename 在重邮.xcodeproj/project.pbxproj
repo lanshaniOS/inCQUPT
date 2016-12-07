@@ -10,6 +10,7 @@
 		49061F581DDB4F7B00E2923A /* UILabel+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 49061F571DDB4F7B00E2923A /* UILabel+Common.m */; };
 		49061F5B1DDF325E00E2923A /* ZCYDetailCourseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49061F5A1DDF325E00E2923A /* ZCYDetailCourseView.m */; };
 		492C932D1DF6F2FC0071DB63 /* ZCYCardDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 492C932C1DF6F2FC0071DB63 /* ZCYCardDetailView.m */; };
+		492C93311DF82D6A0071DB63 /* ZCYDormitoryHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 492C93301DF82D6A0071DB63 /* ZCYDormitoryHelper.m */; };
 		492E231C1DD8B0530083F135 /* UIView+Radius.m in Sources */ = {isa = PBXBuildFile; fileRef = 492E231B1DD8B0530083F135 /* UIView+Radius.m */; };
 		49403FD61DF58DA400AF47D0 /* ZCYUserDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49403FD51DF58DA400AF47D0 /* ZCYUserDetailViewController.m */; };
 		49403FD91DF5905F00AF47D0 /* ZCYAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49403FD81DF5905F00AF47D0 /* ZCYAlertView.m */; };
@@ -124,6 +125,8 @@
 		49061F5A1DDF325E00E2923A /* ZCYDetailCourseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYDetailCourseView.m; sourceTree = "<group>"; };
 		492C932B1DF6F2FC0071DB63 /* ZCYCardDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYCardDetailView.h; sourceTree = "<group>"; };
 		492C932C1DF6F2FC0071DB63 /* ZCYCardDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYCardDetailView.m; sourceTree = "<group>"; };
+		492C932F1DF82D6A0071DB63 /* ZCYDormitoryHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYDormitoryHelper.h; sourceTree = "<group>"; };
+		492C93301DF82D6A0071DB63 /* ZCYDormitoryHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYDormitoryHelper.m; sourceTree = "<group>"; };
 		492E231A1DD8B0530083F135 /* UIView+Radius.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Radius.h"; sourceTree = "<group>"; };
 		492E231B1DD8B0530083F135 /* UIView+Radius.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Radius.m"; sourceTree = "<group>"; };
 		493744141DB1C1F700E49E4E /* 在重邮.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "在重邮.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -321,6 +324,15 @@
 				492C932C1DF6F2FC0071DB63 /* ZCYCardDetailView.m */,
 			);
 			path = Card;
+			sourceTree = "<group>";
+		};
+		492C932E1DF82D390071DB63 /* DomitoryEletric */ = {
+			isa = PBXGroup;
+			children = (
+				492C932F1DF82D6A0071DB63 /* ZCYDormitoryHelper.h */,
+				492C93301DF82D6A0071DB63 /* ZCYDormitoryHelper.m */,
+			);
+			name = DomitoryEletric;
 			sourceTree = "<group>";
 		};
 		4937440B1DB1C1F700E49E4E = {
@@ -631,6 +643,7 @@
 		49AC73EC1DC0F06100E903EA /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				492C932E1DF82D390071DB63 /* DomitoryEletric */,
 				49EA613B1DF00744003A548A /* StudentSearch */,
 				49EA61331DEDB50A003A548A /* Exam */,
 				49A1D13D1DE8790500C93F74 /* LendingBook */,
@@ -1019,6 +1032,7 @@
 				49403FD91DF5905F00AF47D0 /* ZCYAlertView.m in Sources */,
 				4951C8BD1DBA41D000E5AC63 /* main.m in Sources */,
 				4951C8B41DBA41C900E5AC63 /* ZCYHomePageViewController.m in Sources */,
+				492C93311DF82D6A0071DB63 /* ZCYDormitoryHelper.m in Sources */,
 				49A810951DE9D23C00B0183C /* ZWKPieChart.m in Sources */,
 				498D310F1DE4659B00C30828 /* ZCYMoreFunctionViewController.m in Sources */,
 				4951C8B61DBA41C900E5AC63 /* ZCYInformationViewController.m in Sources */,

@@ -29,6 +29,11 @@
     [self initUI];
 }
 
+- (NSString *)title
+{
+    return @"学生详情";
+}
+
 - (instancetype)initWithStudentInfo:(NSDictionary *)studentInfo
 {
     if (self = [super init])
