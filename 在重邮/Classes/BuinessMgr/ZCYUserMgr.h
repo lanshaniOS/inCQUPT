@@ -19,6 +19,10 @@
 @property (strong, nonatomic) NSDictionary *lendBookDic;  /**< 借阅信息 */
 @property (strong, nonatomic) NSArray *examRecord;  /**< 考试安排 */
 @property (strong, nonatomic) NSArray *dormitoryArray;  /**< 寝室 */
+@property (nonatomic,strong) NSDictionary *repairInfomation;
+@property (nonatomic,strong) NSArray *repairAddressChoices;
+@property (strong, nonatomic) NSString *cardID;  /**< 一卡通号 */
+@property (strong, nonatomic) NSDictionary *dormitoryDic;  /**< 水电详情 */
 
 + (ZCYUserMgr *)sharedMgr;
 

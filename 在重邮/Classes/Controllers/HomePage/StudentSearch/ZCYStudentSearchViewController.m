@@ -15,6 +15,7 @@
 @property (strong, nonatomic) UISearchController *searchController;  /**< 搜索框 */
 @property (strong, nonatomic) NSMutableArray *studentArray;  /**< 搜索结果 */
 @property (strong, nonatomic) UITableView *searchTableView;  /**< 搜索结果 */
+@property (strong, nonatomic) NSString *searchbarText;  /**< 搜索字符 */
 @end
 
 @implementation ZCYStudentSearchViewController
@@ -115,13 +116,12 @@
 
 - (void)requestMoreData
 {
-    [ZCYStudentSeachHelper getStudentDetailWithMessage:self.searchController.searchBar.text andPage:_page withCompeletionBlock:^(NSError *error, NSDictionary *resultDic) {
+    [ZCYStudentSeachHelper getStudentDetailWithMessage:self.searchbarText andPage:_page withCompeletionBlock:^(NSError *error, NSDictionary *resultDic) {
         if (error)
         {
             [[ZCYProgressHUD sharedHUD] showWithText:[error localizedDescription] inView:self.view hideAfterDelay:1.0f];
             return;
         }
-        [self endRefresh];
         if (resultDic != nil || resultDic != NULL)
         {
             if (resultDic.count !=0)
@@ -129,6 +129,7 @@
                 [self.studentArray addObjectsFromArray:resultDic[@"rows"]];
                 dispatch_async(dispatch_get_main_queue(), ^{
                    [self.searchTableView reloadData];
+                   [self endRefresh];
                 });
             }
         }
@@ -148,6 +149,7 @@
 {
     if (self.searchController.active == YES)
     {
+        self.searchbarText = self.searchController.searchBar.text;
         if (![self.searchController.searchBar.text  isEqual: @""])
         {
             [self.studentArray removeAllObjects];
@@ -158,7 +160,19 @@
             _page = 1;
             [self.searchTableView reloadData];
         }
+    } else {
+//        if ([self.searchController.searchBar.text  isEqual: @""])
+//        {
+//            [self.studentArray removeAllObjects];
+//            //        _page = 1;
+//            [self.searchTableView reloadData];
+//        }
     }
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar

@@ -11,6 +11,7 @@
 #import "ZCYLoginViewController.h"
 #import "ZCYNavigationController.h"
 #import "ZCYCourseViewController.h"
+#import "ZCYUserInfoHelper.h"
 
 @interface ZCYAppDelegate ()
 
@@ -24,6 +25,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    [ZCYUserInfoHelper getUserTokenwithCompeletionBlock:^(NSError *error, NSArray *array) {
+    }];
+    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = kCommonWhite_Color;
     
@@ -35,6 +39,7 @@
     UIApplicationShortcutItem *courseItem3 = [[UIApplicationShortcutItem alloc] initWithType:@"courseItem3" localizedTitle:@"学生查询" localizedSubtitle:nil icon:courseIcon3 userInfo:nil];
     UIApplicationShortcutIcon *courseIcon4 = [UIApplicationShortcutIcon iconWithTemplateImageName:@"3D_教室"];
     UIApplicationShortcutItem *courseItem4 = [[UIApplicationShortcutItem alloc] initWithType:@"courseItem4" localizedTitle:@"空教室查询" localizedSubtitle:nil icon:courseIcon4 userInfo:nil];
+    
     application.shortcutItems = @[courseItem1, courseItem2, courseItem3, courseItem4];
     NSData *userMgr = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERMGR"];
     ZCYUserMgr *sharedMgr = [NSKeyedUnarchiver unarchiveObjectWithData:userMgr];
@@ -45,9 +50,8 @@
     } else {
         self.tabBarC = [[ZCYHomeTabBarController alloc] init];
         self.window.rootViewController = self.tabBarC;
-
+        
     }
-    
     [self.window makeKeyAndVisible];
     
     return YES;
@@ -67,6 +71,7 @@
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+
 }
 
 

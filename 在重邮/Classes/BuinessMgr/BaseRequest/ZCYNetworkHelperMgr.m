@@ -26,7 +26,35 @@ static const NSString *WXURL = @"http://wx.cqupt.edu.cn";
 - (void)requestWithData:(NSDictionary *)data andCompletionBlock:(void (^)(NSError *, id, NSURLSessionDataTask *))completionBlock andURLPath:(NSString *)urlPath
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:[NSString stringWithFormat:@"%@%@",URL,urlPath] parameters:data progress:^(NSProgress * _Nonnull downloadProgress) {
+    NSMutableDictionary *mutableDic = [NSMutableDictionary dictionaryWithDictionary:data];
+    
+    [mutableDic setObject:[NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSince1970]] forKey:@"timestamp"];
+    [mutableDic setObject:@"在重邮" forKey:@"openid"];
+//    [mutableDic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"ZCYUserToken"] forKey:@"token"];
+    
+    NSData *requestData = [NSJSONSerialization dataWithJSONObject:mutableDic options:0 error:nil];
+    
+    NSString *requestString = [[NSString alloc] initWithData:requestData encoding:NSUTF8StringEncoding];
+    
+    NSMutableString *signString = [NSMutableString stringWithFormat:@"%@",requestString];
+    [signString deleteCharactersInRange:NSMakeRange(requestString.length-1, 1)];
+    [signString appendFormat:@",\"token\":\"%@\"}", [[NSUserDefaults standardUserDefaults] objectForKey:@"ZCYUserToken"]];
+    NSMutableDictionary *endDic = [[NSMutableDictionary alloc] initWithDictionary:data];
+    [endDic setObject:[NSString getmd5WithString:signString] forKey:@"sign"];
+    NSMutableString *endString = [NSMutableString stringWithFormat:@"%@",requestString];
+    [endString deleteCharactersInRange:NSMakeRange(requestString.length-1, 1)];
+    [endString appendFormat:@",\"sign\":\"%@\"}",[NSString getmd5WithString:signString]];
+    
+    [endDic setObject:[NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSince1970]] forKey:@"timestamp"];
+    [endDic setObject:@"在重邮" forKey:@"openid"];
+    NSData *endData = [endString dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *keyString = [endData base64EncodedStringWithOptions:0];
+    
+    [manager POST:[NSString stringWithFormat:@"%@%@",URL,urlPath] parameters:@{
+                                                                               @"key": keyString
+                                                                               
+                                                                                   
+                                                                               }progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -64,5 +92,27 @@ static const NSString *WXURL = @"http://wx.cqupt.edu.cn";
         }
     }];
 
+}
+
+- (void)postRequestWithData:(NSDictionary *)data andCompletionBlock:(void (^)(NSError *, id, NSURLSessionDataTask *))completionBlock andURLPath:(NSString *)urlPath
+{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:[NSString stringWithFormat:@"%@%@",URL,urlPath] parameters:data progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        if (completionBlock)
+        {
+            completionBlock(nil, responseObject, task);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        
+        if (completionBlock)
+        {
+            completionBlock(error, nil, task);
+        }
+    }];
+    
 }
 @end

@@ -22,6 +22,9 @@
 #import "ZCYEmptyClassViewController.h"
 #import "ZCYStudentSearchViewController.h"
 #import "ZCYExaminationViewController.h"
+#import "ZCYHomePageElecView.h"
+#import "ZCYDormitoryHelper.h"
+
 
 @interface ZCYHomePageViewController () <UIScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
@@ -32,6 +35,7 @@
 @property (strong, nonatomic) UIView *cardView;  /**< 一卡通视图 */
 @property (strong, nonatomic) UILabel *timeLabel;  /**< 时间标签 */
 @property (strong, nonatomic) UILabel *summaryLabel;  /**< 课程数标签 */
+@property (strong, nonatomic) ZCYHomePageElecView *electricView;  /**< 水电视图 */
 @end
 
 @implementation ZCYHomePageViewController
@@ -48,10 +52,24 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
     self.navigationController.navigationBar.hidden = YES;
+    if ([ZCYUserMgr sharedMgr].dormitoryArray)
+    {
+        [ZCYDormitoryHelper getElectricDetailWithBuilding:[ZCYUserMgr sharedMgr].dormitoryArray[0] andFloor:[[ZCYUserMgr sharedMgr].dormitoryArray[2] integerValue] andRoom:[[ZCYUserMgr sharedMgr].dormitoryArray[3] integerValue] withCompeletionBlock:^(NSError *error, NSDictionary *resultDic) {
+            if (error)
+            {
+                return;
+            }
+            [ZCYUserMgr sharedMgr].dormitoryDic = resultDic;
+            [self.electricView updateViewWithElecString:[NSString stringWithFormat:@"%@元",resultDic[@"elec_cost"]]];
+        }];
+         
+    }
 //    self.navigationController.navigationBar.alpha = (self.backgroundScrollView.contentOffset.y)/355 * 2.0;
 //    
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -91,7 +109,7 @@
     self.backgroundScrollView.delegate = self;
     self.backgroundScrollView.scrollEnabled = YES;
     self.backgroundScrollView.showsVerticalScrollIndicator = NO;
-    self.backgroundScrollView.contentSize = CGSizeMake(self.view.frame.size.width, 940);
+    self.backgroundScrollView.contentSize = CGSizeMake(self.view.frame.size.width, 1220*self.view.frame.size.height/667);
     self.backgroundScrollView.contentOffset = CGPointMake(0, 0);
     [self.view addSubview:self.backgroundScrollView];
     [self.backgroundScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -175,8 +193,9 @@
         }];
     }
     
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"今天只有 %02ld 节课，爽到爆炸", courseNum]];
-    [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Futura" size:kStandardPx(64)] range:NSMakeRange(5, 2)];
+    NSArray *tipArray = @[@"今天有00节课，放松一下吧", @"今天有02节课哦，爽到爆炸", @"今天有04节课，好好加油吧～", @"今天有06节课哦～，多撑一会吧", @"今天有08节课，容我缓一缓～", @"今天有10节课...生无可恋", @"今天有12节课...生无可恋"];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:tipArray[courseNum/2]];
+    [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Futura" size:kStandardPx(64)] range:NSMakeRange(3, 2)];
     
     [self setLabel:self.summaryLabel withText:@"" andTextColor:kCommonWhite_Color andTextFont:kFont(kStandardPx(36))];
     self.summaryLabel.attributedText = attributedString;
@@ -365,7 +384,7 @@
     }];
     
     UIButton *detailButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [detailButton setTitle:@"详情" forState:UIControlStateNormal];
+    [detailButton setTitle:@"一卡通详情" forState:UIControlStateNormal];
     [detailButton setTitleColor:kDeepGreen_Color forState:UIControlStateNormal];
     detailButton.layer.masksToBounds = YES;
     detailButton.titleLabel.font = kFont(16);
@@ -431,7 +450,27 @@
         make.height.mas_equalTo(0.5);
     }];
     
+   
+    if ([ZCYUserMgr sharedMgr].dormitoryArray)
+    {
+        self.electricView = [[ZCYHomePageElecView alloc] initWithElecString:@"数据记载中..."];
+    } else {
+        self.electricView = [[ZCYHomePageElecView alloc] initWithElecString:@"00"];
+        
+    }
+    [self.backgroundScrollView addSubview:self.electricView];
+    [self.electricView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.and.right.equalTo(self.view);
+        make.top.equalTo(secGrayLine.mas_bottom);
+        make.height.mas_equalTo(215);
+    }];
 
+    @weakify(self);
+    [self.electricView setClickedBlock:^{
+        @strongify(self);
+        ZCYHydroelectricViewController *elecC = [[ZCYHydroelectricViewController alloc] init];
+        [self.navigationController pushViewController:elecC animated:YES];
+    }];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -519,21 +558,7 @@
         NSArray *array = obj;
         if (array == nil || array.count == 0)
         {
-            //        UILabel *tipLabel = [[UILabel alloc] init];
-            //        tipLabel.text = @"今天没课哦";
-            //        tipLabel.textColor = kDeepGray_Color;
-            //        tipLabel.font = [UIFont systemFontOfSize:20 weight:2];
-            //        tipLabel.textAlignment = NSTextAlignmentCenter;
-            //        [self.courseScrollView addSubview:tipLabel];
-            //        [tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            //            make.centerX.equalTo(self.view);
-            //            make.centerY.equalTo(self.courseScrollView);
-            //            make.width.mas_equalTo(100);
-            //            make.height.mas_equalTo(26);
-            //        }];
         } else {
-            //        for (NSInteger i = 0; i<array.count; i++)
-            //        {
             ZCYTimeTableModel *model = array[0];
             ZCYCourseView *courseView = [[ZCYCourseView alloc] initWithCourseName:model.courseName andClassID:model.coursePlace andCourseTime:idx];
             [courseView setTextColor:deepArray[index%3] andBackgroundColor:commonArray[index%3]];
@@ -546,7 +571,6 @@
                 make.height.mas_equalTo((self.view.frame.size.width-40)/2 - 15);
             }];
             index++;
-            //        }
         }
 
     }];
@@ -564,6 +588,7 @@
     ZCYCardDetailViewController *cardDetailVC = [[ZCYCardDetailViewController alloc] init];
     [self.navigationController pushViewController:cardDetailVC animated:YES];
 }
+
 
 #pragma mark - UICollectionViewDelegate & UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -615,13 +640,6 @@
     UIViewController *nextViewController = [[vcClass alloc] init];
     [self.navigationController pushViewController:nextViewController animated:YES];
 }
-#pragma mark - tools
-
-//- (void)becomeActive
-//{
-//     self.navigationController.navigationBar.alpha = (self.backgroundScrollView.contentOffset.y)/355 * 2.0;
-//}
-
 
 //设置基础标签
 -(void)setLabel:(UILabel *)label withText:(NSString *)text andTextColor:(UIColor *)textColor andTextFont:(UIFont *)textFont

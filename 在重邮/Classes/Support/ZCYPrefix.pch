@@ -31,5 +31,6 @@
 #import "ZCYUserMgr.h"
 #import "UILabel+Common.h"
 #import "UIImage+Additions.h"
+#import "NSString+MD5.h"
 
 #endif

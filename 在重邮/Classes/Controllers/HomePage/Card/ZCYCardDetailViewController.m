@@ -111,18 +111,18 @@
 //                    min = min *10;
 //                }
 //            }
-            for (NSInteger index = 0; ; index++)
-            {
-                if (last / 10 == 0)
-                {
-                    max = max * last;
-                    break;
-                } else {
-                    last = last / 10;
-                    max = max*10;
-                }
-            }
-            
+//            for (NSInteger index = 0; ; index++)
+//            {
+//                if (last / 10.0 == 0)
+//                {
+//                    max = max * last;
+//                    break;
+//                } else {
+//                    last = last / 10.0;
+//                    max = max*10;
+//                }
+//            }
+            max = last/10*10+10;
             for (NSInteger index = 0; index<10; index++)
             {
 

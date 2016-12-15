@@ -13,7 +13,7 @@
 
 + (void)getExamRecordWithStdNumber:(NSString *)studentNumber withCompeletionBlock:(void (^)(NSError *, NSArray *))compeletionBlock
 {
-    [[ZCYNetworkHelperMgr sharedMgr] requestWithData:@{@"xh" : studentNumber} andCompletionBlock:^(NSError *error, id response, NSURLSessionDataTask *task) {
+    [[ZCYNetworkHelperMgr sharedMgr] requestWithData:@{@"id" : studentNumber} andCompletionBlock:^(NSError *error, id response, NSURLSessionDataTask *task) {
         compeletionBlock(error, response[@"data"]);
     } andURLPath:@"/api/get_ks.php"];
 }

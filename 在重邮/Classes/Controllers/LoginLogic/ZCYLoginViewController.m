@@ -10,12 +10,14 @@
 #import "ZCYHomeTabBarController.h"
 #import "ZCYTimeTableHelper.h"
 #import "ZCYUserValidateHelper.h"
+#import "ZCYTextField.h"
+#import "ZCYUserInfoHelper.h"
 
 @interface ZCYLoginViewController ()<UITextFieldDelegate>
 
-@property(strong,nonatomic) UITextField *accountTF;  /**< 账号框      */
-@property(strong,nonatomic) UITextField *passwordTF; /**< 密码框      */
-@property(strong,nonatomic) UIImageView *topImage;   /**< 顶部背景图   */
+@property(strong,nonatomic) ZCYTextField *accountTF;  /**< 账号框      */
+@property(strong,nonatomic) ZCYTextField *passwordTF; /**< 密码框      */
+//@property(strong,nonatomic) UIImageView *topImage;   /**< 顶部背景图   */
 @property(strong,nonatomic) UIImageView *logoImage;  /**< 在重邮logo  */
 @property(strong,nonatomic) UIButton    *loginBT;    /**< 登录按钮    */
 @property(strong,nonatomic) UIButton    *forgetBT;   /**< 忘记密码按钮 */
@@ -51,59 +53,80 @@
     
 }
 -(void) TopInit{
-    self.topImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_main_bg"]];
-    [self.view addSubview:self.topImage];
-    [self.topImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.right.equalTo(self.view);
-        make.top.mas_equalTo(self.view);
-        make.height.mas_equalTo(255);
-    }];
-  self.logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AppIcon"]];
+//    self.topImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_main_bg"]];
+//    [self.view addSubview:self.topImage];
+//    [self.topImage mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.and.right.equalTo(self.view);
+//        make.top.mas_equalTo(self.view);
+//        make.height.mas_equalTo(255);
+//    }];
+  self.logoImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"appiconImage"]];
     [self.view addSubview:self.logoImage];
     [self.logoImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.and.height.mas_equalTo(92);
-        make.top.equalTo(self.topImage.mas_bottom).with.offset(-50);
+        make.top.equalTo(self.view).with.offset(84);
         make.centerX.equalTo(self.view.mas_centerX);
         
     }];
 
+//    UILabel *nameLabel = [[UILabel alloc] init];
+//    [nameLabel setFont:[UIFont fontWithName:@"SimHei" size:kStandardPx(80)] andText:@"在重邮" andTextColor:kDeepGreen_Color andBackgroundColor:kTransparentColor];
+//    
+//    [self.view addSubview:nameLabel];
+//    [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(self.logoImage);
+//        make.top.equalTo(self.logoImage.mas_bottom).with.offset(4);
+//    }];
 }
 -(void) TFinit{
     UIView *underline1 = [[UIView alloc]init];
-    underline1.backgroundColor = kCommonBorder_Color;
-    self.accountTF = [[UITextField alloc]init];
+    underline1.backgroundColor = kCommonLightGray_Color;
+    self.accountTF = [[ZCYTextField alloc]init];
     self.accountTF.delegate  = self;
     self.accountTF.placeholder = @"   一卡通统一识别码";
     self.accountTF.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"private_userNumber"];
+    self.accountTF.textAlignment = NSTextAlignmentLeft;
+    
     self.accountTF.clearButtonMode = UITextFieldViewModeAlways;
     self.accountTF.font = kFont(kStandardPx(32));
-    UIImageView *usernameImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_username"]];
-    usernameImageView.frame = CGRectMake(0, 0, 15, 20);
-    self.accountTF.leftView = usernameImageView;
+    UILabel *userLabel = [[UILabel alloc] init];
+    [userLabel setFont:kFont(kStandardPx(32)) andText:@"账号" andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
+    userLabel.frame = CGRectMake(0, 0, 40, 20);
+    self.accountTF.leftView = userLabel;
     self.accountTF.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:self.accountTF];
     [self.accountTF mas_makeConstraints:^(MASConstraintMaker *make) {
 
         make.height.mas_equalTo(30);
-        make.top.equalTo(self.topImage.mas_bottom).with.offset(85);
-        make.left.equalTo(self.view).with.offset(53);
-        make.right.equalTo(self.view).with.offset(-53);
+        make.top.equalTo(self.logoImage.mas_bottom).with.offset(65);
+        make.left.equalTo(self.view).with.offset(15);
+        make.right.equalTo(self.view).with.offset(-15);
     }];
     [self.view addSubview:underline1];
     [underline1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(self.accountTF.mas_width);
         make.height.mas_equalTo(1);
-        make.top.equalTo(self.accountTF.mas_bottom);
-        make.left.equalTo(self.accountTF.mas_left);
+        make.top.equalTo(self.accountTF.mas_bottom).with.offset(8);
+        make.left.and.right.equalTo(self.view);
+    }];
+    
+    UIView *underline3 = [[UIView alloc]init];
+    underline3.backgroundColor = kCommonLightGray_Color;
+    [self.view addSubview:underline3];
+    [underline3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.accountTF.mas_top).with.offset(-8);
+        make.left.and.right.equalTo(self.view);
+        make.height.mas_equalTo(1);
     }];
     UIView *underline2 = [[UIView alloc]init];
-    underline2.backgroundColor = kCommonBorder_Color;
-    self.passwordTF = [[UITextField alloc]init];
+    underline2.backgroundColor = kCommonLightGray_Color;
+    self.passwordTF = [[ZCYTextField alloc]init];
     self.passwordTF.delegate = self;
     self.passwordTF.placeholder = @"   身份证后6位";
-    UIImageView *passwordImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_password"]];
-    passwordImageView.frame = CGRectMake(0, 0, 15, 20);
-    self.passwordTF.leftView = passwordImageView;
+    UILabel *pwdLabel = [[UILabel alloc] init];
+    [pwdLabel setFont:kFont(kStandardPx(32)) andText:@"密码" andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
+    pwdLabel.frame = CGRectMake(0, 0, 40, 20);
+    self.passwordTF.leftView = pwdLabel;
     self.passwordTF.leftViewMode = UITextFieldViewModeAlways;
     self.passwordTF.clearButtonMode = UITextFieldViewModeAlways;
     self.passwordTF.font = kFont(kStandardPx(32));
@@ -111,55 +134,57 @@
     [self.view addSubview:self.passwordTF];
     [self.passwordTF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(30);
-        make.top.equalTo(self.accountTF.mas_bottom).with.offset(30);
-        make.left.equalTo(self.view).with.offset(53);
-        make.right.equalTo(self.view).with.offset(-53);
+        make.top.equalTo(underline1.mas_bottom).with.offset(8);
+        make.left.equalTo(self.view).with.offset(15);
+        make.right.equalTo(self.view).with.offset(-15);
     }];
     [self.view addSubview:underline2];
     [underline2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(1);
-        make.top.equalTo(self.passwordTF.mas_bottom);
-        make.right.and.left.equalTo(self.passwordTF);
+        make.top.equalTo(self.passwordTF.mas_bottom).with.offset(8);
+        make.left.and.right.equalTo(self.view);
+        
     }];
 }
 -(void) Bottominit{
     self.loginBT = [[UIButton alloc]init];
     [self.loginBT setTitle:@"登陆" forState:UIControlStateNormal];
     self.loginBT.backgroundColor = [UIColor colorWithRGBHex:0x56db3c];
-    [self.loginBT.layer setCornerRadius:20];
+    [self.loginBT.layer setCornerRadius:5];
     [self.loginBT.layer setMasksToBounds:YES];
     self.loginBT.titleLabel.font = kFont(kStandardPx(32));
     [self.loginBT addTarget:self action:@selector(pushToHomePage) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.loginBT];
     [self.loginBT mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).with.offset(97);
-        make.right.equalTo(self.view).with.offset(-97);
-        make.height.mas_equalTo(47.5);
-        make.top.equalTo(self.passwordTF.mas_bottom).with.offset(52);
+        make.left.equalTo(self.view).with.offset(15);
+        make.right.equalTo(self.view).with.offset(-15);
+        make.height.mas_equalTo(40);
+        make.top.equalTo(self.passwordTF.mas_bottom).with.offset(28);
     }];
     
-    self.forgetBT =[[UIButton alloc]init];
-    [self.forgetBT setTitle:@"忘记密码" forState:UIControlStateNormal];
-    self.forgetBT.titleLabel.font =[UIFont systemFontOfSize:10.0];
-    [self.forgetBT setTitleColor:kDeepGray_Color forState:UIControlStateNormal];
-    self.forgetBT.titleLabel.font = kFont(kStandardPx(24));
-    [self.view addSubview:self.forgetBT];
-    [self.forgetBT mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(80);
-        make.height.mas_equalTo(30);
-        make.top.equalTo(self.passwordTF.mas_bottom).with.offset(4);
-        make.right.equalTo(self.passwordTF);
-    }];
+//    self.forgetBT =[[UIButton alloc]init];
+//    [self.forgetBT setTitle:@"忘记密码" forState:UIControlStateNormal];
+//    [self.forgetBT setTitleColor:kDeepGreen_Color forState:UIControlStateNormal];
+//    self.forgetBT.titleLabel.font = kFont(kStandardPx(50));
+//    [self.view addSubview:self.forgetBT];
+//    [self.forgetBT mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.width.mas_equalTo(80);
+//        make.height.mas_equalTo(30);
+//        make.top.equalTo(self.loginBT.mas_bottom).with.offset(12);
+//        make.right.equalTo(self.passwordTF);
+//    }];
 }
 
 - (void)pushToHomePage
 {
+
     if ([self.accountTF.text  isEqualToString: @""] || [self.passwordTF.text isEqualToString:@""])
     {
         [[ZCYProgressHUD sharedHUD] showWithText:@"账号或密码不能为空" inView:self.view hideAfterDelay:1];
         return;
     }
     [ZCYUserMgr sharedMgr].studentNumber = self.accountTF.text;
+    
     
     ZCYHomeTabBarController *tabBarC = [[ZCYHomeTabBarController alloc] init];
     [[ZCYProgressHUD sharedHUD] rotateWithText:@"登录中" inView:self.view];
@@ -194,6 +219,7 @@
                         [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0f];
                         [ZCYUserMgr sharedMgr].courseArray = array;
                         ZCYUserMgr *userMgr = [ZCYUserMgr sharedMgr];
+                        userMgr.cardID = self.accountTF.text;
                         NSData *archiveUserData = [NSKeyedArchiver archivedDataWithRootObject:userMgr];
                         [[NSUserDefaults standardUserDefaults] setObject:archiveUserData forKey:@"USERMGR"];
                         
@@ -249,18 +275,22 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
-    NSDictionary *userInfo = notification.userInfo;
-    CGRect keyboardFrameAfterShow = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+//    NSDictionary *userInfo = notification.userInfo;
+//    CGRect keyboardFrameAfterShow = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
-    [self.topImage mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).with.offset(-(keyboardFrameAfterShow.size.height - (self.view.frame.size.height - 47.5 - y_loginButton)));
-    }];
-    [self.topImage setNeedsUpdateConstraints];
-    [self.topImage updateConstraintsIfNeeded];
+//    [self.topImage mas_updateConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.view.mas_top).with.offset(-(keyboardFrameAfterShow.size.height - (self.view.frame.size.height - 47.5 - y_loginButton)));
+//    }];
+//    [self.topImage setNeedsUpdateConstraints];
+//    [self.topImage updateConstraintsIfNeeded];
     
     [UIView animateWithDuration:0.5f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         
-        [self.topImage.superview layoutIfNeeded];
+
+        [self.logoImage mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view).with.offset(74);
+        }];
+        [self.logoImage.superview layoutIfNeeded];
     } completion:^(BOOL finished) {
     }];
 }
@@ -268,19 +298,26 @@
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
-    [self.topImage setNeedsUpdateConstraints];
-    [self.topImage updateConstraintsIfNeeded];
-    
-    [self.topImage mas_updateConstraints:^(MASConstraintMaker *make) {
-        
-        make.top.equalTo(self.view);
-    }];
+//    [self.topImage setNeedsUpdateConstraints];
+//    [self.topImage updateConstraintsIfNeeded];
+//    
+//    [self.topImage mas_updateConstraints:^(MASConstraintMaker *make) {
+//    
+//        make.top.equalTo(self.view);
+//    }];
     
     [UIView animateWithDuration:0.5f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        [self.topImage.superview layoutIfNeeded];
+//        [self.topImage.superview layoutIfNeeded];
+        [self.logoImage mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view).with.offset(84);
+        }];
+        [self.logoImage.superview layoutIfNeeded];
     } completion:^(BOOL finished) {
     }];
 }
+
+
+
 /*
 #pragma mark - Navigation
 

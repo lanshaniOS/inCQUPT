@@ -19,6 +19,7 @@
 @property (strong, nonatomic) UITableView *examTableView;  /**< 背景下啦  */
 @property (strong, nonatomic) UISegmentedControl *segmentControl;  /**< 顶部导航条 */
 @property (strong, nonatomic) UILabel  *examTipLabel;  /**< 提示 */
+@property (strong, nonatomic) UILabel  *scoreTipLabel;  /**< 提示 */
 @property (strong, nonatomic) NSArray *examArray;  /**< 考试安排数组 */
 @property (strong, nonatomic) UITableView *scoreTableView;  /**< 分数查询 */
 @property (strong, nonatomic) UITableView *resitTableView;  /**< 补考 */
@@ -41,17 +42,21 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     if ([ZCYUserMgr sharedMgr].examRecord)
     {
-        self.examTipLabel.hidden = YES;
+//        self.examTipLabel.hidden = YES;
         self.examArray = [ZCYUserMgr sharedMgr].examRecord;
         [self.examTableView reloadData];
+    } else {
+        [[ZCYProgressHUD sharedHUD] rotateWithText:@"数据加载中" inView:self.view];
     }
-    [super viewWillAppear:animated];
     [ZCYExaminationHelper getExamRecordWithStdNumber:[ZCYUserMgr sharedMgr].studentNumber withCompeletionBlock:^(NSError *error, NSArray *array) {
+        [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0f];
         if (error)
         {
-            self.examTipLabel.text = @"您的网络似乎在开小差哟～～～";
+            [[ZCYProgressHUD sharedHUD] showWithText:[error localizedDescription] inView:self.view hideAfterDelay:1.0f];
+//            self.examTipLabel.text = @"您的网络似乎在开小差哟～～～";
             return;
         } else {
            
@@ -65,6 +70,29 @@
                 self.examTipLabel.hidden = YES;
             }
             [self.examTableView reloadData];
+        }
+    }];
+    
+    self.scoreTipLabel.text = @"加载数据中...";
+    self.scoreTipLabel.hidden = NO;
+    [ZCYExamScoreHelper getExamScoreWithStdNumber:[ZCYUserMgr sharedMgr].studentNumber withCompeletionBlock:^(NSError *error, NSArray *array) {
+        if (error)
+        {
+            self.scoreTipLabel.text = [error localizedDescription];
+            self.scoreTipLabel.hidden = NO;
+            return;
+        } else {
+            
+            self.scoreArray = array;
+//            [ZCYUserMgr sharedMgr].examRecord = array;
+            if (self.scoreArray.count == 0)
+            {
+                self.scoreTipLabel.hidden = NO;
+                self.scoreTipLabel.text = @"成绩都还没出来呢～～～";
+            } else {
+                self.scoreTipLabel.hidden = YES;
+            }
+            [self.scoreTableView reloadData];
         }
     }];
 }
@@ -146,10 +174,22 @@
 {
     self.examTipLabel = [[UILabel alloc] init];
     [self.examTipLabel setFont:kFont(kStandardPx(50)) andText:@"获取数据中..." andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
+    self.examTipLabel.hidden = YES;
     self.examTipLabel.textAlignment = NSTextAlignmentCenter;
     [self.backgroundScrollView addSubview:self.examTipLabel];
     [self.examTipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.backgroundScrollView);
+        make.centerY.equalTo(self.backgroundScrollView);
+        make.width.mas_equalTo(self.view.frame.size.width);
+    }];
+    
+    self.scoreTipLabel = [[UILabel alloc] init];
+    [self.scoreTipLabel setFont:kFont(kStandardPx(50)) andText:@"获取数据中..." andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
+    self.scoreTipLabel.hidden = YES;
+    self.scoreTipLabel.textAlignment = NSTextAlignmentCenter;
+    [self.backgroundScrollView addSubview:self.scoreTipLabel];
+    [self.scoreTipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.scoreTableView);
         make.centerY.equalTo(self.backgroundScrollView);
         make.width.mas_equalTo(self.view.frame.size.width);
     }];

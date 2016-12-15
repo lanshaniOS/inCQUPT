@@ -66,8 +66,9 @@
                 return;
             }
             
-            [ZCYUserMgr sharedMgr].dormitoryArray  = @[self.buildNumArray[[self.bindPickerView selectedRowInComponent:0]], self.buildArray[[self.bindPickerView selectedRowInComponent:0]], self.floorArray[[self.bindPickerView selectedRowInComponent:1]], self.roomArray[[self.bindPickerView selectedRowInComponent:2]]];
+//            [ZCYUserMgr sharedMgr].dormitoryArray  = @[self.buildNumArray[[self.bindPickerView selectedRowInComponent:0]], self.buildArray[[self.bindPickerView selectedRowInComponent:0]], self.floorArray[[self.bindPickerView selectedRowInComponent:1]], self.roomArray[[self.bindPickerView selectedRowInComponent:2]]];
             self.dormitoryDic = resultDic;
+            
             [self updateDetailView];
         }];
 
@@ -331,6 +332,9 @@
         }
         
         [ZCYUserMgr sharedMgr].dormitoryArray  = @[self.buildNumArray[[self.bindPickerView selectedRowInComponent:0]], self.buildArray[[self.bindPickerView selectedRowInComponent:0]], self.floorArray[[self.bindPickerView selectedRowInComponent:1]], self.roomArray[[self.bindPickerView selectedRowInComponent:2]]];
+        ZCYUserMgr *userMgr = [ZCYUserMgr sharedMgr];
+        NSData *archiveUserData = [NSKeyedArchiver archivedDataWithRootObject:userMgr];
+        [[NSUserDefaults standardUserDefaults] setObject:archiveUserData forKey:@"USERMGR"];
         self.dormitoryDic = resultDic;
         [self updateDetailView];
     }];
@@ -338,7 +342,7 @@
 
 - (void)updateDetailView
 {
-    self.dormitoryLabel.text = [NSString stringWithFormat:@"%@栋%@%@寝室", self.buildNumArray[[self.bindPickerView selectedRowInComponent:0]], self.floorArray[[self.bindPickerView selectedRowInComponent:1]], self.roomArray[[self.bindPickerView selectedRowInComponent:2]]];
+    self.dormitoryLabel.text = [NSString stringWithFormat:@"%@栋%@%@寝室", [ZCYUserMgr sharedMgr].dormitoryArray[0],  [ZCYUserMgr sharedMgr].dormitoryArray[2],  [ZCYUserMgr sharedMgr].dormitoryArray[3]];
     self.timeLabel.text = [NSString stringWithFormat:@"抄表时间：%@", self.dormitoryDic[@"record_time"]];
     NSString *totalString = [NSString stringWithFormat:@"%@度", self.dormitoryDic[@"elec_spend"]];
     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:totalString];
@@ -351,6 +355,7 @@
     self.startLabel.text = self.dormitoryDic[@"elec_start"];
     self.endLabel.text = self.dormitoryDic[@"elec_end"];
     self.freeLabel.text = self.dormitoryDic[@"elec_free"];
+    [ZCYUserMgr sharedMgr].dormitoryDic = self.dormitoryDic;
 }
 - (void)showPickerView
 {

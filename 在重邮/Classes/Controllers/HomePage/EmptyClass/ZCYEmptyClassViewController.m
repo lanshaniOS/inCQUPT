@@ -428,8 +428,8 @@ static const float animationTime = 0.15f;
     self.fourButton.selected = YES;
     self.fiveButton.selected = NO;
     self.eightButton.selected = NO;
-
     self.classLabel.text = @"四教";
+    
     [self showTimePickerView];
 }
 
@@ -563,12 +563,23 @@ static const float animationTime = 0.15f;
             self.tipLabel.text = @"似乎没有数据哟...";
             return;
         }
-        
-        self.oneLabel.text = [NSString stringWithFormat:@"一楼: %@",[self stringWithArrary:array[0][@"room"]]];
-        self.twoLabel.text = [NSString stringWithFormat:@"二楼: %@",[self stringWithArrary:array[1][@"room"]]];
-        self.threeLabel.text = [NSString stringWithFormat:@"三楼: %@",[self stringWithArrary:array[2][@"room"]]];
-        self.fourLabel.text = [NSString stringWithFormat:@"四楼: %@",[self stringWithArrary:array[3][@"room"]]];
-        self.fiveLabel.text = [NSString stringWithFormat:@"五楼: %@",[self stringWithArrary:array[4][@"room"]]];
+        if (self.eightButton.selected == YES)
+        {
+            self.oneLabel.text = [NSString stringWithFormat:@"一楼: %@",[self stringWithArrary:array[0][@"room"]]];
+            self.twoLabel.text = [NSString stringWithFormat:@"二楼: %@",[self stringWithArrary:array[1][@"room"]]];
+            self.threeLabel.text = [NSString stringWithFormat:@"三楼: %@",[self stringWithArrary:array[2][@"room"]]];
+            self.fiveLabel.hidden = YES;
+            self.fourLabel.hidden = YES;
+
+        } else {
+            self.fiveLabel.hidden = NO;
+            self.fourLabel.hidden = NO;
+            self.oneLabel.text = [NSString stringWithFormat:@"一楼: %@",[self stringWithArrary:array[0][@"room"]]];
+            self.twoLabel.text = [NSString stringWithFormat:@"二楼: %@",[self stringWithArrary:array[1][@"room"]]];
+            self.threeLabel.text = [NSString stringWithFormat:@"三楼: %@",[self stringWithArrary:array[2][@"room"]]];
+            self.fourLabel.text = [NSString stringWithFormat:@"四楼: %@",[self stringWithArrary:array[3][@"room"]]];
+            self.fiveLabel.text = [NSString stringWithFormat:@"五楼: %@",[self stringWithArrary:array[4][@"room"]]];
+        }
     }];
 }
 

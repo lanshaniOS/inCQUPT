@@ -53,7 +53,7 @@
         
     } else {
         _userHaveData = NO;
-        self.tipLabel.hidden = NO;
+        [[ZCYProgressHUD sharedHUD] rotateWithText:@"数据加载中" inView:self.view];
     }
     [self getBooklistWithStudentNum:[ZCYUserMgr sharedMgr].studentNumber];
 }
@@ -153,6 +153,7 @@
 {
     self.tipLabel = [[UILabel alloc] init];
     [self.tipLabel setFont:kFont(kStandardPx(50)) andText:@"本学期没有借书记录哦～～～" andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
+    self.tipLabel.hidden = YES;
     [self.view addSubview:self.tipLabel];
     [self.tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.and.centerX.equalTo(self.view);
@@ -184,17 +185,15 @@
 #pragma mark - tools
 - (void)getBooklistWithStudentNum:(NSString *)studentNumber
 {
-    if (!_userHaveData)
-    {
-        self.tipLabel.text = @"数据加载中...";
-        self.tipLabel.hidden = NO;
-    }
+    
     [ZCYLendingBookHelper getLendingRecordWithStdNumber:[ZCYUserMgr sharedMgr].studentNumber withCompeletionBlock:^(NSError *error, NSDictionary *response) {
+        [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0f];
         if (error)
         {
             DDLogError(@"%@", error);
             if (!_userHaveData)
-            self.tipLabel.text = @"网络开小差啦～～～";
+//            self.tipLabel.text = @"网络开小差啦～～～";
+                [[ZCYProgressHUD sharedHUD] showWithText:[error localizedDescription] inView:self.view hideAfterDelay:1.0f];
             return;
         }
         self.bookList = response[@"data"][@"book_list"];

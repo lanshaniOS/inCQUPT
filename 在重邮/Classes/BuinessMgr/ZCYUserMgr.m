@@ -35,6 +35,9 @@ static ZCYUserMgr *sharedMgr = nil;
     [aCoder encodeObject:self.eduMajor forKey:@"EDUMAJOR"];
     [aCoder encodeObject:self.userName forKey:@"USERNAME"];
     [aCoder encodeObject:self.dormitoryArray forKey:@"DORMITORYARRAY"];
+    [aCoder encodeObject:self.repairInfomation forKey:@"REPAIRINFOMATION"];
+    [aCoder encodeObject:self.repairAddressChoices forKey:@"REPAIRADDRESS"];
+    [aCoder encodeObject:self.cardID forKey:@"CARDID"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -49,6 +52,9 @@ static ZCYUserMgr *sharedMgr = nil;
         self.eduMajor = [aDecoder decodeObjectForKey:@"EDUMAJOR"];
         self.userName = [aDecoder decodeObjectForKey:@"USERNAME"];
         self.dormitoryArray = [aDecoder decodeObjectForKey:@"DORMITORYARRAY"];
+        self.repairInfomation = [aDecoder decodeObjectForKey:@"REPAIRINFOMATION"];
+        self.repairAddressChoices = [aDecoder decodeObjectForKey:@"REPAIRADDRESS"];
+        self.cardID = [aDecoder decodeObjectForKey:@"CARDID"];
     }
     return self;
 }

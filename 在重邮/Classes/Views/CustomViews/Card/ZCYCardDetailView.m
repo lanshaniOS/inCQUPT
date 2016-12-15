@@ -133,7 +133,7 @@
     
     UILabel *moneyLabel = [[UILabel alloc] init];
     [moneyLabel setFont:kFont(kStandardPx(50)) andText:@"" andTextColor:kDeepGreen_Color andBackgroundColor:kTransparentColor];
-    NSString *balcanc = [NSString stringWithFormat:@"%@元",self.cardArray[indexPath.row][@"balance"]];
+    NSString *balcanc = [NSString stringWithFormat:@"%@元",self.cardArray[indexPath.row][@"cost"]];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:balcanc];
     [attributedString addAttribute:NSForegroundColorAttributeName value:kDeepGray_Color range:NSMakeRange(balcanc.length-1, 1)];
     [attributedString addAttribute:NSFontAttributeName value:kFont(kStandardPx(24)) range:NSMakeRange(balcanc.length - 1, 1)];
