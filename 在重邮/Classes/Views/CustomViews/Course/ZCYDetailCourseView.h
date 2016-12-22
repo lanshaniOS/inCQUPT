@@ -13,6 +13,7 @@
 @required
 
 - (void)closeButtonDidPressed;
+- (void)reportErrorDidPressed;
 
 @end
 

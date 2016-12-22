@@ -12,4 +12,5 @@
 
 - (void)setCellWithScoreInfo:(NSDictionary *)examInfo;
 
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier WithScoreDic:(NSDictionary *)scoreDic;
 @end

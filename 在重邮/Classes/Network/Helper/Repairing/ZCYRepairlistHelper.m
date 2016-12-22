@@ -17,7 +17,7 @@
     
     [[ZCYNetworkHelperMgr sharedMgr] requestWithData:@{@"yktID":studentNumber} andCompletionBlock:^(NSError *error, id response, NSURLSessionDataTask *task) {
         NSMutableArray *arr = [NSMutableArray array];
-        NSArray *datas = response[@"data"];
+        id datas = response[@"data"];
         NSInteger status = [response[@"status"] integerValue];
         if (error)
         {
@@ -26,10 +26,17 @@
             return;
         }else{
             if (status == 200) {
-                for (NSDictionary *dic in datas) {
+                if ([datas isKindOfClass:[NSDictionary class]])
+                {
                     ZCYRepairListModel *model = [[ZCYRepairListModel alloc]init];
-                    [model yy_modelSetWithDictionary:dic];
+                    [model yy_modelSetWithDictionary:datas];
                     [arr addObject:model];
+                } else {
+                    for (NSDictionary *dic in datas) {
+                        ZCYRepairListModel *model = [[ZCYRepairListModel alloc]init];
+                        [model yy_modelSetWithDictionary:dic];
+                        [arr addObject:model];
+                    }
                 }
                 compeletionBlock(nil,arr);
             }else{

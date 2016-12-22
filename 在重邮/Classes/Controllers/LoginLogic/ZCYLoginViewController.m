@@ -202,7 +202,7 @@
             [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0f];
             [[ZCYProgressHUD sharedHUD] showWithText:@"用户名或密码错误" inView:self.view hideAfterDelay:1.0f];
         } else if ([response[@"status"] longValue] == 200) {
-            [[NSUserDefaults standardUserDefaults] setObject:self.accountTF.text forKey:@"ZCYUSERPASSWORD"];
+            [[NSUserDefaults standardUserDefaults] setObject:self.passwordTF.text forKey:@"ZCYUSERPASSWORD"];
             NSDictionary *userMessage = response[@"result"];
             [[ZCYUserMgr sharedMgr] yy_modelSetWithDictionary:userMessage];
                 [ZCYTimeTableHelper getTimeTableWithStdNumber:[ZCYUserMgr sharedMgr].studentNumber withCompeletionBlock:^(NSError *error, NSArray *array) {
@@ -226,11 +226,11 @@
                         //共享数据
                         NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.wakeen.ios.dog"];
                         [userDefaults setObject:archiveUserData forKey:@"shared_usermgr"];
-                        
-                         [[ZCYProgressHUD sharedHUD] showWithText:@"登录成功" inView:self.view hideAfterDelay:0.0f];
                         [[NSUserDefaults standardUserDefaults] setObject:self.accountTF.text forKey:@"private_userNumber"];
-                        [NSThread sleepForTimeInterval:1.0f];
-                        [self presentViewController:tabBarC animated:YES completion:nil];
+                        [[ZCYProgressHUD sharedHUD] showWithText:@"登录成功" inView:self.view hideAfterDelay:1.0f  WithCompletionBlock:^{
+                            [self presentViewController:tabBarC animated:YES completion:nil];
+                        }];
+                        
                     });
             }];
 
@@ -275,24 +275,34 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
-//    NSDictionary *userInfo = notification.userInfo;
-//    CGRect keyboardFrameAfterShow = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    NSDictionary *userInfo = notification.userInfo;
+    CGRect keyboardFrameAfterShow = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
 //    [self.topImage mas_updateConstraints:^(MASConstraintMaker *make) {
 //        make.top.equalTo(self.view.mas_top).with.offset(-(keyboardFrameAfterShow.size.height - (self.view.frame.size.height - 47.5 - y_loginButton)));
 //    }];
 //    [self.topImage setNeedsUpdateConstraints];
 //    [self.topImage updateConstraintsIfNeeded];
-    
-    [UIView animateWithDuration:0.5f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        
-
-        [self.logoImage mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.view).with.offset(74);
+    if(self.view.frame.size.height - y_loginButton - 40 < keyboardFrameAfterShow.size.height)
+    {
+        [UIView animateWithDuration:0.2f animations:^{
+            [self.logoImage mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(self.view).with.offset(84-(keyboardFrameAfterShow.size.height-self.view.frame.size.height + y_loginButton + 40));
+            }];
+            [self.logoImage.superview layoutIfNeeded];
         }];
-        [self.logoImage.superview layoutIfNeeded];
-    } completion:^(BOOL finished) {
-    }];
+    } else {
+        [UIView animateWithDuration:0.2f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            
+            
+            [self.logoImage mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(self.view).with.offset(74);
+            }];
+            [self.logoImage.superview layoutIfNeeded];
+        } completion:^(BOOL finished) {
+        }];
+
+    }
 }
 
 

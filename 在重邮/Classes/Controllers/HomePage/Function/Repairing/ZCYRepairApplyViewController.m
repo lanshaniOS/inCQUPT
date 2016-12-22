@@ -13,16 +13,17 @@
 #import "ZCYRepairApplyHelper.h"
 #import "ZCYUserMgr.h"
 
-#define kCellHeight 50
+#define kCellHeight 40
 #define kselfWidth CGRectGetWidth(self.view.frame)
 
 @interface ZCYRepairApplyViewController ()<UITextFieldDelegate,UITextViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 
-@property (nonatomic,strong)UIView *firstTable;
-@property (nonatomic,strong)UIView *secondTable;
-@property (nonatomic,strong)UIButton *FWLXButton;
-@property (nonatomic,strong)UIButton *FWXMButton;
-@property (nonatomic,strong)UIButton *FWQYButton;
+@property (nonatomic,strong)UIView *firstView;
+@property (nonatomic,strong)UIView *secondView;
+@property (strong, nonatomic) UIView *thirdView;  /**< 第三板块 */
+@property (nonatomic,strong)UILabel *FWLXLabel;
+@property (nonatomic,strong)UILabel *FWXMLabel;
+@property (nonatomic,strong)UILabel *FWQYLabel;
 @property (nonatomic,strong)UITextField *addressText;
 @property (nonatomic,strong)UITextField *numberText;
 @property (nonatomic,strong)UITextView *contentText;
@@ -32,6 +33,9 @@
 @property (nonatomic,strong)NSDictionary *choicedInfo;
 @property (nonatomic,strong)NSDictionary *choicedQY;
 @property (nonatomic,strong)UIPickerView *pickView;
+@property (strong, nonatomic) UIView *pickerTopView;  /**< 选择栏顶部 */
+@property (strong, nonatomic) UIButton *commitButton;  /**< 提交按钮 */
+@property (strong, nonatomic) UIControl *backgroundControl;  /**< 背景控制板 */
 
 @end
 
@@ -44,73 +48,90 @@ typedef enum tableType{
 @implementation ZCYRepairApplyViewController
 {
     tableType myTableType;
+    CGFloat y_commitButton;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+
     _repairDates = [NSDictionary dictionaryWithDictionary:[ZCYUserMgr sharedMgr].repairInfomation];
     _LXArray = [_repairDates allKeys];
     _QYMArray = [NSArray arrayWithArray:[ZCYUserMgr sharedMgr].repairAddressChoices];
     
     self.view.backgroundColor = kCommonLightGray_Color;
     self.title = @"服务申报";
+    [self initPickerView];
     [self addFirstView];
     [self addSecondView];
     [self addThirdView];
     [self addCommitButton];
     if ([ZCYUserMgr sharedMgr].repairInfomation == nil) {
         [[ZCYProgressHUD sharedHUD]showWithText:@"服务申报暂时产生错误" inView:self.view hideAfterDelay:1];
-        _FWLXButton.enabled = NO;
-        _FWXMButton.enabled = NO;
-        _FWQYButton.enabled = NO;
+//        _FWLXButton.enabled = NO;
+//        _FWXMButton.enabled = NO;
+//        _FWQYButton.enabled = NO;
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    y_commitButton = self.commitButton.frame.origin.y+self.commitButton.frame.size.height;
+    
+}
 -(void)addFirstView
 {
-    UIView *firstView = [[UIView alloc]init];
-    firstView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:firstView];
-    [firstView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(80+20);
-        make.left.right.mas_equalTo(0);
+    self.firstView = [[UIView alloc]init];
+    self.firstView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.firstView];
+    [self.firstView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view).with.offset(80+20);
+        make.left.right.equalTo(self.view);
         make.height.mas_equalTo(kCellHeight*3);
     }];
     //第一行
     UIView *cell1 = [[UIView alloc]init];
-    [firstView addSubview:cell1];
+    [self.firstView addSubview:cell1];
     [cell1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.mas_equalTo(0);
         make.height.mas_equalTo(kCellHeight);
     }];
     UILabel *leftLabel1 = [[UILabel alloc]init];
     leftLabel1.text = @"服务类型";
+    leftLabel1.font = kFont(14);
     [cell1 addSubview:leftLabel1];
     [leftLabel1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(10);
         make.centerY.equalTo(cell1);
     }];
-    UIImageView *image1 = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"angle-right"]];
-    [cell1 addSubview:image1];
-    [image1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(-10);
+    
+    UILabel *next1Label = [[UILabel alloc] init];
+    [next1Label setFont:kFont(17) andText:@">" andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
+    [cell1 addSubview:next1Label];
+    [next1Label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(cell1).with.offset(-10);
         make.centerY.equalTo(cell1);
     }];
     
-    _FWLXButton = [[UIButton alloc]init];
-    [_FWLXButton setTitle:@"服务类型" forState:UIControlStateNormal];
-    [_FWLXButton setTitleColor:kText_Color_Gray forState:UIControlStateNormal];    [cell1 addSubview:_FWLXButton];
-    [_FWLXButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(image1.mas_left).offset(-10);
+    _FWLXLabel = [[UILabel alloc]init];
+    [_FWLXLabel setFont:kFont(14) andText:@"服务类型" andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
+   ;
+    [cell1 addSubview:_FWLXLabel];
+    [_FWLXLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(next1Label.mas_left).offset(-5);
         make.centerY.equalTo(cell1);
     }];
-    [_FWLXButton addTarget:self action:@selector(choiceFWLX) forControlEvents:UIControlEventTouchUpInside];
+    UITapGestureRecognizer *tapCell1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(choiceFWLX)];
+    [cell1 addGestureRecognizer:tapCell1];
+
     //分割线
     UIView *line1 = [[UIView alloc]initWithFrame:CGRectMake(10, kCellHeight, kselfWidth, 0.5)];
-    line1.backgroundColor = kGray_Line_Color;
-    [firstView addSubview:line1];
+    line1.backgroundColor = kCommonGray_Color;
+    [self.firstView addSubview:line1];
     //第二行
     UIView *cell2 = [[UIView alloc]init];
-    [firstView addSubview:cell2];
+    [self.firstView addSubview:cell2];
     [cell2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(kCellHeight);
         make.left.and.right.mas_equalTo(0);
@@ -118,34 +139,39 @@ typedef enum tableType{
     }];
     UILabel *leftLabel2 = [[UILabel alloc]init];
     leftLabel2.text = @"服务项目";
+    leftLabel2.font = kFont(14);
     [cell2 addSubview:leftLabel2];
     [leftLabel2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(10);
         make.center.equalTo(cell2);
     }];
-    UIImageView *image2 = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"angle-right"]];
-    [cell2 addSubview:image2];
-    [image2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(-10);
+    
+    UILabel *next2Label = [[UILabel alloc] init];
+    [next2Label setFont:kFont(17) andText:@">" andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
+    [cell2 addSubview:next2Label];
+    [next2Label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(cell2).with.offset(-10);
         make.centerY.equalTo(cell2);
     }];
-    _FWXMButton = [[UIButton alloc]init];
-    [_FWXMButton setTitle:@"具体服务项目" forState:UIControlStateNormal];
-    [_FWXMButton setTitleColor:kText_Color_Gray forState:UIControlStateNormal];
-    [cell2 addSubview:_FWXMButton];
-    [_FWXMButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(image2.mas_left).offset(-10);
+    
+    _FWXMLabel = [[UILabel alloc]init];
+    [_FWXMLabel setFont:kFont(14) andText:@"具体服务项目" andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
+    [cell2 addSubview:_FWXMLabel];
+    [_FWXMLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(next2Label.mas_left).offset(-5);
         make.centerY.equalTo(cell2);
     }];
-    [_FWXMButton addTarget:self action:@selector(choiceFWXM) forControlEvents:UIControlEventTouchUpInside];
+
+    UITapGestureRecognizer *tapCell2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(choiceFWXM)];
+    [cell2 addGestureRecognizer:tapCell2];
     
     //分割线
     UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(10, kCellHeight*2, kselfWidth, 0.5)];
-    line2.backgroundColor = kGray_Line_Color;
-    [firstView addSubview:line2];
+    line2.backgroundColor = kCommonGray_Color;
+    [self.firstView addSubview:line2];
     //第三行
     UIView *cell3 = [[UIView alloc]init];
-    [firstView addSubview:cell3];
+    [self.firstView addSubview:cell3];
     [cell3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(kCellHeight*2);
         make.left.and.right.mas_equalTo(0);
@@ -153,53 +179,64 @@ typedef enum tableType{
     }];
     UILabel *leftLabel3 = [[UILabel alloc]init];
     leftLabel3.text = @"服务区域";
+    leftLabel3.font = kFont(14);
     [cell3 addSubview:leftLabel3];
     [leftLabel3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(10);
         make.centerY.equalTo(cell3);
     }];
     
-    UIButton *image3 = [[UIButton alloc]init];
-    [image3 setImage:[UIImage imageNamed:@"angle-right"] forState:UIControlStateNormal];
-    [cell3 addSubview:image3];
-    [image3 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(-10);
+    UILabel *next3Label = [[UILabel alloc] init];
+    [next3Label setFont:kFont(17) andText:@">" andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
+    [cell3 addSubview:next3Label];
+    [next3Label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(cell3).with.offset(-10);
         make.centerY.equalTo(cell3);
     }];
-    [image3 addTarget:self action:@selector(choiceFWQY) forControlEvents:UIControlEventTouchUpInside];
-    
-    _FWQYButton = [[UIButton alloc]init];
-    [_FWQYButton setTitle:@"重庆邮电大学" forState:UIControlStateNormal];
-    [_FWQYButton setTitleColor:[UIColor blackColor]forState:UIControlStateNormal];
-    [cell3 addSubview:_FWQYButton];
-    [_FWQYButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(leftLabel3.mas_right).offset(20);
+    _FWQYLabel = [[UILabel alloc]init];
+    [_FWQYLabel setFont:kFont(14) andText:@"服务区域" andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
+    [cell3 addSubview:_FWQYLabel];
+    [_FWQYLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(next3Label.mas_left).offset(-5);
         make.centerY.equalTo(cell3);
     }];
-    [_FWQYButton addTarget:self action:@selector(choiceFWQY) forControlEvents:UIControlEventTouchUpInside];
+    UITapGestureRecognizer *tapCell3 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(choiceFWQY)];
+    [cell3 addGestureRecognizer:tapCell3];
 }
 
 -(void)choiceFWQY
 {
     myTableType = FWQYTable;
-    if (_pickView != nil) {
-        [_pickView removeFromSuperview];
-        _pickView = nil;
-    }
+//    if (_pickView != nil) {
+//        [_pickView removeFromSuperview];
+//        _pickView = nil;
+//    }
+    [self.pickView reloadAllComponents];
+    NSDictionary *dic = _QYMArray[[self.pickView selectedRowInComponent:0]];
+    _choicedQY = [NSDictionary dictionaryWithDictionary:dic];
+    
     [self addChoiceTableView];
 }
 
 -(void)choiceFWXM
 {
-    if (_choicedXmArray.count == 0 ||_choicedXmArray == nil) {
+    if ([_FWLXLabel.text  isEqualToString: @"服务类型"]) {
         [[ZCYProgressHUD sharedHUD] showWithText:@"请先选择服务类型" inView:self.view hideAfterDelay:1];
         return;
     }
     myTableType = FWXMTable;
-    if (_pickView != nil) {
-        [_pickView removeFromSuperview];
-        _pickView = nil;
-    }
+    
+    NSString *key = _FWLXLabel.text;
+    NSArray *detailArr = [NSArray arrayWithArray:_repairDates[key]];
+    _choicedXmArray = [NSArray arrayWithArray:detailArr];
+    
+//    NSDictionary *dic = _choicedXmArray[[self.pickView selectedRowInComponent:0]];
+//    _choicedInfo = [NSDictionary dictionaryWithDictionary:dic];
+//    if (_pickView != nil) {
+//        [_pickView removeFromSuperview];
+//        _pickView = nil;
+//    }
+    [self.pickView reloadAllComponents];
     [self addChoiceTableView];
     
 }
@@ -207,27 +244,63 @@ typedef enum tableType{
 -(void)choiceFWLX
 {
     myTableType = FWLXTable;
-    if (_pickView != nil) {
-        [_pickView removeFromSuperview];
-        _pickView = nil;
-    }
+//    if (_pickView != nil) {
+//        [_pickView removeFromSuperview];
+//        _pickView = nil;
+//    }
+    [self.pickView reloadAllComponents];
     [self addChoiceTableView];
     
 }
 
-
--(void)addChoiceTableView
+- (void)initPickerView
 {
+    self.pickerTopView = [[UIView alloc] init];
+    self.pickerTopView.backgroundColor = kCommonGray_Color;
+    [[UIApplication sharedApplication].keyWindow addSubview:self.pickerTopView];
+    [self.pickerTopView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo([UIApplication sharedApplication].keyWindow.mas_bottom);
+        make.left.and.right.equalTo([UIApplication sharedApplication].keyWindow);
+        make.height.mas_equalTo(40);
+    }];
+    
+    UIButton *finishButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [finishButton setTitle:@"完成" forState:UIControlStateNormal];
+    [finishButton setTitleColor:kDeepGreen_Color forState:UIControlStateNormal];
+    [finishButton addTarget:self action:@selector(hidePickerView) forControlEvents:UIControlEventTouchUpInside];
+    [self.pickerTopView addSubview:finishButton];
+    [finishButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.pickerTopView).with.offset(-15);
+        make.centerY.equalTo(self.pickerTopView);
+        make.size.mas_equalTo(CGSizeMake(60, 30));
+    }];
     
     self.pickView = [[UIPickerView alloc]init];
     _pickView.delegate = self;
     _pickView.dataSource = self;
-    _pickView.backgroundColor = LGray_Line_Color;
-    [self.view addSubview:_pickView];
+    _pickView.backgroundColor = kCommonWhite_Color;
+    [[UIApplication sharedApplication].keyWindow addSubview:_pickView];
     [_pickView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.bottom.mas_equalTo(0);
+        make.left.right.mas_equalTo(0);
+        make.top.equalTo(self.pickerTopView.mas_bottom);
         make.height.mas_equalTo(160);
     }];
+    
+    self.backgroundControl = [[UIControl alloc] init];
+    self.backgroundControl.backgroundColor = kCommonText_Color;
+    [self.backgroundControl addTarget:self action:@selector(hidePickerView) forControlEvents:UIControlEventTouchUpInside];
+    self.backgroundControl.alpha = 0.0f;
+    [[UIApplication sharedApplication].keyWindow addSubview:self.backgroundControl];
+    [self.backgroundControl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.and.right.and.top.equalTo([UIApplication sharedApplication].keyWindow);
+        make.bottom.equalTo(self.pickerTopView.mas_top);
+    }];
+
+}
+
+-(void)addChoiceTableView
+{
+    [self showPickerView];
 }
 
 
@@ -259,18 +332,15 @@ typedef enum tableType{
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     if (myTableType == FWLXTable) {
-        [_FWLXButton setTitle:_LXArray[row] forState:UIControlStateNormal];
-        NSString *key = _LXArray[row];
-        NSArray *detailArr = [NSArray arrayWithArray:_repairDates[key]];
-        _choicedXmArray = [NSArray arrayWithArray:detailArr];
+        _FWLXLabel.text = _LXArray[row];
     }else if (myTableType == FWXMTable){
         NSDictionary *dic = _choicedXmArray[row];
         _choicedInfo = [NSDictionary dictionaryWithDictionary:dic];
-        [_FWXMButton setTitle:_choicedInfo[@"Name"] forState:UIControlStateNormal];
+        _FWXMLabel.text = _choicedInfo[@"Name"];
     }else{
         NSDictionary *dic = _QYMArray[row];
         _choicedQY = [NSDictionary dictionaryWithDictionary:dic];
-        [_FWQYButton setTitle:dic[@"Name"] forState:UIControlStateNormal];
+        _FWQYLabel.text = dic[@"Name"];
     }
     //    [_pickView removeFromSuperview];
     //    _pickView = nil;
@@ -280,18 +350,18 @@ typedef enum tableType{
 
 -(void)addSecondView
 {
-    UIView *secondView = [[UIView alloc]init];
-    secondView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:secondView];
-    [secondView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(80+kCellHeight*3+20*2);
+    self.secondView = [[UIView alloc]init];
+    self.secondView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.secondView];
+    [self.secondView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.firstView.mas_bottom).with.offset(20);
         make.left.right.mas_equalTo(0);
         make.height.mas_equalTo(kCellHeight*2);
     }];
     
     //第一行
     UIView *cell1 = [[UIView alloc]init];
-    [secondView addSubview:cell1];
+    [self.secondView addSubview:cell1];
     [cell1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.right.equalTo(self.view);
         make.size.mas_equalTo(CGSizeMake(kselfWidth, kCellHeight));
@@ -302,6 +372,7 @@ typedef enum tableType{
     leftLabel1.text = @"报修地址";
     leftLabel1.textColor = [UIColor blackColor];
     [leftLabel1 sizeToFit];
+    [leftLabel1 setFont:kFont(14)];
     leftLabel1.adjustsFontSizeToFitWidth = YES;
     [cell1 addSubview:leftLabel1];
     [leftLabel1 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -311,6 +382,7 @@ typedef enum tableType{
     _addressText = [[UITextField alloc]init];
     _addressText.delegate = self;
     _addressText.placeholder = @"请输入地址";
+    _addressText.font = kFont(14);
     [cell1 addSubview:_addressText];
     [_addressText mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(leftLabel1.mas_right).offset(20);
@@ -322,11 +394,11 @@ typedef enum tableType{
     //分割线
     UIView *firstLine = [[UIView alloc]initWithFrame:CGRectMake(10, kCellHeight, kselfWidth, 0.5)];
     firstLine.backgroundColor = kGray_Line_Color;
-    [secondView addSubview:firstLine];
+    [self.secondView addSubview:firstLine];
     
     //第二行
     UIView *cell2 = [[UIView alloc]init];
-    [secondView addSubview:cell2];
+    [self.secondView addSubview:cell2];
     [cell2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(kCellHeight);
         make.left.and.right.mas_equalTo(0);
@@ -334,6 +406,7 @@ typedef enum tableType{
     }];
     UILabel *leftLabel2 = [[UILabel alloc]init];
     leftLabel2.text = @"联系电话";
+    leftLabel2.font = kFont(14);
     leftLabel2.textColor = [UIColor blackColor];
     [cell2 addSubview:leftLabel2];
     [leftLabel2 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -343,6 +416,7 @@ typedef enum tableType{
     _numberText = [[UITextField alloc]init];
     _numberText.delegate = self;
     _numberText.placeholder = @"请输入联系电话";
+    _numberText.font = kFont(14);
     [cell2 addSubview:_numberText];
     [_numberText mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(leftLabel2.mas_right).offset(20);
@@ -353,78 +427,78 @@ typedef enum tableType{
 
 -(void)addThirdView
 {
-    UIView *thirdView = [[UIView alloc]init];
-    [self.view addSubview:thirdView];
-    [thirdView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(80+20+kCellHeight*5+20+20);
+    self.thirdView = [[UIView alloc]init];
+    [self.view addSubview:self.thirdView];
+    [self.thirdView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.secondView.mas_bottom).with.offset(20);
         make.left.and.right.mas_equalTo(0);
         make.height.mas_equalTo(140);
     }];
     
     UILabel *label = [[UILabel alloc]init];
     label.text = @"申报内容";
+    label.font = kFont(14);
     label.textColor = kText_Color_Gray;
-    [thirdView addSubview:label];
+    [self.thirdView addSubview:label];
     [label mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(0);
         make.left.mas_equalTo(10);
     }];
     _contentText = [[UITextView alloc]init];
     _contentText.pagingEnabled = NO;
-    _contentText.text = @"  请输入";
-    _contentText.textColor = kText_Color_Gray;
+    _contentText.text = @"  请输入报修详情";
+    _contentText.textColor = kCommonGray_Color;
     _contentText.backgroundColor = [UIColor whiteColor];
-    _contentText.font = [UIFont systemFontOfSize:20];
+    _contentText.font = [UIFont systemFontOfSize:14];
     _contentText.delegate = self;
-    [thirdView addSubview:_contentText];
+    [self.thirdView addSubview:_contentText];
     [_contentText mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(label.mas_bottom).offset(5);
         make.left.and.right.mas_equalTo(0);
-        make.bottom.equalTo(thirdView.mas_bottom);
+        make.bottom.equalTo(self.thirdView.mas_bottom);
     }];
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
-    if (_pickView != nil) {
-        
-        [_pickView removeFromSuperview];
-        _pickView = nil;
-        
-    }
-    if ([_contentText.text isEqualToString:@"  请输入"]) {
+//    if (_pickView != nil) {
+//        
+//        [self hidePickerView];
+//        
+//    }
+    if ([_contentText.text isEqualToString:@"  请输入报修详情"]) {
         _contentText.text = @"";
         _contentText.textColor = [UIColor blackColor];
-        _contentText.font = [UIFont systemFontOfSize:18];
+        _contentText.font = [UIFont systemFontOfSize:14];
     }
-    //滑动效果（动画）
-    NSTimeInterval animationDuration = 0.30f;
-    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-    [UIView setAnimationDuration:animationDuration];
-    
-    //将视图的Y坐标向上移动，以使下面腾出地方用于软键盘的显示
-    self.view.frame = CGRectMake(0.0f, -100.0f, self.view.frame.size.width, self.view.frame.size.height);
-    
-    [UIView commitAnimations];
+//    //滑动效果（动画）
+//    NSTimeInterval animationDuration = 0.30f;
+//    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+//    [UIView setAnimationDuration:animationDuration];
+//    
+//    //将视图的Y坐标向上移动，以使下面腾出地方用于软键盘的显示
+//    self.view.frame = CGRectMake(0.0f, -100.0f, self.view.frame.size.width, self.view.frame.size.height);
+//    
+//    [UIView commitAnimations];
 }
 
 -(void)textViewDidEndEditing:(UITextView *)textView
 {
     if (_contentText.text == nil || [_contentText.text isEqualToString:@""]) {
-        _contentText.text = @"  请输入";
-        _contentText.textColor = kText_Color_Gray;
-        _contentText.font = [UIFont systemFontOfSize:20];
+        _contentText.text = @"  请输入报修详情";
+        _contentText.textColor = kCommonGray_Color;
+        _contentText.font = [UIFont systemFontOfSize:14];
     }
     
     //滑动效果
-    NSTimeInterval animationDuration = 0.30f;
-    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-    [UIView setAnimationDuration:animationDuration];
-    
-    //恢复屏幕
-    self.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);//64-216
-    
-    [UIView commitAnimations];
+//    NSTimeInterval animationDuration = 0.30f;
+//    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+//    [UIView setAnimationDuration:animationDuration];
+//    
+//    //恢复屏幕
+//    self.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);//64-216
+//    
+//    [UIView commitAnimations];
     
 }
 
@@ -432,68 +506,89 @@ typedef enum tableType{
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField{
     
-    if (_pickView != nil) {
-        [_pickView removeFromSuperview];
-        _pickView = nil;
-    }
-    //滑动效果（动画）
-    NSTimeInterval animationDuration = 0.30f;
-    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-    [UIView setAnimationDuration:animationDuration];
-    
-    //将视图的Y坐标向上移动，以使下面腾出地方用于软键盘的显示
-    self.view.frame = CGRectMake(0.0f, -100.0f, self.view.frame.size.width, self.view.frame.size.height);//64-216
-    
-    [UIView commitAnimations];
+//    if (_pickView != nil) {
+//        [self hidePickerView];
+//    }
+//    //滑动效果（动画）
+//    NSTimeInterval animationDuration = 0.30f;
+//    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+//    [UIView setAnimationDuration:animationDuration];
+//    
+//    //将视图的Y坐标向上移动，以使下面腾出地方用于软键盘的显示
+//    self.view.frame = CGRectMake(0.0f, -100.0f, self.view.frame.size.width, self.view.frame.size.height);//64-216
+//    
+//    [UIView commitAnimations];
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField{
-    //滑动效果
-    NSTimeInterval animationDuration = 0.30f;
-    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-    [UIView setAnimationDuration:animationDuration];
+//    //滑动效果
+//    NSTimeInterval animationDuration = 0.30f;
+//    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+//    [UIView setAnimationDuration:animationDuration];
+//    
+//    //恢复屏幕
+//    self.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);//64-216
+//    
+//    [UIView commitAnimations];
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    CGRect keyboardFrameAfterShow = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    [UIView animateWithDuration:0.2f animations:^{
+        [self.firstView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view).with.offset(100+(keyboardFrameAfterShow.origin.y - y_commitButton));
+        }];
+        [self.firstView.superview layoutIfNeeded];
+    }];
     
-    //恢复屏幕
-    self.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);//64-216
-    
-    [UIView commitAnimations];
 }
 
 
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.2f animations:^{
+        [self.firstView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view).with.offset(100);
+        }];
+        [self.firstView.superview layoutIfNeeded];
+    }];
+}
+
 -(void)addCommitButton
 {
-    UIButton *commitButton = [[UIButton alloc]init];
-    [commitButton setTitle:@"提交" forState:UIControlStateNormal];
-    commitButton.backgroundColor = kDeepGreen_Color;
-    [commitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    commitButton.layer.cornerRadius = 5;
-    [self.view addSubview:commitButton];
-    [commitButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(80+20+kCellHeight*5+20+20+140+20);
+    self.commitButton = [[UIButton alloc]init];
+    [self.commitButton setTitle:@"提交" forState:UIControlStateNormal];
+    self.commitButton.backgroundColor = kDeepGreen_Color;
+    [self.commitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.commitButton.layer.cornerRadius = 5;
+    [self.view addSubview:self.commitButton];
+    [self.commitButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.thirdView.mas_bottom).with.offset(20);
         make.left.mas_equalTo(10);
         make.right.mas_equalTo(-10);
     }];
-    [commitButton addTarget:self action:@selector(commitAplly) forControlEvents:UIControlEventTouchUpInside];
+    [self.commitButton addTarget:self action:@selector(commitAplly) forControlEvents:UIControlEventTouchUpInside];
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
-    [self.pickView removeFromSuperview];
-    _pickView = nil;
+    [self hidePickerView];
 }
 
 -(void)commitAplly
 {
-    if ([_FWLXButton.titleLabel.text isEqualToString:@"服务类型"]) {
+    if ([_FWLXLabel.text isEqualToString:@"服务类型"]) {
         [[ZCYProgressHUD sharedHUD] showWithText:@"请选择服务类型" inView:self.view hideAfterDelay:1];
         return;
     }
-    if ([_FWXMButton.titleLabel.text isEqualToString:@"具体服务项目"]) {
+    if ([_FWXMLabel.text isEqualToString:@"具体服务项目"]) {
         [[ZCYProgressHUD sharedHUD] showWithText:@"请选择服务项目" inView:self.view hideAfterDelay:1];
         return;
     }
-    if ([_FWQYButton.titleLabel.text isEqualToString:@"重庆邮电大学"]) {
+    if ([_FWQYLabel.text isEqualToString:@"重庆邮电大学"]) {
         [[ZCYProgressHUD sharedHUD] showWithText:@"请选择服务区域" inView:self.view hideAfterDelay:1];
         return;
     }
@@ -519,7 +614,6 @@ typedef enum tableType{
     NSString *address = _addressText.text;
     NSString *content = _contentText.text;
     NSString *title =  content.length > 10 ? [content substringToIndex:10]:content;
-    NSLog(@"%@ %@ %@ %@ %@ %@ %@ %@",studentId,name,CategoryId,SpecificId,phone,AddressId,address,title);
     NSDictionary *dic = [ZCYRepairApplyModel initToDataWithId:studentId name:name Ip:@"172.22.113.200" title:title CategoryId:CategoryId specificId:SpecificId phone:phone addressId:AddressId content:title address:address];
     [ZCYRepairApplyHelper CommitRepairApplyWithData:dic andCompeletionBlock:^(NSError *erro, NSString *str) {
         if (erro) {
@@ -527,7 +621,10 @@ typedef enum tableType{
             return ;
         }
         if ([str isEqualToString:@"ok"]) {
-            [[ZCYProgressHUD sharedHUD] showWithText:@"提交成功" inView:self.view hideAfterDelay:1];
+            [[ZCYProgressHUD sharedHUD] showWithText:@"提交成功" inView:self.view hideAfterDelay:1.5f WithCompletionBlock:^{
+                 [self.navigationController popViewControllerAnimated:YES];
+            }];
+           
         }else{
             [[ZCYProgressHUD sharedHUD] showWithText:@"提交错误" inView:self.view hideAfterDelay:1];
         }
@@ -535,6 +632,54 @@ typedef enum tableType{
     
 }
 
+- (void)hidePickerView
+{
+    [UIView animateWithDuration:0.2f animations:^{
+        [self.pickerTopView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo([UIApplication sharedApplication].keyWindow.mas_bottom);
+        }];
 
+        [self.pickerTopView.superview layoutIfNeeded];
+        self.backgroundControl.alpha = 0.0f;
+    }];
+    [self.pickView selectRow:[self.pickView selectedRowInComponent:0] inComponent:0 animated:NO];
+    switch (myTableType) {
+        case 0:
+        {
+            if (self.FWXMLabel.text != _LXArray[[self.pickView selectedRowInComponent:0]])
+                self.FWXMLabel.text = @"具体服务项目";
+            self.FWLXLabel.text = _LXArray[[self.pickView selectedRowInComponent:0]];
+            break;
+        }
+        case 1:
+            self.FWXMLabel.text = _choicedXmArray[[self.pickView selectedRowInComponent:0]][@"Name"];
+            break;
+        case 2:
+            self.FWQYLabel.text = _QYMArray[[self.pickView selectedRowInComponent:0]][@"Name"];
+        default:
+            break;
+    }
+//    self.pickView = nil;
+}
 
+- (void)showPickerView
+{
+    
+    if (myTableType == FWXMTable){
+        NSDictionary *dic = _choicedXmArray[[self.pickView selectedRowInComponent:0]];
+        _choicedInfo = [NSDictionary dictionaryWithDictionary:dic];
+        _FWXMLabel.text = _choicedInfo[@"Name"];
+    }else if (myTableType == FWQYTable) {
+        NSDictionary *dic = _QYMArray[[self.pickView selectedRowInComponent:0]];
+        _choicedQY = [NSDictionary dictionaryWithDictionary:dic];
+        _FWQYLabel.text = dic[@"Name"];
+    }
+    [UIView animateWithDuration:0.2f animations:^{
+        [self.pickerTopView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo([UIApplication sharedApplication].keyWindow.mas_bottom).with.offset(-200);
+        }];
+        self.backgroundControl.alpha = 0.6f;
+        [self.pickerTopView.superview layoutIfNeeded];
+    }];
+}
 @end

@@ -8,6 +8,7 @@
 
 #import "ZCYUserMgr.h"
 
+
 @interface ZCYUserMgr() <NSCoding>
 
 @end
@@ -38,6 +39,8 @@ static ZCYUserMgr *sharedMgr = nil;
     [aCoder encodeObject:self.repairInfomation forKey:@"REPAIRINFOMATION"];
     [aCoder encodeObject:self.repairAddressChoices forKey:@"REPAIRADDRESS"];
     [aCoder encodeObject:self.cardID forKey:@"CARDID"];
+    [aCoder encodeObject:self.settingImageData forKey:@"SETTINGIMAGEDATA"];
+    [aCoder encodeObject:self.identityCard forKey:@"IDENTITYCARD"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -55,6 +58,8 @@ static ZCYUserMgr *sharedMgr = nil;
         self.repairInfomation = [aDecoder decodeObjectForKey:@"REPAIRINFOMATION"];
         self.repairAddressChoices = [aDecoder decodeObjectForKey:@"REPAIRADDRESS"];
         self.cardID = [aDecoder decodeObjectForKey:@"CARDID"];
+        self.settingImageData = [aDecoder decodeObjectForKey:@"SETTINGIMAGEDATA"];
+        self.identityCard = [aDecoder decodeObjectForKey:@"IDENTITYCARD"];
     }
     return self;
 }
@@ -66,7 +71,27 @@ static ZCYUserMgr *sharedMgr = nil;
              NSStringFromSelector(@selector(eduType)) : @"edutype",
              NSStringFromSelector(@selector(eduMajor)) : @"edumajor",
              NSStringFromSelector(@selector(userName)) : @"name",
-             NSStringFromSelector(@selector(studentNumber)) : @"userNumber"
+             NSStringFromSelector(@selector(studentNumber)) : @"userNumber",
+             NSStringFromSelector(@selector(identityCard))  : @"identityCard"
              };
+}
+
+- (void)removeMgr
+{
+    self.studentNumber = nil;  /**< 学号 */
+    self.courseArray = nil;  /**< 课程总述 */
+    self.schoolName = nil; /**< 学校名称 */
+    self.userName = nil; /**< 用户名称 */
+    self.eduType = nil; /**< 教育水平（本科生、研究生） */
+    self.eduMajor = nil;  /**< 专业 */
+    self.lendBookDic = nil; /**< 借阅信息 */
+    self.examRecord = nil; /**< 考试安排 */
+    self.dormitoryArray = nil; /**< 寝室 */
+    self.repairInfomation = nil;
+    self.repairAddressChoices = nil;
+    self.cardID = nil; /**< 一卡通号 */
+    self.dormitoryDic = nil;
+    self.settingImageData = nil;
+    self.identityCard = nil;
 }
 @end

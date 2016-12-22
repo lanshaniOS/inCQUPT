@@ -33,81 +33,66 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"报修进度查询";
-//    self.view.backgroundColor = kCommonLightGray_Color;
-//    self.automaticallyAdjustsScrollViewInsets = NO;
-//    [self initUIAndData];
+    self.view.backgroundColor = kCommonLightGray_Color;
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    [self initUIAndData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    
-//    if ([ZCYUserMgr sharedMgr].repairInfomation == nil) {
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-//            [ZCYGetRepairApplyData getRepairApplyDataFromeNet:^(NSError *error, NSDictionary *dic) {
-//                [ZCYUserMgr sharedMgr].repairInfomation = [NSDictionary dictionaryWithDictionary:dic];
-//            }];
-//        });
-//    }
-//    
-//    if ([ZCYUserMgr sharedMgr].repairAddressChoices == nil) {
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-//            [ZCYGetRepairAdrressHelper getRepairAdrressFromeNet:^(NSError *error, NSArray *arr) {
-//                [ZCYUserMgr sharedMgr].repairAddressChoices = [NSArray arrayWithArray:arr];
-//            }];
-//        });
-//    }
-//    
-//    [[ZCYProgressHUD sharedHUD] rotateWithText:@"获取数据中" inView:self.view];
-//    [ZCYRepairlistHelper getBXListWithStdNumber:[ZCYUserMgr sharedMgr].cardID withCompeletionBlock:^(NSError *error, NSArray *arr) {
-//        [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0f];
-//        if (error) {
-//            [[ZCYProgressHUD sharedHUD] showWithText:[NSString stringWithFormat:@"%@",error] inView:self.view hideAfterDelay:1];
-//        }
-//        if (arr != nil && arr.count > 0) {
-//            
-//            _arr = [NSMutableArray arrayWithArray:arr];
-//            _tableView = [[UITableView alloc]init];
-//            
-//            _tableView.contentSize = CGSizeMake(kScreenWidth, 40);
-//            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 20)];
-//            view.backgroundColor = kCommonLightGray_Color;
-//            _tableView.tableHeaderView = view;
-//            _tableView.delegate = self;
-//            _tableView.dataSource = self;
-//            _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//            _tableView.showsVerticalScrollIndicator = NO;
-//            [self.view addSubview:_tableView];
-//            [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-//                make.top.mas_equalTo(kNavigationHeight+20);
-//                make.left.right.mas_equalTo(0);
-//                make.bottom.equalTo(self.view.mas_bottom);
-//            }];
-//        }
-//        else{
-//            [[ZCYProgressHUD sharedHUD] showWithText:@"暂无报修信息" inView:self.view hideAfterDelay:1];
-//            _arr = [NSMutableArray array];
-//            _tableView = [[UITableView alloc]init];
-//            _tableView.contentSize = CGSizeMake(kScreenWidth, 60);
-//            _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//            _tableView.scrollEnabled = NO;
-//            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 20)];
-//            view.backgroundColor = kCommonLightGray_Color;
-//            _tableView.tableHeaderView = view;
-//            _tableView.delegate = self;
-//            _tableView.dataSource = self;
-//            [self.view addSubview:_tableView];
-//            [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-//                make.top.mas_equalTo(kNavigationHeight+20);
-//                make.left.right.mas_equalTo(0);
-//                make.height.mas_equalTo(60);
-//            }];
-//        }
-//    }];
+    [[ZCYProgressHUD sharedHUD] rotateWithText:@"获取数据中" inView:self.view];
+    [ZCYRepairlistHelper getBXListWithStdNumber:[ZCYUserMgr sharedMgr].cardID withCompeletionBlock:^(NSError *error, NSArray *arr) {
+        [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0f];
+        if (error) {
+            [[ZCYProgressHUD sharedHUD] showWithText:[NSString stringWithFormat:@"%@",[error localizedDescription]] inView:self.view hideAfterDelay:1];
+            return;
+        }
+        if (arr != nil && arr.count > 0) {
+            _arr = [NSMutableArray arrayWithArray:arr];
+            [_tableView reloadData];
+        }
+        else{
+            [[ZCYProgressHUD sharedHUD] showWithText:@"暂无报修信息" inView:self.view hideAfterDelay:1];
+        }
+    }];
+
+    if ([ZCYUserMgr sharedMgr].repairInfomation == nil) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            [ZCYGetRepairApplyData getRepairApplyDataFromeNet:^(NSError *error, NSDictionary *dic) {
+                [ZCYUserMgr sharedMgr].repairInfomation = [NSDictionary dictionaryWithDictionary:dic];
+            }];
+        });
+    }
+    
+    if ([ZCYUserMgr sharedMgr].repairAddressChoices == nil) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            [ZCYGetRepairAdrressHelper getRepairAdrressFromeNet:^(NSError *error, NSArray *arr) {
+                [ZCYUserMgr sharedMgr].repairAddressChoices = [NSArray arrayWithArray:arr];
+            }];
+        });
+    }
 }
 -(void)initUIAndData
 {
+    _tableView = [[UITableView alloc]init];
     
+    _tableView.contentSize = CGSizeMake(kScreenWidth, 40);
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 20)];
+    view.backgroundColor = kCommonGray_Color;
+    _tableView.tableHeaderView = view;
+    _tableView.delegate = self;
+    _tableView.backgroundColor = kCommonGray_Color;
+    _tableView.dataSource = self;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.showsVerticalScrollIndicator = NO;
+    [self.view addSubview:_tableView];
+    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(kNavigationHeight+20);
+        make.left.right.mas_equalTo(0);
+        make.bottom.equalTo(self.view.mas_bottom);
+    }];
+
 }
 
 
@@ -131,6 +116,7 @@
         UITableViewCell *headCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"head"];
         headCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         headCell.textLabel.text = @"服务申报";
+        headCell.textLabel.font = kFont(14);
         headCell.textLabel.textColor = [UIColor blackColor];
         return headCell;
     }else{

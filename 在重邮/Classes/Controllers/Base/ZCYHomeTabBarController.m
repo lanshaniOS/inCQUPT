@@ -45,6 +45,7 @@
 //        [naviController.navigationBar setBackgroundImage:kNavbar_BgImage forBarMetrics:UIBarMetricsDefault];
         naviController.tabBarItem.image = [[UIImage imageNamed:itemDic[@"icon"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         naviController.tabBarItem.selectedImage = [[UIImage imageNamed:itemDic[@"icon_s"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        
 //        naviController.navigationBar.barStyle = UIStatusBarStyleLightContent;
         [viewControllers addObject:naviController];
     }
@@ -55,7 +56,7 @@
 - (NSArray *)tabbarDefines
 {
     NSArray *defineArray = @[
-                             @{@"name" : @"今日",
+                             @{@"name" : @"首页",
                                @"icon" : @"icon_mainHome",
                                @"icon_s" : @"icon_mainHome_f",
                                @"viewController_class" : NSStringFromClass([ZCYHomePageViewController class])} ,
@@ -65,7 +66,7 @@
 //                               @"viewController_class" : NSStringFromClass([ZCYInformationViewController class])} ,
                              @{@"name" : @"个人中心",
                                @"icon" : @"icon_mainMore",
-                               @"icon_s" : @"icon_mainMore_f",
+                               @"icon_s" : @"icon_mainMore_f2",
                                @"viewController_class" : NSStringFromClass([ZCYSettingsViewController class])}];
     return [defineArray copy];
 }

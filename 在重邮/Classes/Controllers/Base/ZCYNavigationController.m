@@ -24,12 +24,15 @@
 #pragma mark- override
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
+    
     if (self.childViewControllers.count > 0)
     {
         viewController.hidesBottomBarWhenPushed = YES;
     }
     
     [super pushViewController:viewController animated:YES];
+//    viewController.navigationController.navigationItem.backBarButtonItem.title = @"返回";
+//    viewController.navigationController.navigationBar.backItem.title = @"返回";
 }
 
 @end

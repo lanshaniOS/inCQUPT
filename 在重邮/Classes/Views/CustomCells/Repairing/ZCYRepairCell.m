@@ -100,7 +100,7 @@
 -(void)addView
 {
     UIView *lucidView = [[UIView alloc]init];
-    lucidView.backgroundColor = kCommonLightGray_Color;
+    lucidView.backgroundColor = kCommonGray_Color;
     [self.contentView addSubview:lucidView];
     [lucidView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(0);
@@ -112,12 +112,12 @@
 -(void)addline
 {
     UIView *view = [[UIView alloc]init];
-    view.backgroundColor = kText_Color_LightGray;
+    view.backgroundColor = kCommonGray_Color;
     [self.contentView addSubview:view];
     [view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(20);
         make.left.right.mas_equalTo(0);
-        make.height.mas_equalTo(0.5);
+        make.height.mas_equalTo(1);
     }];
 }
 -(void)initHeadView
@@ -161,8 +161,8 @@
 
 -(void)initFirstLine
 {
-    _firstLine = [[UIView alloc]initWithFrame:CGRectMake(12, 70, kScreenWidth, 0.5)];
-    _firstLine.backgroundColor = kText_Color_LightGray;
+    _firstLine = [[UIView alloc]initWithFrame:CGRectMake(12, 70, kScreenWidth, 1)];
+    _firstLine.backgroundColor = kCommonGray_Color;
     [self.contentView addSubview:_firstLine];
 }
 
@@ -249,8 +249,8 @@
     _detailButton = [[UIButton alloc]init];
     [_detailButton setTitle:@"详情" forState:UIControlStateNormal];
     [_detailButton setTitleColor:kDeepGreen_Color forState:UIControlStateNormal];
-    _detailButton.layer.borderWidth = 0.5;
-    _detailButton.layer.borderColor = [LGray_Line_Color CGColor];
+    _detailButton.layer.borderWidth = 1;
+    _detailButton.layer.borderColor = kCommonGray_Color.CGColor;
     [self.contentView addSubview:_detailButton];
     [_detailButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.and.left.and.right.mas_equalTo(0);

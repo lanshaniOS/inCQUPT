@@ -26,7 +26,7 @@ static const float animationTime = 0.15f;
 @property (strong, nonatomic) UIButton *fourButton;  /**< 四教 */
 @property (strong, nonatomic) UIButton *fiveButton;  /**< 五教 */
 @property (strong, nonatomic) UIButton *eightButton;  /**< 八教 */
-@property (strong, nonatomic) UIView *showEmptyHouseView;  /**< 空教室 */
+@property (strong, nonatomic) UIScrollView *showEmptyHouseView;  /**< 空教室 */
 @property (strong, nonatomic) UILabel *oneLabel;  /**< 一楼 */
 @property (strong, nonatomic) UILabel *twoLabel;  /**< 二楼 */
 @property (strong, nonatomic) UILabel *threeLabel;  /**< 三楼 */
@@ -134,7 +134,7 @@ static const float animationTime = 0.15f;
     }];
     
     UIView *line = [[UIView alloc] init];
-    line.backgroundColor = kDeepGray_Color;
+    line.backgroundColor = kCommonGray_Color;
     line.layer.cornerRadius = kStandardPx(5);
     [self.bottomView addSubview:line];
     [line mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -182,9 +182,9 @@ static const float animationTime = 0.15f;
     [self.twoButton setBackgroundImage:[UIImage imageNamed:@"empty_2s"] forState:UIControlStateSelected];
     [self.view addSubview:self.twoButton];
     [self.twoButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).with.offset(16*375/self.view.frame.size.width);
-        make.top.equalTo(self.view).with.offset(382*667/_screenHeight);
-        make.size.mas_equalTo(CGSizeMake(85, 109));
+        make.left.equalTo(self.view).with.offset(16*self.view.frame.size.width/375);
+        make.top.equalTo(self.view).with.offset(424*_screenHeight/667);
+        make.size.mas_equalTo(CGSizeMake(85*self.view.frame.size.width/375, 109*_screenHeight/667));
     }];
     
     self.threeButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -193,9 +193,9 @@ static const float animationTime = 0.15f;
     [self.threeButton setBackgroundImage:[UIImage imageNamed:@"empty_3s"] forState:UIControlStateSelected];
     [self.view addSubview:self.threeButton];
     [self.threeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).with.offset(201*375/self.view.frame.size.width);
-        make.top.equalTo(self.view).with.offset(330*667/_screenHeight);
-        make.size.mas_equalTo(CGSizeMake(85, 109));
+        make.left.equalTo(self.view).with.offset(200*self.view.frame.size.width/375);
+        make.top.equalTo(self.view).with.offset(362*_screenHeight/667);
+        make.size.mas_equalTo(CGSizeMake(85*self.view.frame.size.width/375, 109*_screenHeight/667));
     }];
     
     self.fourButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -204,9 +204,9 @@ static const float animationTime = 0.15f;
     [self.fourButton setBackgroundImage:[UIImage imageNamed:@"empty_4s"] forState:UIControlStateSelected];
     [self.view addSubview:self.fourButton];
     [self.fourButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).with.offset(110*375/self.view.frame.size.width);
-        make.top.equalTo(self.view).with.offset(190*667/_screenHeight);
-        make.size.mas_equalTo(CGSizeMake(85, 109));
+        make.left.equalTo(self.view).with.offset(108*self.view.frame.size.width/375);
+        make.top.equalTo(self.view).with.offset(222*_screenHeight/667);
+        make.size.mas_equalTo(CGSizeMake(85*self.view.frame.size.width/375, 109*_screenHeight/667));
     }];
     
     self.fiveButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -215,9 +215,9 @@ static const float animationTime = 0.15f;
     [self.fiveButton setBackgroundImage:[UIImage imageNamed:@"empty_5s"] forState:UIControlStateSelected];
     [self.view addSubview:self.fiveButton];
     [self.fiveButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).with.offset(214*375/self.view.frame.size.width);
-        make.top.equalTo(self.view).with.offset(69*667/_screenHeight);
-        make.size.mas_equalTo(CGSizeMake(85, 109));
+        make.left.equalTo(self.view).with.offset(212*self.view.frame.size.width/375);
+        make.top.equalTo(self.view).with.offset(87*_screenHeight/667);
+        make.size.mas_equalTo(CGSizeMake(85*self.view.frame.size.width/375, 109*_screenHeight/667));
     }];
     
     self.eightButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -226,9 +226,9 @@ static const float animationTime = 0.15f;
     [self.eightButton setBackgroundImage:[UIImage imageNamed:@"empty_8s"] forState:UIControlStateSelected];
     [self.view addSubview:self.eightButton];
     [self.eightButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).with.offset(280*375/self.view.frame.size.width);
-        make.top.equalTo(self.view).with.offset(212*667/_screenHeight);
-        make.size.mas_equalTo(CGSizeMake(85, 109));
+        make.left.equalTo(self.view).with.offset(278*self.view.frame.size.width/375);
+        make.top.equalTo(self.view).with.offset(244*_screenHeight/667);
+        make.size.mas_equalTo(CGSizeMake(85*self.view.frame.size.width/375, 109*_screenHeight/667));
     }];
 }
 
@@ -249,42 +249,44 @@ static const float animationTime = 0.15f;
 
 - (void)initEmptyClassView
 {
-    self.showEmptyHouseView = [[UIView alloc] init];
+    self.showEmptyHouseView = [[UIScrollView alloc] init];
+    self.showEmptyHouseView.showsHorizontalScrollIndicator = NO;
+    self.showEmptyHouseView.contentSize = CGSizeMake(self.view.frame.size.width, 220);
     self.showEmptyHouseView.backgroundColor = kCommonLightGray_Color;
     [self.view addSubview:self.showEmptyHouseView];
     [self.showEmptyHouseView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.view.mas_bottom).with.offset(-215 - 68);
-        make.height.mas_equalTo(200);
+        make.height.mas_equalTo(220);
         make.left.and.right.equalTo(self.view);
     }];
-    
+    CGFloat fontSize = 30;
     self.oneLabel = [[UILabel alloc] init];
-    [self.oneLabel setFont:kFont(kStandardPx(20)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    [self.oneLabel setFont:kFont(kStandardPx(fontSize)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
     self.oneLabel.numberOfLines = 0;
     [self.showEmptyHouseView addSubview:self.oneLabel];
     
     self.twoLabel = [[UILabel alloc] init];
-    [self.twoLabel setFont:kFont(kStandardPx(20)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    [self.twoLabel setFont:kFont(kStandardPx(fontSize)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
     self.twoLabel.numberOfLines = 0;
     [self.showEmptyHouseView addSubview:self.twoLabel];
     
     self.threeLabel = [[UILabel alloc] init];
-    [self.threeLabel setFont:kFont(kStandardPx(20)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    [self.threeLabel setFont:kFont(kStandardPx(fontSize)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
     self.threeLabel.numberOfLines = 0;
     [self.showEmptyHouseView addSubview:self.threeLabel];
     
     self.fourLabel = [[UILabel alloc] init];
-    [self.fourLabel setFont:kFont(kStandardPx(20)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    [self.fourLabel setFont:kFont(kStandardPx(fontSize)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
     self.fourLabel.numberOfLines = 0;
     [self.showEmptyHouseView addSubview:self.fourLabel];
     
     self.fiveLabel = [[UILabel alloc] init];
-    [self.fiveLabel setFont:kFont(kStandardPx(20)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    [self.fiveLabel setFont:kFont(kStandardPx(fontSize)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
     self.fiveLabel.numberOfLines = 0;
     [self.showEmptyHouseView addSubview:self.fiveLabel];
     
     NSArray *viewArray = @[self.oneLabel, self.twoLabel, self.threeLabel, self.fourLabel, self.fiveLabel];
-    [viewArray mas_distributeViewsAlongAxis:MASAxisTypeVertical withFixedSpacing:8 leadSpacing:10 tailSpacing:10];
+    [viewArray mas_distributeViewsAlongAxis:MASAxisTypeVertical withFixedSpacing:8 leadSpacing:10 tailSpacing:0];
     [viewArray mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(15));
         make.width.mas_equalTo(self.view.frame.size.width - 15);
@@ -293,10 +295,12 @@ static const float animationTime = 0.15f;
     self.tipLabel = [[UILabel alloc] init];
     [self.tipLabel setFont:kFont(kStandardPx(40)) andText:@"加载中..." andTextColor:kCommonText_Color andBackgroundColor:kCommonLightGray_Color];
     self.tipLabel.textAlignment = NSTextAlignmentCenter;
-    [self.showEmptyHouseView addSubview:self.tipLabel];
-    self.showEmptyHouseView.hidden = YES;
+    [self.view addSubview:self.tipLabel];
+    self.tipLabel.hidden = YES;
     [self.tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.top.and.bottom.and.right.equalTo(self.showEmptyHouseView);
+        make.bottom.equalTo(self.view.mas_bottom).with.offset(-215 - 68);
+        make.height.mas_equalTo(220);
+        make.left.and.right.equalTo(self.view);
     }];
     
     self.showEmptyHouseView.hidden = YES;
@@ -308,7 +312,7 @@ static const float animationTime = 0.15f;
     [[UIApplication sharedApplication].keyWindow addSubview:self.backgroundControl];
     [self.backgroundControl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.right.and.top.equalTo([UIApplication sharedApplication].keyWindow);
-        make.bottom.equalTo([UIApplication sharedApplication].keyWindow).with.offset(-215 - 68 - 200);
+        make.bottom.equalTo([UIApplication sharedApplication].keyWindow).with.offset(-215 - 68 - 220);
     }];
     self.backgroundControl.hidden = YES;
     

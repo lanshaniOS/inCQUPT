@@ -35,6 +35,12 @@
     [super viewWillDisappear:animated];
     
 }
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    self.searchController.active = NO;
+    [super viewDidDisappear:animated];
+}
 - (NSString *)title
 {
     return @"学生查询";
@@ -63,7 +69,7 @@
     self.searchController.searchResultsUpdater = self;
     self.searchController.delegate = self;
     self.searchController.searchBar.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
-    self.searchController.searchBar.placeholder = @"请输入学生学号或姓名";
+    self.searchController.searchBar.placeholder = @"请输入学号、姓名或班级号";
     self.searchController.searchBar.delegate = self;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
 //    self.searchController.searchBar.barTintColor = [UIColor redColor];
@@ -120,7 +126,12 @@
         if (error)
         {
             [[ZCYProgressHUD sharedHUD] showWithText:[error localizedDescription] inView:self.view hideAfterDelay:1.0f];
+            [self endRefresh];
             return;
+        }
+        if (_page == 1)
+        {
+            [self.studentArray removeAllObjects];
         }
         if (resultDic != nil || resultDic != NULL)
         {
@@ -152,7 +163,7 @@
         self.searchbarText = self.searchController.searchBar.text;
         if (![self.searchController.searchBar.text  isEqual: @""])
         {
-            [self.studentArray removeAllObjects];
+//            [self.studentArray removeAllObjects];
             _page = 1;
             [self requestMoreData];
         } else {
@@ -186,8 +197,10 @@
             [[ZCYProgressHUD sharedHUD] showWithText:[error localizedDescription] inView:self.view hideAfterDelay:1.0f];
             return;
         }
+        [self.studentArray removeAllObjects];
         if (resultDic != nil || resultDic != NULL)
         {
+            
             if (resultDic.count !=0)
             {
                 [self.studentArray addObjectsFromArray:resultDic[@"rows"]];

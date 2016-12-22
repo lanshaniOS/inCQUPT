@@ -26,7 +26,6 @@
 @property (strong, nonatomic) UIButton *getCoursePicButton;  /**< 截取教务在线课表 */
 @property (strong, nonatomic) UIButton *setCourseStyle;  /**< 设置课表风格 */
 @property (strong, nonatomic) UIButton *reportErrorButton;  /**< 报告错误 */
-
 @property (strong, nonatomic) ZCYTimeTableModel *model;  /**< 课程数据 */
 @end
 
@@ -57,7 +56,7 @@
     self.layer.cornerRadius = kStandardPx(18);
     
     UIView *colLine = [[UIView alloc] init];
-    colLine.backgroundColor = kDeepGray_Color;
+    colLine.backgroundColor = kCommonGray_Color;
     colLine.layer.cornerRadius = kStandardPx(5);
     [self addSubview:colLine];
     [colLine mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -154,7 +153,7 @@
     }];
     
     UIView *line = [[UIView alloc] init];
-    line.backgroundColor = [UIColor grayColor];
+    line.backgroundColor = kCommonGray_Color;
     [self addSubview:line];
     [line mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.weekLabel);
@@ -210,8 +209,8 @@
     }];
     
     self.getCoursePicButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.getCoursePicButton setTitle:@"截取全学期课表(待开发)" forState:UIControlStateNormal];
-    [self.getCoursePicButton setTitleColor:kDeepGreen_Color forState:UIControlStateNormal];
+    [self.getCoursePicButton setTitle:@"截取全学期课表" forState:UIControlStateNormal];
+    [self.getCoursePicButton setTitleColor:kDeepGray_Color forState:UIControlStateNormal];
     self.getCoursePicButton.titleLabel.font = kFont(kStandardPx(32));
     [self addSubview:self.getCoursePicButton];
     [self.getCoursePicButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -222,7 +221,7 @@
     }];
     
     UIView *line1 = [[UIView alloc] init];
-    line1.backgroundColor = [UIColor grayColor];
+    line1.backgroundColor = kCommonGray_Color;
     [self addSubview:line1];
     [line1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.weekLabel);
@@ -232,9 +231,9 @@
     }];
     
     self.setCourseStyle = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.setCourseStyle setTitle:@"自定义课表主题(待开发)" forState:UIControlStateNormal];
+    [self.setCourseStyle setTitle:@"自定义课表主题" forState:UIControlStateNormal];
     self.setCourseStyle.titleLabel.font = kFont(kStandardPx(32));
-    [self.setCourseStyle setTitleColor:kDeepGreen_Color forState:UIControlStateNormal];
+    [self.setCourseStyle setTitleColor:kDeepGray_Color forState:UIControlStateNormal];
     [self addSubview:self.setCourseStyle];
     [self.setCourseStyle mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.weekLabel);
@@ -244,7 +243,7 @@
     }];
     
     UIView *line2 = [[UIView alloc] init];
-    line2.backgroundColor = [UIColor grayColor];
+    line2.backgroundColor = kCommonGray_Color;
     [self addSubview:line2];
     [line2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.weekLabel);
@@ -254,9 +253,10 @@
     }];
     
     self.reportErrorButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.reportErrorButton setTitle:@"报告错误(待开发)" forState:UIControlStateNormal];
+    [self.reportErrorButton setTitle:@"报告错误" forState:UIControlStateNormal];
     self.reportErrorButton.titleLabel.font = kFont(kStandardPx(32));
     [self.reportErrorButton setTitleColor:kDeepGreen_Color forState:UIControlStateNormal];
+    [self.reportErrorButton addTarget:self action:@selector(reportErrorButtonDidClicked) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.reportErrorButton];
     [self.reportErrorButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.weekLabel);
@@ -266,7 +266,7 @@
     }];
     
     UIView *line3 = [[UIView alloc] init];
-    line3.backgroundColor = [UIColor grayColor];
+    line3.backgroundColor = kCommonGray_Color;
     [self addSubview:line3];
     [line3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.weekLabel);
@@ -294,9 +294,9 @@
     
     
     self.segmentControl.selectedSegmentIndex = 0;
-    self.pitchLabel.text = [self courseNumWithCourseTime:courseTime];
+    self.pitchLabel.text = [self courseNumWithCourseTime:courseTime andCourseNum:[model.courseNumber integerValue]];
     self.weekLabel.text = [NSString stringWithFormat:@"星期%@", _weekArray[weekNum]];
-    self.timeLabel.text = [self courseTimeStringWithCourseTime:courseTime];
+    self.timeLabel.text = [self courseTimeStringWithCourseTime:courseTime andCourseNum:[model.courseNumber integerValue]];
     self.courseNameLabel.text = model.courseName;
     self.attributeLabel.text = model.courseType;
     self.creditLabel.text = model.courseCredit;
@@ -314,6 +314,14 @@
     [self.segmentControl removeAllSegments];
 }
 
+- (void)reportErrorButtonDidClicked
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(reportErrorDidPressed)])
+    {
+        [self.delegate reportErrorDidPressed];
+    }
+}
+
 - (void)changeSegmentValue
 {
     NSUInteger index = self.segmentControl.selectedSegmentIndex;
@@ -328,45 +336,78 @@
 
 }
 
-- (NSString *)courseTimeStringWithCourseTime:(NSInteger)courseTime
+- (NSString *)courseTimeStringWithCourseTime:(NSInteger)courseTime andCourseNum:(NSInteger)courseNum
 {
-    switch (courseTime) {
-        case 0:
-            return @"08:00－09:40";
-        case 1:
-            return @"10:05－11:45";
-        case 2:
-            return @"14:00－15:40";
-        case 3:
-            return @"16:05－17:45";
-        case 4:
-            return @"19:00－20:40";
-        case 5:
-            return @"21:05－22:45";
-            
-        default:
-            return @"00:00－";
+    if (courseNum == 3)
+    {
+        switch (courseTime) {
+            case 0:
+                return @"08:00－10:35";
+            case 2:
+                return @"14:00－16:35";
+            case 4:
+                return @"19:00－21:35";
+                
+            default:
+                return @"00:00－";
+        }
+    } else {
+
+        switch (courseTime) {
+            case 0:
+                return @"08:00－09:40";
+            case 1:
+                return @"10:05－11:45";
+            case 2:
+                return @"14:00－15:40";
+            case 3:
+                return @"16:05－17:45";
+            case 4:
+                return @"19:00－20:40";
+            case 5:
+                return @"21:05－22:45";
+                
+            default:
+                return @"00:00－";
+        }
+
     }
 }
 
-- (NSString *)courseNumWithCourseTime:(NSInteger)courseTime
+- (NSString *)courseNumWithCourseTime:(NSInteger)courseTime andCourseNum:(NSInteger)courseNum
 {
-    switch (courseTime) {
-        case 0:
-            return @"一二节";
-        case 1:
-            return @"三四节";
-        case 2:
-            return @"五六节";
-        case 3:
-            return @"七八节";
-        case 4:
-            return @"九十节";
-        case 5:
-            return @"十一十二节";
-            
-        default:
-            return @"wrong";
+    if (courseNum == 3)
+    {
+        switch (courseTime) {
+            case 0:
+                return @"一二三节";
+            case 2:
+                return @"五六七节";
+            case 4:
+                return @"九十十一节";
+                
+            default:
+                return @"wrong";
+        }
+    } else {
+        switch (courseTime) {
+            case 0:
+                return @"一二节";
+            case 1:
+                return @"三四节";
+            case 2:
+                return @"五六节";
+            case 3:
+                return @"七八节";
+            case 4:
+                return @"九十节";
+            case 5:
+                return @"十一十二节";
+                
+            default:
+                return @"wrong";
+        }
+
     }
 }
 @end

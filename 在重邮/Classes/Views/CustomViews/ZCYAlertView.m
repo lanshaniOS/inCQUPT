@@ -41,7 +41,7 @@
     [self mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo([UIApplication sharedApplication].keyWindow.mas_bottom).with.offset(0);
         make.left.and.right.equalTo([UIApplication sharedApplication].keyWindow);
-        make.bottom.equalTo([UIApplication sharedApplication].keyWindow).with.offset(50+self.buttonNameArray.count*40);
+        make.bottom.equalTo([UIApplication sharedApplication].keyWindow).with.offset(60+self.buttonNameArray.count*51);
     }];
     
     self.blackControl = [[UIControl alloc] init];
@@ -64,7 +64,7 @@
     [self addSubview:cancelButton];
     [cancelButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.and.bottom.and.left.equalTo(self);
-        make.height.mas_offset(40);
+        make.height.mas_offset(50);
     }];
     for (NSInteger index=0; index<self.buttonNameArray.count; index++)
     {
@@ -76,8 +76,8 @@
         [button addTarget:self action:@selector(buttonDidClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:button];
         [button mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(cancelButton.mas_top).with.offset(-10-index*40);
-            make.height.mas_equalTo(40);
+            make.bottom.equalTo(cancelButton.mas_top).with.offset(-10-index*51);
+            make.height.mas_equalTo(50);
             make.left.and.right.equalTo(self);
         }];
     }
@@ -89,10 +89,10 @@
     self.blackControl.hidden = NO;
     [UIView animateWithDuration:0.2f animations:^{
         [self mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo([UIApplication sharedApplication].keyWindow.mas_bottom).with.offset(-50-self.buttonNameArray.count*40);
+            make.top.equalTo([UIApplication sharedApplication].keyWindow.mas_bottom).with.offset(-60-self.buttonNameArray.count*51);
             make.left.and.right.equalTo([UIApplication sharedApplication].keyWindow);
             make.bottom.equalTo([UIApplication sharedApplication].keyWindow);
-            make.height.mas_offset(50+self.buttonNameArray.count*40);
+            make.height.mas_offset(60+self.buttonNameArray.count*51);
         }];
         [self.superview layoutIfNeeded];
     }];
@@ -103,7 +103,7 @@
     self.blackControl.hidden = YES;
     [UIView animateWithDuration:0.2f animations:^{
         [self mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo([UIApplication sharedApplication].keyWindow).with.offset(50+self.buttonNameArray.count*40);
+            make.bottom.equalTo([UIApplication sharedApplication].keyWindow).with.offset(60+self.buttonNameArray.count*51);
         }];
         [self.superview layoutIfNeeded];
     }];
@@ -117,7 +117,7 @@
     }
     [UIView animateWithDuration:0.2 animations:^{
         [self mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo([UIApplication sharedApplication].keyWindow).with.offset(50+self.buttonNameArray.count*40);
+            make.bottom.equalTo([UIApplication sharedApplication].keyWindow).with.offset(60+self.buttonNameArray.count*51);
         }];
         [self.superview layoutIfNeeded];
     }];
@@ -125,9 +125,9 @@
 
 - (void)buttonDidClick:(UIButton *)button
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(alertViewDidClickAtIndex:)])
+    if (self.delegate && [self.delegate respondsToSelector:@selector(alertView: didClickAtIndex:)])
     {
-        [self.delegate alertViewDidClickAtIndex:button.tag - 10000];
+        [self.delegate alertView:self didClickAtIndex:button.tag - 10000];
     }
 }
 @end

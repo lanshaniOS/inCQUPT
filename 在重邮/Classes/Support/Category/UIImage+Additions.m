@@ -26,11 +26,18 @@
     return image;
 }
 
+//CIBoxBlur
+//CIDiscBlur
+//CIGaussianBlur
+//CIMedianFilter
+//CIMotionBlur
+//CINoiseReduction
+//CIZoomBlur
 + (UIImage *)blurImage:(UIImage *)image WithBlurNumber:(CGFloat)number
 {
     CIContext *context = [CIContext contextWithOptions:nil];
     CIImage *inputImage = [CIImage imageWithCGImage:image.CGImage];
-    CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
+    CIFilter *filter = [CIFilter filterWithName:@"CINoiseReduction"];
     [filter setValue:inputImage forKey:kCIInputImageKey];
     CIImage *result = [filter valueForKey:kCIOutputImageKey];
     CGImageRef outImage = [context createCGImage:result fromRect:[result extent]];

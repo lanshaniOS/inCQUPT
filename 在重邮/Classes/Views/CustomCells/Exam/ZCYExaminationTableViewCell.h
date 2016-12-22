@@ -10,6 +10,8 @@
 
 @interface ZCYExaminationTableViewCell : UITableViewCell
 
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier andWidth:(CGFloat)cellWidth;
+
 - (void)setCellWithExamInfo:(NSDictionary *)examInfo;
 
 @end

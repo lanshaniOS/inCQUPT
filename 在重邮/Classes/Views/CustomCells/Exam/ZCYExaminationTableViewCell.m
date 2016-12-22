@@ -20,11 +20,15 @@
 
 @end
 @implementation ZCYExaminationTableViewCell
+{
+    CGFloat _cellWidth;
+}
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier andWidth:(CGFloat)cellWidth
 {
     if ([super initWithStyle:style reuseIdentifier:reuseIdentifier])
     {
+        _cellWidth = cellWidth;
         [self setup];
     }
     return self;
@@ -46,17 +50,41 @@
     [dayLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.leavingDayLabel.mas_right);
         make.bottom.equalTo(self.leavingDayLabel);
+//        make.width.mas_equalTo(13);
+    }];
+    
+    
+    self.classIDLabel = [[UILabel alloc] init];
+    [self.classIDLabel setFont:kFont(kStandardPx(40)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    [self addSubview:self.classIDLabel];
+    [self.classIDLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self).with.offset(-15);
+        make.top.equalTo(self).with.offset(18);
+    }];
+    
+    self.examAttrLabel = [[UILabel alloc] init];
+    [self.examAttrLabel setFont:kFont(kStandardPx(26)) andText:@"" andTextColor:kCommonWhite_Color andBackgroundColor:kDeepGreen_Color];
+    self.examAttrLabel.textAlignment = NSTextAlignmentCenter;
+    self.examAttrLabel.layer.cornerRadius = 4.0f;
+    self.examAttrLabel.layer.masksToBounds = YES;
+    [self addSubview:self.examAttrLabel];
+    [self.examAttrLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.classIDLabel.mas_left).with.offset(-10);
+        make.bottom.equalTo(self.classIDLabel);
+        make.size.mas_equalTo(CGSizeMake(34, 17));
     }];
     
     self.courseNameLabel = [[UILabel alloc] init];
     [self.courseNameLabel setFont:kFont(kStandardPx(40)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
     self.courseNameLabel.adjustsFontSizeToFitWidth = YES;
+    self.courseNameLabel.textAlignment = NSTextAlignmentLeft;
     [self addSubview:self.courseNameLabel];
     [self.courseNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).with.offset(18);
-        make.left.equalTo(dayLabel.mas_right).with.offset(18);
-        make.width.mas_equalTo(170*self.frame.size.width/375);
+        make.left.equalTo(self).with.offset(70);
+        make.width.mas_equalTo(127*_cellWidth/320);
     }];
+    
     
     self.examTimeLabel = [[UILabel alloc] init];
     [self.examTimeLabel setFont:kFont(kStandardPx(24)) andText:@"" andTextColor:[UIColor colorWithRGBHex:0x666666] andBackgroundColor:kTransparentColor];
@@ -73,27 +101,7 @@
         make.left.equalTo(self.examTimeLabel);
         make.top.equalTo(self.examTimeLabel.mas_bottom).with.offset(4);
     }];
-    
-    self.examAttrLabel = [[UILabel alloc] init];
-    [self.examAttrLabel setFont:kFont(kStandardPx(26)) andText:@"" andTextColor:kCommonWhite_Color andBackgroundColor:kDeepGreen_Color];
-    self.examAttrLabel.textAlignment = NSTextAlignmentCenter;
-    self.examAttrLabel.layer.cornerRadius = 4.0f;
-    self.examAttrLabel.layer.masksToBounds = YES;
-    [self addSubview:self.examAttrLabel];
-    [self.examAttrLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.courseNameLabel.mas_right).with.offset(6);
-        make.bottom.equalTo(self.courseNameLabel);
-        make.size.mas_equalTo(CGSizeMake(34, 17));
-    }];
-    
-    self.classIDLabel = [[UILabel alloc] init];
-    [self.classIDLabel setFont:kFont(kStandardPx(40)) andText:@"" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
-    [self addSubview:self.classIDLabel];
-    [self.classIDLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self).with.offset(-15);
-        make.bottom.equalTo(self.courseNameLabel);
-    }];
-    
+
     self.sitIDLabel = [[UILabel alloc] init];
     [self.sitIDLabel setFont:kFont(kStandardPx(26)) andText:@"" andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
     [self addSubview:self.sitIDLabel];

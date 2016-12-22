@@ -7,6 +7,7 @@
 //
 
 #import "ZCYCardDetailViewController.h"
+#import "ZCYFeedBackViewController.h"
 #import "ZCYCardHelper.h"
 #import "ZCYBezierPath.h"
 #import "ZCYCardDetailView.h"
@@ -24,12 +25,14 @@
 @property (strong, nonatomic) NSMutableArray *balanceArray;  /**< 消费数组 */
 @property (strong, nonatomic) UIScrollView *backgroundScrollView;  /**< 背景滑动 */
 @property (strong, nonatomic) ZCYCardDetailView *cardDetailView;  /**< 一卡通详情 */
+@property (strong, nonatomic) UIView *detailView;  /**< 消费详情 */
 @end
 
 @implementation ZCYCardDetailViewController
 {
     CGFloat y_oldPanpoint;
     CGFloat sum_yOffset;
+    NSInteger oldClickedIndex;
 }
 
 - (NSString *)title
@@ -63,7 +66,7 @@
 - (void)initBezierView
 {
     self.backgroundScrollView = [[UIScrollView alloc] init];
-    self.backgroundScrollView.contentSize = CGSizeMake(self.view.frame.size.width*2, self.view.frame.size.height - 64 - 68);
+    self.backgroundScrollView.contentSize = CGSizeMake(self.view.frame.size.width*2+self.view.frame.size.width/4.5, self.view.frame.size.height - 64 - 68);
     self.backgroundScrollView.bounces = NO;
     self.backgroundScrollView.showsVerticalScrollIndicator = NO;
     self.backgroundScrollView.showsHorizontalScrollIndicator = NO;
@@ -99,35 +102,13 @@
             NSInteger max = 1;
 //            NSInteger first = [sortArray[0] integerValue];
             NSInteger last = [sortArray[9] integerValue];
-//            for (NSInteger index = 0; ; index++)
-//            {
-//                if (first / 10 == 0)
-//                {
-//                    min = first * min;
-//                    break;
-//                } else {
-//                    
-//                    first = first / 10;
-//                    min = min *10;
-//                }
-//            }
-//            for (NSInteger index = 0; ; index++)
-//            {
-//                if (last / 10.0 == 0)
-//                {
-//                    max = max * last;
-//                    break;
-//                } else {
-//                    last = last / 10.0;
-//                    max = max*10;
-//                }
-//            }
+            
             max = last/10*10+10;
+//            [pointArray addObject:[NSValue valueWithCGPoint:CGPointMake(0, self.view.frame.size.height - 128 - 64 - ((self.view.frame.size.height - 128 - 64)/(max + 10)*[self.cardArray[9][@"balance"] floatValue]))]];
             for (NSInteger index = 0; index<10; index++)
             {
-
                 CGFloat y = [self.cardArray[9-index][@"balance"] floatValue];
-                [pointArray addObject:[NSValue valueWithCGPoint:CGPointMake(self.view.frame.size.width/4.5 * index, self.view.frame.size.height - 128 - 64 - ((self.view.frame.size.height - 128 - 64)/(max + 10)*y))]];
+                [pointArray addObject:[NSValue valueWithCGPoint:CGPointMake(self.view.frame.size.width/4.5 * (index)+self.view.frame.size.width/9, self.view.frame.size.height - 128 - 64 - ((self.view.frame.size.height - 128 - 64)/(max + 10)*y))]];
                 UILabel *dayLabel = [[UILabel alloc] init];
                 NSString *string = [self.cardArray[9-index][@"time"] substringWithRange:NSMakeRange(5, 5)];
                 dayLabel.textAlignment = NSTextAlignmentCenter;
@@ -142,6 +123,7 @@
                 
             }
             
+//            [pointArray addObject:[NSValue valueWithCGPoint:CGPointMake((self.view.frame.size.width/4.5 * 11), self.view.frame.size.height - 128 - 64 - ((self.view.frame.size.height - 128 - 64)/(max + 10)*[self.cardArray[0][@"balance"] floatValue]))]];
             ZCYBezierPath *path = [[ZCYBezierPath alloc] initWithPointArray:pointArray];
             CAShapeLayer *layer = [path drawThirdBezierPathWithWidth:self.view.frame.size.width andHeight:self.view.frame.size.height];
             path.backgroundColor = kCommonWhite_Color;
@@ -150,40 +132,12 @@
             [path mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(self.backgroundScrollView);
 //                make.bottom.equalTo(self.backgroundScrollView.mas_bottom).with.offset(-60);
-                make.width.mas_equalTo(self.view.frame.size.width*2);
+                make.width.mas_equalTo(self.view.frame.size.width*2+self.view.frame.size.width/4.5);
                 make.height.mas_equalTo(self.view.frame.size.height - 128 - 64);
                 make.top.equalTo(self.view).with.offset(64);
             }];
             
-            for (NSInteger index = 0; index < 10; index++) {
-                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-                button.backgroundColor = kCommonGray_Color;
-                [self.backgroundScrollView addSubview:button];
-                [button mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.left.equalTo(self.backgroundScrollView).with.offset(self.view.frame.size.width/4.5*index);
-                    make.width.mas_equalTo(1);
-                    make.height.mas_equalTo(self.view.frame.size.height - 68 - 64);
-                    make.top.equalTo(self.view).with.offset(64);
-                }];
-                
-            }
             
-            UIView *topLine = [[UIView alloc] init];
-            topLine.backgroundColor = kCommonGray_Color;
-            [self.view addSubview:topLine];
-            [topLine mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.and.right.equalTo(self.view);
-                make.top.equalTo(self.view).with.offset(self.view.frame.size.height - 128 - 64 - ((self.view.frame.size.height - 128 - 64)/(max + 10)*[sortArray[9] floatValue])+60);
-                make.height.mas_equalTo(1);
-            }];
-            
-            UILabel *topLabel = [[UILabel alloc] init];
-            [topLabel setFont:kFont(kStandardPx(24)) andText:[NSString stringWithFormat:@"¥ %@",@(max)] andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
-            [self.view addSubview:topLabel];
-            [topLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(topLine.mas_bottom).with.offset(2);
-                make.right.equalTo(self.view.mas_right).with.offset(-5);
-            }];
             
             UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"渐变图"]];
 //            imageView.backgroundColor = kCommonRed_Color;
@@ -191,12 +145,55 @@
             [self.backgroundScrollView addSubview:imageView];
             [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(self.backgroundScrollView);
-                make.width.mas_equalTo(self.view.frame.size.width*2);
+                make.width.mas_equalTo(self.view.frame.size.width*2+self.view.frame.size.width/4.5);
                 make.top.equalTo(self.view).with.offset(64);
                 make.bottom.equalTo(self.view).with.offset(-128);
             }];
             
+            for (NSInteger index = 0; index < 11; index++) {
+                UIView *grayLine = [[UIView alloc] init];
+                grayLine.backgroundColor = kCommonGray_Color;
+                
+                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+                [button setTag:10000+index];
+                [button addTarget:self action:@selector(clickedLine:) forControlEvents:UIControlEventTouchUpInside];
+                [button setBackgroundImage:[UIImage imageWithColor:kTransparentColor] forState:UIControlStateNormal];
+                [self.backgroundScrollView addSubview:button];
+                [button mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.equalTo(self.backgroundScrollView).with.offset(self.view.frame.size.width/4.5*index);
+                    make.width.mas_equalTo(self.view.frame.size.width/4.5);
+                    make.height.mas_equalTo(self.view.frame.size.height - 68 - 64);
+                    make.top.equalTo(self.view).with.offset(64);
+                }];
+                
+                [self.backgroundScrollView addSubview:grayLine];
+                [grayLine mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.equalTo(self.backgroundScrollView).with.offset(self.view.frame.size.width/4.5*index);
+                    make.width.mas_equalTo(1);
+                    make.height.mas_equalTo(self.view.frame.size.height - 68 - 64);
+                    make.top.equalTo(self.view).with.offset(64);
+                }];
+                
+              }
             
+            UIView *topLine = [[UIView alloc] init];
+            topLine.backgroundColor = kCommonGray_Color;
+            [self.view addSubview:topLine];
+            [topLine mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.and.right.equalTo(self.view);
+                make.top.equalTo(self.view).with.offset(self.view.frame.size.height - 128 - 64 - ((self.view.frame.size.height - 128 - 64)/(max + 10)*[sortArray[9] floatValue])+59);
+                make.height.mas_equalTo(1);
+            }];
+            
+           
+            UILabel *topLabel = [[UILabel alloc] init];
+            [topLabel setFont:kFont(kStandardPx(24)) andText:[NSString stringWithFormat:@"¥ %@",sortArray[9]] andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
+            [self.view addSubview:topLabel];
+            [topLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.bottom.equalTo(topLine.mas_top).with.offset(-2);
+                make.right.equalTo(self.view.mas_right).with.offset(-5);
+            }];
+         
         }
     }];
     
@@ -249,7 +246,7 @@
     }];
     
     UIView *line = [[UIView alloc] init];
-    line.backgroundColor = kDeepGray_Color;
+    line.backgroundColor = kCommonGray_Color;
     line.layer.cornerRadius = kStandardPx(5);
     [self.bottomView addSubview:line];
     [line mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -293,11 +290,17 @@
 - (void)initCardDetailView
 {
     self.cardDetailView = [[ZCYCardDetailView alloc] initWithCardArray:self.cardArray];
+    @weakify(self)
+    [self.cardDetailView setClickBlock:^{
+        @strongify(self)
+        ZCYFeedBackViewController *feedBack = [[ZCYFeedBackViewController alloc] init];
+        [self.navigationController pushViewController:feedBack animated:YES];
+    }];
     [self.view addSubview:self.cardDetailView];
     [self.cardDetailView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.right.equalTo(self.view);
         make.top.equalTo(self.bottomView.mas_bottom);
-        make.height.mas_equalTo(380);
+        make.height.mas_equalTo(370);
     }];
 }
 #pragma mark - 点击事件
@@ -305,10 +308,10 @@
 {
     self.finishButton.hidden = NO;
     self.payDetailButton.hidden = YES;
-    sum_yOffset = -380;
+    sum_yOffset = -370;
     [UIView animateWithDuration:0.2f animations:^{
         [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.view).with.offset(-380);
+            make.bottom.equalTo(self.view).with.offset(-370);
         }];
 
         [self.bottomView.superview layoutIfNeeded];
@@ -356,14 +359,14 @@
             
             point.y -= 0.5;
         } else if (point.y < y_oldPanpoint){
-            if (sum_yOffset <= -380)
+            if (sum_yOffset <= -370)
             {
-                sum_yOffset = -380;
+                sum_yOffset = -370;
             }
             
-            if (sum_yOffset >= 380)
+            if (sum_yOffset >= 370)
             {
-                sum_yOffset = 380;
+                sum_yOffset = 370;
             }
             
             [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -371,7 +374,7 @@
             }];
             
             
-            if (self.view.frame.size.height - self.bottomView.frame.origin.y - self.bottomView.frame.size.height >= 380)
+            if (self.view.frame.size.height - self.bottomView.frame.origin.y - self.bottomView.frame.size.height >= 370)
             {
                 [self showPayDetailedView];
             }
@@ -395,6 +398,58 @@
 {
     
 }
+
+- (void)clickedLine:(UIButton *)button
+{
+    NSInteger index = button.tag - 10000;
+    
+    UIButton *oldButton = [self.backgroundScrollView viewWithTag:10000+oldClickedIndex];
+    UIView *oldLine = [oldButton viewWithTag:20000+oldClickedIndex];
+    [oldLine removeFromSuperview];
+    UIView *redLine = [[UIView alloc] init];
+    [redLine setTag:20000+index];
+    redLine.backgroundColor = [UIColor colorWithRGBHex:0xff3779];
+    [button addSubview:redLine];
+    [redLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(button);
+        make.top.and.bottom.equalTo(button);
+        make.width.mas_equalTo(1);
+    }];
+    NSString *balcanc = [NSString stringWithFormat:@"余额%@元",self.cardArray[9-index][@"balance"]];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:balcanc];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:kDeepGreen_Color range:NSMakeRange(2, balcanc.length - 3)];
+
+    self.balanceLabel.attributedText = attributedString;
+    self.closeDayLabel.text = [NSString stringWithFormat:@"截止%@", [self.cardArray[9-index][@"time"] substringWithRange:NSMakeRange(5, 14)]];
+    oldClickedIndex = index;
+//    button.selected = YES;
+//    for (NSInteger i = 0; i<10; i++)
+//    {
+//        UIButton *otherButton = [self.backgroundScrollView viewWithTag:10000+i];
+//        if (button != otherButton)
+//        {
+//            otherButton.selected = NO;
+//        }
+//        
+//    
+//        UIView *topLine = [self.view viewWithTag:30000+button.tag+10000];
+//            topLine.hidden = YES;
+//        UILabel *topLabel = [self.view viewWithTag:20000+button.tag+10000];
+//            topLabel.hidden = YES;
+//        
+//    }
+//        
+//    UIView *topLine = [self.view viewWithTag:30000+button.tag+10000];
+//    topLine.hidden = NO;
+//    UILabel *topLabel = [self.view viewWithTag:20000+button.tag+10000];
+//    topLabel.hidden = NO;
+}
+
+- (void)showDetailView
+{
+    
+}
+
 #pragma mark - TOOLS
 - (NSArray *)bubbleSortWithArray:(NSMutableArray *)mutableArray
 {

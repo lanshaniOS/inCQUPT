@@ -44,13 +44,18 @@
     [super viewWillAppear:animated];
     if ([ZCYUserMgr sharedMgr].lendBookDic)
     {
-        _userHaveData = YES;
-        self.tipLabel.hidden = YES;
-        self.bookList = [ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"book_list"];
-        self.debtString = [ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"dbet"];
-        self.totalBookString = [ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"books_num"];
-        self.historyString = [ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"history"];
-        
+        if ([[ZCYUserMgr sharedMgr].lendBookDic[@"date"][@"books_num"] integerValue] == 0)
+        {
+            _userHaveData = NO;
+            
+        } else {
+            _userHaveData = YES;
+            self.tipLabel.hidden = YES;
+            self.bookList = [ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"book_list"];
+            self.debtString = [ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"dbet"];
+            self.totalBookString = [ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"books_num"];
+            self.historyString = [ZCYUserMgr sharedMgr].lendBookDic[@"data"][@"history"];
+        }
     } else {
         _userHaveData = NO;
         [[ZCYProgressHUD sharedHUD] rotateWithText:@"数据加载中" inView:self.view];
@@ -141,7 +146,7 @@
         }
     }
     UIView *grayLine = [[UIView alloc] init];
-    grayLine.backgroundColor = kDeepGray_Color;
+    grayLine.backgroundColor = kCommonGray_Color;
     [self.view addSubview:grayLine];
     [grayLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.right.equalTo(self.view);
@@ -152,7 +157,7 @@
 - (void)initTipLabel
 {
     self.tipLabel = [[UILabel alloc] init];
-    [self.tipLabel setFont:kFont(kStandardPx(50)) andText:@"本学期没有借书记录哦～～～" andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
+    [self.tipLabel setFont:kFont(kStandardPx(40)) andText:@"本学期没有借书记录哦～～～" andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
     self.tipLabel.hidden = YES;
     [self.view addSubview:self.tipLabel];
     [self.tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {

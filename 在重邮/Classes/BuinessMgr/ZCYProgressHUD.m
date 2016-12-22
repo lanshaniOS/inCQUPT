@@ -32,6 +32,21 @@
     [self.hud hide:YES afterDelay:delay];
 }
 
+- (void)showWithText:(NSString *)text inView:(UIView *)view hideAfterDelay:(NSTimeInterval)delay WithCompletionBlock:(void(^)())completionBlock
+{
+    self.hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    self.hud.labelText = text;
+    self.hud.mode = MBProgressHUDModeText;
+    [self.hud showAnimated:YES whileExecutingBlock:^{
+        [NSThread sleepForTimeInterval:delay];
+    } completionBlock:^{
+        if (completionBlock)
+            completionBlock();
+    }];
+    
+//    [self.hud hide:YES afterDelay:delay];
+}
+
 - (void)rotateWithText:(NSString *)text inView:(UIView *)view
 {
     self.hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
@@ -39,6 +54,21 @@
     self.hud.mode = MBProgressHUDModeIndeterminate;
 }
 
+- (void)rotateWithText:(NSString *)text inView:(UIView *)view WithExcutingBlock:(void(^)())excutingBlock
+{
+    self.hud.labelText = text;
+    self.hud.mode = MBProgressHUDModeIndeterminate;
+    [self.hud showAnimated:YES whileExecutingBlock:^{
+        [NSThread sleepForTimeInterval:2.0f];
+    } completionBlock:^{
+//        [self.hud hide:YES];
+        if (excutingBlock)
+        {
+            excutingBlock();
+        }
+        
+    }];
+}
 - (void)hideAfterDelay:(NSTimeInterval)delay
 {
     [self.hud hide:YES afterDelay:delay];

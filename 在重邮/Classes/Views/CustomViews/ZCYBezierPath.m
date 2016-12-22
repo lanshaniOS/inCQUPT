@@ -73,18 +73,19 @@
     NSArray *lineArray = @[@"", oneLineArray, twoLineArray, threeLineArray, fourLineArray, fiveLineArray, sixLineArray, sevenLineArray, eightLineArray, nightLineArray];
     
     [path moveToPoint:CGPointMake(0, _screenHeight-128-64)];
+    [path addLineToPoint:CGPointMake(0, _onePoint.y)];
     [path addLineToPoint:_onePoint];
     for (NSInteger index = 1; index < 10; index++)
     {
         [path addCurveToPoint:[self.pointArray[index] CGPointValue] controlPoint1:[lineArray[index][0] CGPointValue] controlPoint2:[lineArray[index][1] CGPointValue]];
     }
-    [path addLineToPoint:_tenPoint];
-    [path addLineToPoint:CGPointMake(_screenWidth*2, _screenHeight - 128 - 64)];
-    
+//    [path addLineToPoint:_tenPoint];
+    [path addLineToPoint:CGPointMake(_screenWidth*2+_screenWidth/4.5+1, _tenPoint.y)];
+    [path addLineToPoint:CGPointMake(_screenWidth*2+_screenWidth/4.5+1, _screenHeight-128-64)];
     for (NSInteger index = 0; index<10; index++)
     {
         UIView *pointView = [[UIView alloc] init];
-        pointView.frame = CGRectMake((index)*screenWidth/4.5 - 3.5, [self.pointArray[index] CGPointValue].y - 4, 8, 8);
+        pointView.frame = CGRectMake((index)*screenWidth/4.5 - 3.5 + screenWidth/9, [self.pointArray[index] CGPointValue].y - 4, 8, 8);
         pointView.layer.masksToBounds = YES;
         pointView.backgroundColor = kDeepGreen_Color;
         pointView.layer.cornerRadius = 4;
@@ -107,8 +108,8 @@
 
 - (NSArray *)getControlPointWithFirstPoint:(CGPoint)firstPoint andSecondPoint:(CGPoint)secondPoint
 {
-    CGPoint onePoint = CGPointMake((firstPoint.x+secondPoint.x)/2, firstPoint.y - (secondPoint.y - firstPoint.y)/8);
-    CGPoint twoPoint = CGPointMake((firstPoint.x+secondPoint.x)/2, secondPoint.y + (secondPoint.y - firstPoint.y)/8);
+    CGPoint onePoint = CGPointMake((firstPoint.x+secondPoint.x)/2, firstPoint.y - (secondPoint.y - firstPoint.y)/64);
+    CGPoint twoPoint = CGPointMake((firstPoint.x+secondPoint.x)/2, secondPoint.y + (secondPoint.y - firstPoint.y)/64);
     return @[[NSValue valueWithCGPoint:onePoint], [NSValue valueWithCGPoint:twoPoint]];
 }
 @end

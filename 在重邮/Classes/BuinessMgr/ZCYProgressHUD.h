@@ -17,4 +17,8 @@
 - (void)rotateWithText:(NSString *)text inView:(UIView *)view;
 
 - (void)hideAfterDelay:(NSTimeInterval)delay;
+
+- (void)showWithText:(NSString *)text inView:(UIView *)view hideAfterDelay:(NSTimeInterval)delay WithCompletionBlock:(void(^)())completionBlock;
+
+- (void)rotateWithText:(NSString *)text inView:(UIView *)view WithExcutingBlock:(void(^)())excutingBlock;
 @end

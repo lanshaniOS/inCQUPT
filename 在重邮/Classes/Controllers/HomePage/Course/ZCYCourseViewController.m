@@ -10,6 +10,7 @@
 #import "ZCYTimeTableModel.h"
 #import "ZCYDetailCourseView.h"
 #import "ZCYTimeTableHelper.h"
+#import "ZCYFeedBackViewController.h"
 
 static const float animationTime = 0.2f;
 
@@ -81,6 +82,16 @@ static const float animationTime = 0.2f;
             [self.courseCollectionView reloadData];
         }];
     } else {
+        [ZCYTimeTableHelper getTimeTableWithStdNumber:[ZCYUserMgr sharedMgr].studentNumber withCompeletionBlock:^(NSError *error, NSArray *array) {
+            if (error)
+            {
+                return;
+            }
+            [ZCYUserMgr sharedMgr].courseArray = array;
+//            self.courseArray = [ZCYUserMgr sharedMgr].courseArray;
+//            [self.courseCollectionView reloadData];
+        }];
+
         self.courseArray = [ZCYUserMgr sharedMgr].courseArray;
     }
 }
@@ -88,6 +99,7 @@ static const float animationTime = 0.2f;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    self.backgroundScrollView.contentSize = CGSizeMake(_courseWidth*7 + 28 + 3, 42+(_courseWidth+0.5)*6*1.26);
     [self.weekPicker selectRow:[NSDate date].schoolWeek-1 inComponent:0 animated:NO];
 }
 - (void)viewWillDisappear:(BOOL)animated
@@ -105,12 +117,22 @@ static const float animationTime = 0.2f;
     self.title = @"课表";
     self.navigationController.navigationBar.alpha = 1.0f;
     [self initBackgroundView];
+    UIView *greenView = [[UIView alloc] init];
+    greenView.backgroundColor = [UIColor colorWithRGBHex:0xe4ffdf];
+    [self.backgroundScrollView addSubview:greenView];
+    [greenView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.backgroundScrollView).with.offset(28+(_courseWidth+0.5)*([NSDate date].week-1));
+        make.top.equalTo(self.backgroundScrollView).with.offset(-80);
+        make.height.mas_equalTo(self.backgroundScrollView.contentSize.height+200);
+        make.width.mas_equalTo(_courseWidth+0.5);
+    }];
     [self initCourseCollectionView];
     [self initHeaderView];
     [self initLeftTimeView];
     [self initBottomView];
     [self initWeekPickerView];
     [self initCourseDetailView];
+
 }
 
 - (void)initHeaderView
@@ -122,7 +144,7 @@ static const float animationTime = 0.2f;
         make.top.equalTo(self.view).with.offset(64);
         make.left.equalTo(self.backgroundScrollView).with.offset(-200);
         make.width.mas_equalTo(1000);
-        make.height.mas_equalTo(27);
+        make.height.mas_equalTo(42);
     }];
     
     NSArray *numArray = @[@"", @"一", @"二", @"三", @"四", @"五", @"六", @"日"];
@@ -131,9 +153,9 @@ static const float animationTime = 0.2f;
         UIView *numView = [[UIView alloc] init];
         if ([NSDate date].week == index)
         {
-            [self setView:numView WithNum:numArray[index] andSegColor:kCourseGreen_Color shouldShowSeg:YES];
+            [self setView:numView WithNum:numArray[index] andSegColor:kDeepGreen_Color shouldShowSeg:YES];
         } else {
-             [self setView:numView WithNum:numArray[index] andSegColor:kCourseGreen_Color shouldShowSeg:NO];
+             [self setView:numView WithNum:numArray[index] andSegColor:kDeepGreen_Color shouldShowSeg:NO];
         }
         
         [self.headerView addSubview:numView];
@@ -148,7 +170,7 @@ static const float animationTime = 0.2f;
 - (void)initBackgroundView
 {
     self.backgroundScrollView = [[UIScrollView alloc] init];
-    self.backgroundScrollView.contentSize = CGSizeMake(_courseWidth*7 + 28 + 3, 27+_courseWidth*6*1.26 + 3);
+    self.backgroundScrollView.contentSize = CGSizeMake(_courseWidth*7 + 28 + 3, 42+(_courseWidth+0.5)*6*1.26);
     self.backgroundScrollView.delegate = self;
     self.backgroundScrollView.showsHorizontalScrollIndicator = NO;
     self.backgroundScrollView.showsVerticalScrollIndicator = NO;
@@ -160,16 +182,19 @@ static const float animationTime = 0.2f;
         make.left.and.right.top.equalTo(self.view);
         make.bottom.equalTo(self.view).with.offset(-68);
     }];
+    
+
 }
 
 - (void)initCourseCollectionView
 {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(_courseWidth, _courseWidth*1.26 + 0.5);
+    layout.itemSize = CGSizeMake(_courseWidth+0.5, _courseWidth*1.26 + 0.5);
     self.courseCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-    self.courseCollectionView.backgroundColor = kCommonGray_Color;
+    self.courseCollectionView.backgroundColor = kTransparentColor;
     [self.courseCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"courseCollctionViewCellID"];
     self.courseCollectionView.delegate = self;
+
     self.courseCollectionView.dataSource = self;
     self.courseCollectionView.scrollEnabled = NO;
     
@@ -177,7 +202,7 @@ static const float animationTime = 0.2f;
     self.courseCollectionView.showsHorizontalScrollIndicator = NO;
     [self.backgroundScrollView addSubview:self.courseCollectionView];
     [self.courseCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.backgroundScrollView).with.offset(27);
+        make.top.equalTo(self.backgroundScrollView).with.offset(42);
         make.left.equalTo(self.backgroundScrollView).with.offset(28);
         make.height.mas_equalTo(6*1.26*_courseWidth + 3);
         make.width.mas_equalTo(7*_courseWidth+3.5);
@@ -235,7 +260,7 @@ static const float animationTime = 0.2f;
     }];
     
     UIView *line = [[UIView alloc] init];
-    line.backgroundColor = kDeepGray_Color;
+    line.backgroundColor = kCommonGray_Color;
     line.layer.cornerRadius = kStandardPx(5);
     [self.bottomView addSubview:line];
     [line mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -304,7 +329,7 @@ static const float animationTime = 0.2f;
         [self.leftTimeView addSubview:indexLabel];
         [indexLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.and.right.equalTo(self.leftTimeView);
-            make.top.equalTo(self.backgroundScrollView).with.offset((index - 1)*_timeLabelWidth + 27);
+            make.top.equalTo(self.backgroundScrollView).with.offset((index - 1)*_timeLabelWidth + 42);
             make.height.mas_equalTo(_timeLabelWidth);
         }];
     }
@@ -388,15 +413,15 @@ static const float animationTime = 0.2f;
     switch (indexPath.section) {
         case 0:
         case 1:
-            cellColor = kCourseGreen_Color;
+            cellColor = kDeepGreen_Color;
             break;
         case 2:
         case 3:
-            cellColor = kCommonGolden_Color;
+            cellColor = kDeepOrigin_Color;
             break;
         case 4:
         case 5:
-            cellColor = kDeepGray_Color;
+            cellColor = kDeepYellow_Color;
             break;
         default:
             cellColor = kCommonRed_Color;
@@ -404,8 +429,14 @@ static const float animationTime = 0.2f;
     }
     NSArray *courseArray = self.courseArray[indexPath.row];
     NSArray *colArray = courseArray[indexPath.section];
-    
-    cell.backgroundColor = kCommonWhite_Color;
+
+//    if (indexPath.row == [NSDate date].week -1)
+//    {
+//        cell.backgroundColor = [UIColor colorWithRGBHex:0xe4ffdf];
+//    } else {
+//    cell.backgroundColor = kTransparentColor;
+//    }
+    cell.backgroundColor = kTransparentColor;
     if (colArray.count >= 2)
     {
         UIView *dotView = [[UIView alloc] init];
@@ -421,6 +452,8 @@ static const float animationTime = 0.2f;
     } else {
         schoolWeek = [self.weekPicker selectedRowInComponent:0]+1;
     }
+    cell.frame = CGRectMake((_courseWidth+0.5)*indexPath.row, (_courseWidth*1.26+0.5)*indexPath.section, _courseWidth, _courseWidth*1.26);
+    __block BOOL haveCourse = NO;
     [colArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
     
         ZCYTimeTableModel *model  = obj;
@@ -428,25 +461,51 @@ static const float animationTime = 0.2f;
         {
             if ([model.courseWeeks[i] integerValue] == schoolWeek)
             {
-                [self setCollectionViewCell:cell withColor:cellColor andCourseName:model.courseName andClassID:model.coursePlace];
-//                [cell setRadius:5.0f]; //影响性能
-                cell.layer.cornerRadius = 5.0f;
-                cell.layer.shouldRasterize = YES;
-                cell.layer.rasterizationScale = [UIScreen mainScreen].scale;
+                if (!haveCourse)
+                {
+                    haveCourse = YES;
+                    [self setCollectionViewCell:cell withColor:cellColor andCourseName:model.courseName andClassID:model.coursePlace];
+                    //                [cell setRadius:5.0f]; //影响性能
+                    cell.layer.cornerRadius = 5.0f;
+                    cell.layer.shouldRasterize = YES;
+                    cell.layer.rasterizationScale = [UIScreen mainScreen].scale;
+                    if ([model.courseNumber integerValue] == 3)
+                    {
+                        cell.frame = CGRectMake((_courseWidth+0.5)*indexPath.row, (_courseWidth*1.26+0.5)*indexPath.section, _courseWidth, _courseWidth*3*0.63);
+                    }
+                }
             }
+            
+        }
+        if (haveCourse)
+        {
+            *stop = YES;
         }
     }];
     if(indexPath.section != 5)
     {
         UIView *grayView = [[UIView alloc] init];
-        grayView.backgroundColor = kCommonLightGray_Color;
+        grayView.backgroundColor = kCommonGray_Color;
         [cell addSubview:grayView];
         [grayView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(cell);
+            make.top.equalTo(cell.mas_bottom);
             make.left.and.right.equalTo(cell);
-            make.height.mas_equalTo(1);
+            make.height.mas_equalTo(0.5);
         }];
     }
+    
+    if (indexPath.row != 6)
+    {
+        UIView *rightLine = [[UIView alloc] init];
+        rightLine.backgroundColor = kCommonGray_Color;
+        [cell addSubview:rightLine];
+        [rightLine mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(cell.mas_right);
+            make.top.and.bottom.equalTo(cell);
+            make.width.mas_equalTo(0.5);
+        }];
+    }
+    
     return cell;
    
 }
@@ -461,6 +520,14 @@ static const float animationTime = 0.2f;
     return 6;
 }
 
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+
+    return CGSizeMake( _courseWidth+0.5, _courseWidth*1.26 + 0.5);
+
+
+}
+
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
     return UIEdgeInsetsMake(0, 0, 0, 0);
@@ -468,12 +535,12 @@ static const float animationTime = 0.2f;
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
-    return 0.5;
+    return 0;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 {
-    return 0.5;
+    return 0;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -482,7 +549,7 @@ static const float animationTime = 0.2f;
     NSArray *courseArray = self.courseArray[indexPath.row];
     NSArray *colArray = courseArray[indexPath.section];
     __block BOOL haveCourse = NO;
- 
+    
     NSInteger schoolWeek;
     if (_isFirstShowCourse)
     {
@@ -503,6 +570,7 @@ static const float animationTime = 0.2f;
     if (!haveCourse)
     {
         old_selectedIndexPath = nil;
+        [self hideDetailCourseView];
         return;
     }
     CGFloat x_offset = self.backgroundScrollView.contentOffset.x;
@@ -803,32 +871,35 @@ static const float animationTime = 0.2f;
         [self.detailCourseView.superview layoutIfNeeded];
     }];
 }
+
+- (void)reportErrorDidPressed
+{
+    ZCYFeedBackViewController *feedBack = [[ZCYFeedBackViewController alloc] init];
+    [self.navigationController pushViewController:feedBack animated:YES];
+}
 #pragma mark - TOOL
 
 - (void)setView:(UIView *)view WithNum:(NSString *)numString andSegColor:(UIColor *)color shouldShowSeg:(BOOL)showSeg
 {
     view.backgroundColor = kCommonLightGray_Color;
     UILabel *label = [[UILabel alloc] init];
-    label.text = numString;
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = kCommonText_Color;
-    label.font = kFont(kStandardPx(26));
+    [label setFont:kFont(kStandardPx(26)) andText:numString andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
     [view addSubview:label];
     [label mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(_courseWidth - 40);
-        make.height.and.bottom.equalTo(view);
-        make.left.equalTo(view).with.offset(20);
+        make.centerX.and.centerY.equalTo(view);
     }];
     
     if (showSeg == YES)
     {
-        UIView *segView = [[UIView alloc] init];
-        segView.backgroundColor = kCourseGreen_Color;
-        [view addSubview:segView];
-        [segView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(2);
-            make.width.equalTo(label);
-            make.left.and.bottom.equalTo(label);
+        UIView *dotView = [[UIView alloc] init];
+        dotView.backgroundColor = kDeepGreen_Color;
+        dotView.layer.masksToBounds = YES;
+        dotView.layer.cornerRadius = 2.5;
+        [view addSubview:dotView];
+        [dotView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(view);
+            make.top.equalTo(view.mas_bottom).with.offset(-8);
+            make.size.mas_equalTo(CGSizeMake(5, 5));
         }];
     }
 }

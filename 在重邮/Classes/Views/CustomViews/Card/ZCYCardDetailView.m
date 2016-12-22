@@ -68,6 +68,7 @@
     [self.reportErrorButton setTitle:@"报告错误" forState:UIControlStateNormal];
     self.reportErrorButton.titleLabel.font = kFont(kStandardPx(32));
     [self.reportErrorButton setTitleColor:kDeepGreen_Color forState:UIControlStateNormal];
+    [self.reportErrorButton addTarget:self action:@selector(reportButtonDidClicked) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.reportErrorButton];
     [self.reportErrorButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.tableView);
@@ -132,11 +133,25 @@
     }];
     
     UILabel *moneyLabel = [[UILabel alloc] init];
-    [moneyLabel setFont:kFont(kStandardPx(50)) andText:@"" andTextColor:kDeepGreen_Color andBackgroundColor:kTransparentColor];
-    NSString *balcanc = [NSString stringWithFormat:@"%@元",self.cardArray[indexPath.row][@"cost"]];
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:balcanc];
-    [attributedString addAttribute:NSForegroundColorAttributeName value:kDeepGray_Color range:NSMakeRange(balcanc.length-1, 1)];
-    [attributedString addAttribute:NSFontAttributeName value:kFont(kStandardPx(24)) range:NSMakeRange(balcanc.length - 1, 1)];
+    [moneyLabel setFont:kFont(kStandardPx(50)) andText:@"" andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
+    NSString *costString;
+    if ([self.cardArray[indexPath.row][@"cost"] floatValue] <0)
+    {
+        costString = [NSString stringWithFormat:@"%@元", @(-[self.cardArray[indexPath.row][@"cost"] floatValue])];
+    } else {
+        costString = [NSString stringWithFormat:@"%@元", @([self.cardArray[indexPath.row][@"cost"] floatValue])];
+    }
+    
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:costString];
+    if ([self.cardArray[indexPath.row][@"cost"] floatValue] <0)
+    {
+       [attributedString addAttribute:NSForegroundColorAttributeName value:kDeepOrigin_Color range:NSMakeRange(0, costString.length-1)];
+    } else {
+        [attributedString addAttribute:NSForegroundColorAttributeName value:kDeepGreen_Color range:NSMakeRange(0, costString.length-1)];
+    }
+
+    
+    [attributedString addAttribute:NSFontAttributeName value:kFont(kStandardPx(24)) range:NSMakeRange(costString.length - 1, 1)];
     moneyLabel.attributedText = attributedString;
     [cell addSubview:moneyLabel];
     [moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -145,7 +160,16 @@
     }];
     
     UILabel *typeLabel = [[UILabel alloc] init];
-    [typeLabel setFont:kFont(kStandardPx(26)) andText:self.cardArray[indexPath.row][@"transaction"] andTextColor:kCommonWhite_Color andBackgroundColor:kDeepGreen_Color];
+    NSString *typeString;
+    if ([self.cardArray[indexPath.row][@"cost"] floatValue] <0)
+    {
+        [typeLabel setFont:kFont(kStandardPx(26)) andText:@"圈存机" andTextColor:kCommonWhite_Color andBackgroundColor:kDeepOrigin_Color];
+        typeString = @"圈存机";
+    } else {
+        [typeLabel setFont:kFont(kStandardPx(26)) andText:self.cardArray[indexPath.row][@"transaction"] andTextColor:kCommonWhite_Color andBackgroundColor:kDeepGreen_Color];
+        typeString = self.cardArray[indexPath.row][@"transaction"];
+    }
+    
     typeLabel.textAlignment = NSTextAlignmentCenter;
     typeLabel.layer.cornerRadius = 4.0f;
     typeLabel.layer.masksToBounds = YES;
@@ -153,7 +177,7 @@
     [typeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(moneyLabel.mas_left).with.offset(-10);
         make.centerY.equalTo(cell);
-        make.size.mas_equalTo(CGSizeMake(34, 17));
+        make.size.mas_equalTo(CGSizeMake(6+typeString.length*14, 17));
     }];
 
     UIView *grayLine = [[UIView alloc] init];
@@ -167,6 +191,13 @@
     return cell;
 }
 
+- (void)reportButtonDidClicked
+{
+    if (self.clickBlock)
+    {
+        self.clickBlock();
+    }
+}
 - (void)updateCardDetailViewWithCardArray:(NSArray *)cardArray
 {
     self.cardArray = cardArray;

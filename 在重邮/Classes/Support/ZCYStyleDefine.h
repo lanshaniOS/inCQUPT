@@ -30,19 +30,21 @@ static const int ddLogLevel = DDLogLevelInfo;
 
 #define kDefaultFont  kFont(13.5)
 
-#define kCommonGreen_Color              [UIColor colorWithRGBHex:0xc2ffb6]
-#define kDeepGreen_Color                [UIColor colorWithRGBHex:0x56db3c]
-#define kCourseGreen_Color              [UIColor colorWithRGBHex:0x34bb62]
+#define kCommonGreen_Color              [UIColor colorWithRGBHex:0xd0ffc6] //青色
+#define kDeepGreen_Color                [UIColor colorWithRGBHex:0x4AC930] //绿色
 
 #define kCommonYellow_Color             [UIColor colorWithRGBHex:0xfbff9b]
-#define kDeepYellow_Color               [UIColor colorWithRGBHex:0xccb800]
+#define kDeepYellow_Color               [UIColor colorWithRGBHex:0xF5C400] //黄色
 
-#define kCommonPink_Color               [UIColor colorWithRGBHex:0xf7c1ff]
-#define kDeepPink_Color                 [UIColor colorWithRGBHex:0xe84fff]
+#define kCommonPink_Color               [UIColor colorWithRGBHex:0xFFc3d7]
+#define kDeepPink_Color                 [UIColor colorWithRGBHex:0xFF3779]
+
+#define kCommonOrigin_Color             [UIColor colorWithRGBHex:0xffebcb]
+#define kDeepOrigin_Color               [UIColor colorWithRGBHex:0xff9c00]
 
 #define kDeepGray_Color                 [UIColor colorWithRGBHex:0x666666]
 
-#define kCommonRed_Color                [UIColor colorWithRGBHex:0xf86365]
+#define kCommonRed_Color                [UIColor colorWithRGBHex:0xfc3545]
 #define kCommonOrange_Color             [UIColor colorWithRGBHex:0xe96600]
 #define kCommonRed_Color_Highlighted    [UIColor colorWithRGBHex:0xbd494a]
 #define kCommonLightGray_Color          [UIColor colorWithRGBHex:0xf7f7f7]
@@ -53,7 +55,7 @@ static const int ddLogLevel = DDLogLevelInfo;
 #define kCommonBorder_Color             [UIColor colorWithRGBHex:0xbbbbbb]
 #define kCommonLightBlue_Color          [UIColor colorWithRGBHex:0x268ddd]
 
-#define kCommonGolden_Color             [UIColor colorWithRGBHex:0xfda00d]
+#define kCommonGolden_Color             [UIColor colorWithRGBHex:0xFF9C00]
 
 
 #define kAppBg_Color                    [UIColor whiteColor]

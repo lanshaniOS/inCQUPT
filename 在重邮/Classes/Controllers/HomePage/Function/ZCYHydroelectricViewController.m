@@ -291,9 +291,11 @@
 {
     if (component == 0)
     {
-        return self.view.frame.size.width/1.6;
+        return self.view.frame.size.width/1.39;
+    } else if (component == 1) {
+        return self.view.frame.size.width/9.1;
     } else {
-        return self.view.frame.size.width/10;
+        return self.view.frame.size.width/8.1;
     }
 }
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component

@@ -39,14 +39,30 @@
     // If an error is encountered, use NCUpdateResultFailed
     // If there's no update required, use NCUpdateResultNoData
     // If there's an update, use NCUpdateResultNewData
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setImage:[UIImage imageNamed:@"3D_课表"] forState:UIControlStateNormal];
-    [self.view addSubview:button];
-    [self.view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).with.offset(20);
-        make.size.mas_equalTo(CGSizeMake(40, 40));
-        make.centerY.equalTo(self.view);
-    }];
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [button setImage:[UIImage imageNamed:@"3D_课表"] forState:UIControlStateNormal];
+//    button.frame = CGRectMake(20, self.view.frame.size.height/2-20, 30, 30);
+//    [self.view addSubview:button];
+//    
+//    UIButton *cardButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [cardButton setImage:[UIImage imageNamed:@"3D_一卡通"] forState:UIControlStateNormal];
+//    cardButton.frame = CGRectMake((self.view.frame.size.width-160)/4+20, self.view.frame.size.height/2-20, 30, 30);
+//    [self.view addSubview:cardButton];
+//    
+//    
+//    UIButton *studentButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [studentButton setImage:[UIImage imageNamed:@"3D_学生查询"] forState:UIControlStateNormal];
+//    studentButton.frame = CGRectMake((self.view.frame.size.width-160)/2+20, self.view.frame.size.height/2-20, 30, 30);
+//
+//    [self.view addSubview:studentButton];
+//   
+//
+//    UIButton *examButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [examButton setImage:[UIImage imageNamed:@"3D_考试"] forState:UIControlStateNormal];
+//    examButton.frame = CGRectMake((self.view.frame.size.width-160)+20, self.view.frame.size.height/2-20, 30, 30);
+//
+//    [self.view addSubview:examButton];
+
     completionHandler(NCUpdateResultNewData);
 }
 

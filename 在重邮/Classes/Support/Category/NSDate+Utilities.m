@@ -39,7 +39,17 @@ static const unsigned componentFlags = (NSCalendarUnitYear| NSCalendarUnitMonth 
     
     NSDateFormatter *date = [[NSDateFormatter alloc] init];
     [date setDateFormat:@"yyyy-MM-dd"];
-    NSDate *oneWeek = [date dateFromString:@"2016-09-04"];
+    NSDate *oneWeek;
+//    NSString *dateString = [date stringFromDate:[NSDate date]];
+    NSTimeInterval timeInterval = [[NSDate date] timeIntervalSince1970];
+//    NSTimeInterval oldInterval = [[date dateFromString:@"2016-09-04"] timeIntervalSince1970];
+    NSTimeInterval newInterval = [[date dateFromString:@"2017-02-27"] timeIntervalSince1970];
+    if (timeInterval < newInterval)
+    {
+        oneWeek = [date dateFromString:@"2016-09-04"];
+    } else if (timeInterval >= newInterval) {
+        oneWeek = [date dateFromString:@"2017-02-27"];
+    }
     
     NSTimeInterval oneWeekTime = [oneWeek timeIntervalSince1970];
     NSTimeInterval todayTime = [today timeIntervalSince1970];

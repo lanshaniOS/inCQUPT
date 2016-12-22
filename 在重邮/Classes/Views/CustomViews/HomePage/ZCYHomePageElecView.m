@@ -55,7 +55,7 @@
     }];
     
     self.elecLabel = [[UILabel alloc] init];
-    [self.elecLabel setFont:kFont(kStandardPx(150)) andText:self.elecString andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    [self.elecLabel setFont:kFont(kStandardPx(40)) andText:self.elecString andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
     
     [self addSubview:self.elecLabel];
     [self.elecLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -80,9 +80,9 @@
         self.bindButton.titleLabel.font = kFont(kStandardPx(40));
         [self addSubview:self.bindButton];
         [self.bindButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.bindLabel.mas_right);
-            make.centerY.equalTo(self);
-            make.width.mas_equalTo(40);
+            make.centerX.equalTo(self.bindLabel);
+            make.top.equalTo(self.bindLabel.mas_bottom).with.offset(2);
+            make.width.mas_equalTo(80);
         }];
         
     } else {
@@ -115,19 +115,24 @@
 
 - (void)updateViewWithElecString:(NSString *)elecString
 {
+    self.elecString = elecString;
+    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:self.elecString];
     if ([self.elecString isEqualToString:@"00"])
     {
         self.elecLabel.hidden = YES;
         self.bindButton.hidden = NO;
         self.bindLabel.hidden = NO;
+    } else if ([self.elecString isEqualToString:@"数据加载似乎出现了问题"]) {
+        self.elecLabel.hidden = NO;
+        self.bindButton.hidden = YES;
+        self.bindLabel.hidden = YES;
     } else {
         self.elecLabel.hidden = NO;
         self.bindButton.hidden = YES;
         self.bindLabel.hidden = YES;
+
+        [attributeString addAttribute:NSFontAttributeName value:kFont(kStandardPx(120)) range:NSMakeRange(0, self.elecString.length-1)];
     }
-    self.elecString = elecString;
-    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:self.elecString];
-    [attributeString addAttribute:NSFontAttributeName value:kFont(kStandardPx(36)) range:NSMakeRange(self.elecString.length-1, 1)];
     
     self.elecLabel.attributedText = attributeString;
 }

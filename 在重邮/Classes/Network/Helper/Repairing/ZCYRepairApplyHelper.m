@@ -14,7 +14,7 @@
 
 +(void)CommitRepairApplyWithData:(NSDictionary *)data andCompeletionBlock:(void (^)(NSError *, NSString *))compeletionBlock
 {
-    [[ZCYNetworkHelperMgr sharedMgr]postRequestWithData:data andCompletionBlock:^(NSError *error, id response, NSURLSessionDataTask *task) {
+    [[ZCYNetworkHelperMgr sharedMgr] requestWithData:data andCompletionBlock:^(NSError *error, id response, NSURLSessionDataTask *task) {
         NSString *message = response[@"message"];
         compeletionBlock(error,message);
     } andURLPath:@"/api/bx/bx.php"];

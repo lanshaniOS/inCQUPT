@@ -11,6 +11,9 @@
 #import "ZCYLoginViewController.h"
 #import "ZCYNavigationController.h"
 #import "ZCYCourseViewController.h"
+#import "ZCYCardDetailViewController.h"
+#import "ZCYExaminationViewController.h"
+#import "ZCYStudentSearchViewController.h"
 #import "ZCYUserInfoHelper.h"
 
 @interface ZCYAppDelegate ()
@@ -35,10 +38,10 @@
     UIApplicationShortcutItem *courseItem1 = [[UIApplicationShortcutItem alloc] initWithType:@"courseItem1" localizedTitle:@"课表查询" localizedSubtitle:nil icon:courseIcon1 userInfo:nil];
     UIApplicationShortcutIcon *courseIcon2 = [UIApplicationShortcutIcon iconWithTemplateImageName:@"3D_考试"];
     UIApplicationShortcutItem *courseItem2 = [[UIApplicationShortcutItem alloc] initWithType:@"courseItem2" localizedTitle:@"考试查询" localizedSubtitle:nil icon:courseIcon2 userInfo:nil];
-    UIApplicationShortcutIcon *courseIcon3 = [UIApplicationShortcutIcon iconWithTemplateImageName:@"3D_学生查询"];
-    UIApplicationShortcutItem *courseItem3 = [[UIApplicationShortcutItem alloc] initWithType:@"courseItem3" localizedTitle:@"学生查询" localizedSubtitle:nil icon:courseIcon3 userInfo:nil];
-    UIApplicationShortcutIcon *courseIcon4 = [UIApplicationShortcutIcon iconWithTemplateImageName:@"3D_教室"];
-    UIApplicationShortcutItem *courseItem4 = [[UIApplicationShortcutItem alloc] initWithType:@"courseItem4" localizedTitle:@"空教室查询" localizedSubtitle:nil icon:courseIcon4 userInfo:nil];
+    UIApplicationShortcutIcon *courseIcon3 = [UIApplicationShortcutIcon iconWithTemplateImageName:@"3D_一卡通"];
+    UIApplicationShortcutItem *courseItem3 = [[UIApplicationShortcutItem alloc] initWithType:@"courseItem3" localizedTitle:@"一卡通查询" localizedSubtitle:nil icon:courseIcon3 userInfo:nil];
+    UIApplicationShortcutIcon *courseIcon4 = [UIApplicationShortcutIcon iconWithTemplateImageName:@"3D_学生查询"];
+    UIApplicationShortcutItem *courseItem4 = [[UIApplicationShortcutItem alloc] initWithType:@"courseItem4" localizedTitle:@"学生查询" localizedSubtitle:nil icon:courseIcon4 userInfo:nil];
     
     application.shortcutItems = @[courseItem1, courseItem2, courseItem3, courseItem4];
     NSData *userMgr = [[NSUserDefaults standardUserDefaults] objectForKey:@"USERMGR"];
@@ -59,11 +62,20 @@
 
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler
 {
+    ZCYNavigationController *navigationC = self.tabBarC.viewControllers[0];
     if ([shortcutItem.type isEqualToString:@"courseItem1"])
     {
-        ZCYNavigationController *navigationC = self.tabBarC.viewControllers[0];
         ZCYCourseViewController *courseVC = [[ZCYCourseViewController alloc] init];
         [navigationC pushViewController:courseVC animated:NO];
+    } else if ([shortcutItem.type isEqualToString:@"courseItem2"]) {
+        ZCYExaminationViewController *examVC = [[ZCYExaminationViewController alloc] init];
+        [navigationC pushViewController:examVC animated:NO];
+    } else if ([shortcutItem.type isEqualToString:@"courseItem3"]) {
+        ZCYCardDetailViewController *cardVC = [[ZCYCardDetailViewController alloc] init];
+        [navigationC pushViewController:cardVC animated:NO];
+    } else if ([shortcutItem.type isEqualToString:@"courseItem4"]) {
+        ZCYStudentSearchViewController *searchVC = [[ZCYStudentSearchViewController alloc] init];
+        [navigationC pushViewController:searchVC animated:NO];
     }
 }
 

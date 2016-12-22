@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class ZCYAlertView;
 @protocol ZCYAlertViewDelegate <NSObject>
 
 @required
-- (void)alertViewDidClickAtIndex:(NSInteger)index;
+- (void)alertView:(ZCYAlertView *)alertView didClickAtIndex:(NSInteger)index;
 
 @optional
 - (void)cancelButtonDidClick;

@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^reportErrorDidClick)();
 @interface ZCYCardDetailView : UIView
 
 - (instancetype)initWithCardArray:(NSArray *)cardArray;
 
 - (void)updateCardDetailViewWithCardArray:(NSArray *)cardArray;
 
+@property (strong, nonatomic) reportErrorDidClick clickBlock;  /**< 报告错误按钮  */
 @end

@@ -38,12 +38,13 @@
 - (void)setup
 {
     UILabel *nameLabel = [[UILabel alloc] init];
-    [nameLabel setFont:kFont(kStandardPx(40)) andText:self.bookName andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    [nameLabel setFont:kFont(15.5) andText:self.bookName andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+//    nameLabel.adjustsFontSizeToFitWidth = YES;
     [self addSubview:nameLabel];
     [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self).with.offset(15);
         make.top.equalTo(self).with.offset(21);
-        make.width.mas_equalTo(self.frame.size.width - 60);
+        make.width.mas_equalTo(_viewWidth - 129);
     }];
     
     UIImageView *lendImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_lending"]];
@@ -119,7 +120,7 @@
     }];
    
     UIView *grayLine = [[UIView alloc] init];
-    grayLine.backgroundColor = kDeepGray_Color;
+    grayLine.backgroundColor = kCommonGray_Color;
     [self addSubview:grayLine];
     [grayLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.and.left.and.right.equalTo(self);

@@ -35,6 +35,7 @@
 @property (strong, nonatomic) UIView *cardView;  /**< 一卡通视图 */
 @property (strong, nonatomic) UILabel *timeLabel;  /**< 时间标签 */
 @property (strong, nonatomic) UILabel *summaryLabel;  /**< 课程数标签 */
+@property (strong, nonatomic) UILabel *cardLabel;  /**< 余额 */
 @property (strong, nonatomic) ZCYHomePageElecView *electricView;  /**< 水电视图 */
 @end
 
@@ -59,6 +60,7 @@
         [ZCYDormitoryHelper getElectricDetailWithBuilding:[ZCYUserMgr sharedMgr].dormitoryArray[0] andFloor:[[ZCYUserMgr sharedMgr].dormitoryArray[2] integerValue] andRoom:[[ZCYUserMgr sharedMgr].dormitoryArray[3] integerValue] withCompeletionBlock:^(NSError *error, NSDictionary *resultDic) {
             if (error)
             {
+                [self.electricView updateViewWithElecString:@"数据加载似乎出现了问题"];
                 return;
             }
             [ZCYUserMgr sharedMgr].dormitoryDic = resultDic;
@@ -66,6 +68,23 @@
         }];
          
     }
+    [ZCYCardHelper getCardDetailWithCardID:[[NSUserDefaults standardUserDefaults] objectForKey:@"private_userNumber"] withCompletionBlock:^(NSError *error, NSArray *array) {
+
+        if (error)
+        {
+            self.cardLabel.text = @"数据加载途中出现了问题哦";
+            return;
+        }
+        if (array || array.count!=0)
+        {
+            NSString *balanceString = [NSString stringWithFormat:@"%@元", array[0][@"balance"]];
+            NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:balanceString];
+            [attributeString addAttribute:NSFontAttributeName value:kFont(kStandardPx(120)) range:NSMakeRange(0, balanceString.length-1)];
+            self.cardLabel.attributedText = attributeString;
+        } else {
+            self.cardLabel.text = @"数据加载途中似乎出现了问题哦";
+        }
+    }];
 //    self.navigationController.navigationBar.alpha = (self.backgroundScrollView.contentOffset.y)/355 * 2.0;
 //    
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
@@ -109,7 +128,7 @@
     self.backgroundScrollView.delegate = self;
     self.backgroundScrollView.scrollEnabled = YES;
     self.backgroundScrollView.showsVerticalScrollIndicator = NO;
-    self.backgroundScrollView.contentSize = CGSizeMake(self.view.frame.size.width, 1220*self.view.frame.size.height/667);
+    self.backgroundScrollView.contentSize = CGSizeMake(self.view.frame.size.width, 675+self.view.frame.size.height*467/667);
     self.backgroundScrollView.contentOffset = CGPointMake(0, 0);
     [self.view addSubview:self.backgroundScrollView];
     [self.backgroundScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -127,7 +146,7 @@
     [self.backgroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.right.equalTo(self.view);
         make.top.equalTo(self.backgroundScrollView);
-        make.height.mas_equalTo(self.view.frame.size.width * 255/375);
+        make.height.mas_equalTo(self.view.frame.size.height * 255/667);
     }];
     
     UILabel *topicLabel = [[UILabel alloc] init];
@@ -164,7 +183,7 @@
     }];
     
     self.summaryLabel = [[UILabel alloc] init];
-    __block NSUInteger courseNum = 0;
+    __block NSInteger courseNum = 0;
     NSArray *todayCourseArray = [NSArray array];
     
     if (!([ZCYUserMgr sharedMgr].courseArray == nil || [ZCYUserMgr sharedMgr].courseArray.count == 0))
@@ -186,15 +205,22 @@
                 {
                     if ([courseWeeks[i] integerValue] == [NSDate date].schoolWeek)
                     {
-                         courseNum = courseNum + 2;
+                         courseNum = courseNum + [model.courseNumber integerValue];
                     }
                 }
             }];
         }];
     }
-    
-    NSArray *tipArray = @[@"今天有00节课，放松一下吧", @"今天有02节课哦，爽到爆炸", @"今天有04节课，好好加油吧～", @"今天有06节课哦～，多撑一会吧", @"今天有08节课，容我缓一缓～", @"今天有10节课...生无可恋", @"今天有12节课...生无可恋"];
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:tipArray[courseNum/2]];
+    NSString *tipString;
+    if (courseNum>=0 && courseNum<4)
+    {
+        tipString = [NSString stringWithFormat:@"今天有%02ld节课，放松一下吧", (long)courseNum];
+    } else if (courseNum >=4 && courseNum < 8) {
+        tipString = [NSString stringWithFormat:@"今天有%02ld节课哦～，多撑一会吧", (long)courseNum];
+    } else if (courseNum >=8 && courseNum <= 12) {
+        tipString = [NSString stringWithFormat:@"今天有%02ld节课...生无可恋", (long)courseNum];
+    }
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:tipString];
     [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Futura" size:kStandardPx(64)] range:NSMakeRange(3, 2)];
     
     [self setLabel:self.summaryLabel withText:@"" andTextColor:kCommonWhite_Color andTextFont:kFont(kStandardPx(36))];
@@ -247,7 +273,7 @@
     topicView.font = [UIFont systemFontOfSize:20 weight:2];
     [self.backgroundScrollView addSubview:topicView];
     [topicView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.backgroundScrollView).with.offset(165+self.view.frame.size.width * 255/375);
+        make.top.equalTo(self.backgroundScrollView).with.offset(165+self.view.frame.size.height * 255/667);
         make.height.mas_equalTo(25);
         make.width.mas_equalTo(90);
         make.left.equalTo(self.view).with.offset(20);
@@ -292,8 +318,8 @@
         make.left.and.right.equalTo(self.view);
     }];
     
-    NSArray <UIColor *> *commonArray = @[kCommonGreen_Color, kCommonYellow_Color, kCommonPink_Color];
-    NSArray <UIColor *> *deepArray = @[kDeepGreen_Color, kDeepYellow_Color, kDeepPink_Color];
+    NSArray <UIColor *> *commonArray = @[kCommonGreen_Color, kCommonOrigin_Color, kCommonPink_Color];
+    NSArray <UIColor *> *deepArray = @[kDeepGreen_Color, kDeepOrigin_Color, kDeepPink_Color];
     __block NSInteger index = 0;
     if (!([ZCYUserMgr sharedMgr].courseArray == nil || [ZCYUserMgr sharedMgr].courseArray.count == 0))
     {
@@ -372,15 +398,22 @@
     }];
     
     UILabel *cardLabel = [[UILabel alloc] init];
-    cardLabel.text = @"一卡通";
+    cardLabel.text = @"一卡通余额";
     cardLabel.font = [UIFont systemFontOfSize:20 weight:2];
     cardLabel.textColor = kCommonText_Color;
     [self.cardView addSubview:cardLabel];
     [cardLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.cardView).with.offset(14);
         make.height.mas_equalTo(25);
-        make.width.mas_equalTo(90);
+        make.width.mas_equalTo(110);
         make.left.equalTo(self.view).with.offset(20);
+    }];
+    
+    self.cardLabel = [[UILabel alloc] init];
+    [self.cardLabel setFont:kFont(kStandardPx(40)) andText:@"数据加载中" andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    [self.cardView addSubview:self.cardLabel];
+    [self.cardLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.and.centerY.equalTo(self.cardView);
     }];
     
     UIButton *detailButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -391,33 +424,41 @@
     [detailButton addTarget:self action:@selector(pushToCardDetailVC) forControlEvents:UIControlEventTouchUpInside];
     [self.backgroundScrollView addSubview:detailButton];
     [detailButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.mas_right).with.offset(-90);
+        make.left.equalTo(self.view.mas_right).with.offset(-110);
         make.bottom.equalTo(cardLabel);
         make.height.mas_equalTo(20);
-        make.width.mas_equalTo(70);
-    }];
-
-    UIView *greenRound = [[UIView alloc] init];
-    greenRound.backgroundColor = kDeepGreen_Color;
-    greenRound.layer.masksToBounds = YES;
-    greenRound.layer.cornerRadius = 5;
-    [self.backgroundScrollView addSubview:greenRound];
-    [greenRound mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.cardView.mas_top).with.offset(185);
-        make.left.equalTo(self.view).with.offset(self.view.frame.size.width/2 - 80);
-        make.size.mas_equalTo(CGSizeMake(10, 10));
+        make.width.mas_equalTo(90);
     }];
     
-    UILabel *campusLabel = [[UILabel alloc] init];
-    campusLabel.text = @"校园";
-    campusLabel.textColor = kCommonText_Color;
-    campusLabel.font = kFont(14);
-    [self.backgroundScrollView addSubview:campusLabel];
-    [campusLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(greenRound.mas_right).with.offset(10);
-        make.centerY.equalTo(greenRound);
-        make.width.mas_equalTo(40);
+    UILabel *tipLabel = [[UILabel alloc] init];
+    [tipLabel setFont:kFont(kStandardPx(26)) andText:@"截止昨日00:00" andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
+    [self.cardView addSubview:tipLabel];
+    [tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.cardView).with.offset(-10);
+        make.bottom.equalTo(self.cardView).with.offset(-5);
     }];
+//
+//    UIView *greenRound = [[UIView alloc] init];
+//    greenRound.backgroundColor = kDeepGreen_Color;
+//    greenRound.layer.masksToBounds = YES;
+//    greenRound.layer.cornerRadius = 5;
+//    [self.backgroundScrollView addSubview:greenRound];
+//    [greenRound mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.cardView.mas_top).with.offset(185);
+//        make.left.equalTo(self.view).with.offset(self.view.frame.size.width/2 - 80);
+//        make.size.mas_equalTo(CGSizeMake(10, 10));
+//    }];
+//    
+//    UILabel *campusLabel = [[UILabel alloc] init];
+//    campusLabel.text = @"校园";
+//    campusLabel.textColor = kCommonText_Color;
+//    campusLabel.font = kFont(14);
+//    [self.backgroundScrollView addSubview:campusLabel];
+//    [campusLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(greenRound.mas_right).with.offset(10);
+//        make.centerY.equalTo(greenRound);
+//        make.width.mas_equalTo(40);
+//    }];
     
     UIView *grayLine = [[UIView alloc] init];
     grayLine.backgroundColor = [UIColor colorWithRGBHex:0xd8d8d8];
@@ -429,39 +470,38 @@
         make.height.mas_equalTo(0.5);
     }];
     
-    UIView *verticalLine = [[UIView alloc] init];
-    verticalLine.backgroundColor = [UIColor colorWithRGBHex:0xd8d8d8];
-    
-    [self.backgroundScrollView addSubview:verticalLine];
-    [verticalLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(grayLine.mas_bottom);
-        make.centerX.equalTo(self.view);
-        make.width.mas_equalTo(0.5);
-        make.height.mas_equalTo(80);
-    }];
-
-    UIView *secGrayLine = [[UIView alloc] init];
-    secGrayLine.backgroundColor = [UIColor colorWithRGBHex:0xd8d8d8];
-    
-    [self.backgroundScrollView addSubview:secGrayLine];
-    [secGrayLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.right.equalTo(self.view);
-        make.top.equalTo(verticalLine.mas_bottom);
-        make.height.mas_equalTo(0.5);
-    }];
+//    UIView *verticalLine = [[UIView alloc] init];
+//    verticalLine.backgroundColor = [UIColor colorWithRGBHex:0xd8d8d8];
+//    
+//    [self.backgroundScrollView addSubview:verticalLine];
+//    [verticalLine mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(grayLine.mas_bottom);
+//        make.centerX.equalTo(self.view);
+//        make.width.mas_equalTo(0.5);
+//        make.height.mas_equalTo(80);
+//    }];
+//
+//    UIView *secGrayLine = [[UIView alloc] init];
+//    secGrayLine.backgroundColor = [UIColor colorWithRGBHex:0xd8d8d8];
+//    
+//    [self.backgroundScrollView addSubview:secGrayLine];
+//    [secGrayLine mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.and.right.equalTo(self.view);
+//        make.top.equalTo(verticalLine.mas_bottom);
+//        make.height.mas_equalTo(0.5);
+//    }];
     
    
     if ([ZCYUserMgr sharedMgr].dormitoryArray)
     {
-        self.electricView = [[ZCYHomePageElecView alloc] initWithElecString:@"数据记载中..."];
+        self.electricView = [[ZCYHomePageElecView alloc] initWithElecString:@"数据加载中..."];
     } else {
         self.electricView = [[ZCYHomePageElecView alloc] initWithElecString:@"00"];
-        
     }
     [self.backgroundScrollView addSubview:self.electricView];
     [self.electricView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.right.equalTo(self.view);
-        make.top.equalTo(secGrayLine.mas_bottom);
+        make.top.equalTo(grayLine.mas_bottom);
         make.height.mas_equalTo(215);
     }];
 
@@ -500,14 +540,14 @@
                 [self.backgroundImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.left.and.right.equalTo(self.view);
                     make.top.equalTo(self.view);
-                    make.height.mas_equalTo(self.view.frame.size.width * 255/375);
+                    make.height.mas_equalTo(self.view.frame.size.height * 255/667);
                 }];
             } else {
                 
                 [self.backgroundImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.left.and.right.equalTo(self.view);
                     make.top.equalTo(self.backgroundScrollView);
-                    make.height.mas_equalTo(self.view.frame.size.width * 255/375);
+                    make.height.mas_equalTo(self.view.frame.size.height * 255/667);
                 }];
                 
             }
@@ -517,7 +557,7 @@
             [self.backgroundImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
                 make.left.and.right.equalTo(self.view);
                 make.top.equalTo(self.backgroundScrollView);
-                make.height.mas_equalTo(self.view.frame.size.width * 255/375);
+                make.height.mas_equalTo(self.view.frame.size.height * 255/667);
             }];
            
         }
@@ -540,7 +580,7 @@
         courseNum = courseNum + 2;
     }];
 
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"今天只有 %02ld 节课，爽到爆炸", courseNum]];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"今天只有 %02ld 节课，爽到爆炸", (unsigned long)courseNum]];
     [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Futura" size:kStandardPx(64)] range:NSMakeRange(5, 2)];
     
     self.summaryLabel.attributedText = attributedString;
