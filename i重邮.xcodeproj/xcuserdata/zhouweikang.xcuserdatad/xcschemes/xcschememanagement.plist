@@ -9,8 +9,15 @@
 			<key>orderHint</key>
 			<integer>13</integer>
 		</dict>
+		<key>i重邮.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>14</integer>
+		</dict>
 		<key>在重邮.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
