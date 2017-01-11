@@ -156,7 +156,7 @@
 		492C93301DF82D6A0071DB63 /* ZCYDormitoryHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYDormitoryHelper.m; sourceTree = "<group>"; };
 		492E231A1DD8B0530083F135 /* UIView+Radius.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Radius.h"; sourceTree = "<group>"; };
 		492E231B1DD8B0530083F135 /* UIView+Radius.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Radius.m"; sourceTree = "<group>"; };
-		493744141DB1C1F700E49E4E /* 在重邮.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "在重邮.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		493744141DB1C1F700E49E4E /* i重邮.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "i重邮.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		493AC1B01E06B67C00D1391D /* ZCYFeedBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYFeedBackViewController.h; sourceTree = "<group>"; };
 		493AC1B11E06B67C00D1391D /* ZCYFeedBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYFeedBackViewController.m; sourceTree = "<group>"; };
 		49403FD41DF58DA400AF47D0 /* ZCYUserDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYUserDetailViewController.h; sourceTree = "<group>"; };
@@ -423,7 +423,7 @@
 		493744151DB1C1F700E49E4E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				493744141DB1C1F700E49E4E /* 在重邮.app */,
+				493744141DB1C1F700E49E4E /* i重邮.app */,
 				49ECE7241DE5D68700163D5C /* Today.appex */,
 			);
 			name = Products;
@@ -1050,7 +1050,7 @@
 			);
 			name = "i重邮";
 			productName = "微重邮";
-			productReference = 493744141DB1C1F700E49E4E /* 在重邮.app */;
+			productReference = 493744141DB1C1F700E49E4E /* i重邮.app */;
 			productType = "com.apple.product-type.application";
 		};
 		49ECE7231DE5D68700163D5C /* Today */ = {
@@ -1346,7 +1346,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1391,7 +1391,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -1412,7 +1412,7 @@
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/在重邮/Classes/Support/ZCYPrefix.pch";
 				INFOPLIST_FILE = "在重邮/SupportingFiles/ZCYInfo.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1447,7 +1447,7 @@
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/在重邮/Classes/Support/ZCYPrefix.pch";
 				INFOPLIST_FILE = "在重邮/SupportingFiles/ZCYInfo.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1478,7 +1478,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 6F2P7ZWTTE;
 				INFOPLIST_FILE = Today/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1511,7 +1511,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 6F2P7ZWTTE;
 				INFOPLIST_FILE = Today/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
