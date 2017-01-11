@@ -57,13 +57,20 @@ static const NSString *WXURL = @"http://wx.cqupt.edu.cn";
                                                                                }progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        if (completionBlock)
+
+        if ([responseObject[@"status"] integerValue] == 200)
         {
-            completionBlock(nil, responseObject, task);
+            if (completionBlock)
+            {
+                completionBlock(nil, responseObject, task);
+            }
+        } else {
+            if (completionBlock)
+            {
+                completionBlock(nil, nil, task);
+            }
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
         
         if (completionBlock)
         {

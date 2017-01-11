@@ -37,6 +37,7 @@
 		496EF5991DC78DD80028B5BA /* ZCYCardDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 496EF5981DC78DD80028B5BA /* ZCYCardDetailViewController.m */; };
 		496EF59C1DC78F4F0028B5BA /* ZCYCardHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 496EF59B1DC78F4F0028B5BA /* ZCYCardHelper.m */; };
 		496F14DC1DD0B6B3000FA790 /* ZCYUserValidateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 496F14DB1DD0B6B3000FA790 /* ZCYUserValidateHelper.m */; };
+		4970EDF91E25E66700F13A83 /* UIButton+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 4970EDF81E25E66700F13A83 /* UIButton+Common.m */; };
 		498D310F1DE4659B00C30828 /* ZCYMoreFunctionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 498D310E1DE4659B00C30828 /* ZCYMoreFunctionViewController.m */; };
 		499232CB1DC487AA00B17B54 /* ZCYProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 499232CA1DC487AA00B17B54 /* ZCYProgressHUD.m */; };
 		499232DA1DC4A28C00B17B54 /* ZCYCourseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 499232D91DC4A28C00B17B54 /* ZCYCourseView.m */; };
@@ -206,6 +207,8 @@
 		496EF59B1DC78F4F0028B5BA /* ZCYCardHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYCardHelper.m; sourceTree = "<group>"; };
 		496F14DA1DD0B6B3000FA790 /* ZCYUserValidateHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYUserValidateHelper.h; sourceTree = "<group>"; };
 		496F14DB1DD0B6B3000FA790 /* ZCYUserValidateHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYUserValidateHelper.m; sourceTree = "<group>"; };
+		4970EDF71E25E66700F13A83 /* UIButton+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Common.h"; sourceTree = "<group>"; };
+		4970EDF81E25E66700F13A83 /* UIButton+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Common.m"; sourceTree = "<group>"; };
 		498D310D1DE4659B00C30828 /* ZCYMoreFunctionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYMoreFunctionViewController.h; sourceTree = "<group>"; };
 		498D310E1DE4659B00C30828 /* ZCYMoreFunctionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYMoreFunctionViewController.m; sourceTree = "<group>"; };
 		499232C91DC487AA00B17B54 /* ZCYProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYProgressHUD.h; sourceTree = "<group>"; };
@@ -581,6 +584,8 @@
 				49403FDB1DF5C40500AF47D0 /* UIImage+Additions.m */,
 				49108DAE1E00183900C71723 /* NSString+MD5.h */,
 				49108DAF1E00183900C71723 /* NSString+MD5.m */,
+				4970EDF71E25E66700F13A83 /* UIButton+Common.h */,
+				4970EDF81E25E66700F13A83 /* UIButton+Common.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1204,6 +1209,7 @@
 				49A810941DE9D23C00B0183C /* ZWKBarChart.m in Sources */,
 				49BB03E31DF99F1C003E39C0 /* ZCYRepairlistHelper.m in Sources */,
 				49BB03D11DF99EED003E39C0 /* ZCYPropertyRepairViewController.m in Sources */,
+				4970EDF91E25E66700F13A83 /* UIButton+Common.m in Sources */,
 				495DAC5F1E081626007A2DCD /* Base64Transcoder.m in Sources */,
 				496EF5991DC78DD80028B5BA /* ZCYCardDetailViewController.m in Sources */,
 				49A1D13C1DE86D7800C93F74 /* ZCYLendBookViewController.m in Sources */,

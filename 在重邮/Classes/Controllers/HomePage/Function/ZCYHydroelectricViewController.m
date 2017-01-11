@@ -50,7 +50,7 @@
     self.buildArray = @[@"1栋（知行苑1舍）",@"2栋（知行苑2舍）", @"3栋（知行苑3舍）", @"4栋（知行苑4舍）", @"5栋（知行苑5舍）", @"6栋（知行苑6舍）", @"8栋（宁静苑1舍）", @"9栋（宁静苑2舍）", @"10栋（宁静苑3舍）", @"11栋（宁静苑4舍）", @"12栋（宁静苑5舍）", @"15栋（知行苑7舍）", @"16栋（知行苑8舍）", @"17栋（兴业苑1舍）", @"18栋（兴业苑2舍）", @"19栋（兴业苑3舍）", @"20栋（兴业苑4舍）", @"21栋（兴业苑5舍）", @"22栋（兴业苑6舍）", @"23A栋（兴业苑7舍）", @"23B栋（兴业苑8舍）", @"24栋（明理苑1舍）", @"25栋（明理苑2舍）", @"26栋（明理苑3舍）", @"27栋（明理苑4舍）", @"28栋（明理苑5舍）", @"29栋（明理苑6舍）", @"30栋（明理苑7舍）", @"31栋（明理苑8舍）", @"32栋（宁静苑6舍）", @"33栋（宁静苑7舍）", @"34栋（宁静苑8舍）", @"35栋（宁静苑9舍）", @"36栋（四海苑1舍）", @"37栋（四海苑2舍）", @"39栋（四海苑9舍）"];
     self.buildNumArray =  @[@"1",@"2", @"3", @"4", @"5", @"6", @"8", @"9", @"10", @"11", @"12", @"15", @"16", @"17", @"18", @"19", @"20", @"21", @"22", @"23A", @"23B", @"24", @"25", @"26", @"27", @"28", @"29", @"30", @"31", @"32", @"33", @"34", @"35", @"36", @"37", @"39"];
     self.floorArray = @[@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10"];
-    self.roomArray = @[@"01", @"02", @"03", @"04", @"05", @"06", @"07", @"08", @"09", @"10", @"11", @"12", @"13", @"14", @"15", @"16", @"17", @"18", @"19", @"20", @"21", @"22", @"23", @"24"];
+    self.roomArray = @[@"01", @"02", @"03", @"04", @"05", @"06", @"07", @"08", @"09", @"10", @"11", @"12", @"13", @"14", @"15", @"16", @"17", @"18", @"19", @"20", @"21", @"22", @"23", @"24", @"25", @"26", @"27", @"28", @"29", @"30", @"31", @"32", @"33", @"34", @"35", @"36", @"37", @"38", @"39", @"40"];
     if ([ZCYUserMgr sharedMgr].dormitoryArray)
     {
         [[ZCYProgressHUD sharedHUD] rotateWithText:@"获取数据中..." inView:self.view];
@@ -99,6 +99,15 @@
         make.size.mas_equalTo(CGSizeMake(40, 30));
     }];
     
+    UIButton *cancelbutton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [cancelbutton setBackgroundColor:kTransparentColor andTitle:@"取消" WithTitleColor:kDeepGray_Color andTarget:self WithClickAction:@selector(cancelButtonDidClick)];
+    [self.pickerTopView addSubview:cancelbutton];
+    [cancelbutton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.pickerTopView).with.offset(10);
+        make.centerY.equalTo(finishButton);
+        make.size.equalTo(finishButton);
+    }];
+    
     self.bindPickerView = [[UIPickerView alloc] init];
     self.bindPickerView.delegate = self;
     self.bindPickerView.dataSource = self;
@@ -113,6 +122,7 @@
     self.backgroundControl = [[UIControl alloc] init];
     self.backgroundControl.backgroundColor = kCommonText_Color;
     self.backgroundControl.alpha = 0.6;
+    [self.backgroundControl addTarget:self action:@selector(cancelButtonDidClick) forControlEvents:UIControlEventTouchUpInside];
     [[UIApplication sharedApplication].keyWindow addSubview:self.backgroundControl];
     [self.backgroundControl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.right.and.top.equalTo([UIApplication sharedApplication].keyWindow);
@@ -342,6 +352,16 @@
     }];
 }
 
+- (void)cancelButtonDidClick
+{
+    [UIView animateWithDuration:0.2f animations:^{
+        [self.pickerTopView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view.mas_bottom).with.offset(0);
+        }];
+        [self.pickerTopView.superview layoutIfNeeded];
+        self.backgroundControl.hidden = YES;
+    }];
+}
 - (void)updateDetailView
 {
     self.dormitoryLabel.text = [NSString stringWithFormat:@"%@栋%@%@寝室", [ZCYUserMgr sharedMgr].dormitoryArray[0],  [ZCYUserMgr sharedMgr].dormitoryArray[2],  [ZCYUserMgr sharedMgr].dormitoryArray[3]];
