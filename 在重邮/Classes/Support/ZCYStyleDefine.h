@@ -16,7 +16,7 @@ static const int ddLogLevel = DDLogLevelVerbose;
 #else
 static const int ddLogLevel = DDLogLevelInfo;
 #endif
-
+#define kDeviceVersion [[UIDevice currentDevice] systemVersion]
 #define kProportionWidthFactor  (kScreenWidth / kStanderWidth)   //设备屏幕宽度与基准屏幕宽度比例
 #define kProportionHeightFactor (kScreenHeight / kStanderHeight) //设备屏幕宽度与基准屏幕宽度比例
 

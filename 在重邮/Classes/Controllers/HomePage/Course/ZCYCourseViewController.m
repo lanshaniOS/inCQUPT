@@ -346,11 +346,20 @@ static const float animationTime = 0.2f;
         self.weekPicker.delegate = self;
         self.weekPicker.backgroundColor = kCommonLightGray_Color;
         [self.view addSubview:self.weekPicker];
-        [self.weekPicker mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.and.right.equalTo(self.bottomView);
-            make.top.equalTo(self.bottomView.mas_bottom).with.offset(-kStandardPx(18)/2);
-            make.height.mas_equalTo(215);
-        }];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0)
+        {
+            [self.weekPicker mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.and.right.equalTo(self.bottomView);
+                make.top.equalTo(self.bottomView.mas_bottom).with.offset(-kStandardPx(18)/2);
+                make.height.mas_equalTo(215);
+            }];
+        } else {
+            [self.weekPicker mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.and.right.equalTo(self.bottomView);
+                make.top.equalTo(self.bottomView.mas_bottom).with.offset(-kStandardPx(18)/2-20);
+                make.height.mas_equalTo(215+40);
+            }];
+        }
     }
 }
 

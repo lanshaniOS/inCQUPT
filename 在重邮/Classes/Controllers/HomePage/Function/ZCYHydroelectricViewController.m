@@ -113,11 +113,21 @@
     self.bindPickerView.dataSource = self;
     self.bindPickerView.backgroundColor = kCommonLightGray_Color;
     [self.view addSubview:self.bindPickerView];
-    [self.bindPickerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.right.equalTo(self.view);
-        make.top.equalTo(self.pickerTopView.mas_bottom);
-        make.height.mas_equalTo(215);
-    }];
+    if ([kDeviceVersion floatValue] >= 9.0)
+    {
+        [self.bindPickerView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.and.right.equalTo(self.view);
+            make.top.equalTo(self.pickerTopView.mas_bottom);
+            make.height.mas_equalTo(215);
+        }];
+    } else {
+        [self.bindPickerView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.and.right.equalTo(self.view);
+            make.top.equalTo(self.pickerTopView.mas_bottom).with.offset(-20);
+            make.height.mas_equalTo(215+40);
+        }];
+    }
+    
     
     self.backgroundControl = [[UIControl alloc] init];
     self.backgroundControl.backgroundColor = kCommonText_Color;

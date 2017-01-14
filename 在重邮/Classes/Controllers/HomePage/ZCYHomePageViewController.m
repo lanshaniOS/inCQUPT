@@ -64,7 +64,7 @@
                 return;
             }
             [ZCYUserMgr sharedMgr].dormitoryDic = resultDic;
-            [self.electricView updateViewWithElecString:[NSString stringWithFormat:@"%@元",resultDic[@"elec_cost"]]];
+            [self.electricView updateViewWithElecString:[NSString stringWithFormat:@"%@元",@([resultDic[@"elec_cost"] floatValue])]];
         }];
          
     }
@@ -77,7 +77,7 @@
         }
         if (array || array.count!=0)
         {
-            NSString *balanceString = [NSString stringWithFormat:@"%@元", array[0][@"balance"]];
+            NSString *balanceString = [NSString stringWithFormat:@"%@元", @([array[0][@"balance"] floatValue])];
             NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:balanceString];
             [attributeString addAttribute:NSFontAttributeName value:kFont(kStandardPx(120)) range:NSMakeRange(0, balanceString.length-1)];
             self.cardLabel.attributedText = attributeString;
@@ -431,34 +431,13 @@
     }];
     
     UILabel *tipLabel = [[UILabel alloc] init];
-    [tipLabel setFont:kFont(kStandardPx(26)) andText:@"截止昨日00:00" andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
+    [tipLabel setFont:kFont(kStandardPx(26)) andText:@"截止今日00:00" andTextColor:kDeepGray_Color andBackgroundColor:kTransparentColor];
     [self.cardView addSubview:tipLabel];
     [tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.cardView).with.offset(-10);
         make.bottom.equalTo(self.cardView).with.offset(-5);
     }];
-//
-//    UIView *greenRound = [[UIView alloc] init];
-//    greenRound.backgroundColor = kDeepGreen_Color;
-//    greenRound.layer.masksToBounds = YES;
-//    greenRound.layer.cornerRadius = 5;
-//    [self.backgroundScrollView addSubview:greenRound];
-//    [greenRound mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.cardView.mas_top).with.offset(185);
-//        make.left.equalTo(self.view).with.offset(self.view.frame.size.width/2 - 80);
-//        make.size.mas_equalTo(CGSizeMake(10, 10));
-//    }];
-//    
-//    UILabel *campusLabel = [[UILabel alloc] init];
-//    campusLabel.text = @"校园";
-//    campusLabel.textColor = kCommonText_Color;
-//    campusLabel.font = kFont(14);
-//    [self.backgroundScrollView addSubview:campusLabel];
-//    [campusLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(greenRound.mas_right).with.offset(10);
-//        make.centerY.equalTo(greenRound);
-//        make.width.mas_equalTo(40);
-//    }];
+
     
     UIView *grayLine = [[UIView alloc] init];
     grayLine.backgroundColor = [UIColor colorWithRGBHex:0xd8d8d8];
@@ -469,28 +448,6 @@
         make.top.equalTo(self.cardView.mas_bottom);
         make.height.mas_equalTo(0.5);
     }];
-    
-//    UIView *verticalLine = [[UIView alloc] init];
-//    verticalLine.backgroundColor = [UIColor colorWithRGBHex:0xd8d8d8];
-//    
-//    [self.backgroundScrollView addSubview:verticalLine];
-//    [verticalLine mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(grayLine.mas_bottom);
-//        make.centerX.equalTo(self.view);
-//        make.width.mas_equalTo(0.5);
-//        make.height.mas_equalTo(80);
-//    }];
-//
-//    UIView *secGrayLine = [[UIView alloc] init];
-//    secGrayLine.backgroundColor = [UIColor colorWithRGBHex:0xd8d8d8];
-//    
-//    [self.backgroundScrollView addSubview:secGrayLine];
-//    [secGrayLine mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.and.right.equalTo(self.view);
-//        make.top.equalTo(verticalLine.mas_bottom);
-//        make.height.mas_equalTo(0.5);
-//    }];
-    
    
     if ([ZCYUserMgr sharedMgr].dormitoryArray)
     {

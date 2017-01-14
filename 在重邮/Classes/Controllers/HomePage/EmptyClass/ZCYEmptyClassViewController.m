@@ -239,12 +239,23 @@ static const float animationTime = 0.15f;
     self.timePicker.dataSource = self;
     self.timePicker.backgroundColor = kCommonLightGray_Color;
     [self.view addSubview:self.timePicker];
-    [self.timePicker mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.bottomView.mas_bottom);
-        make.left.and.right.equalTo(self.view);
-        make.height.mas_equalTo(215);
-    }];
-   
+    if ([kDeviceVersion floatValue] >= 9.0)
+    {
+        [self.timePicker mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.bottomView.mas_bottom);
+            make.left.and.right.equalTo(self.view);
+            make.height.mas_equalTo(215);
+        }];
+
+    } else {
+        [self.timePicker mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.bottomView.mas_bottom).with.offset(-20);
+            make.left.and.right.equalTo(self.view);
+            make.height.mas_equalTo(215+40);
+        }];
+
+    }
+    
 }
 
 - (void)initEmptyClassView
