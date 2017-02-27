@@ -93,6 +93,7 @@
                 }
                 [self.examTableView reloadData];
             }
+            
         }];
         
         self.scoreTipLabel.text = @"加载数据中...";

@@ -28,7 +28,7 @@ static const float animationTime = 0.2f;
 @property (strong, nonatomic) UIControl *backgroundControl;  /**< 背景控制 */
 @property (strong, nonatomic) UILabel *weekLabel;  /**< 周数显示 */
 @property (strong, nonatomic) NSString *studentNumber;  /**< 学号 */
-@property (strong, nonatomic) NSArray *courseArray;  /**< 课程数组 */
+//@property (strong, nonatomic) NSArray *courseArray;  /**< 课程数组 */
 @end
 
 @implementation ZCYCourseViewController
@@ -78,7 +78,7 @@ static const float animationTime = 0.2f;
                 [[ZCYProgressHUD sharedHUD] showWithText:[error localizedDescription] inView:self.view hideAfterDelay:1.0f];
                 return;
             }
-            self.courseArray = array;
+            [ZCYUserMgr sharedMgr].courseArray = array;
             [self.courseCollectionView reloadData];
         }];
     } else {
@@ -89,10 +89,10 @@ static const float animationTime = 0.2f;
             }
             [ZCYUserMgr sharedMgr].courseArray = array;
 //            self.courseArray = [ZCYUserMgr sharedMgr].courseArray;
-//            [self.courseCollectionView reloadData];
+            [self.courseCollectionView reloadData];
         }];
 
-        self.courseArray = [ZCYUserMgr sharedMgr].courseArray;
+//        self.courseArray = [ZCYUserMgr sharedMgr].courseArray;
     }
 }
 
@@ -436,7 +436,7 @@ static const float animationTime = 0.2f;
             cellColor = kCommonRed_Color;
             break;
     }
-    NSArray *courseArray = self.courseArray[indexPath.row];
+    NSArray *courseArray = [ZCYUserMgr sharedMgr].courseArray[indexPath.row];
     NSArray *colArray = courseArray[indexPath.section];
 
 //    if (indexPath.row == [NSDate date].week -1)
@@ -555,7 +555,7 @@ static const float animationTime = 0.2f;
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSArray *courseArray = self.courseArray[indexPath.row];
+    NSArray *courseArray = [ZCYUserMgr sharedMgr].courseArray[indexPath.row];
     NSArray *colArray = courseArray[indexPath.section];
     __block BOOL haveCourse = NO;
     
@@ -922,7 +922,7 @@ static const float animationTime = 0.2f;
         classPlaceString = [NSString stringWithFormat:@"%@",@(idc)];
     } else {
         classPlaceString = [classID substringWithRange:NSMakeRange(0, [classID
-                                                                        length]-3)];
+                                                                        length])];
     }
     cell.backgroundColor = cellColor;
     

@@ -88,7 +88,18 @@
 //    self.navigationController.navigationBar.alpha = (self.backgroundScrollView.contentOffset.y)/355 * 2.0;
 //    
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
-    
+    [ZCYTimeTableHelper getTimeTableWithStdNumber:[ZCYUserMgr sharedMgr].studentNumber withCompeletionBlock:^(NSError *error, NSArray *array) {
+        if (error)
+        {
+            return;
+        }
+        [ZCYUserMgr sharedMgr].courseArray = array;
+        //            self.courseArray = [ZCYUserMgr sharedMgr].courseArray;
+        NSData *archiveUserData = [NSKeyedArchiver archivedDataWithRootObject:[ZCYUserMgr sharedMgr]];
+        [[NSUserDefaults standardUserDefaults] setObject:archiveUserData forKey:@"USERMGR"];
+    }];
+
+    [self updateUIWithArray:[ZCYUserMgr sharedMgr].courseArray];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -526,51 +537,112 @@
 {
     
     self.timeLabel.text = [NSString stringWithFormat:@"星期%@ %@月%@号", [NSDate date].weekString, @([NSDate date].month), @([NSDate date].day)];
-    
-    NSArray *todayCourseArray = courseArray[[NSDate date].week - 1];
-    
-    __block NSUInteger courseNum = 0;
-    
-    [todayCourseArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSArray *array = obj;
-        if (array.count != 0 && array != nil)
-        courseNum = courseNum + 2;
-    }];
-
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"今天只有 %02ld 节课，爽到爆炸", (unsigned long)courseNum]];
-    [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Futura" size:kStandardPx(64)] range:NSMakeRange(5, 2)];
-    
-    self.summaryLabel.attributedText = attributedString;
-    
     for (UIView *subview in [self.courseScrollView subviews])
     {
         [subview removeFromSuperview];
     }
+    NSArray *todayCourseArray = courseArray[[NSDate date].week - 1];
     
-    NSArray <UIColor *> *commonArray = @[kCommonGreen_Color, kCommonYellow_Color, kCommonPink_Color];
-    NSArray <UIColor *> *deepArray = @[kDeepGreen_Color, kDeepYellow_Color, kDeepPink_Color];
+    NSArray <UIColor *> *commonArray = @[kCommonGreen_Color, kCommonOrigin_Color, kCommonPink_Color];
+    NSArray <UIColor *> *deepArray = @[kDeepGreen_Color, kDeepOrigin_Color, kDeepPink_Color];
     __block NSInteger index = 0;
+    if (!([ZCYUserMgr sharedMgr].courseArray == nil || [ZCYUserMgr sharedMgr].courseArray.count == 0))
+    {
+        todayCourseArray = [ZCYUserMgr sharedMgr].courseArray[[NSDate date].week - 1];
+        
+        [todayCourseArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSArray *array = obj;
+            NSUInteger timeIdx = idx;
+            if (!(array == nil || array.count == 0))
+            {
+                
+                [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    ZCYTimeTableModel *model = obj;
+                    
+                    NSArray *courseWeeks = model.courseWeeks;
+                    for (NSInteger i = 0; i<courseWeeks.count; i++)
+                    {
+                        if ([courseWeeks[i] integerValue] == [NSDate date].schoolWeek)
+                        {
+                            ZCYCourseView *courseView = [[ZCYCourseView alloc] initWithCourseName:model.courseName andClassID:model.coursePlace andCourseTime:timeIdx];
+                            [courseView setTextColor:deepArray[index%3] andBackgroundColor:commonArray[index%3]];
+                            [self.courseScrollView addSubview:courseView];
+                            self.courseScrollView.contentSize = CGSizeMake((index+1)*(self.view.frame.size.width-30)/2 , (self.view.frame.size.width-40)/2 - 15);
+                            [courseView mas_makeConstraints:^(MASConstraintMaker *make) {
+                                make.left.equalTo(self.courseScrollView).with.offset(index*(self.view.frame.size.width-40)/2 + 20);
+                                make.top.equalTo(self.courseScrollView);
+                                make.width.mas_equalTo((self.view.frame.size.width-40)/2);
+                                make.height.mas_equalTo((self.view.frame.size.width-40)/2 - 15);
+                            }];
+                            index++;
+                        }
+                    }
+                }];
+                
+            }
+            
+        }];
+        
+    }
+    if (index == 0)
+    {
+        UILabel *tipLabel = [[UILabel alloc] init];
+        tipLabel.text = @"今天没课哦";
+        tipLabel.textColor = kDeepGray_Color;
+        tipLabel.font = [UIFont systemFontOfSize:20 weight:2];
+        tipLabel.textAlignment = NSTextAlignmentCenter;
+        [self.courseScrollView addSubview:tipLabel];
+        [tipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view);
+            make.centerY.equalTo(self.courseScrollView);
+            make.width.mas_equalTo(160);
+            make.height.mas_equalTo(26);
+        }];
+    }
+    __block NSUInteger courseNum = 0;
     
-    [todayCourseArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSArray *array = obj;
-        if (array == nil || array.count == 0)
-        {
-        } else {
-            ZCYTimeTableModel *model = array[0];
-            ZCYCourseView *courseView = [[ZCYCourseView alloc] initWithCourseName:model.courseName andClassID:model.coursePlace andCourseTime:idx];
-            [courseView setTextColor:deepArray[index%3] andBackgroundColor:commonArray[index%3]];
-            [self.courseScrollView addSubview:courseView];
-            self.courseScrollView.contentSize = CGSizeMake((index+1)*(self.view.frame.size.width-30)/2 , (self.view.frame.size.width-40)/2 - 15);
-            [courseView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(self.courseScrollView).with.offset(index*(self.view.frame.size.width-40)/2 + 20);
-                make.top.equalTo(self.courseScrollView);
-                make.width.mas_equalTo((self.view.frame.size.width-40)/2);
-                make.height.mas_equalTo((self.view.frame.size.width-40)/2 - 15);
+    if (!([ZCYUserMgr sharedMgr].courseArray == nil || [ZCYUserMgr sharedMgr].courseArray.count == 0))
+    {
+        todayCourseArray = [ZCYUserMgr sharedMgr].courseArray[[NSDate date].week - 1];
+    }
+    
+    
+    if (!([ZCYUserMgr sharedMgr].courseArray == nil || [ZCYUserMgr sharedMgr].courseArray.count == 0))
+    {
+        NSArray *todayCourseArray = [ZCYUserMgr sharedMgr].courseArray[[NSDate date].week - 1];
+        
+        [todayCourseArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSArray *array = obj;
+            [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                ZCYTimeTableModel *model = obj;
+                NSArray *courseWeeks = model.courseWeeks;
+                for (NSInteger i = 0; i<courseWeeks.count; i++)
+                {
+                    if ([courseWeeks[i] integerValue] == [NSDate date].schoolWeek)
+                    {
+                        courseNum = courseNum + [model.courseNumber integerValue];
+                    }
+                }
             }];
-            index++;
-        }
-
-    }];
+        }];
+    }
+    
+    NSString *tipString;
+    
+    if (courseNum<4)
+    {
+        tipString = [NSString stringWithFormat:@"今天有%02ld节课，放松一下吧", (long)courseNum];
+    } else if (courseNum >=4 && courseNum < 8) {
+        tipString = [NSString stringWithFormat:@"今天有%02ld节课哦～，多撑一会吧", (long)courseNum];
+    } else if (courseNum >=8 && courseNum <= 12) {
+        tipString = [NSString stringWithFormat:@"今天有%02ld节课...生无可恋", (long)courseNum];
+    }
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:tipString];
+    [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Futura" size:kStandardPx(64)] range:NSMakeRange(3, 2)];
+    
+    self.summaryLabel.attributedText = attributedString;
+    
+    
 }
 
 #pragma mark - 点击事件

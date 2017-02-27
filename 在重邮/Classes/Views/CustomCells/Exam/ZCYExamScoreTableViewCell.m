@@ -41,7 +41,7 @@
     self.scoreLabel = [[UILabel alloc] init];
     self.typeLabel = [[UILabel alloc] init];
     self.scoreLabel.adjustsFontSizeToFitWidth = YES;
-    if ([self.scoreString floatValue] >= 60 || [self.scoreString  isEqualToString: @"A"] || [self.scoreString  isEqualToString: @"A+"] || [self.scoreString  isEqualToString: @"A-"] || [self.scoreString  isEqualToString: @"B"] || [self.scoreString  isEqualToString: @"B+"] || [self.scoreString  isEqualToString: @"B-"] || [self.scoreString  isEqualToString: @"C"] || [self.scoreString  isEqualToString: @"C+"] || [self.scoreString  isEqualToString: @"C-"])
+    if ([self.scoreString floatValue] >= 60 || [self.scoreString  isEqualToString: @"A"] || [self.scoreString  isEqualToString: @"A+"] || [self.scoreString  isEqualToString: @"A-"] || [self.scoreString  isEqualToString: @"B"] || [self.scoreString  isEqualToString: @"B+"] || [self.scoreString  isEqualToString: @"B-"] || [self.scoreString  isEqualToString: @"C"] || [self.scoreString  isEqualToString: @"C+"] || [self.scoreString  isEqualToString: @"C-"] || [self.scoreString isEqualToString:@"通过"])
     {
         [self.scoreLabel setFont:kFont(kStandardPx(60)) andText:self.scoreString andTextColor:kDeepGreen_Color andBackgroundColor:kTransparentColor];
         [self.typeLabel setFont:kFont(kStandardPx(26)) andText:self.typeString andTextColor:kCommonWhite_Color andBackgroundColor:kDeepGreen_Color];

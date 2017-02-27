@@ -65,9 +65,10 @@ static const NSString *WXURL = @"http://wx.cqupt.edu.cn";
                 completionBlock(nil, responseObject, task);
             }
         } else {
+            NSError *error = [[NSError alloc] initWithDomain:NSMachErrorDomain code:NSURLErrorUnknown userInfo:@{@"error": @"未知错误"}];
             if (completionBlock)
             {
-                completionBlock(nil, nil, task);
+                completionBlock(error, nil, task);
             }
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
