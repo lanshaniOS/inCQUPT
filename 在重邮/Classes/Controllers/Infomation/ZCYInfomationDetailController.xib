@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ZCYInfomationDetailController">
+            <connections>
+                <outlet property="bodyText" destination="NZu-oV-LXQ" id="9Ts-uy-uH1"/>
+                <outlet property="timeLabel" destination="WJ8-vL-vJV" id="hiL-yt-mO2"/>
+                <outlet property="titleLabel" destination="Pd0-Qm-Wka" id="IbU-e1-whL"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="egnoewngieongeriohntimhiotnjmtjmyionetio" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pd0-Qm-Wka">
+                    <rect key="frame" x="16" y="78" width="343" height="57.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NZu-oV-LXQ">
+                    <rect key="frame" x="29" y="216.5" width="317" height="450.5"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WJ8-vL-vJV">
+                    <rect key="frame" x="29" y="165.5" width="250" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="250" id="YsV-2b-EDT"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Pd0-Qm-Wka" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="78" id="6OY-5u-xzU"/>
+                <constraint firstItem="NZu-oV-LXQ" firstAttribute="leading" secondItem="WJ8-vL-vJV" secondAttribute="leading" id="9ci-YI-HGd"/>
+                <constraint firstItem="NZu-oV-LXQ" firstAttribute="centerX" secondItem="Pd0-Qm-Wka" secondAttribute="centerX" id="GFt-Wf-lx7"/>
+                <constraint firstItem="WJ8-vL-vJV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="29" id="SSf-zf-8f4"/>
+                <constraint firstAttribute="trailing" secondItem="NZu-oV-LXQ" secondAttribute="trailing" constant="29" id="fd8-BW-pYV"/>
+                <constraint firstAttribute="bottom" secondItem="NZu-oV-LXQ" secondAttribute="bottom" id="i5b-Vb-46y"/>
+                <constraint firstAttribute="trailing" secondItem="Pd0-Qm-Wka" secondAttribute="trailing" constant="16" id="pMq-kg-EfB"/>
+                <constraint firstItem="WJ8-vL-vJV" firstAttribute="top" secondItem="Pd0-Qm-Wka" secondAttribute="bottom" constant="30" id="rxR-yv-GLh"/>
+                <constraint firstItem="NZu-oV-LXQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="29" id="v3K-EZ-3Vx"/>
+                <constraint firstItem="NZu-oV-LXQ" firstAttribute="top" secondItem="WJ8-vL-vJV" secondAttribute="bottom" constant="30" id="ykA-NL-iDg"/>
+                <constraint firstItem="Pd0-Qm-Wka" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="zy7-cs-cES"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <point key="canvasLocation" x="34.5" y="53.5"/>
+        </view>
+    </objects>
+</document>

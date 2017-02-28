@@ -27,7 +27,7 @@ static const NSString *WXURL = @"http://wx.cqupt.edu.cn";
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSMutableDictionary *mutableDic = [NSMutableDictionary dictionaryWithDictionary:data];
-    
+    //manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [mutableDic setObject:[NSString stringWithFormat:@"%.0f",[[NSDate date] timeIntervalSince1970]] forKey:@"timestamp"];
     [mutableDic setObject:@"在重邮" forKey:@"openid"];
 //    [mutableDic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"ZCYUserToken"] forKey:@"token"];
@@ -102,10 +102,10 @@ static const NSString *WXURL = @"http://wx.cqupt.edu.cn";
 
 }
 
-- (void)postRequestWithData:(NSDictionary *)data andCompletionBlock:(void (^)(NSError *, id, NSURLSessionDataTask *))completionBlock andURLPath:(NSString *)urlPath
+- (void)GetRequestWithData:(NSDictionary *)data andCompletionBlock:(void (^)(NSError *, id, NSURLSessionDataTask *))completionBlock andURLPath:(NSString *)urlPath
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:[NSString stringWithFormat:@"%@%@",URL,urlPath] parameters:data progress:^(NSProgress * _Nonnull downloadProgress) {
+    [manager GET:[NSString stringWithFormat:@"%@%@",URL,urlPath] parameters:data progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -115,12 +115,13 @@ static const NSString *WXURL = @"http://wx.cqupt.edu.cn";
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        
         if (completionBlock)
         {
             completionBlock(error, nil, task);
         }
     }];
-    
 }
+
+
+
 @end

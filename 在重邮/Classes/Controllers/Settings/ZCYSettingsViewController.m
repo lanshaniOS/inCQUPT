@@ -12,6 +12,7 @@
 #import "ZCYAlertView.h"
 #import "ZCYFeedBackViewController.h"
 #import "ZCYAboutusViewController.h"
+#import "ZCYCalendarViewController.h"
 
 @interface ZCYSettingsViewController () <ZCYAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate>
 
@@ -134,11 +135,23 @@
         make.height.mas_equalTo(45);
     }];
     
+    UIView *calendarView = [[UIView alloc] init];
+    [self setView:calendarView withImageName:@"反馈意见" andFuncName:@"校历"];
+    [self.backgroundScrollView addSubview:calendarView];
+    [calendarView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(userView.mas_bottom).with.offset(20);
+        make.left.and.right.equalTo(self.view);
+        make.height.mas_equalTo(45);
+        
+    }];
+    UITapGestureRecognizer *tapCalendar = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToCalendarController)];
+    [calendarView addGestureRecognizer:tapCalendar];
+    
     UIView *feedView = [[UIView alloc] init];
     [self setView:feedView withImageName:@"反馈意见" andFuncName:@"反馈意见"];
     [self.backgroundScrollView addSubview:feedView];
     [feedView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(userView.mas_bottom).with.offset(20);
+        make.top.equalTo(calendarView.mas_bottom).with.offset(1);
         make.left.and.right.equalTo(self.view);
         make.height.mas_equalTo(45);
 
@@ -217,6 +230,12 @@
 {
     ZCYUserDetailViewController *userVC = [[ZCYUserDetailViewController alloc] init];
     [self.navigationController pushViewController:userVC animated:YES];
+}
+
+-(void)pushToCalendarController
+{
+    ZCYCalendarViewController *calendarVC = [[ZCYCalendarViewController alloc]init];
+    [self.navigationController pushViewController:calendarVC animated:YES];
 }
 
 - (void)pushToFeedBackController
