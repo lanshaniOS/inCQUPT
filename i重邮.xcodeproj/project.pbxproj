@@ -70,8 +70,6 @@
 		49A1D13C1DE86D7800C93F74 /* ZCYLendBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A1D13B1DE86D7800C93F74 /* ZCYLendBookViewController.m */; };
 		49A1D1401DE8792300C93F74 /* ZCYLendingBookHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A1D13F1DE8792300C93F74 /* ZCYLendingBookHelper.m */; };
 		49A1D1441DE87F9100C93F74 /* ZCYLendingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A1D1431DE87F9100C93F74 /* ZCYLendingTableViewCell.m */; };
-		49A810941DE9D23C00B0183C /* ZWKBarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A810911DE9D23C00B0183C /* ZWKBarChart.m */; };
-		49A810951DE9D23C00B0183C /* ZWKPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A810931DE9D23C00B0183C /* ZWKPieChart.m */; };
 		49A8B4911DFECCD9006AD8B7 /* ZCYHomePageElecView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A8B4901DFECCD9006AD8B7 /* ZCYHomePageElecView.m */; };
 		49A8B4951DFECE73006AD8B7 /* ZCYUserInfoHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A8B4941DFECE73006AD8B7 /* ZCYUserInfoHelper.m */; };
 		49AC73EB1DC0EC8100E903EA /* ZCYUserMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AC73EA1DC0EC8100E903EA /* ZCYUserMgr.m */; };
@@ -117,6 +115,8 @@
 		49ECE7461DE732D300163D5C /* ZCYCourseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49ECE7451DE732D300163D5C /* ZCYCourseView.m */; };
 		49ECE74A1DE735B800163D5C /* NSDate+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 49ECE7491DE735B800163D5C /* NSDate+Utilities.m */; };
 		E51FFEF2FC165CDCBE4A6571 /* libPods-在重邮.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1189500E1074EECD137C3468 /* libPods-在重邮.a */; };
+		F0D35F581E65243C001F2E08 /* ZWKBarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D35F551E65243C001F2E08 /* ZWKBarChart.m */; };
+		F0D35F591E65243C001F2E08 /* ZWKPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D35F571E65243C001F2E08 /* ZWKPieChart.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -253,10 +253,6 @@
 		49A1D13F1DE8792300C93F74 /* ZCYLendingBookHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYLendingBookHelper.m; sourceTree = "<group>"; };
 		49A1D1421DE87F9100C93F74 /* ZCYLendingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYLendingTableViewCell.h; sourceTree = "<group>"; };
 		49A1D1431DE87F9100C93F74 /* ZCYLendingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYLendingTableViewCell.m; sourceTree = "<group>"; };
-		49A810901DE9D23C00B0183C /* ZWKBarChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWKBarChart.h; sourceTree = "<group>"; };
-		49A810911DE9D23C00B0183C /* ZWKBarChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWKBarChart.m; sourceTree = "<group>"; };
-		49A810921DE9D23C00B0183C /* ZWKPieChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWKPieChart.h; sourceTree = "<group>"; };
-		49A810931DE9D23C00B0183C /* ZWKPieChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWKPieChart.m; sourceTree = "<group>"; };
 		49A8B48F1DFECCD9006AD8B7 /* ZCYHomePageElecView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYHomePageElecView.h; sourceTree = "<group>"; };
 		49A8B4901DFECCD9006AD8B7 /* ZCYHomePageElecView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYHomePageElecView.m; sourceTree = "<group>"; };
 		49A8B4931DFECE73006AD8B7 /* ZCYUserInfoHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYUserInfoHelper.h; sourceTree = "<group>"; };
@@ -349,6 +345,10 @@
 		49ECE7491DE735B800163D5C /* NSDate+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+Utilities.m"; path = "在重邮/Classes/Support/Category/NSDate+Utilities.m"; sourceTree = SOURCE_ROOT; };
 		66C2A3B14195ED8D12228F00 /* Pods-在重邮.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-在重邮.release.xcconfig"; path = "Pods/Target Support Files/Pods-在重邮/Pods-在重邮.release.xcconfig"; sourceTree = "<group>"; };
 		B9A8BE7DC58BA8111526991E /* Pods-在重邮.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-在重邮.debug.xcconfig"; path = "Pods/Target Support Files/Pods-在重邮/Pods-在重邮.debug.xcconfig"; sourceTree = "<group>"; };
+		F0D35F541E65243C001F2E08 /* ZWKBarChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZWKBarChart.h; path = "在重邮/Libraries/ZWKCharts/ZWKBarChart.h"; sourceTree = SOURCE_ROOT; };
+		F0D35F551E65243C001F2E08 /* ZWKBarChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZWKBarChart.m; path = "在重邮/Libraries/ZWKCharts/ZWKBarChart.m"; sourceTree = SOURCE_ROOT; };
+		F0D35F561E65243C001F2E08 /* ZWKPieChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZWKPieChart.h; path = "在重邮/Libraries/ZWKCharts/ZWKPieChart.h"; sourceTree = SOURCE_ROOT; };
+		F0D35F571E65243C001F2E08 /* ZWKPieChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZWKPieChart.m; path = "在重邮/Libraries/ZWKCharts/ZWKPieChart.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -741,10 +741,10 @@
 		49A8108F1DE9D23C00B0183C /* ZWKCharts */ = {
 			isa = PBXGroup;
 			children = (
-				49A810901DE9D23C00B0183C /* ZWKBarChart.h */,
-				49A810911DE9D23C00B0183C /* ZWKBarChart.m */,
-				49A810921DE9D23C00B0183C /* ZWKPieChart.h */,
-				49A810931DE9D23C00B0183C /* ZWKPieChart.m */,
+				F0D35F541E65243C001F2E08 /* ZWKBarChart.h */,
+				F0D35F551E65243C001F2E08 /* ZWKBarChart.m */,
+				F0D35F561E65243C001F2E08 /* ZWKPieChart.h */,
+				F0D35F571E65243C001F2E08 /* ZWKPieChart.m */,
 			);
 			name = ZWKCharts;
 			path = "../../../../ZWKCharts-master/ZWKCharts";
@@ -1206,12 +1206,12 @@
 				495DAC631E081626007A2DCD /* SKPSMTPMessage.m in Sources */,
 				496F14DC1DD0B6B3000FA790 /* ZCYUserValidateHelper.m in Sources */,
 				49EA61501DF17877003A548A /* ZCYBezierPath.m in Sources */,
-				49A810941DE9D23C00B0183C /* ZWKBarChart.m in Sources */,
 				49BB03E31DF99F1C003E39C0 /* ZCYRepairlistHelper.m in Sources */,
 				49BB03D11DF99EED003E39C0 /* ZCYPropertyRepairViewController.m in Sources */,
 				4970EDF91E25E66700F13A83 /* UIButton+Common.m in Sources */,
 				495DAC5F1E081626007A2DCD /* Base64Transcoder.m in Sources */,
 				496EF5991DC78DD80028B5BA /* ZCYCardDetailViewController.m in Sources */,
+				F0D35F581E65243C001F2E08 /* ZWKBarChart.m in Sources */,
 				49A1D13C1DE86D7800C93F74 /* ZCYLendBookViewController.m in Sources */,
 				49EA61441DF046C5003A548A /* ZCYEmptyClassHelpr.m in Sources */,
 				49AC74051DC2092300E903EA /* ZCYNetworkHelperMgr.m in Sources */,
@@ -1223,6 +1223,7 @@
 				49EA61361DEDB526003A548A /* ZCYExaminationHelper.m in Sources */,
 				49EA613A1DEDB688003A548A /* ZCYExaminationTableViewCell.m in Sources */,
 				49A8B4911DFECCD9006AD8B7 /* ZCYHomePageElecView.m in Sources */,
+				F0D35F591E65243C001F2E08 /* ZWKPieChart.m in Sources */,
 				49BB03E01DF99F1C003E39C0 /* ZCYGetRepairApplyData.m in Sources */,
 				499232CB1DC487AA00B17B54 /* ZCYProgressHUD.m in Sources */,
 				492C932D1DF6F2FC0071DB63 /* ZCYCardDetailView.m in Sources */,
@@ -1231,7 +1232,6 @@
 				4951C8B41DBA41C900E5AC63 /* ZCYHomePageViewController.m in Sources */,
 				49A8B4951DFECE73006AD8B7 /* ZCYUserInfoHelper.m in Sources */,
 				492C93311DF82D6A0071DB63 /* ZCYDormitoryHelper.m in Sources */,
-				49A810951DE9D23C00B0183C /* ZWKPieChart.m in Sources */,
 				498D310F1DE4659B00C30828 /* ZCYMoreFunctionViewController.m in Sources */,
 				4951C8B61DBA41C900E5AC63 /* ZCYInformationViewController.m in Sources */,
 				495DAC611E081626007A2DCD /* NSData+Base64Additions.m in Sources */,
