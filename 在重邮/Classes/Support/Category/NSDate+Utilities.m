@@ -55,7 +55,7 @@ static const unsigned componentFlags = (NSCalendarUnitYear| NSCalendarUnitMonth 
     NSTimeInterval todayTime = [today timeIntervalSince1970];
     NSInteger weekTime = (todayTime - oneWeekTime)/86400;
     
-    return weekTime%7 == 0 ? weekTime/7 + 1 : weekTime/7+1 + 1;
+    return weekTime%7 == 0 ? weekTime/7 : weekTime/7+1;
 }
 
 - (NSString *)weekString

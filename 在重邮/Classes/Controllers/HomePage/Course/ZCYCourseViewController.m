@@ -461,6 +461,10 @@ static const float animationTime = 0.2f;
     } else {
         schoolWeek = [self.weekPicker selectedRowInComponent:0]+1;
     }
+    
+    
+    
+    
     cell.frame = CGRectMake((_courseWidth+0.5)*indexPath.row, (_courseWidth*1.26+0.5)*indexPath.section, _courseWidth, _courseWidth*1.26);
     __block BOOL haveCourse = NO;
     [colArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
