@@ -20,7 +20,7 @@ static ZCYUserMgr *sharedMgr = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedMgr = [[self alloc] init];
-        sharedMgr.studentNumber = @"";
+//        sharedMgr.studentNumber = @"";
         sharedMgr.courseArray = [[NSArray alloc] init];
     });
     return sharedMgr;
@@ -30,10 +30,13 @@ static ZCYUserMgr *sharedMgr = nil;
 {
     [aCoder encodeObject:self.studentNumber forKey:@"STUDENTNUMBER"];
     [aCoder encodeObject:self.courseArray forKey:@"COURSEARRAY"];
-    [aCoder encodeObject:self.schoolName forKey:@"SCHOOLNAME"];
+//    [aCoder encodeObject:self.schoolName forKey:@"SCHOOLNAME"];
     [aCoder encodeObject:self.eduType forKey:@"EDUTYPE"];
-    [aCoder encodeObject:self.eduMajor forKey:@"EDUMAJOR"];
+//    [aCoder encodeObject:self.eduMajor forKey:@"EDUMAJOR"];
     [aCoder encodeObject:self.userName forKey:@"USERNAME"];
+    [aCoder encodeObject:self.cardID forKey:@"CARDID"];
+    [aCoder encodeObject:self.identityID forKey:@"IDENTITYID"];
+    [aCoder encodeObject:self.collegeName forKey:@"COLLEGENAME"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -43,11 +46,12 @@ static ZCYUserMgr *sharedMgr = nil;
     {
         self.studentNumber = [aDecoder decodeObjectForKey:@"STUDENTNUMBER"];
         self.courseArray = [aDecoder decodeObjectForKey:@"COURSEARRAY"];
-        self.schoolName = [aDecoder decodeObjectForKey:@"SCHOOLNAME"];
+        self.collegeName = [aDecoder decodeObjectForKey:@"COLLEGENAME"];
         self.eduType = [aDecoder decodeObjectForKey:@"EDUTYPE"];
-        self.eduMajor = [aDecoder decodeObjectForKey:@"EDUMAJOR"];
+//        self.eduMajor = [aDecoder decodeObjectForKey:@"EDUMAJOR"];
         self.userName = [aDecoder decodeObjectForKey:@"USERNAME"];
-
+        self.cardID = [aDecoder decodeObjectForKey:@"CARDID"];
+        self.identityID = [aDecoder decodeObjectForKey:@"IDENTITYID"];
     }
     return self;
 }
@@ -55,11 +59,13 @@ static ZCYUserMgr *sharedMgr = nil;
 + (NSDictionary<NSString *, id> *)modelCustomPropertyMapper
 {
     return @{
-             NSStringFromSelector(@selector(schoolName)) : @"school",
-             NSStringFromSelector(@selector(eduType)) : @"edutype",
-             NSStringFromSelector(@selector(eduMajor)) : @"edumajor",
+//             NSStringFromSelector(@selector(schoolName)) : @"school",
+             NSStringFromSelector(@selector(collegeName)) : @"yxm",
+             NSStringFromSelector(@selector(eduType)) : @"type",
              NSStringFromSelector(@selector(userName)) : @"name",
-             NSStringFromSelector(@selector(studentNumber)) : @"userNumber"
+             NSStringFromSelector(@selector(studentNumber)) : @"xh",
+             NSStringFromSelector(@selector(identityID)) : @"sfzh",
+             NSStringFromSelector(@selector(cardID)) : @"ykt"
              };
 }
 @end

@@ -12,11 +12,11 @@
 
 @property (strong, nonatomic) NSString *studentNumber;  /**< 学号 */
 @property (strong, nonatomic) NSArray *courseArray;  /**< 课程总述 */
-@property (strong, nonatomic) NSString *schoolName;  /**< 学校名称 */
+@property (strong, nonatomic) NSString *collegeName;  /**< 学校名称 */
 @property (strong, nonatomic) NSString *userName;  /**< 用户名称 */
 @property (strong, nonatomic) NSString *eduType;  /**< 教育水平（本科生、研究生） */
-@property (strong, nonatomic) NSString *eduMajor;  /**< 专业 */
-@property (strong, nonatomic) NSString *identityCard;  /**< 身份证后六位 */
+//@property (strong, nonatomic) NSString *eduMajor;  /**< 专业 */
+@property (strong, nonatomic) NSString *identityID;  /**< 身份证后六位 */
 @property (strong, nonatomic) NSDictionary *lendBookDic;  /**< 借阅信息 */
 @property (strong, nonatomic) NSArray *examRecord;  /**< 考试安排 */
 @property (strong, nonatomic) NSArray *dormitoryArray;  /**< 寝室 */

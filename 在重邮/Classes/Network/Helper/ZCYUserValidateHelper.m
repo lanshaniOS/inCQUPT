@@ -15,8 +15,8 @@
 + (void)getUserInfoWithUserName:(NSString *)username andPassword:(NSString *)password andCompletionBlock:(void(^)(NSError *, id response))completionBlock
 {
     NSDictionary *userDic = @{
-                              @"userName" : username,
-                              @"password" : password
+                              @"yktid" : username,
+                              @"passwd" : password
                               };
     [[ZCYNetworkHelperMgr sharedMgr] wx_requestWithData:userDic andCompletionBlock:^(NSError *error, id response, NSURLSessionDataTask *task) {
         if (error)

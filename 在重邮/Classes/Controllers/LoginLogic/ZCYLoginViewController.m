@@ -194,7 +194,7 @@
         if (error)
         {
             [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0f];
-            [[ZCYProgressHUD sharedHUD] showWithText:[error localizedDescription] inView:self.view hideAfterDelay:1.0f];
+            [[ZCYProgressHUD sharedHUD] showWithText:@"用户名或密码错误" inView:self.view hideAfterDelay:1.0f];
             return;
         }
         if ([response[@"status"] longValue] == 50002)
@@ -203,7 +203,7 @@
             [[ZCYProgressHUD sharedHUD] showWithText:@"用户名或密码错误" inView:self.view hideAfterDelay:1.0f];
         } else if ([response[@"status"] longValue] == 200) {
             [[NSUserDefaults standardUserDefaults] setObject:self.passwordTF.text forKey:@"ZCYUSERPASSWORD"];
-            NSDictionary *userMessage = response[@"result"];
+            NSDictionary *userMessage = response[@"data"];
             [[ZCYUserMgr sharedMgr] yy_modelSetWithDictionary:userMessage];
                 [ZCYTimeTableHelper getTimeTableWithStdNumber:[ZCYUserMgr sharedMgr].studentNumber withCompeletionBlock:^(NSError *error, NSArray *array) {
                     @strongify(self);

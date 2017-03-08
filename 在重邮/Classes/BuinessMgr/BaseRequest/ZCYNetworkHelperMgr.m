@@ -10,12 +10,11 @@
 
 static const NSString * URL = @"https://we.cqu.pt";
 static const NSString *WXURL = @"http://wx.cqupt.edu.cn";
-
+static ZCYNetworkHelperMgr *networkHelper = nil;
 @implementation ZCYNetworkHelperMgr
 
 + (ZCYNetworkHelperMgr *)sharedMgr
 {
-    static ZCYNetworkHelperMgr *networkHelper = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         networkHelper = [[self alloc] init];
@@ -82,23 +81,27 @@ static const NSString *WXURL = @"http://wx.cqupt.edu.cn";
 
 - (void)wx_requestWithData:(NSDictionary *)data andCompletionBlock:(void(^)(NSError *, id, NSURLSessionDataTask *))completionBlock andURLPath:(NSString *)urlPath
 {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:[NSString stringWithFormat:@"%@%@",WXURL,urlPath] parameters:data progress:^(NSProgress * _Nonnull downloadProgress) {
+    [self requestWithData:data andCompletionBlock:^(NSError *error, id response, NSURLSessionDataTask *task) {
         
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        if (completionBlock)
-        {
-            completionBlock(nil, responseObject, task);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        
-        if (completionBlock)
-        {
-            completionBlock(error, nil, task);
-        }
-    }];
+        completionBlock(error, response, task);
+    } andURLPath:@"/api/users/check_login.php"];
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//    [manager POST:[NSString stringWithFormat:@"%@%@",WXURL,urlPath] parameters:data progress:^(NSProgress * _Nonnull downloadProgress) {
+//        
+//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        
+//        if (completionBlock)
+//        {
+//            completionBlock(nil, responseObject, task);
+//        }
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        
+//        
+//        if (completionBlock)
+//        {
+//            completionBlock(error, nil, task);
+//        }
+//    }];
 
 }
 

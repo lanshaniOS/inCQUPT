@@ -65,4 +65,9 @@
     }
     return self;
 }
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<%@: %p, courseTime: %@, classId: %@, courseId: %@, courseType: %@, courseCredit: %@, coursePlace: %@, courseName: %@, courseWeeks: %@, coueseNumber: %@",[self class], self, _courseTime, _classId, _courseId, _courseType, _courseCredit, _coursePlace, _courseName, _courseWeeks, _courseNumber];
+}
 @end
