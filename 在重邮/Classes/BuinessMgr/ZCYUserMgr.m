@@ -31,16 +31,17 @@ static ZCYUserMgr *sharedMgr = nil;
 {
     [aCoder encodeObject:self.studentNumber forKey:@"STUDENTNUMBER"];
     [aCoder encodeObject:self.courseArray forKey:@"COURSEARRAY"];
-    [aCoder encodeObject:self.schoolName forKey:@"SCHOOLNAME"];
+//    [aCoder encodeObject:self.schoolName forKey:@"SCHOOLNAME"];
     [aCoder encodeObject:self.eduType forKey:@"EDUTYPE"];
-    [aCoder encodeObject:self.eduMajor forKey:@"EDUMAJOR"];
+//    [aCoder encodeObject:self.eduMajor forKey:@"EDUMAJOR"];
     [aCoder encodeObject:self.userName forKey:@"USERNAME"];
     [aCoder encodeObject:self.dormitoryArray forKey:@"DORMITORYARRAY"];
     [aCoder encodeObject:self.repairInfomation forKey:@"REPAIRINFOMATION"];
     [aCoder encodeObject:self.repairAddressChoices forKey:@"REPAIRADDRESS"];
     [aCoder encodeObject:self.cardID forKey:@"CARDID"];
     [aCoder encodeObject:self.settingImageData forKey:@"SETTINGIMAGEDATA"];
-    [aCoder encodeObject:self.identityCard forKey:@"IDENTITYCARD"];
+    [aCoder encodeObject:self.identityID forKey:@"IDENTITYCARD"];
+    [aCoder encodeObject:self.collegeName forKey:@"COLLEGENAME"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -50,16 +51,17 @@ static ZCYUserMgr *sharedMgr = nil;
     {
         self.studentNumber = [aDecoder decodeObjectForKey:@"STUDENTNUMBER"];
         self.courseArray = [aDecoder decodeObjectForKey:@"COURSEARRAY"];
-        self.schoolName = [aDecoder decodeObjectForKey:@"SCHOOLNAME"];
+//        self.schoolName = [aDecoder decodeObjectForKey:@"SCHOOLNAME"];
         self.eduType = [aDecoder decodeObjectForKey:@"EDUTYPE"];
-        self.eduMajor = [aDecoder decodeObjectForKey:@"EDUMAJOR"];
+//        self.eduMajor = [aDecoder decodeObjectForKey:@"EDUMAJOR"];
         self.userName = [aDecoder decodeObjectForKey:@"USERNAME"];
         self.dormitoryArray = [aDecoder decodeObjectForKey:@"DORMITORYARRAY"];
         self.repairInfomation = [aDecoder decodeObjectForKey:@"REPAIRINFOMATION"];
         self.repairAddressChoices = [aDecoder decodeObjectForKey:@"REPAIRADDRESS"];
         self.cardID = [aDecoder decodeObjectForKey:@"CARDID"];
         self.settingImageData = [aDecoder decodeObjectForKey:@"SETTINGIMAGEDATA"];
-        self.identityCard = [aDecoder decodeObjectForKey:@"IDENTITYCARD"];
+        self.identityID = [aDecoder decodeObjectForKey:@"IDENTITYCARD"];
+        self.collegeName = [aDecoder decodeObjectForKey:@"COLLEGENAME"];
     }
     return self;
 }
@@ -67,12 +69,12 @@ static ZCYUserMgr *sharedMgr = nil;
 + (NSDictionary<NSString *, id> *)modelCustomPropertyMapper
 {
     return @{
-             NSStringFromSelector(@selector(schoolName)) : @"school",
-             NSStringFromSelector(@selector(eduType)) : @"edutype",
-             NSStringFromSelector(@selector(eduMajor)) : @"edumajor",
+             NSStringFromSelector(@selector(collegeName)) : @"yxm",
+             NSStringFromSelector(@selector(eduType)) : @"type",
              NSStringFromSelector(@selector(userName)) : @"name",
-             NSStringFromSelector(@selector(studentNumber)) : @"userNumber",
-             NSStringFromSelector(@selector(identityCard))  : @"identityCard"
+             NSStringFromSelector(@selector(studentNumber)) : @"xh",
+             NSStringFromSelector(@selector(identityID)) : @"sfzh",
+             NSStringFromSelector(@selector(cardID)) : @"ykt"
              };
 }
 
@@ -80,10 +82,10 @@ static ZCYUserMgr *sharedMgr = nil;
 {
     self.studentNumber = nil;  /**< 学号 */
     self.courseArray = nil;  /**< 课程总述 */
-    self.schoolName = nil; /**< 学校名称 */
+//    self.schoolName = nil; /**< 学校名称 */
     self.userName = nil; /**< 用户名称 */
     self.eduType = nil; /**< 教育水平（本科生、研究生） */
-    self.eduMajor = nil;  /**< 专业 */
+//    self.eduMajor = nil;  /**< 专业 */
     self.lendBookDic = nil; /**< 借阅信息 */
     self.examRecord = nil; /**< 考试安排 */
     self.dormitoryArray = nil; /**< 寝室 */
@@ -92,6 +94,7 @@ static ZCYUserMgr *sharedMgr = nil;
     self.cardID = nil; /**< 一卡通号 */
     self.dormitoryDic = nil;
     self.settingImageData = nil;
-    self.identityCard = nil;
+    self.identityID = nil;
+    self.collegeName = nil;
 }
 @end

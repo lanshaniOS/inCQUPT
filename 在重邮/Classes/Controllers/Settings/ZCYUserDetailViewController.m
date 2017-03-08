@@ -37,8 +37,8 @@
     } else {
         dormitoryString = @"未绑定";
     }
-    self.funcArray = @[@"姓名", @"学号",@"学校", @"教育水平", @"专业", @"寝室", @"一卡通号"];
-    self.detailArray = @[[ZCYUserMgr sharedMgr].userName, [ZCYUserMgr sharedMgr].studentNumber, [ZCYUserMgr sharedMgr].schoolName, [ZCYUserMgr sharedMgr].eduType, [ZCYUserMgr sharedMgr].eduMajor, dormitoryString, [ZCYUserMgr sharedMgr].cardID];
+    self.funcArray = @[@"姓名", @"学号",@"学院", @"教育水平", @"寝室", @"一卡通号"];
+    self.detailArray = @[[ZCYUserMgr sharedMgr].userName, [ZCYUserMgr sharedMgr].studentNumber, [ZCYUserMgr sharedMgr].collegeName, [ZCYUserMgr sharedMgr].eduType, dormitoryString, [ZCYUserMgr sharedMgr].cardID];
     [self initUserTableView];
 }
 
