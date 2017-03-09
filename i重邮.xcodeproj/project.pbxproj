@@ -115,8 +115,6 @@
 		49ECE74A1DE735B800163D5C /* NSDate+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 49ECE7491DE735B800163D5C /* NSDate+Utilities.m */; };
 		E51FFEF2FC165CDCBE4A6571 /* libPods-在重邮.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1189500E1074EECD137C3468 /* libPods-在重邮.a */; };
 		F019347A1E6591CE00D3E25E /* ZCYCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F01934791E6591CE00D3E25E /* ZCYCalendarViewController.m */; };
-		F03411E31E7133E8009A029C /* detailNew.css in Resources */ = {isa = PBXBuildFile; fileRef = F03411E11E7133E8009A029C /* detailNew.css */; };
-		F03411E41E7133E8009A029C /* detailNew.html in Resources */ = {isa = PBXBuildFile; fileRef = F03411E21E7133E8009A029C /* detailNew.html */; };
 		F08D213B1E6FDF0100FD72FB /* ZCYInfomationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F08D21391E6FDF0100FD72FB /* ZCYInfomationCell.m */; };
 		F08D213C1E6FDF0100FD72FB /* ZCYInfomationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F08D213A1E6FDF0100FD72FB /* ZCYInfomationCell.xib */; };
 		F08D21401E6FF27C00FD72FB /* InfomationTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F08D213F1E6FF27C00FD72FB /* InfomationTypeView.m */; };
@@ -127,7 +125,6 @@
 		F0D35F641E65300C001F2E08 /* InfomationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D35F631E65300C001F2E08 /* InfomationHelper.m */; };
 		F0D35F681E65305A001F2E08 /* ZCYInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D35F671E65305A001F2E08 /* ZCYInformationViewController.m */; };
 		F0D35F721E653B38001F2E08 /* ZCYInfomationDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D35F701E653B38001F2E08 /* ZCYInfomationDetailController.m */; };
-		F0D35F731E653B38001F2E08 /* ZCYInfomationDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0D35F711E653B38001F2E08 /* ZCYInfomationDetailController.xib */; };
 		F0D35F761E654092001F2E08 /* InfomationDetailHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D35F751E654092001F2E08 /* InfomationDetailHelper.m */; };
 /* End PBXBuildFile section */
 
@@ -357,8 +354,6 @@
 		B9A8BE7DC58BA8111526991E /* Pods-在重邮.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-在重邮.debug.xcconfig"; path = "Pods/Target Support Files/Pods-在重邮/Pods-在重邮.debug.xcconfig"; sourceTree = "<group>"; };
 		F01934781E6591CE00D3E25E /* ZCYCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYCalendarViewController.h; sourceTree = "<group>"; };
 		F01934791E6591CE00D3E25E /* ZCYCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYCalendarViewController.m; sourceTree = "<group>"; };
-		F03411E11E7133E8009A029C /* detailNew.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = detailNew.css; sourceTree = "<group>"; };
-		F03411E21E7133E8009A029C /* detailNew.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = detailNew.html; sourceTree = "<group>"; };
 		F08D21381E6FDF0100FD72FB /* ZCYInfomationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYInfomationCell.h; sourceTree = "<group>"; };
 		F08D21391E6FDF0100FD72FB /* ZCYInfomationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYInfomationCell.m; sourceTree = "<group>"; };
 		F08D213A1E6FDF0100FD72FB /* ZCYInfomationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZCYInfomationCell.xib; sourceTree = "<group>"; };
@@ -378,7 +373,6 @@
 		F0D35F671E65305A001F2E08 /* ZCYInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYInformationViewController.m; sourceTree = "<group>"; };
 		F0D35F6F1E653B38001F2E08 /* ZCYInfomationDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYInfomationDetailController.h; sourceTree = "<group>"; };
 		F0D35F701E653B38001F2E08 /* ZCYInfomationDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYInfomationDetailController.m; sourceTree = "<group>"; };
-		F0D35F711E653B38001F2E08 /* ZCYInfomationDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZCYInfomationDetailController.xib; sourceTree = "<group>"; };
 		F0D35F741E654092001F2E08 /* InfomationDetailHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfomationDetailHelper.h; sourceTree = "<group>"; };
 		F0D35F751E654092001F2E08 /* InfomationDetailHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfomationDetailHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -666,7 +660,6 @@
 		4951C8981DBA409700E5AC63 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				F03411E01E7133E8009A029C /* detailNew */,
 				4951C8991DBA409700E5AC63 /* Assets.xcassets */,
 				4951C89A1DBA409700E5AC63 /* LaunchScreen.storyboard */,
 			);
@@ -1063,15 +1056,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		F03411E01E7133E8009A029C /* detailNew */ = {
-			isa = PBXGroup;
-			children = (
-				F03411E11E7133E8009A029C /* detailNew.css */,
-				F03411E21E7133E8009A029C /* detailNew.html */,
-			);
-			path = detailNew;
-			sourceTree = "<group>";
-		};
 		F08D21371E6FDEA700FD72FB /* Infomation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1121,7 +1105,6 @@
 				F0D35F671E65305A001F2E08 /* ZCYInformationViewController.m */,
 				F0D35F6F1E653B38001F2E08 /* ZCYInfomationDetailController.h */,
 				F0D35F701E653B38001F2E08 /* ZCYInfomationDetailController.m */,
-				F0D35F711E653B38001F2E08 /* ZCYInfomationDetailController.xib */,
 			);
 			path = Infomation;
 			sourceTree = "<group>";
@@ -1221,9 +1204,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0D35F731E653B38001F2E08 /* ZCYInfomationDetailController.xib in Resources */,
-				F03411E31E7133E8009A029C /* detailNew.css in Resources */,
-				F03411E41E7133E8009A029C /* detailNew.html in Resources */,
 				4951C8A71DBA409700E5AC63 /* Assets.xcassets in Resources */,
 				F08D213C1E6FDF0100FD72FB /* ZCYInfomationCell.xib in Resources */,
 			);

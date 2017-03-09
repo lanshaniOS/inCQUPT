@@ -121,8 +121,8 @@
 -(void)getNews{
     _news = [NSMutableArray array];
     [InfomationHelper getInfomationListWithNewsApi:_newsApi[_currentNews] andBlock:^(NSError *erro, NSArray *arr) {
+        [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0];
         if (erro) {
-            [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0];
             [[ZCYProgressHUD sharedHUD] showWithText:erro.localizedDescription inView:self.view hideAfterDelay:1.0f];
         }else{
             for (int i = 0; i < arr.count; i++) {
@@ -135,7 +135,6 @@
                 [_news addObject:model];
                 
             }
-            [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0];
             [_listTable reloadData];
         }
 
