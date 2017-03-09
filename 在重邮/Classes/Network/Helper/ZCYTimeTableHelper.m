@@ -28,7 +28,6 @@
     }
     
     [[ZCYNetworkHelperMgr sharedMgr] requestWithData:@{@"id" : studentNumber} andCompletionBlock:^(NSError *error, id response, NSURLSessionDataTask *task) {
-        
         NSArray *timeTableArray = response[@"data"][@"lessons"];
         if (error)
         {

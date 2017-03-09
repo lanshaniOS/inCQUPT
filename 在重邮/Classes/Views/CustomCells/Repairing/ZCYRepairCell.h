@@ -10,12 +10,13 @@
 
 @interface ZCYRepairCell : UITableViewCell
 
-
 @property (nonatomic,strong)NSString *BXID;
 @property (nonatomic,strong)NSString *BXStates;
 @property (nonatomic,strong)NSString *BXfwlx;
 @property (nonatomic,strong)NSString *BXfwsj;
 @property (nonatomic,strong)NSString *BXfwxm;
 @property (nonatomic,strong) UIButton *detailButton;
+
+
 
 @end

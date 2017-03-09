@@ -338,8 +338,20 @@
 
 - (NSString *)courseTimeStringWithCourseTime:(NSInteger)courseTime andCourseNum:(NSInteger)courseNum
 {
-    if (courseNum == 3)
-    {
+    if (courseNum == 4) {
+        switch (courseTime) {
+            case 0:
+                return @"08:00－11:45";
+            case 2:
+                return @"14:00－17:45";
+            case 4:
+                return @"19:00－22:45";
+                
+            default:
+                return @"00:00－";
+        }
+
+    }else if (courseNum == 3){
         switch (courseTime) {
             case 0:
                 return @"08:00－10:35";
@@ -376,7 +388,19 @@
 
 - (NSString *)courseNumWithCourseTime:(NSInteger)courseTime andCourseNum:(NSInteger)courseNum
 {
-    if (courseNum == 3)
+    if (courseNum == 4) {
+        switch (courseTime) {
+            case 0:
+                return @"一二三四节";
+            case 2:
+                return @"五六七八节";
+            case 4:
+                return @"九十十一十二节";
+                
+            default:
+                return @"wrong";
+        }
+    }else if (courseNum == 3)
     {
         switch (courseTime) {
             case 0:

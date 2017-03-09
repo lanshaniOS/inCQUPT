@@ -115,6 +115,11 @@
 		49ECE74A1DE735B800163D5C /* NSDate+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 49ECE7491DE735B800163D5C /* NSDate+Utilities.m */; };
 		E51FFEF2FC165CDCBE4A6571 /* libPods-在重邮.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1189500E1074EECD137C3468 /* libPods-在重邮.a */; };
 		F019347A1E6591CE00D3E25E /* ZCYCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F01934791E6591CE00D3E25E /* ZCYCalendarViewController.m */; };
+		F03411E31E7133E8009A029C /* detailNew.css in Resources */ = {isa = PBXBuildFile; fileRef = F03411E11E7133E8009A029C /* detailNew.css */; };
+		F03411E41E7133E8009A029C /* detailNew.html in Resources */ = {isa = PBXBuildFile; fileRef = F03411E21E7133E8009A029C /* detailNew.html */; };
+		F08D213B1E6FDF0100FD72FB /* ZCYInfomationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F08D21391E6FDF0100FD72FB /* ZCYInfomationCell.m */; };
+		F08D213C1E6FDF0100FD72FB /* ZCYInfomationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F08D213A1E6FDF0100FD72FB /* ZCYInfomationCell.xib */; };
+		F08D21401E6FF27C00FD72FB /* InfomationTypeView.m in Sources */ = {isa = PBXBuildFile; fileRef = F08D213F1E6FF27C00FD72FB /* InfomationTypeView.m */; };
 		F0D35F581E65243C001F2E08 /* ZWKBarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D35F551E65243C001F2E08 /* ZWKBarChart.m */; };
 		F0D35F591E65243C001F2E08 /* ZWKPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D35F571E65243C001F2E08 /* ZWKPieChart.m */; };
 		F0D35F5F1E652F93001F2E08 /* InfomationDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D35F5C1E652F93001F2E08 /* InfomationDetailModel.m */; };
@@ -352,6 +357,13 @@
 		B9A8BE7DC58BA8111526991E /* Pods-在重邮.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-在重邮.debug.xcconfig"; path = "Pods/Target Support Files/Pods-在重邮/Pods-在重邮.debug.xcconfig"; sourceTree = "<group>"; };
 		F01934781E6591CE00D3E25E /* ZCYCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYCalendarViewController.h; sourceTree = "<group>"; };
 		F01934791E6591CE00D3E25E /* ZCYCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYCalendarViewController.m; sourceTree = "<group>"; };
+		F03411E11E7133E8009A029C /* detailNew.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = detailNew.css; sourceTree = "<group>"; };
+		F03411E21E7133E8009A029C /* detailNew.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = detailNew.html; sourceTree = "<group>"; };
+		F08D21381E6FDF0100FD72FB /* ZCYInfomationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYInfomationCell.h; sourceTree = "<group>"; };
+		F08D21391E6FDF0100FD72FB /* ZCYInfomationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYInfomationCell.m; sourceTree = "<group>"; };
+		F08D213A1E6FDF0100FD72FB /* ZCYInfomationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZCYInfomationCell.xib; sourceTree = "<group>"; };
+		F08D213E1E6FF27C00FD72FB /* InfomationTypeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfomationTypeView.h; sourceTree = "<group>"; };
+		F08D213F1E6FF27C00FD72FB /* InfomationTypeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfomationTypeView.m; sourceTree = "<group>"; };
 		F0D35F541E65243C001F2E08 /* ZWKBarChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZWKBarChart.h; path = "在重邮/Libraries/ZWKCharts/ZWKBarChart.h"; sourceTree = SOURCE_ROOT; };
 		F0D35F551E65243C001F2E08 /* ZWKBarChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZWKBarChart.m; path = "在重邮/Libraries/ZWKCharts/ZWKBarChart.m"; sourceTree = SOURCE_ROOT; };
 		F0D35F561E65243C001F2E08 /* ZWKPieChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZWKPieChart.h; path = "在重邮/Libraries/ZWKCharts/ZWKPieChart.h"; sourceTree = SOURCE_ROOT; };
@@ -616,6 +628,7 @@
 		4951C8951DBA409700E5AC63 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
+				F08D21371E6FDEA700FD72FB /* Infomation */,
 				49BB03E41DF99F31003E39C0 /* Repairing */,
 				49EA61371DEDB661003A548A /* Exam */,
 				49A1D1411DE87F7C00C93F74 /* LendingRecord */,
@@ -626,6 +639,7 @@
 		4951C8961DBA409700E5AC63 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				F08D213D1E6FF24F00FD72FB /* Infamation */,
 				49BB03EB1DF99F48003E39C0 /* Repairing */,
 				492C932A1DF6F2CD0071DB63 /* Card */,
 				499C0AEF1DCA278700E2F61D /* Course */,
@@ -652,6 +666,7 @@
 		4951C8981DBA409700E5AC63 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F03411E01E7133E8009A029C /* detailNew */,
 				4951C8991DBA409700E5AC63 /* Assets.xcassets */,
 				4951C89A1DBA409700E5AC63 /* LaunchScreen.storyboard */,
 			);
@@ -1048,6 +1063,34 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		F03411E01E7133E8009A029C /* detailNew */ = {
+			isa = PBXGroup;
+			children = (
+				F03411E11E7133E8009A029C /* detailNew.css */,
+				F03411E21E7133E8009A029C /* detailNew.html */,
+			);
+			path = detailNew;
+			sourceTree = "<group>";
+		};
+		F08D21371E6FDEA700FD72FB /* Infomation */ = {
+			isa = PBXGroup;
+			children = (
+				F08D21381E6FDF0100FD72FB /* ZCYInfomationCell.h */,
+				F08D21391E6FDF0100FD72FB /* ZCYInfomationCell.m */,
+				F08D213A1E6FDF0100FD72FB /* ZCYInfomationCell.xib */,
+			);
+			path = Infomation;
+			sourceTree = "<group>";
+		};
+		F08D213D1E6FF24F00FD72FB /* Infamation */ = {
+			isa = PBXGroup;
+			children = (
+				F08D213E1E6FF27C00FD72FB /* InfomationTypeView.h */,
+				F08D213F1E6FF27C00FD72FB /* InfomationTypeView.m */,
+			);
+			path = Infamation;
+			sourceTree = "<group>";
+		};
 		F0D35F5A1E652F93001F2E08 /* InfomationModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1179,7 +1222,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0D35F731E653B38001F2E08 /* ZCYInfomationDetailController.xib in Resources */,
+				F03411E31E7133E8009A029C /* detailNew.css in Resources */,
+				F03411E41E7133E8009A029C /* detailNew.html in Resources */,
 				4951C8A71DBA409700E5AC63 /* Assets.xcassets in Resources */,
+				F08D213C1E6FDF0100FD72FB /* ZCYInfomationCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1257,6 +1303,7 @@
 				49BB03C81DF99EBF003E39C0 /* ZCYRepairDetailModel.m in Sources */,
 				49BB03C71DF99EBF003E39C0 /* ZCYRepairApplyModel.m in Sources */,
 				49CD413A1DC745530024011D /* ZCYLoginViewController.m in Sources */,
+				F08D213B1E6FDF0100FD72FB /* ZCYInfomationCell.m in Sources */,
 				49403FD61DF58DA400AF47D0 /* ZCYUserDetailViewController.m in Sources */,
 				495DAC631E081626007A2DCD /* SKPSMTPMessage.m in Sources */,
 				496F14DC1DD0B6B3000FA790 /* ZCYUserValidateHelper.m in Sources */,
@@ -1301,6 +1348,7 @@
 				495DAC331E07DE87007A2DCD /* ZCYAboutusViewController.m in Sources */,
 				4951C8B21DBA41AB00E5AC63 /* ZCYAppDelegate.m in Sources */,
 				49A1D1401DE8792300C93F74 /* ZCYLendingBookHelper.m in Sources */,
+				F08D21401E6FF27C00FD72FB /* InfomationTypeView.m in Sources */,
 				49BB03D31DF99EED003E39C0 /* ZCYRepairDetailViewController.m in Sources */,
 				49BB03E91DF99F31003E39C0 /* ZCYRepairCell.m in Sources */,
 				499B36721DC8E00B00CE2461 /* ZCYLineChart.m in Sources */,

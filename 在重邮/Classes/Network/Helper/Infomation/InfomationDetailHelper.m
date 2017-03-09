@@ -24,7 +24,6 @@
             detail.title = dic[@"title"];
             detail.time = dic[@"author"];
             detail.body = dic[@"body"];
-            NSLog(@"000%@",detail.time);
             completionBlock(nil,detail);
         }
         

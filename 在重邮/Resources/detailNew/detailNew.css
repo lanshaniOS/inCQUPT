@@ -1,0 +1,34 @@
+.container{
+    background: #fff;
+    padding: 0 30rpx;
+    width: 100%;
+}
+
+
+.titleDiv{
+	text.align:center;
+	width: 100%;
+}
+
+.info{
+	margin-top: 30rpx;
+    color: #b2b2b2;
+
+}
+
+.detail{
+	font-size: 11pt;
+    line-height: 150%;
+    padding: 50rpx 15rpx 200rpx;
+    word-break: break-all;
+    text-align: justify;
+}
+
+.title{
+	font-size: 18pt;
+    font-weight: bold;
+    margin-top: 40rpx;
+    line-height: 140%;
+    word-break: break-all;
+    text-align: center;
+}

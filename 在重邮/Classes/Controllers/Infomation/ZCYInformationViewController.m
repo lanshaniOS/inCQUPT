@@ -10,13 +10,15 @@
 #import "InfomationHelper.h"
 #import "InformationModel.h"
 #import "ZCYInfomationDetailController.h"
-
+#import "ZCYInfomationCell.h"
+#import "InfomationTypeView.h"
 
 #define kButtonWidth 50
+#define kButtonheight 55
+#define kVerticalAspact 10
 #define kScreenWidth self.view.frame.size.width
 #define kViewHeight self.view.frame.size.height
 #define kNavagationHeight self.navigationController.navigationBar.frame.size.height
-#define kAspact 10
 
 @interface ZCYInformationViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -24,16 +26,23 @@
 @property (nonatomic,strong)UITableView *listTable;
 @property (nonatomic,strong)NSArray *buttonNames;
 @property (nonatomic,strong)NSMutableArray *news;
-@property (nonatomic,strong)NSString *newsAPI;
+//@property (nonatomic,strong)NSString *newsAPI;
+@property (nonatomic,assign)NSInteger currentNews;
+@property (nonatomic,strong)NSArray *newsApi;
 
 @end
 
 @implementation ZCYInformationViewController
-
+{
+    CGFloat kAspact;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     _buttonNames = @[@"头条",@"教务公告",@"OA公告",@"会议通知",@"学术讲座",@"综合新闻"];
+    _newsApi = @[@"/api/get_newslist.php?page=1",@"/api/news/oa_list.php",@"/api/news/oa_list.php",@"/api/news/hy_list.php",@"/api/news/jz_list.php",@"/api/news/new_list.php"];
+    _currentNews = 0;
     self.automaticallyAdjustsScrollViewInsets = NO;
+    kAspact = (kScreenWidth-kButtonWidth*6)/7;
     [self initUI];
 }
 
@@ -54,32 +63,33 @@
 }
 
 -(void)initHeadScroll{
-    self.headScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 64, kScreenWidth, kButtonWidth+kAspact*2)];
-    self.headScroll.contentSize = CGSizeMake(kButtonWidth*6+kAspact*7, kButtonWidth+kAspact*2);
+    self.headScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 64, kScreenWidth, kButtonheight+kVerticalAspact)];
+    self.headScroll.contentSize = CGSizeMake(kButtonWidth*6+kAspact*7, kButtonheight+kVerticalAspact);
     _headScroll.showsVerticalScrollIndicator = NO;
     _headScroll.showsHorizontalScrollIndicator = NO;
-    _headScroll.backgroundColor = [UIColor yellowColor];
+//    _headScroll.backgroundColor = kDeepGreen_Color;
     [self.view addSubview:_headScroll];
     for (int i = 0; i < 6; i++) {
-        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(i*kButtonWidth+(i+1)*kAspact, kAspact, kButtonWidth, kButtonWidth)];
-        button.backgroundColor = [UIColor blackColor];
-        button.tag = 100+i;
-        [button setTitle:_buttonNames[i] forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:11];
-        [button addTarget:self action:@selector(choseInfomation:) forControlEvents:UIControlEventTouchUpInside];
-        [_headScroll addSubview:button];
+        InfomationTypeView *title = [[InfomationTypeView alloc]initWithFrame:CGRectMake(kButtonWidth*i+kAspact*(i+1), 4, kButtonWidth, kButtonheight) andType:_buttonNames[i]];
+        title.tag = 200+i;
+        //title.backgroundColor = [UIColor blackColor];
+        [_headScroll addSubview:title];
+        title.block = ^(NSInteger tag){
+            _currentNews = tag-200;
+            [[ZCYProgressHUD sharedHUD] rotateWithText:@"获取数据中" inView:self.view];
+            [self getNews];
+        };
     }
-}
-
--(void)choseInfomation:(UIButton *)button{
-    NSLog(@"0000");
 }
 
 
 -(void)initListTable{
     NSLog(@"%f",self.tabBarController.tabBar.frame.size.height);
-    CGFloat tableHeight = kViewHeight-(64+kButtonWidth+kAspact*2)-self.tabBarController.tabBar.frame.size.height;
-    _listTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 64+kButtonWidth+kAspact*2, kScreenWidth, tableHeight) style:UITableViewStylePlain];
+    CGFloat tableHeight = kViewHeight-(64+kButtonheight+kVerticalAspact)-self.tabBarController.tabBar.frame.size.height;
+    _listTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 64+kButtonheight+kVerticalAspact, kScreenWidth, tableHeight)];
+    _listTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _listTable.showsVerticalScrollIndicator = NO;
+    [self.listTable registerNib:[UINib nibWithNibName:@"ZCYInfomationCell" bundle:nil] forCellReuseIdentifier:@"cellId"];
     _listTable.delegate = self;
     _listTable.dataSource = self;
     [self.view addSubview:_listTable];
@@ -98,20 +108,20 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *cellID = @"cellID";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cellID"];
-    }
+    static NSString *cellID = @"cellId";
+    ZCYInfomationCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
     InformationModel *model = _news[indexPath.row];
-    cell.textLabel.text = model.title;
-    cell.detailTextLabel.text = model.time;
+    [cell setTitle:model.title Time:model.time type:model.type];
     return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 50.0;
 }
 
 -(void)getNews{
     _news = [NSMutableArray array];
-    [InfomationHelper getInfomationList:^(NSError *erro, NSArray *arr) {
+    [InfomationHelper getInfomationListWithNewsApi:_newsApi[_currentNews] andBlock:^(NSError *erro, NSArray *arr) {
         if (erro) {
             NSLog(@"%@",erro);
         }else{
@@ -122,15 +132,14 @@
                 model.title = dic[@"title"];
                 model.time = dic[@"time"];
                 model.type = dic[@"type"];
-                NSLog(@"%@",model.title);
                 [_news addObject:model];
                 
             }
             [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0];
             [_listTable reloadData];
         }
+
     }];
+
 }
-
-
 @end

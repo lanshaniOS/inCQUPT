@@ -10,16 +10,29 @@
 #import "ZCYUserMgr.h"
 @implementation InfomationHelper
 
-+(void)getInfomationList:(void (^)(NSError *, NSArray *))completionBlock{
++(void)getInfomationListWithNewsApi:(NSString *)newsApi andBlock:(void (^)(NSError *, NSArray *))completionBlock{
     
-    [[ZCYNetworkHelperMgr sharedMgr] requestWithData:@{@"page":@"1"} andCompletionBlock:^(NSError *error, id response, NSURLSessionDataTask *task) {
-        if (error) {
-            completionBlock(error,nil);
-        }else{
-            completionBlock(nil,response[@"data"]);
-        }
-
-    } andURLPath:@"/api/get_newslist.php"];
+    if ([newsApi isEqualToString:@"/api/get_newslist.php"]) {
+        [[ZCYNetworkHelperMgr sharedMgr] requestWithData:@{@"page":@"1"} andCompletionBlock:^(NSError *error, id response, NSURLSessionDataTask *task) {
+            if (error) {
+                completionBlock(error,nil);
+            }else{
+                completionBlock(nil,response[@"data"]);
+            }
+            
+        } andURLPath:@"/api/get_newslist.php"];
+    }else{
+        [[ZCYNetworkHelperMgr sharedMgr] requestWithData:nil andCompletionBlock:^(NSError *error, id response, NSURLSessionDataTask *task) {
+            if (error) {
+                completionBlock(error,nil);
+            }else{
+                completionBlock(nil,response[@"data"]);
+            }
+            
+        } andURLPath:newsApi];
+    }
+    
+    
 }
 
 @end

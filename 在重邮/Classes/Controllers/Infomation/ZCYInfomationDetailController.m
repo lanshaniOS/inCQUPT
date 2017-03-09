@@ -10,10 +10,9 @@
 #import "InfomationDetailModel.h"
 #import "InfomationDetailHelper.h"
 
-@interface ZCYInfomationDetailController ()
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-@property (weak, nonatomic) IBOutlet UITextView *bodyText;
+@interface ZCYInfomationDetailController ()<UIWebViewDelegate>
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (nonatomic,strong)InfomationDetailModel *detailModel;
 @property (nonatomic,strong)NSString *infomationType;
 @property (nonatomic,strong)NSString *infomationId;
 @end
@@ -46,10 +45,12 @@
             }else{
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0];
-                    self.titleLabel.text = detail.title;
-                    self.timeLabel.text = detail.time;
-                    self.bodyText.text = detail.body;
-                    NSLog(@"%@---%@",_titleLabel,detail.time);
+                    self.detailModel = detail;
+
+                    NSString *htmlPath = [[NSBundle mainBundle] pathForResource:@"detailNew" ofType:@"html"];
+                    NSString *htmlCont = [NSString stringWithContentsOfFile:htmlPath encoding:NSUTF8StringEncoding error:nil];
+                    NSURL *url = [NSURL fileURLWithPath:[NSBundle mainBundle].bundlePath];
+                    [self.webView loadHTMLString:htmlCont baseURL:url];
                 });
             }
         }];
@@ -59,6 +60,19 @@
 -(void)getInfomationType:(NSString *)type andId:(NSString *)infomationId{
     _infomationId = infomationId;
     _infomationType = type;
+}
+
+
+-(void)webViewDidFinishLoad:(UIWebView *)webView{
+    NSString *title = self.detailModel.title;
+    NSString *author = self.detailModel.time;
+    NSString *body = self.detailModel.body;
+    NSString *changeTitle = [NSString stringWithFormat:@"var change = document.getElementsByClassName('title')[0];""change.innerHTML = '%@';",title];
+    [webView stringByEvaluatingJavaScriptFromString:changeTitle];
+    NSString *changeAuthor = [NSString stringWithFormat:@"var change = document.getElementsByClassName('info')[0];""change.innerHTML = '%@';",author];
+    [webView stringByEvaluatingJavaScriptFromString:changeAuthor];
+    NSString *changeBody = [NSString stringWithFormat:@"var change = document.getElementsByClassName('detail')[0];""change.innerHTML = '%@';",body];
+    [webView stringByEvaluatingJavaScriptFromString:changeBody];
 }
 
 @end

@@ -438,7 +438,7 @@ static const float animationTime = 0.2f;
     }
     NSArray *courseArray = [ZCYUserMgr sharedMgr].courseArray[indexPath.row];
     NSArray *colArray = courseArray[indexPath.section];
-
+    NSLog(@"%@",colArray);
 //    if (indexPath.row == [NSDate date].week -1)
 //    {
 //        cell.backgroundColor = [UIColor colorWithRGBHex:0xe4ffdf];
@@ -463,13 +463,12 @@ static const float animationTime = 0.2f;
     }
 
     
-    
-    
     cell.frame = CGRectMake((_courseWidth+0.5)*indexPath.row, (_courseWidth*1.26+0.5)*indexPath.section, _courseWidth, _courseWidth*1.26);
     __block BOOL haveCourse = NO;
     [colArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
     
         ZCYTimeTableModel *model  = obj;
+        
         for (NSUInteger i=0; i<model.courseWeeks.count; i++)
         {
             if ([model.courseWeeks[i] integerValue] == schoolWeek)
@@ -485,6 +484,9 @@ static const float animationTime = 0.2f;
                     if ([model.courseNumber integerValue] == 3)
                     {
                         cell.frame = CGRectMake((_courseWidth+0.5)*indexPath.row, (_courseWidth*1.26+0.5)*indexPath.section, _courseWidth, _courseWidth*3*0.63);
+                    }
+                    if ([model.courseNumber integerValue] == 4) {
+                        cell.frame = CGRectMake((_courseWidth+0.5)*indexPath.row, (_courseWidth*1.26+0.5)*indexPath.section, _courseWidth, _courseWidth*4*0.63);
                     }
                 }
             }
@@ -583,7 +585,8 @@ static const float animationTime = 0.2f;
     if (!haveCourse)
     {
         old_selectedIndexPath = nil;
-        [self hideDetailCourseView];
+        //[self hideDetailCourseView];
+        [self closeButtonDidPressed];
         return;
     }
     CGFloat x_offset = self.backgroundScrollView.contentOffset.x;
@@ -872,6 +875,9 @@ static const float animationTime = 0.2f;
 #pragma mark - ZCYCloseButtonTouchedDelegate
 - (void)closeButtonDidPressed
 {
+    if (self.weekPicker.hidden == NO) {
+        return;
+    }
     self.bottomView.hidden = NO;
     self.weekPicker.hidden = NO;
     UICollectionViewCell *cell = [self.courseCollectionView cellForItemAtIndexPath:old_selectedIndexPath];
