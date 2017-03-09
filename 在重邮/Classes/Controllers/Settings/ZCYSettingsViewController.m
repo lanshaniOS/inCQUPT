@@ -136,7 +136,7 @@
     }];
     
     UIView *calendarView = [[UIView alloc] init];
-    [self setView:calendarView withImageName:@"反馈意见" andFuncName:@"校历"];
+    [self setView:calendarView withImageName:@"校历图标" andFuncName:@"校历"];
     [self.backgroundScrollView addSubview:calendarView];
     [calendarView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(userView.mas_bottom).with.offset(20);

@@ -41,7 +41,8 @@
     if (_infomationId&&_infomationType) {
         [InfomationDetailHelper getInfomationDetailWithType:_infomationType andId:_infomationId andCompletionBlock:^(NSError *erro, InfomationDetailModel *detail) {
             if (erro) {
-                NSLog(@"%@",erro);
+                [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0];
+                [[ZCYProgressHUD sharedHUD] showWithText:erro.localizedDescription inView:self.view hideAfterDelay:1.0f];
             }else{
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0];

@@ -438,7 +438,7 @@ static const float animationTime = 0.2f;
     }
     NSArray *courseArray = [ZCYUserMgr sharedMgr].courseArray[indexPath.row];
     NSArray *colArray = courseArray[indexPath.section];
-    NSLog(@"%@",colArray);
+    
 //    if (indexPath.row == [NSDate date].week -1)
 //    {
 //        cell.backgroundColor = [UIColor colorWithRGBHex:0xe4ffdf];
@@ -465,6 +465,7 @@ static const float animationTime = 0.2f;
     
     cell.frame = CGRectMake((_courseWidth+0.5)*indexPath.row, (_courseWidth*1.26+0.5)*indexPath.section, _courseWidth, _courseWidth*1.26);
     __block BOOL haveCourse = NO;
+    NSLog(@"%@", colArray);
     [colArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
     
         ZCYTimeTableModel *model  = obj;
@@ -475,6 +476,7 @@ static const float animationTime = 0.2f;
             {
                 if (!haveCourse)
                 {
+                    NSLog(@"%@", model.courseName);
                     haveCourse = YES;
                     [self setCollectionViewCell:cell withColor:cellColor andCourseName:model.courseName andClassID:model.coursePlace];
                     //                [cell setRadius:5.0f]; //影响性能
