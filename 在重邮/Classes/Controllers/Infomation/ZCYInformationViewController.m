@@ -36,6 +36,7 @@
     CGFloat kAspact;
     BOOL isAddPage;
     BOOL isRefresh;
+    BOOL isFirstShow;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -58,11 +59,17 @@
     kAspact = (kScreenWidth-kButtonWidth*6)/7;
     isAddPage = NO;
     isRefresh = NO;
+    isFirstShow = YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
 }
 
 - (void)initUI
@@ -106,14 +113,22 @@
     _listTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     _listTable.showsVerticalScrollIndicator = NO;
     [self.listTable registerNib:[UINib nibWithNibName:@"ZCYInfomationCell" bundle:nil] forCellReuseIdentifier:@"cellId"];
-    
+    [self addMJHeader];
+    _listTable.delegate = self;
+    _listTable.dataSource = self;
+    [self.view addSubview:_listTable];
+}
+
+-(void)addMJHeader{
     MJRefreshHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         isRefresh = YES;
         [self getNews];
     }];
     self.listTable.mj_header = header;
     [self.listTable.mj_header beginRefreshing];
-    
+}
+
+-(void)addMJFooter{
     self.listTable.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         NSInteger currentPage = [_currentPages[_currentNews] integerValue];
         currentPage ++;
@@ -121,10 +136,6 @@
         _currentPages[_currentNews] = [NSNumber numberWithInteger:currentPage];
         [self getNews];
     }];
-    
-    _listTable.delegate = self;
-    _listTable.dataSource = self;
-    [self.view addSubview:_listTable];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -176,11 +187,19 @@
                 }
                 if (isAddPage == NO) {
                     [news removeAllObjects];
+                    [news addObjectsFromArray:newsArr];
+                    [self.listTable.mj_header endRefreshing];
+                }else{
+                    isAddPage = NO;
+                    [news addObjectsFromArray:newsArr];
+                    [self.listTable.mj_footer endRefreshing];
                 }
-                isAddPage = NO;
-                [news addObjectsFromArray:newsArr];
+                if (isFirstShow) {
+                    [self addMJFooter];
+                    isFirstShow = NO;
+                }
                 [_listTable reloadData];
-                [self.listTable.mj_header endRefreshing];
+                
             }else{
                 [[ZCYProgressHUD sharedHUD] showWithText:[NSString stringWithFormat:@"暂无%@",_buttonNames[_currentNews]] inView:self.view hideAfterDelay:1.0f];
             }
