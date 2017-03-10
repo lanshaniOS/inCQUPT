@@ -13,11 +13,11 @@
 .info{
 	margin-top: 30rpx;
     color: #b2b2b2;
-
+    font-size 10px;
 }
 
 .detail{
-	font-size: 11pt;
+	font-size: 13px;
     line-height: 150%;
     padding: 50rpx 15rpx 200rpx;
     word-break: break-all;
@@ -25,7 +25,7 @@
 }
 
 .title{
-	font-size: 17pt;
+	font-size: 15px;
     font-weight: bold;
     margin-top: 35rpx;
     line-height: 140%;

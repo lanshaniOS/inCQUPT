@@ -67,11 +67,12 @@
     NSString *title = self.detailModel.title;
     NSString *author = self.detailModel.time;
     NSString *body = self.detailModel.body;
-    NSString *changeTitle = [NSString stringWithFormat:@"var change = document.getElementsByClassName('title')[0];""change.innerHTML = '%@';",title];
+    NSString *changeTitle = [NSString stringWithFormat:@"document.getElementsByClassName('title')[0].innerText = '%@';",title];
     [webView stringByEvaluatingJavaScriptFromString:changeTitle];
-    NSString *changeAuthor = [NSString stringWithFormat:@"var change = document.getElementsByClassName('info')[0];""change.innerHTML = '%@';",author];
+    NSString *changeAuthor = [NSString stringWithFormat:@"document.getElementsByClassName('info')[0].innerText = '%@';",author];
     [webView stringByEvaluatingJavaScriptFromString:changeAuthor];
-    NSString *changeBody = [NSString stringWithFormat:@"var change = document.getElementsByClassName('detail')[0];""change.innerHTML = '%@';",body];
+    NSString *changeBody = [NSString stringWithFormat:@"document.getElementsByClassName('detail')[0].innerText = '%@';",body];
+    NSLog(@"%@",changeBody);
     [webView stringByEvaluatingJavaScriptFromString:changeBody];
 }
 
