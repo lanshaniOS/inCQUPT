@@ -84,7 +84,6 @@
 
 
 -(void)initListTable{
-    NSLog(@"%f",self.tabBarController.tabBar.frame.size.height);
     CGFloat tableHeight = kViewHeight-(64+kButtonheight+kVerticalAspact)-self.tabBarController.tabBar.frame.size.height;
     _listTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 64+kButtonheight+kVerticalAspact, kScreenWidth, tableHeight)];
     _listTable.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -122,8 +121,9 @@
 -(void)getNews{
     _news = [NSMutableArray array];
     [InfomationHelper getInfomationListWithNewsApi:_newsApi[_currentNews] andBlock:^(NSError *erro, NSArray *arr) {
+        [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0];
         if (erro) {
-            NSLog(@"%@",erro);
+            [[ZCYProgressHUD sharedHUD] showWithText:erro.localizedDescription inView:self.view hideAfterDelay:1.0f];
         }else{
             for (int i = 0; i < arr.count; i++) {
                 InformationModel *model = [[InformationModel alloc]init];
@@ -135,7 +135,6 @@
                 [_news addObject:model];
                 
             }
-            [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0];
             [_listTable reloadData];
         }
 
