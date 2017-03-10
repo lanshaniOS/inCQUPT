@@ -25,33 +25,44 @@
 @property (nonatomic,strong)UIScrollView *headScroll;
 @property (nonatomic,strong)UITableView *listTable;
 @property (nonatomic,strong)NSArray *buttonNames;
-@property (nonatomic,strong)NSMutableArray *news;
-//@property (nonatomic,strong)NSString *newsAPI;
+@property (nonatomic,strong)NSMutableArray *newsArr;
 @property (nonatomic,assign)NSInteger currentNews;
 @property (nonatomic,strong)NSArray *newsApi;
-
+@property (nonatomic,strong)NSMutableArray *currentPages;
 @end
 
 @implementation ZCYInformationViewController
 {
     CGFloat kAspact;
+    BOOL isAddPage;
+    BOOL isRefresh;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initData];
+    [self initUI];
+}
+
+-(void)initData{
     _buttonNames = @[@"头条",@"教务公告",@"OA公告",@"会议通知",@"学术讲座",@"综合新闻"];
-    _newsApi = @[@"/api/get_newslist.php?page=1",@"/api/news/oa_list.php",@"/api/news/oa_list.php",@"/api/news/hy_list.php",@"/api/news/jz_list.php",@"/api/news/new_list.php"];
+    _newsApi = @[@"/api/get_newslist.php",@"/api/news/jw_list.php",@"/api/news/oa_list.php",@"/api/news/hy_list.php",@"/api/news/jz_list.php",@"/api/news/new_list.php"];
+    _currentPages = [NSMutableArray arrayWithArray:@[@1,@1,@1,@1,@1,@1]];
+    _newsArr = [NSMutableArray array];
+    
+    for (int i = 0; i < _buttonNames.count; i++) {
+        NSMutableArray *arr = [NSMutableArray array];
+        [_newsArr addObject:arr];
+    }
     _currentNews = 0;
     self.automaticallyAdjustsScrollViewInsets = NO;
     kAspact = (kScreenWidth-kButtonWidth*6)/7;
-    [self initUI];
+    isAddPage = NO;
+    isRefresh = NO;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    if (_news.count == 0) {
-        [[ZCYProgressHUD sharedHUD] rotateWithText:@"获取数据中" inView:self.view];
-    }
-    
+
 }
 
 - (void)initUI
@@ -76,8 +87,14 @@
         [_headScroll addSubview:title];
         title.block = ^(NSInteger tag){
             _currentNews = tag-200;
-            [[ZCYProgressHUD sharedHUD] rotateWithText:@"获取数据中" inView:self.view];
-            [self getNews];
+            NSMutableArray *arr = _newsArr[_currentNews];
+            if (arr.count > 0) {
+                [self.listTable reloadData];
+            }else{
+                [[ZCYProgressHUD sharedHUD] rotateWithText:@"获取数据中" inView:self.view];
+                [self getNews];
+            }
+            
         };
     }
 }
@@ -89,6 +106,22 @@
     _listTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     _listTable.showsVerticalScrollIndicator = NO;
     [self.listTable registerNib:[UINib nibWithNibName:@"ZCYInfomationCell" bundle:nil] forCellReuseIdentifier:@"cellId"];
+    
+    MJRefreshHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        isRefresh = YES;
+        [self getNews];
+    }];
+    self.listTable.mj_header = header;
+    [self.listTable.mj_header beginRefreshing];
+    
+    self.listTable.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        NSInteger currentPage = [_currentPages[_currentNews] integerValue];
+        currentPage ++;
+        isAddPage = YES;
+        _currentPages[_currentNews] = [NSNumber numberWithInteger:currentPage];
+        [self getNews];
+    }];
+    
     _listTable.delegate = self;
     _listTable.dataSource = self;
     [self.view addSubview:_listTable];
@@ -96,20 +129,21 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    InformationModel *model = _news[indexPath.row];
+    InformationModel *model = _newsArr[_currentNews][indexPath.row];
     ZCYInfomationDetailController *detailVC = [[ZCYInfomationDetailController alloc]init];
     [detailVC getInfomationType:model.type andId:model.articleid];
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _news.count;
+    NSMutableArray *arr = _newsArr[_currentNews];
+    return arr.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellID = @"cellId";
     ZCYInfomationCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
-    InformationModel *model = _news[indexPath.row];
+    InformationModel *model = _newsArr[_currentNews][indexPath.row];
     [cell setTitle:model.title Time:model.time type:model.type];
     return cell;
 }
@@ -119,23 +153,37 @@
 }
 
 -(void)getNews{
-    _news = [NSMutableArray array];
-    [InfomationHelper getInfomationListWithNewsApi:_newsApi[_currentNews] andBlock:^(NSError *erro, NSArray *arr) {
+    NSMutableArray *news = self.newsArr[_currentNews];
+    if (isRefresh) {
+        _currentPages[_currentNews] = [NSNumber numberWithInteger:1];
+        isRefresh = NO;
+    }
+    [InfomationHelper getInfomationListWithNewsApi:_newsApi[_currentNews] andPage:[_currentPages[_currentNews] integerValue] andBlock:^(NSError *erro, NSArray *arr) {
         [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0];
         if (erro) {
             [[ZCYProgressHUD sharedHUD] showWithText:erro.localizedDescription inView:self.view hideAfterDelay:1.0f];
         }else{
-            for (int i = 0; i < arr.count; i++) {
-                InformationModel *model = [[InformationModel alloc]init];
-                NSDictionary *dic = arr[i];
-                model.articleid = dic[@"articleid"];
-                model.title = dic[@"title"];
-                model.time = dic[@"time"];
-                model.type = dic[@"type"];
-                [_news addObject:model];
-                
+            NSMutableArray *newsArr = [NSMutableArray array];
+            if (arr && arr.count>0) {
+                for (int i = 0; i < arr.count; i++) {
+                    InformationModel *model = [[InformationModel alloc]init];
+                    NSDictionary *dic = arr[i];
+                    model.articleid = dic[@"articleid"];
+                    model.title = dic[@"title"];
+                    model.time = dic[@"time"];
+                    model.type = dic[@"type"];
+                    [newsArr addObject:model];
+                }
+                if (isAddPage == NO) {
+                    [news removeAllObjects];
+                }
+                isAddPage = NO;
+                [news addObjectsFromArray:newsArr];
+                [_listTable reloadData];
+                [self.listTable.mj_header endRefreshing];
+            }else{
+                [[ZCYProgressHUD sharedHUD] showWithText:[NSString stringWithFormat:@"暂无%@",_buttonNames[_currentNews]] inView:self.view hideAfterDelay:1.0f];
             }
-            [_listTable reloadData];
         }
 
     }];

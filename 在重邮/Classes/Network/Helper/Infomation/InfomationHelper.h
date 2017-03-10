@@ -10,6 +10,6 @@
 
 @interface InfomationHelper : NSObject
 
-+(void)getInfomationListWithNewsApi:(NSString *)newsApi andBlock:(void (^)(NSError *, NSArray *))completionBlock;
++(void)getInfomationListWithNewsApi:(NSString *)newsApi andPage:(NSInteger)page andBlock:(void (^)(NSError *, NSArray *))completionBlock;
 
 @end
