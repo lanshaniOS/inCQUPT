@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		33EBE2E7AF8A290E75DFE225 /* libPods-Today.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B748FE8DE13082445F21A19 /* libPods-Today.a */; };
 		49061F581DDB4F7B00E2923A /* UILabel+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 49061F571DDB4F7B00E2923A /* UILabel+Common.m */; };
 		49061F5B1DDF325E00E2923A /* ZCYDetailCourseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49061F5A1DDF325E00E2923A /* ZCYDetailCourseView.m */; };
 		49108DB01E00183900C71723 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 49108DAF1E00183900C71723 /* NSString+MD5.m */; };
@@ -42,29 +43,6 @@
 		499232DA1DC4A28C00B17B54 /* ZCYCourseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 499232D91DC4A28C00B17B54 /* ZCYCourseView.m */; };
 		499232E01DC4ECBC00B17B54 /* ZCYCourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 499232DF1DC4ECBC00B17B54 /* ZCYCourseViewController.m */; };
 		499B36721DC8E00B00CE2461 /* ZCYLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 499B36711DC8E00B00CE2461 /* ZCYLineChart.m */; };
-		49A1D1131DE8639800C93F74 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D1081DE8639800C93F74 /* libAFNetworking.a */; };
-		49A1D1151DE8639800C93F74 /* libFMDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D10A1DE8639800C93F74 /* libFMDB.a */; };
-		49A1D1161DE8639800C93F74 /* libJSPatch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D10B1DE8639800C93F74 /* libJSPatch.a */; };
-		49A1D1171DE8639800C93F74 /* libMasonry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D10C1DE8639800C93F74 /* libMasonry.a */; };
-		49A1D1181DE8639800C93F74 /* libMBProgressHUD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D10D1DE8639800C93F74 /* libMBProgressHUD.a */; };
-		49A1D1191DE8639800C93F74 /* libMJRefresh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D10E1DE8639800C93F74 /* libMJRefresh.a */; };
-		49A1D11A1DE8639800C93F74 /* libSDWebImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D10F1DE8639800C93F74 /* libSDWebImage.a */; };
-		49A1D11B1DE8639800C93F74 /* libYYImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D1101DE8639800C93F74 /* libYYImage.a */; };
-		49A1D11C1DE8639800C93F74 /* libYYModel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D1111DE8639800C93F74 /* libYYModel.a */; };
-		49A1D11D1DE8639800C93F74 /* libYYText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D1121DE8639800C93F74 /* libYYText.a */; };
-		49A1D11F1DE863AE00C93F74 /* libCocoaLumberjack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D11E1DE863AE00C93F74 /* libCocoaLumberjack.a */; };
-		49A1D1201DE863CC00C93F74 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D1081DE8639800C93F74 /* libAFNetworking.a */; };
-		49A1D1211DE863CC00C93F74 /* libFMDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D10A1DE8639800C93F74 /* libFMDB.a */; };
-		49A1D12C1DE863CD00C93F74 /* libCocoaLumberjack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D1221DE863CC00C93F74 /* libCocoaLumberjack.a */; };
-		49A1D12D1DE863CD00C93F74 /* libJSPatch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D1231DE863CD00C93F74 /* libJSPatch.a */; };
-		49A1D12E1DE863CD00C93F74 /* libMasonry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D1241DE863CD00C93F74 /* libMasonry.a */; };
-		49A1D12F1DE863CD00C93F74 /* libMBProgressHUD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D1251DE863CD00C93F74 /* libMBProgressHUD.a */; };
-		49A1D1301DE863CD00C93F74 /* libMJRefresh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D1261DE863CD00C93F74 /* libMJRefresh.a */; };
-		49A1D1311DE863CD00C93F74 /* libPods-在重邮.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D1271DE863CD00C93F74 /* libPods-在重邮.a */; };
-		49A1D1321DE863CD00C93F74 /* libSDWebImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D1281DE863CD00C93F74 /* libSDWebImage.a */; };
-		49A1D1331DE863CD00C93F74 /* libYYImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D1291DE863CD00C93F74 /* libYYImage.a */; };
-		49A1D1341DE863CD00C93F74 /* libYYModel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D12A1DE863CD00C93F74 /* libYYModel.a */; };
-		49A1D1351DE863CD00C93F74 /* libYYText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A1D12B1DE863CD00C93F74 /* libYYText.a */; };
 		49A1D1381DE8655B00C93F74 /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A1D1371DE8655B00C93F74 /* UIColor+Additions.m */; };
 		49A1D13C1DE86D7800C93F74 /* ZCYLendBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A1D13B1DE86D7800C93F74 /* ZCYLendBookViewController.m */; };
 		49A1D1401DE8792300C93F74 /* ZCYLendingBookHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A1D13F1DE8792300C93F74 /* ZCYLendingBookHelper.m */; };
@@ -94,6 +72,18 @@
 		49BB03EA1DF99F31003E39C0 /* ZCYRepairDetailCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BB03E81DF99F31003E39C0 /* ZCYRepairDetailCellView.m */; };
 		49BB03EE1DF99F48003E39C0 /* ZCYRepairGDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BB03ED1DF99F48003E39C0 /* ZCYRepairGDView.m */; };
 		49CD413A1DC745530024011D /* ZCYLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CD41391DC745530024011D /* ZCYLoginViewController.m */; };
+		49DED9601E741F5B00A95A39 /* libPods-i重邮.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A13C71F9ACFB601A1BC97FE /* libPods-i重邮.a */; };
+		49DED96E1E741F5B00A95A39 /* libMasonry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DED9641E741F5B00A95A39 /* libMasonry.a */; };
+		49DED9751E74225700A95A39 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DED9611E741F5B00A95A39 /* libAFNetworking.a */; };
+		49DED9761E74225700A95A39 /* libCocoaLumberjack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DED9621E741F5B00A95A39 /* libCocoaLumberjack.a */; };
+		49DED9771E74225700A95A39 /* libFMDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DED9631E741F5B00A95A39 /* libFMDB.a */; };
+		49DED9781E74225700A95A39 /* libMasonry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DED9641E741F5B00A95A39 /* libMasonry.a */; };
+		49DED9791E74225700A95A39 /* libMBProgressHUD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DED9651E741F5B00A95A39 /* libMBProgressHUD.a */; };
+		49DED97A1E74225700A95A39 /* libMJRefresh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DED9661E741F5B00A95A39 /* libMJRefresh.a */; };
+		49DED97B1E74225700A95A39 /* libSDWebImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DED9671E741F5B00A95A39 /* libSDWebImage.a */; };
+		49DED97C1E74225700A95A39 /* libYYImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DED9681E741F5B00A95A39 /* libYYImage.a */; };
+		49DED97D1E74225700A95A39 /* libYYModel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DED9691E741F5B00A95A39 /* libYYModel.a */; };
+		49DED97E1E74225700A95A39 /* libYYText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DED96A1E741F5B00A95A39 /* libYYText.a */; };
 		49EA612A1DEDA975003A548A /* ZCYExaminationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EA61291DEDA975003A548A /* ZCYExaminationViewController.m */; };
 		49EA612D1DEDA987003A548A /* ZCYEmptyClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EA612C1DEDA987003A548A /* ZCYEmptyClassViewController.m */; };
 		49EA61311DEDAA2D003A548A /* ZCYStudentSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EA61301DEDAA2D003A548A /* ZCYStudentSearchViewController.m */; };
@@ -113,6 +103,7 @@
 		49ECE7421DE72F1200163D5C /* ZCYUserMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 49ECE7411DE72F1200163D5C /* ZCYUserMgr.m */; };
 		49ECE7461DE732D300163D5C /* ZCYCourseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49ECE7451DE732D300163D5C /* ZCYCourseView.m */; };
 		49ECE74A1DE735B800163D5C /* NSDate+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 49ECE7491DE735B800163D5C /* NSDate+Utilities.m */; };
+		B604844A0EC8563617EFF74E /* libPods-i重邮.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A13C71F9ACFB601A1BC97FE /* libPods-i重邮.a */; };
 		E51FFEF2FC165CDCBE4A6571 /* libPods-在重邮.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1189500E1074EECD137C3468 /* libPods-在重邮.a */; };
 		F019347A1E6591CE00D3E25E /* ZCYCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F01934791E6591CE00D3E25E /* ZCYCalendarViewController.m */; };
 		F08D213B1E6FDF0100FD72FB /* ZCYInfomationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F08D21391E6FDF0100FD72FB /* ZCYInfomationCell.m */; };
@@ -154,6 +145,8 @@
 
 /* Begin PBXFileReference section */
 		1189500E1074EECD137C3468 /* libPods-在重邮.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-在重邮.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A13C71F9ACFB601A1BC97FE /* libPods-i重邮.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-i重邮.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3943E775C22A3626885E0FDE /* Pods-i重邮.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-i重邮.release.xcconfig"; path = "Pods/Target Support Files/Pods-i重邮/Pods-i重邮.release.xcconfig"; sourceTree = "<group>"; };
 		49061F561DDB4F7B00E2923A /* UILabel+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Common.h"; sourceTree = "<group>"; };
 		49061F571DDB4F7B00E2923A /* UILabel+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Common.m"; sourceTree = "<group>"; };
 		49061F591DDF325E00E2923A /* ZCYDetailCourseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYDetailCourseView.h; sourceTree = "<group>"; };
@@ -230,28 +223,6 @@
 		499232DF1DC4ECBC00B17B54 /* ZCYCourseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYCourseViewController.m; sourceTree = "<group>"; };
 		499B36701DC8E00B00CE2461 /* ZCYLineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYLineChart.h; sourceTree = "<group>"; };
 		499B36711DC8E00B00CE2461 /* ZCYLineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYLineChart.m; sourceTree = "<group>"; };
-		49A1D1081DE8639800C93F74 /* libAFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAFNetworking.a; path = "../../../Library/Developer/Xcode/DerivedData/在重邮-akiheshqtfbdrjfbnppzlcmpfzfa/Build/Products/Debug-iphoneos/AFNetworking/libAFNetworking.a"; sourceTree = "<group>"; };
-		49A1D1091DE8639800C93F74 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocoaLumberjack.a; path = "Pods/../build/Debug-iphoneos/CocoaLumberjack/libCocoaLumberjack.a"; sourceTree = "<group>"; };
-		49A1D10A1DE8639800C93F74 /* libFMDB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFMDB.a; path = "../../../Library/Developer/Xcode/DerivedData/在重邮-akiheshqtfbdrjfbnppzlcmpfzfa/Build/Products/Debug-iphoneos/FMDB/libFMDB.a"; sourceTree = "<group>"; };
-		49A1D10B1DE8639800C93F74 /* libJSPatch.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libJSPatch.a; path = "Pods/../build/Debug-iphoneos/JSPatch/libJSPatch.a"; sourceTree = "<group>"; };
-		49A1D10C1DE8639800C93F74 /* libMasonry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMasonry.a; path = "Pods/../build/Debug-iphoneos/Masonry/libMasonry.a"; sourceTree = "<group>"; };
-		49A1D10D1DE8639800C93F74 /* libMBProgressHUD.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMBProgressHUD.a; path = "Pods/../build/Debug-iphoneos/MBProgressHUD/libMBProgressHUD.a"; sourceTree = "<group>"; };
-		49A1D10E1DE8639800C93F74 /* libMJRefresh.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMJRefresh.a; path = "Pods/../build/Debug-iphoneos/MJRefresh/libMJRefresh.a"; sourceTree = "<group>"; };
-		49A1D10F1DE8639800C93F74 /* libSDWebImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDWebImage.a; path = "Pods/../build/Debug-iphoneos/SDWebImage/libSDWebImage.a"; sourceTree = "<group>"; };
-		49A1D1101DE8639800C93F74 /* libYYImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libYYImage.a; path = "Pods/../build/Debug-iphoneos/YYImage/libYYImage.a"; sourceTree = "<group>"; };
-		49A1D1111DE8639800C93F74 /* libYYModel.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libYYModel.a; path = "Pods/../build/Debug-iphoneos/YYModel/libYYModel.a"; sourceTree = "<group>"; };
-		49A1D1121DE8639800C93F74 /* libYYText.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libYYText.a; path = "Pods/../build/Debug-iphoneos/YYText/libYYText.a"; sourceTree = "<group>"; };
-		49A1D11E1DE863AE00C93F74 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocoaLumberjack.a; path = "Pods/../build/Debug-iphoneos/CocoaLumberjack/libCocoaLumberjack.a"; sourceTree = "<group>"; };
-		49A1D1221DE863CC00C93F74 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocoaLumberjack.a; path = "Pods/../build/Debug-iphoneos/CocoaLumberjack/libCocoaLumberjack.a"; sourceTree = "<group>"; };
-		49A1D1231DE863CD00C93F74 /* libJSPatch.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libJSPatch.a; path = "Pods/../build/Debug-iphoneos/JSPatch/libJSPatch.a"; sourceTree = "<group>"; };
-		49A1D1241DE863CD00C93F74 /* libMasonry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMasonry.a; path = "Pods/../build/Debug-iphoneos/Masonry/libMasonry.a"; sourceTree = "<group>"; };
-		49A1D1251DE863CD00C93F74 /* libMBProgressHUD.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMBProgressHUD.a; path = "Pods/../build/Debug-iphoneos/MBProgressHUD/libMBProgressHUD.a"; sourceTree = "<group>"; };
-		49A1D1261DE863CD00C93F74 /* libMJRefresh.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMJRefresh.a; path = "Pods/../build/Debug-iphoneos/MJRefresh/libMJRefresh.a"; sourceTree = "<group>"; };
-		49A1D1271DE863CD00C93F74 /* libPods-在重邮.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-在重邮.a"; path = "Pods/../build/Debug-iphoneos/libPods-在重邮.a"; sourceTree = "<group>"; };
-		49A1D1281DE863CD00C93F74 /* libSDWebImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDWebImage.a; path = "Pods/../build/Debug-iphoneos/SDWebImage/libSDWebImage.a"; sourceTree = "<group>"; };
-		49A1D1291DE863CD00C93F74 /* libYYImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libYYImage.a; path = "Pods/../build/Debug-iphoneos/YYImage/libYYImage.a"; sourceTree = "<group>"; };
-		49A1D12A1DE863CD00C93F74 /* libYYModel.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libYYModel.a; path = "Pods/../build/Debug-iphoneos/YYModel/libYYModel.a"; sourceTree = "<group>"; };
-		49A1D12B1DE863CD00C93F74 /* libYYText.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libYYText.a; path = "Pods/../build/Debug-iphoneos/YYText/libYYText.a"; sourceTree = "<group>"; };
 		49A1D1361DE8655B00C93F74 /* UIColor+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Additions.h"; path = "在重邮/Classes/Support/Category/UIColor+Additions.h"; sourceTree = SOURCE_ROOT; };
 		49A1D1371DE8655B00C93F74 /* UIColor+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Additions.m"; path = "在重邮/Classes/Support/Category/UIColor+Additions.m"; sourceTree = SOURCE_ROOT; };
 		49A1D13A1DE86D7800C93F74 /* ZCYLendBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYLendBookViewController.h; sourceTree = "<group>"; };
@@ -310,6 +281,16 @@
 		49BB03ED1DF99F48003E39C0 /* ZCYRepairGDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYRepairGDView.m; sourceTree = "<group>"; };
 		49CD41381DC745530024011D /* ZCYLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYLoginViewController.h; sourceTree = "<group>"; };
 		49CD41391DC745530024011D /* ZCYLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYLoginViewController.m; sourceTree = "<group>"; };
+		49DED9611E741F5B00A95A39 /* libAFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAFNetworking.a; path = "../../../Library/Developer/Xcode/DerivedData/i重邮-geiyjkvrixxywbcqlyvnrdfwsueo/Build/Products/Release-iphoneos/AFNetworking/libAFNetworking.a"; sourceTree = "<group>"; };
+		49DED9621E741F5B00A95A39 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocoaLumberjack.a; path = "../../../Library/Developer/Xcode/DerivedData/i重邮-geiyjkvrixxywbcqlyvnrdfwsueo/Build/Products/Release-iphoneos/CocoaLumberjack/libCocoaLumberjack.a"; sourceTree = "<group>"; };
+		49DED9631E741F5B00A95A39 /* libFMDB.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFMDB.a; path = "../../../Library/Developer/Xcode/DerivedData/i重邮-geiyjkvrixxywbcqlyvnrdfwsueo/Build/Products/Release-iphoneos/FMDB/libFMDB.a"; sourceTree = "<group>"; };
+		49DED9641E741F5B00A95A39 /* libMasonry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMasonry.a; path = "../../../Library/Developer/Xcode/DerivedData/i重邮-geiyjkvrixxywbcqlyvnrdfwsueo/Build/Products/Release-iphoneos/Masonry/libMasonry.a"; sourceTree = "<group>"; };
+		49DED9651E741F5B00A95A39 /* libMBProgressHUD.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMBProgressHUD.a; path = "../../../Library/Developer/Xcode/DerivedData/i重邮-geiyjkvrixxywbcqlyvnrdfwsueo/Build/Products/Release-iphoneos/MBProgressHUD/libMBProgressHUD.a"; sourceTree = "<group>"; };
+		49DED9661E741F5B00A95A39 /* libMJRefresh.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMJRefresh.a; path = "../../../Library/Developer/Xcode/DerivedData/i重邮-geiyjkvrixxywbcqlyvnrdfwsueo/Build/Products/Release-iphoneos/MJRefresh/libMJRefresh.a"; sourceTree = "<group>"; };
+		49DED9671E741F5B00A95A39 /* libSDWebImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDWebImage.a; path = "../../../Library/Developer/Xcode/DerivedData/i重邮-geiyjkvrixxywbcqlyvnrdfwsueo/Build/Products/Release-iphoneos/SDWebImage/libSDWebImage.a"; sourceTree = "<group>"; };
+		49DED9681E741F5B00A95A39 /* libYYImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libYYImage.a; path = "../../../Library/Developer/Xcode/DerivedData/i重邮-geiyjkvrixxywbcqlyvnrdfwsueo/Build/Products/Release-iphoneos/YYImage/libYYImage.a"; sourceTree = "<group>"; };
+		49DED9691E741F5B00A95A39 /* libYYModel.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libYYModel.a; path = "../../../Library/Developer/Xcode/DerivedData/i重邮-geiyjkvrixxywbcqlyvnrdfwsueo/Build/Products/Release-iphoneos/YYModel/libYYModel.a"; sourceTree = "<group>"; };
+		49DED96A1E741F5B00A95A39 /* libYYText.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libYYText.a; path = "../../../Library/Developer/Xcode/DerivedData/i重邮-geiyjkvrixxywbcqlyvnrdfwsueo/Build/Products/Release-iphoneos/YYText/libYYText.a"; sourceTree = "<group>"; };
 		49EA61281DEDA975003A548A /* ZCYExaminationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYExaminationViewController.h; sourceTree = "<group>"; };
 		49EA61291DEDA975003A548A /* ZCYExaminationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYExaminationViewController.m; sourceTree = "<group>"; };
 		49EA612B1DEDA987003A548A /* ZCYEmptyClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYEmptyClassViewController.h; sourceTree = "<group>"; };
@@ -350,8 +331,10 @@
 		49ECE7471DE734A100163D5C /* ZCYStyleDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZCYStyleDefine.h; sourceTree = "<group>"; };
 		49ECE7481DE735B800163D5C /* NSDate+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+Utilities.h"; path = "在重邮/Classes/Support/Category/NSDate+Utilities.h"; sourceTree = SOURCE_ROOT; };
 		49ECE7491DE735B800163D5C /* NSDate+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+Utilities.m"; path = "在重邮/Classes/Support/Category/NSDate+Utilities.m"; sourceTree = SOURCE_ROOT; };
-		66C2A3B14195ED8D12228F00 /* Pods-在重邮.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-在重邮.release.xcconfig"; path = "Pods/Target Support Files/Pods-在重邮/Pods-在重邮.release.xcconfig"; sourceTree = "<group>"; };
-		B9A8BE7DC58BA8111526991E /* Pods-在重邮.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-在重邮.debug.xcconfig"; path = "Pods/Target Support Files/Pods-在重邮/Pods-在重邮.debug.xcconfig"; sourceTree = "<group>"; };
+		5D5C36B949432B1FC78E6BC1 /* Pods-i重邮.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-i重邮.debug.xcconfig"; path = "Pods/Target Support Files/Pods-i重邮/Pods-i重邮.debug.xcconfig"; sourceTree = "<group>"; };
+		6B748FE8DE13082445F21A19 /* libPods-Today.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Today.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		78597084D782CF66FE065969 /* Pods-Today.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Today.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Today/Pods-Today.debug.xcconfig"; sourceTree = "<group>"; };
+		CA1ABD48708D0B7625294365 /* Pods-Today.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Today.release.xcconfig"; path = "Pods/Target Support Files/Pods-Today/Pods-Today.release.xcconfig"; sourceTree = "<group>"; };
 		F01934781E6591CE00D3E25E /* ZCYCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYCalendarViewController.h; sourceTree = "<group>"; };
 		F01934791E6591CE00D3E25E /* ZCYCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYCalendarViewController.m; sourceTree = "<group>"; };
 		F08D21381E6FDF0100FD72FB /* ZCYInfomationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYInfomationCell.h; sourceTree = "<group>"; };
@@ -382,18 +365,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49A1D11F1DE863AE00C93F74 /* libCocoaLumberjack.a in Frameworks */,
-				49A1D1131DE8639800C93F74 /* libAFNetworking.a in Frameworks */,
-				49A1D1151DE8639800C93F74 /* libFMDB.a in Frameworks */,
-				49A1D1161DE8639800C93F74 /* libJSPatch.a in Frameworks */,
-				49A1D1171DE8639800C93F74 /* libMasonry.a in Frameworks */,
-				49A1D1181DE8639800C93F74 /* libMBProgressHUD.a in Frameworks */,
-				49A1D1191DE8639800C93F74 /* libMJRefresh.a in Frameworks */,
-				49A1D11A1DE8639800C93F74 /* libSDWebImage.a in Frameworks */,
-				49A1D11B1DE8639800C93F74 /* libYYImage.a in Frameworks */,
-				49A1D11C1DE8639800C93F74 /* libYYModel.a in Frameworks */,
-				49A1D11D1DE8639800C93F74 /* libYYText.a in Frameworks */,
+				49DED9751E74225700A95A39 /* libAFNetworking.a in Frameworks */,
+				49DED9761E74225700A95A39 /* libCocoaLumberjack.a in Frameworks */,
+				49DED9771E74225700A95A39 /* libFMDB.a in Frameworks */,
+				49DED9781E74225700A95A39 /* libMasonry.a in Frameworks */,
+				49DED9791E74225700A95A39 /* libMBProgressHUD.a in Frameworks */,
+				49DED97A1E74225700A95A39 /* libMJRefresh.a in Frameworks */,
+				49DED97B1E74225700A95A39 /* libSDWebImage.a in Frameworks */,
+				49DED97C1E74225700A95A39 /* libYYImage.a in Frameworks */,
+				49DED97D1E74225700A95A39 /* libYYModel.a in Frameworks */,
+				49DED97E1E74225700A95A39 /* libYYText.a in Frameworks */,
 				E51FFEF2FC165CDCBE4A6571 /* libPods-在重邮.a in Frameworks */,
+				B604844A0EC8563617EFF74E /* libPods-i重邮.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,19 +384,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49A1D12C1DE863CD00C93F74 /* libCocoaLumberjack.a in Frameworks */,
-				49A1D12D1DE863CD00C93F74 /* libJSPatch.a in Frameworks */,
-				49A1D12E1DE863CD00C93F74 /* libMasonry.a in Frameworks */,
-				49A1D12F1DE863CD00C93F74 /* libMBProgressHUD.a in Frameworks */,
-				49A1D1301DE863CD00C93F74 /* libMJRefresh.a in Frameworks */,
-				49A1D1311DE863CD00C93F74 /* libPods-在重邮.a in Frameworks */,
-				49A1D1321DE863CD00C93F74 /* libSDWebImage.a in Frameworks */,
-				49A1D1331DE863CD00C93F74 /* libYYImage.a in Frameworks */,
-				49A1D1341DE863CD00C93F74 /* libYYModel.a in Frameworks */,
-				49A1D1351DE863CD00C93F74 /* libYYText.a in Frameworks */,
-				49A1D1201DE863CC00C93F74 /* libAFNetworking.a in Frameworks */,
-				49A1D1211DE863CC00C93F74 /* libFMDB.a in Frameworks */,
+				49DED96E1E741F5B00A95A39 /* libMasonry.a in Frameworks */,
+				49DED9601E741F5B00A95A39 /* libPods-i重邮.a in Frameworks */,
 				49ECE7261DE5D68700163D5C /* NotificationCenter.framework in Frameworks */,
+				33EBE2E7AF8A290E75DFE225 /* libPods-Today.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1015,34 +989,24 @@
 		5434925B5381CD43A936643C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				49A1D1221DE863CC00C93F74 /* libCocoaLumberjack.a */,
-				49A1D1231DE863CD00C93F74 /* libJSPatch.a */,
-				49A1D1241DE863CD00C93F74 /* libMasonry.a */,
-				49A1D1251DE863CD00C93F74 /* libMBProgressHUD.a */,
-				49A1D1261DE863CD00C93F74 /* libMJRefresh.a */,
-				49A1D1271DE863CD00C93F74 /* libPods-在重邮.a */,
-				49A1D1281DE863CD00C93F74 /* libSDWebImage.a */,
-				49A1D1291DE863CD00C93F74 /* libYYImage.a */,
-				49A1D12A1DE863CD00C93F74 /* libYYModel.a */,
-				49A1D12B1DE863CD00C93F74 /* libYYText.a */,
-				49A1D11E1DE863AE00C93F74 /* libCocoaLumberjack.a */,
-				49A1D1081DE8639800C93F74 /* libAFNetworking.a */,
-				49A1D1091DE8639800C93F74 /* libCocoaLumberjack.a */,
-				49A1D10A1DE8639800C93F74 /* libFMDB.a */,
-				49A1D10B1DE8639800C93F74 /* libJSPatch.a */,
-				49A1D10C1DE8639800C93F74 /* libMasonry.a */,
-				49A1D10D1DE8639800C93F74 /* libMBProgressHUD.a */,
-				49A1D10E1DE8639800C93F74 /* libMJRefresh.a */,
-				49A1D10F1DE8639800C93F74 /* libSDWebImage.a */,
-				49A1D1101DE8639800C93F74 /* libYYImage.a */,
-				49A1D1111DE8639800C93F74 /* libYYModel.a */,
-				49A1D1121DE8639800C93F74 /* libYYText.a */,
+				49DED9611E741F5B00A95A39 /* libAFNetworking.a */,
+				49DED9621E741F5B00A95A39 /* libCocoaLumberjack.a */,
+				49DED9631E741F5B00A95A39 /* libFMDB.a */,
+				49DED9641E741F5B00A95A39 /* libMasonry.a */,
+				49DED9651E741F5B00A95A39 /* libMBProgressHUD.a */,
+				49DED9661E741F5B00A95A39 /* libMJRefresh.a */,
+				49DED9671E741F5B00A95A39 /* libSDWebImage.a */,
+				49DED9681E741F5B00A95A39 /* libYYImage.a */,
+				49DED9691E741F5B00A95A39 /* libYYModel.a */,
+				49DED96A1E741F5B00A95A39 /* libYYText.a */,
 				499232CC1DC494E400B17B54 /* DTPerformanceSession.framework */,
 				499232CD1DC494E400B17B54 /* InterfaceBuilderKit.framework */,
 				499232CE1DC494E400B17B54 /* XcodeKit.framework */,
 				499232CF1DC494E400B17B54 /* XCTest.framework */,
 				1189500E1074EECD137C3468 /* libPods-在重邮.a */,
 				49ECE7251DE5D68700163D5C /* NotificationCenter.framework */,
+				1A13C71F9ACFB601A1BC97FE /* libPods-i重邮.a */,
+				6B748FE8DE13082445F21A19 /* libPods-Today.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1050,8 +1014,10 @@
 		DE8FDDA178AEC12746377F8F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				B9A8BE7DC58BA8111526991E /* Pods-在重邮.debug.xcconfig */,
-				66C2A3B14195ED8D12228F00 /* Pods-在重邮.release.xcconfig */,
+				5D5C36B949432B1FC78E6BC1 /* Pods-i重邮.debug.xcconfig */,
+				3943E775C22A3626885E0FDE /* Pods-i重邮.release.xcconfig */,
+				78597084D782CF66FE065969 /* Pods-Today.debug.xcconfig */,
+				CA1ABD48708D0B7625294365 /* Pods-Today.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1138,9 +1104,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 49ECE7341DE5D68700163D5C /* Build configuration list for PBXNativeTarget "Today" */;
 			buildPhases = (
+				AB6E64C66BA48B2D541DDA09 /* [CP] Check Pods Manifest.lock */,
 				49ECE7201DE5D68700163D5C /* Sources */,
 				49ECE7211DE5D68700163D5C /* Frameworks */,
 				49ECE7221DE5D68700163D5C /* Resources */,
+				FA8325A84638A5450744C1C7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1232,7 +1200,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-在重邮/Pods-在重邮-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-i重邮/Pods-i重邮-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		988FAE71E350FA5C75F688D8 /* [CP] Embed Pods Frameworks */ = {
@@ -1247,7 +1215,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-在重邮/Pods-在重邮-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-i重邮/Pods-i重邮-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AB6E64C66BA48B2D541DDA09 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		EE6D1B4062BEB2117E9596EF /* [CP] Check Pods Manifest.lock */ = {
@@ -1263,6 +1246,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		FA8325A84638A5450744C1C7 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Today/Pods-Today-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1396,7 +1394,6 @@
 /* Begin XCBuildConfiguration section */
 		493744291DB1C1F700E49E4E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B9A8BE7DC58BA8111526991E /* Pods-在重邮.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1447,7 +1444,6 @@
 		};
 		4937442A1DB1C1F700E49E4E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 66C2A3B14195ED8D12228F00 /* Pods-在重邮.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1492,7 +1488,7 @@
 		};
 		4937442C1DB1C1F700E49E4E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B9A8BE7DC58BA8111526991E /* Pods-在重邮.debug.xcconfig */;
+			baseConfigurationReference = 5D5C36B949432B1FC78E6BC1 /* Pods-i重邮.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1527,7 +1523,7 @@
 		};
 		4937442D1DB1C1F700E49E4E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 66C2A3B14195ED8D12228F00 /* Pods-在重邮.release.xcconfig */;
+			baseConfigurationReference = 3943E775C22A3626885E0FDE /* Pods-i重邮.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1562,7 +1558,7 @@
 		};
 		49ECE7321DE5D68700163D5C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B9A8BE7DC58BA8111526991E /* Pods-在重邮.debug.xcconfig */;
+			baseConfigurationReference = 78597084D782CF66FE065969 /* Pods-Today.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Today/Today.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1595,7 +1591,7 @@
 		};
 		49ECE7331DE5D68700163D5C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 66C2A3B14195ED8D12228F00 /* Pods-在重邮.release.xcconfig */;
+			baseConfigurationReference = CA1ABD48708D0B7625294365 /* Pods-Today.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Today/Today.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

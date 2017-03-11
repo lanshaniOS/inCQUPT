@@ -100,7 +100,7 @@ static const float animationTime = 0.2f;
 {
     [super viewDidAppear:animated];
     self.backgroundScrollView.contentSize = CGSizeMake(_courseWidth*7 + 28 + 3, 42+(_courseWidth+0.5)*6*1.26);
-    [self.weekPicker selectRow:[NSDate date].schoolWeek-1 inComponent:0 animated:NO];
+    [self.weekPicker selectRow:[ZCYUserMgr sharedMgr].shcoolWeek-1 inComponent:0 animated:NO];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -238,7 +238,7 @@ static const float animationTime = 0.2f;
     
     self.weekLabel = [[UILabel alloc] init];
     self.weekLabel.textColor = kCommonText_Color;
-    self.weekLabel.text = [NSString stringWithFormat:@"第%@周", [NSDate date].schoolWeekString];
+    self.weekLabel.text = [NSString stringWithFormat:@"第%@周", [NSDate schoolWeekStringWithWeek:[ZCYUserMgr sharedMgr].shcoolWeek]];
     [self.weekLabel sizeToFit];
     self.weekLabel.font = kFont(kStandardPx(40));
     [self.bottomView addSubview:self.weekLabel];
@@ -340,8 +340,8 @@ static const float animationTime = 0.2f;
     if (!_weekPicker)
     {
         self.weekPicker = [[UIPickerView alloc] init];
-        _weekArray = [NSMutableArray arrayWithObjects:@"一", @"二", @"三", @"四", @"五", @"六", @"七", @"八", @"九", @"十", @"十一", @"十二", @"十三", @"十四", @"十五", @"十六", @"十七", @"十八", @"十九", @"二十", @"二十一", nil];
-        _weekArray[[NSDate date].schoolWeek - 1] = [NSString stringWithFormat:@"%@（本周)", [NSDate date].schoolWeekString];
+        _weekArray = [NSMutableArray arrayWithObjects:@"一", @"二", @"三", @"四", @"五", @"六", @"七", @"八", @"九", @"十", @"十一", @"十二", @"十三", @"十四", @"十五", @"十六", @"十七", @"十八", @"十九", @"二十", @"二十一", @"二十二", @"二十三", @"二十四", @"二十五", @"二十六", @"二十七", @"二十八", @"二十九", @"三十", nil];
+        _weekArray[[ZCYUserMgr sharedMgr].shcoolWeek - 1] = [NSString stringWithFormat:@"%@（本周)", [NSDate schoolWeekStringWithWeek:[ZCYUserMgr sharedMgr].shcoolWeek]];
         self.weekPicker.dataSource = self;
         self.weekPicker.delegate = self;
         self.weekPicker.backgroundColor = kCommonLightGray_Color;
@@ -457,7 +457,7 @@ static const float animationTime = 0.2f;
     NSInteger schoolWeek;
     if (_isFirstShowCourse)
     {
-        schoolWeek = [NSDate date].schoolWeek;
+        schoolWeek = [ZCYUserMgr sharedMgr].shcoolWeek;
     } else {
         schoolWeek = [self.weekPicker selectedRowInComponent:0]+1;
     }
@@ -465,7 +465,6 @@ static const float animationTime = 0.2f;
     
     cell.frame = CGRectMake((_courseWidth+0.5)*indexPath.row, (_courseWidth*1.26+0.5)*indexPath.section, _courseWidth, _courseWidth*1.26);
     __block BOOL haveCourse = NO;
-    NSLog(@"%@", colArray);
     [colArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
     
         ZCYTimeTableModel *model  = obj;
@@ -476,7 +475,7 @@ static const float animationTime = 0.2f;
             {
                 if (!haveCourse)
                 {
-                    NSLog(@"%@", model.courseName);
+
                     haveCourse = YES;
                     [self setCollectionViewCell:cell withColor:cellColor andCourseName:model.courseName andClassID:model.coursePlace];
                     //                [cell setRadius:5.0f]; //影响性能
@@ -570,7 +569,7 @@ static const float animationTime = 0.2f;
     NSInteger schoolWeek;
     if (_isFirstShowCourse)
     {
-        schoolWeek = [NSDate date].schoolWeek;
+        schoolWeek = [ZCYUserMgr sharedMgr].shcoolWeek;
     } else {
         schoolWeek = [self.weekPicker selectedRowInComponent:0]+1;
     }
@@ -865,8 +864,8 @@ static const float animationTime = 0.2f;
     if (_didTouchedFinishButton)
     {
         _isFirstShowCourse = NO;
-        if ([self.weekPicker selectedRowInComponent:0]+1 == [NSDate date].schoolWeek)
-            self.weekLabel.text = [NSString stringWithFormat:@"第%@周", [NSDate date].schoolWeekString];
+        if ([self.weekPicker selectedRowInComponent:0]+1 == [ZCYUserMgr sharedMgr].shcoolWeek)
+            self.weekLabel.text = [NSString stringWithFormat:@"第%@周", [NSDate schoolWeekStringWithWeek:[ZCYUserMgr sharedMgr].shcoolWeek]];
         else
             self.weekLabel.text = [NSString stringWithFormat:@"第%@周", _weekArray[[self.weekPicker selectedRowInComponent:0]]];
 

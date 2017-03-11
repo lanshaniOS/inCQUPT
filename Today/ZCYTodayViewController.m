@@ -12,7 +12,6 @@
 #import "ZCYUserMgr.h"
 #import "ZCYCourseView.h"
 #import "NSDate+Utilities.h"
-#import "Masonry.h"
 #import "ZCYStyleDefine.h"
 
 @interface ZCYTodayViewController () <NCWidgetProviding>

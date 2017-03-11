@@ -27,7 +27,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
+    BuglyConfig *config = [BuglyConfig defaultConfig];
+    config.unexpectedTerminatingDetectionEnable = YES;
+    config.reportLogLevel = BuglyLogLevelWarn;
+    [Bugly startWithAppId:@"abf2c183e5" config:config];
     [ZCYUserInfoHelper getUserTokenwithCompeletionBlock:^(NSError *error, NSArray *array) {
     }];
     

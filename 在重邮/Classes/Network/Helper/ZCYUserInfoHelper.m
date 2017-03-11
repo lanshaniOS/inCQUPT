@@ -19,7 +19,6 @@
         [[NSUserDefaults standardUserDefaults] setObject:baseToken forKey:@"ZCYUserToken"];
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@", error.localizedDescription);
     }];
 }
 @end

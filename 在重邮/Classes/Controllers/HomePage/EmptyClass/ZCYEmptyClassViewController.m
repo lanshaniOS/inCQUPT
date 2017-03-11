@@ -126,7 +126,7 @@ static const float animationTime = 0.15f;
     }];
     
     self.weekTimeLabel = [[UILabel alloc] init];
-    [self.weekTimeLabel setFont:kFont(kStandardPx(30)) andText:[NSString stringWithFormat:@"第%@周 星期%@", [NSDate date].schoolWeekString, [NSDate date].weekString] andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
+    [self.weekTimeLabel setFont:kFont(kStandardPx(30)) andText:[NSString stringWithFormat:@"第%@周 星期%@", [NSDate schoolWeekStringWithWeek:[ZCYUserMgr sharedMgr].shcoolWeek], [NSDate date].weekString] andTextColor:kCommonText_Color andBackgroundColor:kTransparentColor];
     [self.bottomView addSubview:self.weekTimeLabel];
     [self.weekTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.classLabel);
@@ -339,7 +339,7 @@ static const float animationTime = 0.15f;
 {
     if (component == 0)
     {
-        return _shcoolWeekArray.count - [NSDate date].schoolWeek + 1;
+        return _shcoolWeekArray.count - [ZCYUserMgr sharedMgr].shcoolWeek + 1;
     } else if (component == 1) {
         if ([self.timePicker selectedRowInComponent:0] != 0)
         {
@@ -366,7 +366,7 @@ static const float animationTime = 0.15f;
 {
     if (component == 0)
     {
-        return [NSString stringWithFormat:@"第%@周", _shcoolWeekArray[row + [NSDate date].schoolWeek - 1]];
+        return [NSString stringWithFormat:@"第%@周", _shcoolWeekArray[row + [ZCYUserMgr sharedMgr].shcoolWeek - 1]];
     } else if (component == 1) {
         if ([self.timePicker selectedRowInComponent:0] != 0)
         {
@@ -384,7 +384,7 @@ static const float animationTime = 0.15f;
 {
     [self.timePicker reloadComponent:1];
     NSInteger week = [self.timePicker selectedRowInComponent:0] == 0 ? [self.timePicker selectedRowInComponent:1] + [NSDate date].week + 1 : [self.timePicker selectedRowInComponent:1];
-    [self getEmptyHouseWithBuilding:_selectedBuilding andSchoolWeek:[self.timePicker selectedRowInComponent:0] + [NSDate date].schoolWeek + 1 andWeek:week andSection:[self.timePicker selectedRowInComponent:2]];
+    [self getEmptyHouseWithBuilding:_selectedBuilding andSchoolWeek:[self.timePicker selectedRowInComponent:0] + [ZCYUserMgr sharedMgr].shcoolWeek + 1 andWeek:week andSection:[self.timePicker selectedRowInComponent:2]];
     
     NSString *weekString;
     if ([self.timePicker selectedRowInComponent:0] == 0)
@@ -393,7 +393,7 @@ static const float animationTime = 0.15f;
     } else {
         weekString = _weekArray[[self.timePicker selectedRowInComponent:1]];
     }
-    self.weekTimeLabel.text = [NSString stringWithFormat:@"第%@周 星期%@", _shcoolWeekArray[[self.timePicker selectedRowInComponent:0] + [NSDate date].schoolWeek - 1], weekString];
+    self.weekTimeLabel.text = [NSString stringWithFormat:@"第%@周 星期%@", _shcoolWeekArray[[self.timePicker selectedRowInComponent:0] + [ZCYUserMgr sharedMgr].shcoolWeek - 1], weekString];
 
 }
 #pragma mark - 点击事件
@@ -475,7 +475,7 @@ static const float animationTime = 0.15f;
 
     self.showEmptyHouseView.hidden = NO;
     NSInteger week = [self.timePicker selectedRowInComponent:0] == 0 ? [self.timePicker selectedRowInComponent:1] + [NSDate date].week + 1 : [self.timePicker selectedRowInComponent:1];
-    [self getEmptyHouseWithBuilding:_selectedBuilding andSchoolWeek:[self.timePicker selectedRowInComponent:0] + [NSDate date].schoolWeek + 1 andWeek:week andSection:[self.timePicker selectedRowInComponent:2]];
+    [self getEmptyHouseWithBuilding:_selectedBuilding andSchoolWeek:[self.timePicker selectedRowInComponent:0] + [ZCYUserMgr sharedMgr].shcoolWeek + 1 andWeek:week andSection:[self.timePicker selectedRowInComponent:2]];
 }
 
 - (void)hideTimePickerView
@@ -489,7 +489,7 @@ static const float animationTime = 0.15f;
     } else {
         weekString = _weekArray[[self.timePicker selectedRowInComponent:1]];
     }
-    self.weekTimeLabel.text = [NSString stringWithFormat:@"第%@周 星期%@", _shcoolWeekArray[[self.timePicker selectedRowInComponent:0] + [NSDate date].schoolWeek - 1], weekString];
+    self.weekTimeLabel.text = [NSString stringWithFormat:@"第%@周 星期%@", _shcoolWeekArray[[self.timePicker selectedRowInComponent:0] + [ZCYUserMgr sharedMgr].shcoolWeek - 1], weekString];
     self.selectedTimeButton.hidden = NO;
     self.finishButton.hidden = YES;
     sum_yOffset = 0;

@@ -46,7 +46,6 @@
 -(instancetype)initWithFrame:(CGRect)frame andType:(NSString *)type{
     self = [self initWithFrame:frame];
     if (self) {
-        NSLog(@"%@",type);
         _titleLabel.text = type;
         if ([type isEqualToString:@"头条"]) {
             _iconImage.image = [UIImage imageNamed:@"Oval-green"];

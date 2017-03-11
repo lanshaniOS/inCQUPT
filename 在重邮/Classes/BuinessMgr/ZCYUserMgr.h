@@ -25,6 +25,7 @@
 @property (strong, nonatomic) NSString *cardID;  /**< 一卡通号 */
 @property (strong, nonatomic) NSDictionary *dormitoryDic;  /**< 水电详情 */
 @property (strong, nonatomic) NSData *settingImageData;  /**< 设置顶部图片 */
+@property (assign, nonatomic) NSInteger shcoolWeek;  /**< 开学周数 */
 
 + (ZCYUserMgr *)sharedMgr;
 

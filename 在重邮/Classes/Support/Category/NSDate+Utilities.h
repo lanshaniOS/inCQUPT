@@ -14,10 +14,11 @@
 @property (readonly) NSInteger month;
 @property (readonly) NSInteger day;
 @property (readonly) NSString *weekString;
-@property (readonly) NSInteger schoolWeek;
-@property (readonly) NSString *schoolWeekString;
+//@property (readonly) NSInteger schoolWeek;
+
 
 //返回单例
 + (NSCalendar *)currentCalendar;
-
+//汉字
++ (NSString *)schoolWeekStringWithWeek:(NSInteger)schoolWeek;
 @end
