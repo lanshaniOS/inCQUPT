@@ -24,7 +24,7 @@
 @property (strong, nonatomic) UILabel *coursePlaceLabel;  /**< 上课地点 */
 @property (strong, nonatomic) UILabel *groupLabel;  /**< 上课班级 */
 @property (strong, nonatomic) UIButton *getCoursePicButton;  /**< 截取教务在线课表 */
-@property (strong, nonatomic) UIButton *setCourseStyle;  /**< 设置课表风格 */
+@property (strong, nonatomic) UIButton *addNotification;  /**< 设置课表风格 */
 @property (strong, nonatomic) UIButton *reportErrorButton;  /**< 报告错误 */
 @property (strong, nonatomic) ZCYTimeTableModel *model;  /**< 课程数据 */
 @end
@@ -230,15 +230,17 @@
         make.top.equalTo(self.getCoursePicButton.mas_bottom).with.offset(20);
     }];
     
-    self.setCourseStyle = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.setCourseStyle setTitle:@"自定义课表主题" forState:UIControlStateNormal];
-    self.setCourseStyle.titleLabel.font = kFont(kStandardPx(32));
-    [self.setCourseStyle setTitleColor:kDeepGray_Color forState:UIControlStateNormal];
-    [self addSubview:self.setCourseStyle];
-    [self.setCourseStyle mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.addNotification = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.addNotification setTitle:@"课前提醒" forState:UIControlStateNormal];
+    [self.addNotification setTitleColor:kDeepGreen_Color forState:UIControlStateNormal];
+    self.addNotification.titleLabel.font = kFont(kStandardPx(32));
+    [self.addNotification addTarget:self action:@selector(addCourseNotification) forControlEvents:UIControlEventTouchUpInside];
+    self.addNotification.titleLabel.textAlignment = NSTextAlignmentLeft;
+    [self addSubview:self.addNotification];
+    [self.addNotification mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.weekLabel);
         make.height.mas_equalTo(20);
-        make.width.mas_equalTo(125);
+        make.width.mas_equalTo(70);
         make.top.equalTo(line1.mas_bottom).with.offset(20);
     }];
     
@@ -249,7 +251,7 @@
         make.left.equalTo(self.weekLabel);
         make.centerX.equalTo(self);
         make.height.mas_equalTo(0.5);
-        make.top.equalTo(self.setCourseStyle.mas_bottom).with.offset(20);
+        make.top.equalTo(self.addNotification.mas_bottom).with.offset(20);
     }];
     
     self.reportErrorButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -335,6 +337,14 @@
     self.groupLabel.text = model.classId;
 
 }
+
+-(void)addCourseNotification{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(addNotificationDidPressed)])
+    {
+        [self.delegate addNotificationDidPressed];
+    }
+}
+
 
 - (NSString *)courseTimeStringWithCourseTime:(NSInteger)courseTime andCourseNum:(NSInteger)courseNum
 {

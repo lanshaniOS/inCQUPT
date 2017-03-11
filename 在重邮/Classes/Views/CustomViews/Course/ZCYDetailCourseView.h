@@ -14,6 +14,7 @@
 
 - (void)closeButtonDidPressed;
 - (void)reportErrorDidPressed;
+- (void)addNotificationDidPressed;
 
 @end
 

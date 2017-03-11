@@ -41,6 +41,7 @@ static const float animationTime = 0.2f;
     CGFloat sum_yCourseViewOffset;
   
     NSIndexPath *old_selectedIndexPath;
+    NSIndexPath *currentSelectedIndexPath;
     BOOL _didTouchedFinishButton;
     BOOL _isFirstShowCourse;
 }
@@ -562,7 +563,7 @@ static const float animationTime = 0.2f;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    currentSelectedIndexPath = indexPath;
     NSArray *courseArray = [ZCYUserMgr sharedMgr].courseArray[indexPath.row];
     NSArray *colArray = courseArray[indexPath.section];
     __block BOOL haveCourse = NO;
@@ -587,7 +588,6 @@ static const float animationTime = 0.2f;
     if (!haveCourse)
     {
         old_selectedIndexPath = nil;
-        //[self hideDetailCourseView];
         [self closeButtonDidPressed];
         return;
     }
@@ -898,6 +898,28 @@ static const float animationTime = 0.2f;
     ZCYFeedBackViewController *feedBack = [[ZCYFeedBackViewController alloc] init];
     [self.navigationController pushViewController:feedBack animated:YES];
 }
+
+-(void)addNotificationDidPressed{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"仅选本周" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"%lu--%lu",currentSelectedIndexPath.section,currentSelectedIndexPath.row);
+        
+    }];
+    [alert addAction:action];
+    
+    UIAlertAction *act = [UIAlertAction actionWithTitle:@"所有周次" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UILocalNotification *notification = [[UILocalNotification alloc]init];
+        
+        
+        
+    }];
+    [alert addAction:act];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 #pragma mark - TOOL
 
 - (void)setView:(UIView *)view WithNum:(NSString *)numString andSegColor:(UIColor *)color shouldShowSeg:(BOOL)showSeg
@@ -963,8 +985,11 @@ static const float animationTime = 0.2f;
         make.right.equalTo(cell).with.offset(-2.5);
         make.top.equalTo(courseeLabel.mas_bottom);
     }];
-    
-    
 }
-         
+
+#pragma mark UILocalNotification
+//-(void)setNotification{
+//    NSArray *arr =
+//}
+//
 @end

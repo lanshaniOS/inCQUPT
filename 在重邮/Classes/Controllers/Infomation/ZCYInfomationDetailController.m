@@ -41,7 +41,11 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = YES;
-    [[ZCYProgressHUD sharedHUD] rotateWithText:@"获取数据中" inView:self.view];
+    
+    if (_detailModel == nil) {
+        [[ZCYProgressHUD sharedHUD] rotateWithText:@"获取数据中" inView:self.view];
+    }
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
