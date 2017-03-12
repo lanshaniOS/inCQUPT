@@ -205,7 +205,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:self.passwordTF.text forKey:@"ZCYUSERPASSWORD"];
             NSDictionary *userMessage = response[@"data"];
             [[ZCYUserMgr sharedMgr] yy_modelSetWithDictionary:userMessage];
-                [ZCYTimeTableHelper getTimeTableWithStdNumber:[ZCYUserMgr sharedMgr].studentNumber withCompeletionBlock:^(NSError *error, NSArray *array) {
+                [ZCYTimeTableHelper getTimeTableWithStdNumber:[ZCYUserMgr sharedMgr].studentNumber shouldSaveTime:YES withCompeletionBlock:^(NSError *error, NSArray *array) {
                     @strongify(self);
                     
                     if (error)

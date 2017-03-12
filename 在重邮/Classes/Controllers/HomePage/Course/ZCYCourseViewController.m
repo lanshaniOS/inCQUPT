@@ -71,25 +71,24 @@ static const float animationTime = 0.2f;
     if (self.studentNumber && ![self.studentNumber  isEqual: @""])
     {
         [[ZCYProgressHUD sharedHUD] rotateWithText:@"获取课表中" inView:self.view];
-        [ZCYTimeTableHelper getTimeTableWithStdNumber:self.studentNumber withCompeletionBlock:^(NSError *error, NSArray *array) {
+        [ZCYTimeTableHelper getTimeTableWithStdNumber:self.studentNumber  shouldSaveTime:NO withCompeletionBlock:^(NSError *error, NSArray *array) {
             [[ZCYProgressHUD sharedHUD] hideAfterDelay:0.0f];
             if (error)
             {
                 [[ZCYProgressHUD sharedHUD] showWithText:[error localizedDescription] inView:self.view hideAfterDelay:1.0f];
                 return;
             }
-            [ZCYUserMgr sharedMgr].courseArray = array;
             [self.courseCollectionView reloadData];
         }];
     } else {
-        [ZCYTimeTableHelper getTimeTableWithStdNumber:[ZCYUserMgr sharedMgr].studentNumber withCompeletionBlock:^(NSError *error, NSArray *array) {
+        [ZCYTimeTableHelper getTimeTableWithStdNumber:[ZCYUserMgr sharedMgr].studentNumber shouldSaveTime:NO withCompeletionBlock:^(NSError *error, NSArray *array) {
             if (error)
             {
                 return;
             }
             [ZCYUserMgr sharedMgr].courseArray = array;
 //            self.courseArray = [ZCYUserMgr sharedMgr].courseArray;
-            [self.courseCollectionView reloadData];
+//            [self.courseCollectionView reloadData];
         }];
 
 //        self.courseArray = [ZCYUserMgr sharedMgr].courseArray;

@@ -12,7 +12,7 @@
 
 @implementation ZCYTimeTableHelper
 
-+ (void)getTimeTableWithStdNumber:(NSString *)studentNumber withCompeletionBlock:(void (^)(NSError *, NSArray *))compeletionBlock
++ (void)getTimeTableWithStdNumber:(NSString *)studentNumber shouldSaveTime:(BOOL)shouldSave  withCompeletionBlock:(void (^)(NSError *, NSArray *))compeletionBlock
 {
     //存放课表数组初始化
     NSMutableArray *weekArray = [[NSMutableArray alloc] initWithCapacity:7];
@@ -37,7 +37,10 @@
         }
         dispatch_queue_t bgQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
         dispatch_async(bgQueue, ^{
-            [ZCYUserMgr sharedMgr].shcoolWeek = [response[@"data"][@"week"] integerValue];
+            if (shouldSave)
+            {
+                [ZCYUserMgr sharedMgr].shcoolWeek = [response[@"data"][@"week"] integerValue];
+            }
             for (NSInteger i = 0; i < 7; i++)
             {
                 

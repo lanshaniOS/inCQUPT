@@ -104,7 +104,6 @@
 		49ECE7461DE732D300163D5C /* ZCYCourseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49ECE7451DE732D300163D5C /* ZCYCourseView.m */; };
 		49ECE74A1DE735B800163D5C /* NSDate+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 49ECE7491DE735B800163D5C /* NSDate+Utilities.m */; };
 		B604844A0EC8563617EFF74E /* libPods-i重邮.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A13C71F9ACFB601A1BC97FE /* libPods-i重邮.a */; };
-		E51FFEF2FC165CDCBE4A6571 /* libPods-在重邮.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1189500E1074EECD137C3468 /* libPods-在重邮.a */; };
 		F019347A1E6591CE00D3E25E /* ZCYCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F01934791E6591CE00D3E25E /* ZCYCalendarViewController.m */; };
 		F08D213B1E6FDF0100FD72FB /* ZCYInfomationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F08D21391E6FDF0100FD72FB /* ZCYInfomationCell.m */; };
 		F08D213C1E6FDF0100FD72FB /* ZCYInfomationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F08D213A1E6FDF0100FD72FB /* ZCYInfomationCell.xib */; };
@@ -375,7 +374,6 @@
 				49DED97C1E74225700A95A39 /* libYYImage.a in Frameworks */,
 				49DED97D1E74225700A95A39 /* libYYModel.a in Frameworks */,
 				49DED97E1E74225700A95A39 /* libYYText.a in Frameworks */,
-				E51FFEF2FC165CDCBE4A6571 /* libPods-在重邮.a in Frameworks */,
 				B604844A0EC8563617EFF74E /* libPods-i重邮.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
