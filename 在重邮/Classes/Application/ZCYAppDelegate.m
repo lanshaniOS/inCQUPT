@@ -67,9 +67,11 @@
     if ([[UIDevice currentDevice] systemVersion].integerValue >= 10) {
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
         center.delegate = self;
+        //iOS10以上使用以下方法注册，才能得到授权
         [center requestAuthorizationWithOptions:(UNAuthorizationOptionAlert+UNAuthorizationOptionSound) completionHandler:^(BOOL granted, NSError * _Nullable error) {
             
         }];
+        //获取当前的通知设置，UNNotificationsettings是只读对象，不能直接修改，只能通过以下方法获取
         [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
             
         }];
@@ -87,6 +89,11 @@
 
     return YES;
 }
+
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
+    completionHandler(UNNotificationPresentationOptionAlert);
+}
+
 
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler
 {

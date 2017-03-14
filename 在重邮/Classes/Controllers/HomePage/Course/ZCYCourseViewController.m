@@ -947,8 +947,8 @@ static const float animationTime = 0.2f;
         }
         NSTimeInterval allInterval = startInterval+dayInterval+hourInterval;
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:allInterval];
-
-        [self addNotificationWithTimeInterval:allInterval orFireDate:date];
+        NSLog(@"%@",date);
+        [self addNotificationWithFireDate:date];
         [[ZCYProgressHUD sharedHUD] showWithText:@"设置成功" inView:strongSelf.view hideAfterDelay:1.0];
     }];
     [alert addAction:action];
@@ -1013,7 +1013,7 @@ static const float animationTime = 0.2f;
             NSTimeInterval weekInterval = ([weeksArray[i] integerValue]-currentWeek)*7*24*3600;
             NSTimeInterval allInterval = startInterval+dayInterval+hourInterval+weekInterval;
             NSDate *date = [NSDate dateWithTimeIntervalSince1970:allInterval];
-            [self addNotificationWithTimeInterval:allInterval orFireDate:date];
+            [self addNotificationWithFireDate:date];
         }
 
         [[ZCYProgressHUD sharedHUD] showWithText:@"设置成功" inView:strongSelf.view hideAfterDelay:1.0];
@@ -1025,14 +1025,15 @@ static const float animationTime = 0.2f;
     [self presentViewController:alert animated:YES completion:nil];
 }
 
--(void)addNotificationWithTimeInterval:(NSTimeInterval)interval orFireDate:(NSDate *)date{
+-(void)addNotificationWithFireDate:(NSDate *)date{
     if ([[UIDevice currentDevice] systemVersion].integerValue >= 10) {
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
         UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc]init];
         content.title = @"该上课啦！";
         content.body = [NSString stringWithFormat:@"同学，再过十分钟就要上课了，不要迟到哦～"];
         content.sound = [UNNotificationSound defaultSound];
-        UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:interval repeats:NO];
+        NSTimeInterval nowInterval = [date timeIntervalSinceNow];
+        UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:nowInterval repeats:NO];
         UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"singleNotification" content:content trigger:trigger];
         //推送成功后处理
         [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
