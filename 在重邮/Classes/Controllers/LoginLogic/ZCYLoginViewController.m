@@ -12,7 +12,7 @@
 #import "ZCYUserValidateHelper.h"
 #import "ZCYTextField.h"
 #import "ZCYUserInfoHelper.h"
-#import "ZCYGetTimeHelper.h"
+
 
 @interface ZCYLoginViewController ()<UITextFieldDelegate>
 
@@ -48,13 +48,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [ZCYGetTimeHelper getCurrentTimeWithCompletionBlock:^(NSError *error, ZCYCuurentTimeModel *timeModel) {
-        if (error) {
-            NSLog(@"%@",error);
-        }else{
-            [ZCYUserMgr sharedMgr].schoolTimeModel = timeModel;
-        }
-    }];
 }
 
 -(void) initUI{
@@ -218,7 +211,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:self.passwordTF.text forKey:@"ZCYUSERPASSWORD"];
             NSDictionary *userMessage = response[@"data"];
             [[ZCYUserMgr sharedMgr] yy_modelSetWithDictionary:userMessage];
-                [ZCYTimeTableHelper getTimeTableWithStdNumber:[ZCYUserMgr sharedMgr].studentNumber withCompeletionBlock:^(NSError *error, NSArray *array) {
+                [ZCYTimeTableHelper getTimeTableWithStdNumber:[ZCYUserMgr sharedMgr].studentNumber shouldSaveTime:YES withCompeletionBlock:^(NSError *error, NSArray *array) {
                     @strongify(self);
                     
                     if (error)

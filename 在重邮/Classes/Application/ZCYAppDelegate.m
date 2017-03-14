@@ -16,6 +16,7 @@
 #import "ZCYStudentSearchViewController.h"
 #import "ZCYUserInfoHelper.h"
 #import <UserNotifications/UserNotifications.h>
+#import "ZCYGetTimeHelper.h"
 
 @interface ZCYAppDelegate ()<UNUserNotificationCenterDelegate>
 
@@ -76,7 +77,14 @@
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil];
         [application registerUserNotificationSettings:settings];
     }
-    
+    [ZCYGetTimeHelper getCurrentTimeWithCompletionBlock:^(NSError *error, ZCYCuurentTimeModel *timeModel) {
+        if (error) {
+            NSLog(@"%@",error);
+        }else{
+            [ZCYUserMgr sharedMgr].schoolTimeModel = timeModel;
+        }
+    }];
+
     return YES;
 }
 
