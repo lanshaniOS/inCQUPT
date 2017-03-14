@@ -36,6 +36,7 @@
 @property (strong, nonatomic) UILabel *timeLabel;  /**< 时间标签 */
 @property (strong, nonatomic) UILabel *summaryLabel;  /**< 课程数标签 */
 @property (strong, nonatomic) UILabel *cardLabel;  /**< 余额 */
+@property (strong, nonatomic) UILabel *weekLabel;  /**< 周次 */
 @property (strong, nonatomic) ZCYHomePageElecView *electricView;  /**< 水电视图 */
 @end
 
@@ -97,9 +98,11 @@
         //            self.courseArray = [ZCYUserMgr sharedMgr].courseArray;
         NSData *archiveUserData = [NSKeyedArchiver archivedDataWithRootObject:[ZCYUserMgr sharedMgr]];
         [[NSUserDefaults standardUserDefaults] setObject:archiveUserData forKey:@"USERMGR"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+             [self updateUIWithArray:[ZCYUserMgr sharedMgr].courseArray];
+        });
     }];
 
-    [self updateUIWithArray:[ZCYUserMgr sharedMgr].courseArray];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -290,12 +293,12 @@
         make.left.equalTo(self.view).with.offset(20);
     }];
     
-    UILabel *weekLabel = [[UILabel alloc] init];
-    weekLabel.textColor = kDeepGray_Color;
-    weekLabel.text = [NSString stringWithFormat:@"第 %@ 周", @([ZCYUserMgr sharedMgr].shcoolWeek)];
-    weekLabel.font = [UIFont fontWithName:@"Futra" size:16];
-    [self.backgroundScrollView addSubview:weekLabel];
-    [weekLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.weekLabel = [[UILabel alloc] init];
+    self.weekLabel.textColor = kDeepGray_Color;
+    self.weekLabel.text = [NSString stringWithFormat:@"第 %@ 周", @([ZCYUserMgr sharedMgr].shcoolWeek)];
+    self.weekLabel.font = [UIFont fontWithName:@"Futra" size:16];
+    [self.backgroundScrollView addSubview:self.weekLabel];
+    [self.weekLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(topicView.mas_right).with.offset(12);
         make.bottom.equalTo(topicView);
         make.height.mas_equalTo(20);
@@ -537,10 +540,12 @@
 {
     
     self.timeLabel.text = [NSString stringWithFormat:@"星期%@ %@月%@号", [NSDate date].weekString, @([NSDate date].month), @([NSDate date].day)];
+    self.weekLabel.text = [NSString stringWithFormat:@"第 %@ 周", @([ZCYUserMgr sharedMgr].shcoolWeek)];
     for (UIView *subview in [self.courseScrollView subviews])
     {
         [subview removeFromSuperview];
     }
+    
     NSArray *todayCourseArray = courseArray[[NSDate date].week - 1];
     
     NSArray <UIColor *> *commonArray = @[kCommonGreen_Color, kCommonOrigin_Color, kCommonPink_Color];

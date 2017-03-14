@@ -35,12 +35,16 @@
             compeletionBlock(error, nil);
             return;
         }
-        dispatch_queue_t bgQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
-        dispatch_async(bgQueue, ^{
-            if (shouldSave)
-            {
-                [ZCYUserMgr sharedMgr].shcoolWeek = [response[@"data"][@"week"] integerValue];
-            }
+       
+       
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if (shouldSave)
+                {
+                    [ZCYUserMgr sharedMgr].shcoolWeek = [response[@"data"][@"week"] integerValue];
+                }
+            });
+            
             for (NSInteger i = 0; i < 7; i++)
             {
                 
@@ -60,7 +64,7 @@
                     }
                 }
             }
-        });
+        
         if (compeletionBlock)
         {
             compeletionBlock(nil, weekArray);
