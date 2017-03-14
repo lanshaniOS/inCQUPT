@@ -12,6 +12,7 @@
 #import "ZCYUserValidateHelper.h"
 #import "ZCYTextField.h"
 #import "ZCYUserInfoHelper.h"
+#import "ZCYGetTimeHelper.h"
 
 @interface ZCYLoginViewController ()<UITextFieldDelegate>
 
@@ -44,6 +45,18 @@
     [super viewDidAppear:animated];
     y_loginButton = self.loginBT.frame.origin.y;
 }
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [ZCYGetTimeHelper getCurrentTimeWithCompletionBlock:^(NSError *error, ZCYCuurentTimeModel *timeModel) {
+        if (error) {
+            NSLog(@"%@",error);
+        }else{
+            [ZCYUserMgr sharedMgr].schoolTimeModel = timeModel;
+        }
+    }];
+}
+
 -(void) initUI{
     [self TopInit];
     [self TFinit];

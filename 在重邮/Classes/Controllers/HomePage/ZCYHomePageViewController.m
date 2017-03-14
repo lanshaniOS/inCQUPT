@@ -106,7 +106,7 @@
 {
     [super viewDidAppear:animated];
 //    self.navigationController.navigationBar.alpha = (self.backgroundScrollView.contentOffset.y)/355 * 2.0;
-   
+    NSLog(@"%@",[ZCYUserMgr sharedMgr].schoolTimeModel);
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -214,7 +214,7 @@
                 NSArray *courseWeeks = model.courseWeeks;
                 for (NSInteger i = 0; i<courseWeeks.count; i++)
                 {
-                    if ([courseWeeks[i] integerValue] == [NSDate date].schoolWeek)
+                    if ([courseWeeks[i] integerValue] == [ZCYUserMgr sharedMgr].shcoolWeek)
                     {
                          courseNum = courseNum + [model.courseNumber integerValue];
                     }
@@ -292,7 +292,7 @@
     
     UILabel *weekLabel = [[UILabel alloc] init];
     weekLabel.textColor = kDeepGray_Color;
-    weekLabel.text = [NSString stringWithFormat:@"第 %@ 周", @([NSDate date].schoolWeek)];
+    weekLabel.text = [NSString stringWithFormat:@"第 %@ 周", @([ZCYUserMgr sharedMgr].shcoolWeek)];
     weekLabel.font = [UIFont fontWithName:@"Futra" size:16];
     [self.backgroundScrollView addSubview:weekLabel];
     [weekLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -348,7 +348,7 @@
                     NSArray *courseWeeks = model.courseWeeks;
                     for (NSInteger i = 0; i<courseWeeks.count; i++)
                     {
-                        if ([courseWeeks[i] integerValue] == [NSDate date].schoolWeek)
+                        if ([courseWeeks[i] integerValue] == [ZCYUserMgr sharedMgr].shcoolWeek)
                         {
                             ZCYCourseView *courseView = [[ZCYCourseView alloc] initWithCourseName:model.courseName andClassID:model.coursePlace andCourseTime:timeIdx];
                             [courseView setTextColor:deepArray[index%3] andBackgroundColor:commonArray[index%3]];
@@ -562,7 +562,7 @@
                     NSArray *courseWeeks = model.courseWeeks;
                     for (NSInteger i = 0; i<courseWeeks.count; i++)
                     {
-                        if ([courseWeeks[i] integerValue] == [NSDate date].schoolWeek)
+                        if ([courseWeeks[i] integerValue] == [ZCYUserMgr sharedMgr].shcoolWeek)
                         {
                             ZCYCourseView *courseView = [[ZCYCourseView alloc] initWithCourseName:model.courseName andClassID:model.coursePlace andCourseTime:timeIdx];
                             [courseView setTextColor:deepArray[index%3] andBackgroundColor:commonArray[index%3]];
@@ -618,7 +618,7 @@
                 NSArray *courseWeeks = model.courseWeeks;
                 for (NSInteger i = 0; i<courseWeeks.count; i++)
                 {
-                    if ([courseWeeks[i] integerValue] == [NSDate date].schoolWeek)
+                    if ([courseWeeks[i] integerValue] == [ZCYUserMgr sharedMgr].shcoolWeek)
                     {
                         courseNum = courseNum + [model.courseNumber integerValue];
                     }

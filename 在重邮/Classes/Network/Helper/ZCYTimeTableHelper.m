@@ -35,25 +35,29 @@
             compeletionBlock(error, nil);
             return;
         }
-        for (NSInteger i = 0; i < 7; i++)
-        {
-            
-            NSMutableArray *mutableArray = timeTableArray[i]; //上课节数,周数不同
-            for (NSInteger j = 0; j < 6; j++)
+        dispatch_queue_t bgQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+        dispatch_async(bgQueue, ^{
+            [ZCYUserMgr sharedMgr].shcoolWeek = [response[@"data"][@"week"] integerValue];
+            for (NSInteger i = 0; i < 7; i++)
             {
-                NSArray *courseArray = mutableArray[j]; //取出不同周数的课程;
-                for (NSDictionary *courseDic  in courseArray)
+                
+                NSMutableArray *mutableArray = timeTableArray[i]; //上课节数,周数不同
+                for (NSInteger j = 0; j < 6; j++)
                 {
-                    ZCYTimeTableModel *model = [[ZCYTimeTableModel alloc] init];
-                    [model yy_modelSetWithDictionary:courseDic];
-                    
-                    if (!([model.courseName  isEqual: @""] || model.courseName == nil))
+                    NSArray *courseArray = mutableArray[j]; //取出不同周数的课程;
+                    for (NSDictionary *courseDic  in courseArray)
                     {
-                        [weekArray[i][j] addObject:model];
+                        ZCYTimeTableModel *model = [[ZCYTimeTableModel alloc] init];
+                        [model yy_modelSetWithDictionary:courseDic];
+                        
+                        if (!([model.courseName  isEqual: @""] || model.courseName == nil))
+                        {
+                            [weekArray[i][j] addObject:model];
+                        }
                     }
                 }
             }
-        }
+        });
         if (compeletionBlock)
         {
             compeletionBlock(nil, weekArray);

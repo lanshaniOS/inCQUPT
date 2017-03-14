@@ -25,46 +25,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "&#x5728;&#x91cd;&#x90ae;/Classes/Controllers/HomePage/Course/ZCYCourseViewController.m"
-            timestampString = "510743231.66473"
+            filePath = "&#x5728;&#x91cd;&#x90ae;/Classes/Controllers/HomePage/Examination/ZCYExaminationViewController.m"
+            timestampString = "510931605.058837"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "469"
-            endingLineNumber = "469"
-            landmarkName = "-collectionView:cellForItemAtIndexPath:"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "-viewWillAppear:"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[ZCYCourseViewController collectionView:cellForItemAtIndexPath:]"
-                  moduleName = "i&#x91cd;&#x90ae;"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhouweikang/Documents/oc/%E5%9C%A8%E9%87%8D%E9%82%AE/%E5%9C%A8%E9%87%8D%E9%82%AE/Classes/Controllers/HomePage/Course/ZCYCourseViewController.m"
-                  timestampString = "510759492.319242"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "469"
-                  endingLineNumber = "469"
-                  offsetFromSymbolStart = "2192">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__65-[ZCYCourseViewController collectionView:cellForItemAtIndexPath:]_block_invoke"
-                  moduleName = "i&#x91cd;&#x90ae;"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhouweikang/Documents/oc/%E5%9C%A8%E9%87%8D%E9%82%AE/%E5%9C%A8%E9%87%8D%E9%82%AE/Classes/Controllers/HomePage/Course/ZCYCourseViewController.m"
-                  timestampString = "510759492.321518"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "471"
-                  endingLineNumber = "471"
-                  offsetFromSymbolStart = "76">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

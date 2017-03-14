@@ -17,6 +17,7 @@
 #ifdef __OBJC__
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
+#import <Bugly/Bugly.h>
 #import "ZCYNetworkHelperMgr.h"
 #import "ZCYStyleDefine.h"
 #import "Masonry.h"

@@ -15,8 +15,9 @@
 #import "ZCYExaminationViewController.h"
 #import "ZCYStudentSearchViewController.h"
 #import "ZCYUserInfoHelper.h"
+#import <UserNotifications/UserNotifications.h>
 
-@interface ZCYAppDelegate ()
+@interface ZCYAppDelegate ()<UNUserNotificationCenterDelegate>
 
 @property (strong, nonatomic)  ZCYHomeTabBarController *tabBarC;  /**< TabbarVC */
 
@@ -27,7 +28,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
+    BuglyConfig *config = [BuglyConfig defaultConfig];
+    config.unexpectedTerminatingDetectionEnable = YES;
+    config.reportLogLevel = BuglyLogLevelWarn;
+    [Bugly startWithAppId:@"abf2c183e5" config:config];
     [ZCYUserInfoHelper getUserTokenwithCompeletionBlock:^(NSError *error, NSArray *array) {
     }];
     
@@ -58,6 +62,20 @@
     }
 
     [self.window makeKeyAndVisible];
+    
+    if ([[UIDevice currentDevice] systemVersion].integerValue >= 10) {
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        center.delegate = self;
+        [center requestAuthorizationWithOptions:(UNAuthorizationOptionAlert+UNAuthorizationOptionSound) completionHandler:^(BOOL granted, NSError * _Nullable error) {
+            
+        }];
+        [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+            
+        }];
+    }else if ([[UIDevice currentDevice] systemVersion].integerValue >= 8){
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil];
+        [application registerUserNotificationSettings:settings];
+    }
     
     return YES;
 }

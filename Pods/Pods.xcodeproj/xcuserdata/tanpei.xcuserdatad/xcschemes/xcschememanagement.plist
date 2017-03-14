@@ -39,6 +39,16 @@
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
+		<key>Pods-Today.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>15</integer>
+		</dict>
+		<key>Pods-i重邮.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>14</integer>
+		</dict>
 		<key>Pods-在重邮.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -67,12 +77,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>04CF549EBEEE7BC87AEAE35397184D94</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>12E2BC28C62976C425F4B71C2723F0B1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>175B076ED45EB1A3E40F58BA14036467</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>17F040B9821C140E2263DA5B5E583A8F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1A9298B32F31A61F3742650B19EE27BD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -92,6 +117,16 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>4B1F6F5B09580FE7DB38D7D7943080DA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>52CAD255CECC0A8567145E75ED0E8669</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>53480ED0BE09FF49E34B1702D485CAAB</key>
 		<dict>
 			<key>primary</key>
@@ -102,12 +137,47 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>8642CC820CE8C5B88C113D7F47AF4BC3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8D320669B86AAA3F45F04A6080DCA819</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>928353533005A4198EBDA5B700D37B64</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>9820B69D3D5046813F3DE98C883C83F1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9DC8D9E02903E93BD0B2FEC9D846EA20</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9E033EDB5EC0819481B0546434FA577B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>9F12FB4A63E20F601CFB2E64A65B57C1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A65A44CAD9C7FDDA021EE0B088959774</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E89C3B78C675DF3492C5CB6E3920F9BF</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -11,6 +11,8 @@
 #import "ZCYDetailCourseView.h"
 #import "ZCYTimeTableHelper.h"
 #import "ZCYFeedBackViewController.h"
+#import "ZCYCuurentTimeModel.h"
+#import <UserNotiFications/UserNotifications.h>
 
 static const float animationTime = 0.2f;
 
@@ -101,7 +103,7 @@ static const float animationTime = 0.2f;
 {
     [super viewDidAppear:animated];
     self.backgroundScrollView.contentSize = CGSizeMake(_courseWidth*7 + 28 + 3, 42+(_courseWidth+0.5)*6*1.26);
-    [self.weekPicker selectRow:[NSDate date].schoolWeek-1 inComponent:0 animated:NO];
+    [self.weekPicker selectRow:[ZCYUserMgr sharedMgr].shcoolWeek-1 inComponent:0 animated:NO];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -239,7 +241,7 @@ static const float animationTime = 0.2f;
     
     self.weekLabel = [[UILabel alloc] init];
     self.weekLabel.textColor = kCommonText_Color;
-    self.weekLabel.text = [NSString stringWithFormat:@"第%@周", [NSDate date].schoolWeekString];
+    self.weekLabel.text = [NSString stringWithFormat:@"第%@周", [NSDate schoolWeekStringWithWeek:[ZCYUserMgr sharedMgr].shcoolWeek]];
     [self.weekLabel sizeToFit];
     self.weekLabel.font = kFont(kStandardPx(40));
     [self.bottomView addSubview:self.weekLabel];
@@ -341,8 +343,8 @@ static const float animationTime = 0.2f;
     if (!_weekPicker)
     {
         self.weekPicker = [[UIPickerView alloc] init];
-        _weekArray = [NSMutableArray arrayWithObjects:@"一", @"二", @"三", @"四", @"五", @"六", @"七", @"八", @"九", @"十", @"十一", @"十二", @"十三", @"十四", @"十五", @"十六", @"十七", @"十八", @"十九", @"二十", @"二十一", nil];
-        _weekArray[[NSDate date].schoolWeek - 1] = [NSString stringWithFormat:@"%@（本周)", [NSDate date].schoolWeekString];
+        _weekArray = [NSMutableArray arrayWithObjects:@"一", @"二", @"三", @"四", @"五", @"六", @"七", @"八", @"九", @"十", @"十一", @"十二", @"十三", @"十四", @"十五", @"十六", @"十七", @"十八", @"十九", @"二十", @"二十一", @"二十二", @"二十三", @"二十四", @"二十五", @"二十六", @"二十七", @"二十八", @"二十九", @"三十", nil];
+        _weekArray[[ZCYUserMgr sharedMgr].shcoolWeek - 1] = [NSString stringWithFormat:@"%@（本周)", [NSDate schoolWeekStringWithWeek:[ZCYUserMgr sharedMgr].shcoolWeek]];
         self.weekPicker.dataSource = self;
         self.weekPicker.delegate = self;
         self.weekPicker.backgroundColor = kCommonLightGray_Color;
@@ -458,7 +460,7 @@ static const float animationTime = 0.2f;
     NSInteger schoolWeek;
     if (_isFirstShowCourse)
     {
-        schoolWeek = [NSDate date].schoolWeek;
+        schoolWeek = [ZCYUserMgr sharedMgr].shcoolWeek;
     } else {
         schoolWeek = [self.weekPicker selectedRowInComponent:0]+1;
     }
@@ -466,7 +468,6 @@ static const float animationTime = 0.2f;
     
     cell.frame = CGRectMake((_courseWidth+0.5)*indexPath.row, (_courseWidth*1.26+0.5)*indexPath.section, _courseWidth, _courseWidth*1.26);
     __block BOOL haveCourse = NO;
-    NSLog(@"%@", colArray);
     [colArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
     
         ZCYTimeTableModel *model  = obj;
@@ -477,7 +478,7 @@ static const float animationTime = 0.2f;
             {
                 if (!haveCourse)
                 {
-                    NSLog(@"%@", model.courseName);
+
                     haveCourse = YES;
                     [self setCollectionViewCell:cell withColor:cellColor andCourseName:model.courseName andClassID:model.coursePlace];
                     //                [cell setRadius:5.0f]; //影响性能
@@ -571,7 +572,7 @@ static const float animationTime = 0.2f;
     NSInteger schoolWeek;
     if (_isFirstShowCourse)
     {
-        schoolWeek = [NSDate date].schoolWeek;
+        schoolWeek = [ZCYUserMgr sharedMgr].shcoolWeek;
     } else {
         schoolWeek = [self.weekPicker selectedRowInComponent:0]+1;
     }
@@ -865,8 +866,8 @@ static const float animationTime = 0.2f;
     if (_didTouchedFinishButton)
     {
         _isFirstShowCourse = NO;
-        if ([self.weekPicker selectedRowInComponent:0]+1 == [NSDate date].schoolWeek)
-            self.weekLabel.text = [NSString stringWithFormat:@"第%@周", [NSDate date].schoolWeekString];
+        if ([self.weekPicker selectedRowInComponent:0]+1 == [ZCYUserMgr sharedMgr].shcoolWeek)
+            self.weekLabel.text = [NSString stringWithFormat:@"第%@周", [NSDate schoolWeekStringWithWeek:[ZCYUserMgr sharedMgr].shcoolWeek]];
         else
             self.weekLabel.text = [NSString stringWithFormat:@"第%@周", _weekArray[[self.weekPicker selectedRowInComponent:0]]];
 
@@ -901,17 +902,133 @@ static const float animationTime = 0.2f;
 
 -(void)addNotificationDidPressed{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    ZCYCuurentTimeModel *timeModel = [ZCYUserMgr sharedMgr].schoolTimeModel;
+    NSInteger UTCInterval = 8;
+    NSInteger currentWeek = [timeModel.currentWeek integerValue];
+    NSInteger currentWeekDay = [timeModel.currentWeekDay integerValue];
+    NSInteger selectedWeek = [self.weekPicker selectedRowInComponent:0]+1;
+    NSInteger selectedDay = currentSelectedIndexPath.row + 1;
+    NSDateFormatter *formate = [[NSDateFormatter alloc]init];
+    [formate setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *startTimeStr = [NSString stringWithFormat:@"%@ 00:00:00",timeModel.term_start];
+    NSDate *startTime = [formate dateFromString:startTimeStr];
+    NSTimeInterval startInterval = [startTime timeIntervalSince1970]+UTCInterval*3600;
+    __weak typeof(self) weakself = self;
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"仅选本周" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSLog(@"%lu--%lu",currentSelectedIndexPath.section,currentSelectedIndexPath.row);
+        __strong typeof(weakself) strongSelf = weakself;
+        if (selectedWeek < currentWeek) {
+            [[ZCYProgressHUD sharedHUD] showWithText:@"该课已经上过了哦～" inView:strongSelf.view hideAfterDelay:1.0];
+            return ;
+        }else if (selectedWeek == currentWeek){
+            if (currentSelectedIndexPath.row+1 < currentWeekDay) {
+                [[ZCYProgressHUD sharedHUD] showWithText:@"该课已经上过了哦～" inView:strongSelf.view hideAfterDelay:1.0];
+                return;
+            }
+        }
+        NSTimeInterval dayInterval = (selectedDay-1+(selectedWeek-1)*7)*24*3600;
+        NSTimeInterval hourInterval = 0;
+        if (currentSelectedIndexPath.section == 0) {
+            hourInterval = (7*60+50)*60;
+        }
+        if (currentSelectedIndexPath.section == 1) {
+            hourInterval = (9*60+55)*60;
+        }
+        if (currentSelectedIndexPath.section == 2) {
+            hourInterval = (13*60+50)*60;
+        }
+        if (currentSelectedIndexPath.section == 3) {
+            hourInterval = (15*60+55)*60;
+        }
+        if (currentSelectedIndexPath.section == 4) {
+            hourInterval = (18*60+50)*60;
+        }
+        if (currentSelectedIndexPath.section == 5) {
+            hourInterval = (20*60+45)*60;
+        }
+        NSTimeInterval allInterval = startInterval+dayInterval+hourInterval;
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:allInterval];
+        NSLog(@"%@",date);
         
+        if ([[UIDevice currentDevice] systemVersion].integerValue >= 10) {
+            UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+            UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc]init];
+            content.title = @"该上课啦！";
+            content.body = [NSString stringWithFormat:@"同学，再过十分钟就要上课了，不要迟到哦～"];
+            content.sound = [UNNotificationSound defaultSound];
+            UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:allInterval repeats:NO];
+            UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"singleNotification" content:content trigger:trigger];
+            //推送成功后处理
+            [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+                
+            }];
+        }else{
+            UILocalNotification *notification = [[UILocalNotification alloc]init];
+            notification.fireDate = date;
+            notification.alertBody = @"同学，该上课了哦！";
+            notification.soundName = UILocalNotificationDefaultSoundName;
+            notification.timeZone = [NSTimeZone defaultTimeZone];
+            [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+        }
+        [[ZCYProgressHUD sharedHUD] showWithText:@"设置成功" inView:strongSelf.view hideAfterDelay:1.0];
     }];
     [alert addAction:action];
     
     UIAlertAction *act = [UIAlertAction actionWithTitle:@"所有周次" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        UILocalNotification *notification = [[UILocalNotification alloc]init];
+        __strong typeof(self) strongSelf = weakself;
+        if (selectedWeek < currentWeek) {
+            
+            return ;
+        }else if (selectedWeek == currentWeek){
+            if (currentSelectedIndexPath.row+1 < currentWeekDay) {
+                [[ZCYProgressHUD sharedHUD] showWithText:@"该课已经上过了哦～" inView:strongSelf.view hideAfterDelay:1.0];
+                return;
+            }
+        }
+        NSTimeInterval dayInterval = (selectedDay-1+(selectedWeek-1)*7)*24*3600;
+        NSTimeInterval hourInterval = 0;
+        if (currentSelectedIndexPath.section == 0) {
+            hourInterval = (7*60+50)*60;
+        }
+        if (currentSelectedIndexPath.section == 1) {
+            hourInterval = (9*60+55)*60;
+        }
+        if (currentSelectedIndexPath.section == 2) {
+            hourInterval = (13*60+50)*60;
+        }
+        if (currentSelectedIndexPath.section == 3) {
+            hourInterval = (15*60+55)*60;
+        }
+        if (currentSelectedIndexPath.section == 4) {
+            hourInterval = (18*60+50)*60;
+        }
+        if (currentSelectedIndexPath.section == 5) {
+            hourInterval = (20*60+45)*60;
+        }
+        NSTimeInterval allInterval = startInterval+dayInterval+hourInterval;
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:allInterval];
+        NSLog(@"%@",date);
         
-        
-        
+        if ([[UIDevice currentDevice] systemVersion].integerValue >= 10) {
+            UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+            UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc]init];
+            content.title = @"该上课啦！";
+            content.body = [NSString stringWithFormat:@"同学，再过十分钟就要上课了，不要迟到哦～"];
+            content.sound = [UNNotificationSound defaultSound];
+            UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:allInterval repeats:NO];
+            UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"singleNotification" content:content trigger:trigger];
+            //推送成功后处理
+            [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+                
+            }];
+        }else{
+            UILocalNotification *notification = [[UILocalNotification alloc]init];
+            notification.fireDate = date;
+            notification.alertBody = @"同学，该上课了哦！";
+            notification.soundName = UILocalNotificationDefaultSoundName;
+            notification.timeZone = [NSTimeZone defaultTimeZone];
+            [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+        }
+        [[ZCYProgressHUD sharedHUD] showWithText:@"设置成功" inView:strongSelf.view hideAfterDelay:1.0];
     }];
     [alert addAction:act];
     
@@ -987,9 +1104,6 @@ static const float animationTime = 0.2f;
     }];
 }
 
-#pragma mark UILocalNotification
-//-(void)setNotification{
-//    NSArray *arr =
-//}
-//
+
+
 @end

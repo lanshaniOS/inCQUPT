@@ -42,6 +42,8 @@ static ZCYUserMgr *sharedMgr = nil;
     [aCoder encodeObject:self.settingImageData forKey:@"SETTINGIMAGEDATA"];
     [aCoder encodeObject:self.identityID forKey:@"IDENTITYCARD"];
     [aCoder encodeObject:self.collegeName forKey:@"COLLEGENAME"];
+    [aCoder encodeInteger:self.shcoolWeek forKey:@"SCHOOLWEEK"];
+    [aCoder encodeObject:self.schoolTimeModel forKey:@"SCHOOLTIMEMODEL"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -62,6 +64,8 @@ static ZCYUserMgr *sharedMgr = nil;
         self.settingImageData = [aDecoder decodeObjectForKey:@"SETTINGIMAGEDATA"];
         self.identityID = [aDecoder decodeObjectForKey:@"IDENTITYCARD"];
         self.collegeName = [aDecoder decodeObjectForKey:@"COLLEGENAME"];
+        self.shcoolWeek = [aDecoder decodeIntegerForKey:@"SCHOOLWEEK"];
+        self.schoolTimeModel = [aDecoder decodeObjectForKey:@"SCHOOLTIMEMODEL"];
     }
     return self;
 }
