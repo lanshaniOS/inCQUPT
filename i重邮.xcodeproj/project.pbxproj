@@ -104,6 +104,8 @@
 		49ECE7461DE732D300163D5C /* ZCYCourseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49ECE7451DE732D300163D5C /* ZCYCourseView.m */; };
 		49ECE74A1DE735B800163D5C /* NSDate+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 49ECE7491DE735B800163D5C /* NSDate+Utilities.m */; };
 		B604844A0EC8563617EFF74E /* libPods-i重邮.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A13C71F9ACFB601A1BC97FE /* libPods-i重邮.a */; };
+		F0113EB61E7E6EC000902ED8 /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = F0113EB31E7E6EC000902ED8 /* CMPopTipView.m */; };
+		F0113EBB1E7E700F00902ED8 /* ZCYNotificationMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = F0113EBA1E7E700F00902ED8 /* ZCYNotificationMenu.m */; };
 		F019347A1E6591CE00D3E25E /* ZCYCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F01934791E6591CE00D3E25E /* ZCYCalendarViewController.m */; };
 		F061A6D31E74F60200CCABE6 /* ZCYGetTimeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F061A6D21E74F60200CCABE6 /* ZCYGetTimeHelper.m */; };
 		F061A6D61E74FAD300CCABE6 /* ZCYCuurentTimeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F061A6D51E74FAD300CCABE6 /* ZCYCuurentTimeModel.m */; };
@@ -336,6 +338,10 @@
 		6B748FE8DE13082445F21A19 /* libPods-Today.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Today.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78597084D782CF66FE065969 /* Pods-Today.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Today.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Today/Pods-Today.debug.xcconfig"; sourceTree = "<group>"; };
 		CA1ABD48708D0B7625294365 /* Pods-Today.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Today.release.xcconfig"; path = "Pods/Target Support Files/Pods-Today/Pods-Today.release.xcconfig"; sourceTree = "<group>"; };
+		F0113EB21E7E6EC000902ED8 /* CMPopTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMPopTipView.h; path = CMPopTipView/CMPopTipView.h; sourceTree = "<group>"; };
+		F0113EB31E7E6EC000902ED8 /* CMPopTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CMPopTipView.m; path = CMPopTipView/CMPopTipView.m; sourceTree = "<group>"; };
+		F0113EB91E7E700F00902ED8 /* ZCYNotificationMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYNotificationMenu.h; sourceTree = "<group>"; };
+		F0113EBA1E7E700F00902ED8 /* ZCYNotificationMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYNotificationMenu.m; sourceTree = "<group>"; };
 		F01934781E6591CE00D3E25E /* ZCYCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCYCalendarViewController.h; sourceTree = "<group>"; };
 		F01934791E6591CE00D3E25E /* ZCYCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCYCalendarViewController.m; sourceTree = "<group>"; };
 		F061A6D11E74F60200CCABE6 /* ZCYGetTimeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZCYGetTimeHelper.h; path = ../ZCYGetTimeHelper.h; sourceTree = "<group>"; };
@@ -617,6 +623,7 @@
 				49BB03EB1DF99F48003E39C0 /* Repairing */,
 				492C932A1DF6F2CD0071DB63 /* Card */,
 				499C0AEF1DCA278700E2F61D /* Course */,
+				F0113EB01E7E6EC000902ED8 /* ZCYPopTipView */,
 				499232D71DC4A28C00B17B54 /* HomePage */,
 				49EA614E1DF17877003A548A /* ZCYBezierPath.h */,
 				49EA614F1DF17877003A548A /* ZCYBezierPath.m */,
@@ -709,6 +716,8 @@
 			children = (
 				49061F591DDF325E00E2923A /* ZCYDetailCourseView.h */,
 				49061F5A1DDF325E00E2923A /* ZCYDetailCourseView.m */,
+				F0113EB91E7E700F00902ED8 /* ZCYNotificationMenu.h */,
+				F0113EBA1E7E700F00902ED8 /* ZCYNotificationMenu.m */,
 			);
 			path = Course;
 			sourceTree = "<group>";
@@ -1030,6 +1039,16 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		F0113EB01E7E6EC000902ED8 /* ZCYPopTipView */ = {
+			isa = PBXGroup;
+			children = (
+				F0113EB21E7E6EC000902ED8 /* CMPopTipView.h */,
+				F0113EB31E7E6EC000902ED8 /* CMPopTipView.m */,
+			);
+			name = ZCYPopTipView;
+			path = HomePage/CMPopTipView;
+			sourceTree = "<group>";
+		};
 		F08D21371E6FDEA700FD72FB /* Infomation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1284,6 +1303,7 @@
 				49A1D1441DE87F9100C93F74 /* ZCYLendingTableViewCell.m in Sources */,
 				F0D35F681E65305A001F2E08 /* ZCYInformationViewController.m in Sources */,
 				49AC73EF1DC0F09300E903EA /* ZCYTimeTableHelper.m in Sources */,
+				F0113EB61E7E6EC000902ED8 /* CMPopTipView.m in Sources */,
 				F061A6D31E74F60200CCABE6 /* ZCYGetTimeHelper.m in Sources */,
 				49EA612A1DEDA975003A548A /* ZCYExaminationViewController.m in Sources */,
 				F0D35F5F1E652F93001F2E08 /* InfomationDetailModel.m in Sources */,
@@ -1327,6 +1347,7 @@
 				495DAC611E081626007A2DCD /* NSData+Base64Additions.m in Sources */,
 				49EA61471DF05FBE003A548A /* ZCYExamScoreTableViewCell.m in Sources */,
 				49061F581DDB4F7B00E2923A /* UILabel+Common.m in Sources */,
+				F0113EBB1E7E700F00902ED8 /* ZCYNotificationMenu.m in Sources */,
 				4951C8B81DBA41C900E5AC63 /* ZCYSettingsViewController.m in Sources */,
 				49EA61311DEDAA2D003A548A /* ZCYStudentSearchViewController.m in Sources */,
 				49108DB01E00183900C71723 /* NSString+MD5.m in Sources */,

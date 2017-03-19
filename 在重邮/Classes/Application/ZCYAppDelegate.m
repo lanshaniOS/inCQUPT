@@ -86,9 +86,44 @@
             [ZCYUserMgr sharedMgr].schoolTimeModel = timeModel;
         }
     }];
-
+    NSLog(@"%@",[ZCYUserMgr sharedMgr].notificationIdentifiers);
+//    NSDate *date1 = [NSDate dateWithTimeIntervalSinceNow:20];
+//    NSDate *date2 = [NSDate dateWithTimeIntervalSinceNow:5];
+//    [self addNotificationWithFireDate:date2 andIdentifier:@"哈哈"];
+//    [self addNotificationWithFireDate:date1 andIdentifier:@"嘿嘿-节"];
     return YES;
 }
+
+//-(void)addNotificationWithFireDate:(NSDate *)date andIdentifier:(NSString *)identifier{
+//    
+//     [[ZCYUserMgr sharedMgr].notificationIdentifiers addObject:identifier];
+//    NSLog(@"%@",[ZCYUserMgr sharedMgr].notificationIdentifiers);
+//    if ([[UIDevice currentDevice] systemVersion].integerValue >= 10) {
+//        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+//        UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc]init];
+//        content.title = @"该上课啦！";
+//        content.body = [NSString stringWithFormat:@"同学，再过十分钟就要上课了，不要迟到哦～"];
+//        content.sound = [UNNotificationSound defaultSound];
+//        NSTimeInterval nowInterval = [date timeIntervalSinceNow];
+//        UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:nowInterval repeats:NO];
+//        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
+//        //推送成功后处理
+//        [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+//            [[ZCYUserMgr sharedMgr].notificationIdentifiers removeObject:identifier];
+//            NSLog(@"%@",[ZCYUserMgr sharedMgr].notificationIdentifiers);
+//        }];
+//    }else{
+//        UILocalNotification *notification = [[UILocalNotification alloc]init];
+//        notification.fireDate = date;
+//        notification.alertBody = @"同学，该上课了哦！";
+//        notification.soundName = UILocalNotificationDefaultSoundName;
+//        notification.timeZone = [NSTimeZone defaultTimeZone];
+//        [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+//    }
+//    
+//}
+
+
 
 -(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
     completionHandler(UNNotificationPresentationOptionAlert);
@@ -135,6 +170,15 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    if ([ZCYUserMgr sharedMgr].schoolTimeModel == nil) {
+        [ZCYGetTimeHelper getCurrentTimeWithCompletionBlock:^(NSError *error, ZCYCuurentTimeModel *timeModel) {
+            if (error) {
+                NSLog(@"%@",error);
+            }else{
+                [ZCYUserMgr sharedMgr].schoolTimeModel = timeModel;
+            }
+        }];
+    }
 }
 
 

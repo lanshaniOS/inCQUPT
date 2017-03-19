@@ -109,7 +109,6 @@
 {
     [super viewDidAppear:animated];
 //    self.navigationController.navigationBar.alpha = (self.backgroundScrollView.contentOffset.y)/355 * 2.0;
-    NSLog(@"%@",[ZCYUserMgr sharedMgr].schoolTimeModel);
 }
 
 - (void)viewDidDisappear:(BOOL)animated

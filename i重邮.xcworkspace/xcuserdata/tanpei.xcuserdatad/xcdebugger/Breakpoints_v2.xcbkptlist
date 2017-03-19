@@ -30,19 +30,13 @@
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "&#x5728;&#x91cd;&#x90ae;/Classes/Controllers/HomePage/Course/ZCYCourseViewController.m"
-            timestampString = "511168901.472956"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "989"
-            endingLineNumber = "989"
-            landmarkName = "-addNotificationDidPressed"
-            landmarkType = "7">
+            scope = "0"
+            stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -52,12 +46,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5728;&#x91cd;&#x90ae;/Classes/Controllers/HomePage/Course/ZCYCourseViewController.m"
-            timestampString = "511171120.066377"
+            timestampString = "511609972.507964"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1011"
-            endingLineNumber = "1011"
-            landmarkName = "-addNotificationDidPressed"
+            startingLineNumber = "1217"
+            endingLineNumber = "1217"
+            landmarkName = "-addNotificationWithFireDate:andIdentifier:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x5728;&#x91cd;&#x90ae;/Classes/Controllers/HomePage/Course/ZCYCourseViewController.m"
+            timestampString = "511609972.507964"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "456"
+            endingLineNumber = "456"
+            landmarkName = "-tableView:commitEditingStyle:forRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

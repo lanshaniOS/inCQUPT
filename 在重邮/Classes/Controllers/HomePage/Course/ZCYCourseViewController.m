@@ -13,10 +13,12 @@
 #import "ZCYFeedBackViewController.h"
 #import "ZCYCuurentTimeModel.h"
 #import <UserNotiFications/UserNotifications.h>
+#import "ZCYGetTimeHelper.h"
+#import "CMPopTipView.h"
 
 static const float animationTime = 0.2f;
 
-@interface ZCYCourseViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIPickerViewDelegate, UIPickerViewDataSource, ZCYDetailCourseCloseButtonTouchedDelegate, UIScrollViewDelegate>
+@interface ZCYCourseViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIPickerViewDelegate, UIPickerViewDataSource, ZCYDetailCourseCloseButtonTouchedDelegate, UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 
 @property (strong, nonatomic) UIScrollView *backgroundScrollView;  /**<  滑动背景 */
 @property (strong, nonatomic) UIView *leftTimeView;  /**< 左部上课节数 */
@@ -31,6 +33,10 @@ static const float animationTime = 0.2f;
 @property (strong, nonatomic) UILabel *weekLabel;  /**< 周数显示 */
 @property (strong, nonatomic) NSString *studentNumber;  /**< 学号 */
 //@property (strong, nonatomic) NSArray *courseArray;  /**< 课程数组 */
+@property (nonatomic,strong) UITableView *notificationMenu;
+@property (nonatomic,strong) NSMutableArray *menuArray;
+@property (nonatomic,strong) CMPopTipView *popView;
+
 @end
 
 @implementation ZCYCourseViewController
@@ -41,11 +47,12 @@ static const float animationTime = 0.2f;
     CGFloat sum_yOffset;
     CGFloat y_oldCourseViewPoint;
     CGFloat sum_yCourseViewOffset;
-  
+    
     NSIndexPath *old_selectedIndexPath;
     NSIndexPath *currentSelectedIndexPath;
     BOOL _didTouchedFinishButton;
     BOOL _isFirstShowCourse;
+    BOOL _isShowNotificationMenu;
 }
 
 - (instancetype)initWithStudentNumber:(NSString *)studentNumber
@@ -90,11 +97,11 @@ static const float animationTime = 0.2f;
                 return;
             }
             [ZCYUserMgr sharedMgr].courseArray = array;
-//            self.courseArray = [ZCYUserMgr sharedMgr].courseArray;
-//            [self.courseCollectionView reloadData];
+            //            self.courseArray = [ZCYUserMgr sharedMgr].courseArray;
+            //            [self.courseCollectionView reloadData];
         }];
-
-//        self.courseArray = [ZCYUserMgr sharedMgr].courseArray;
+        
+        //        self.courseArray = [ZCYUserMgr sharedMgr].courseArray;
     }
 }
 
@@ -108,6 +115,10 @@ static const float animationTime = 0.2f;
 {
     [super viewWillDisappear:animated];
     self.headerView.hidden = YES;
+    if (_isShowNotificationMenu) {
+        [_popView dismissAnimated:YES];
+        _isShowNotificationMenu = NO;
+    }
 }
 #pragma mark - initUI
 - (void)initUI
@@ -134,7 +145,24 @@ static const float animationTime = 0.2f;
     [self initBottomView];
     [self initWeekPickerView];
     [self initCourseDetailView];
+    [self initNotificationMenu];
+    [self addBarItem];
+}
 
+- (void)initNotificationMenu
+{
+    _menuArray = [NSMutableArray arrayWithArray:[ZCYUserMgr sharedMgr].notificationIdentifiers];
+    self.notificationMenu = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 150, 180) style:UITableViewStylePlain];
+    self.notificationMenu.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.notificationMenu.delegate = self;
+    self.notificationMenu.dataSource = self;
+    [self.notificationMenu registerClass:[UITableViewCell class] forCellReuseIdentifier:@"tableViewCell"];
+}
+
+-(void)addBarItem{
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(changeNotification:)];
+    self.navigationItem.rightBarButtonItem = item;
+    
 }
 
 - (void)initHeaderView
@@ -157,7 +185,7 @@ static const float animationTime = 0.2f;
         {
             [self setView:numView WithNum:numArray[index] andSegColor:kDeepGreen_Color shouldShowSeg:YES];
         } else {
-             [self setView:numView WithNum:numArray[index] andSegColor:kDeepGreen_Color shouldShowSeg:NO];
+            [self setView:numView WithNum:numArray[index] andSegColor:kDeepGreen_Color shouldShowSeg:NO];
         }
         
         [self.headerView addSubview:numView];
@@ -178,14 +206,14 @@ static const float animationTime = 0.2f;
     self.backgroundScrollView.showsVerticalScrollIndicator = NO;
     self.backgroundScrollView.scrollEnabled = YES;
     self.backgroundScrollView.directionalLockEnabled = YES;
-
+    
     [self.view addSubview:self.backgroundScrollView];
     [self.backgroundScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.right.top.equalTo(self.view);
         make.bottom.equalTo(self.view).with.offset(-68);
     }];
     
-
+    
 }
 
 - (void)initCourseCollectionView
@@ -196,7 +224,7 @@ static const float animationTime = 0.2f;
     self.courseCollectionView.backgroundColor = kTransparentColor;
     [self.courseCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"courseCollctionViewCellID"];
     self.courseCollectionView.delegate = self;
-
+    
     self.courseCollectionView.dataSource = self;
     self.courseCollectionView.scrollEnabled = NO;
     
@@ -209,13 +237,13 @@ static const float animationTime = 0.2f;
         make.height.mas_equalTo(6*1.26*_courseWidth + 3);
         make.width.mas_equalTo(7*_courseWidth+3.5);
     }];
-
+    
 }
 
 - (void)initBottomView
 {
     self.bottomView = [[UIView alloc] init];
-
+    
     self.bottomView.backgroundColor = kCommonLightGray_Color;
     self.bottomView.alpha = 0.95f;
     self.bottomView.layer.shadowOpacity = 0.95f;
@@ -384,6 +412,67 @@ static const float animationTime = 0.2f;
         [self.detailCourseView addGestureRecognizer:panGestureRecognizer];
     }
 }
+
+#pragma mark - UItableViewDeleagete
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.menuArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableViewCell" forIndexPath:indexPath];
+    cell.textLabel.text = self.menuArray[indexPath.row];
+    cell.textLabel.font = [UIFont systemFontOfSize:12];
+    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.backgroundColor = [UIColor colorWithRed:92/255.0 green:255/255.0 blue:117/255.0 alpha:1];
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 40;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+-(void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+}
+
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
+}
+
+-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewCellEditingStyleDelete;
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    [_notificationMenu setEditing:NO animated:YES];
+    if ([[UIDevice currentDevice] systemVersion].integerValue >= 10) {
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        [center removeDeliveredNotificationsWithIdentifiers:self.menuArray[indexPath.row]];
+    }else{
+        NSArray *locationArray = [UIApplication sharedApplication].scheduledLocalNotifications;
+        for (UILocalNotification *location in locationArray) {
+            NSDictionary *dic = location.userInfo;
+            NSString *key = [[dic allKeys] firstObject];
+            if ([key isEqualToString:[NSString stringWithFormat:@"%lu",indexPath.row]]) {
+                [[UIApplication sharedApplication]cancelLocalNotification:location];
+            }
+        }
+    }
+    [_menuArray removeObjectAtIndex:indexPath.row];
+    [[ZCYUserMgr sharedMgr].notificationIdentifiers removeObjectAtIndex:indexPath.row];
+    ZCYUserMgr *userMgr = [ZCYUserMgr sharedMgr];
+    NSData *archiveUserData = [NSKeyedArchiver archivedDataWithRootObject:userMgr];
+    [[NSUserDefaults standardUserDefaults] setObject:archiveUserData forKey:@"USERMGR"];
+}
+
+
 #pragma mark - UIPickerViewDelegate & UIPickerViewDataSource
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
@@ -441,12 +530,12 @@ static const float animationTime = 0.2f;
     NSArray *courseArray = [ZCYUserMgr sharedMgr].courseArray[indexPath.row];
     NSArray *colArray = courseArray[indexPath.section];
     
-//    if (indexPath.row == [NSDate date].week -1)
-//    {
-//        cell.backgroundColor = [UIColor colorWithRGBHex:0xe4ffdf];
-//    } else {
-//    cell.backgroundColor = kTransparentColor;
-//    }
+    //    if (indexPath.row == [NSDate date].week -1)
+    //    {
+    //        cell.backgroundColor = [UIColor colorWithRGBHex:0xe4ffdf];
+    //    } else {
+    //    cell.backgroundColor = kTransparentColor;
+    //    }
     cell.backgroundColor = kTransparentColor;
     if (colArray.count >= 2)
     {
@@ -463,12 +552,12 @@ static const float animationTime = 0.2f;
     } else {
         schoolWeek = [self.weekPicker selectedRowInComponent:0]+1;
     }
-
+    
     
     cell.frame = CGRectMake((_courseWidth+0.5)*indexPath.row, (_courseWidth*1.26+0.5)*indexPath.section, _courseWidth, _courseWidth*1.26);
     __block BOOL haveCourse = NO;
     [colArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-    
+        
         ZCYTimeTableModel *model  = obj;
         
         for (NSUInteger i=0; i<model.courseWeeks.count; i++)
@@ -477,7 +566,7 @@ static const float animationTime = 0.2f;
             {
                 if (!haveCourse)
                 {
-
+                    
                     haveCourse = YES;
                     [self setCollectionViewCell:cell withColor:cellColor andCourseName:model.courseName andClassID:model.coursePlace];
                     //                [cell setRadius:5.0f]; //影响性能
@@ -525,7 +614,7 @@ static const float animationTime = 0.2f;
     }
     
     return cell;
-   
+    
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -540,10 +629,10 @@ static const float animationTime = 0.2f;
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
     return CGSizeMake( _courseWidth+0.5, _courseWidth*1.26 + 0.5);
-
-
+    
+    
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
@@ -563,6 +652,10 @@ static const float animationTime = 0.2f;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (_isShowNotificationMenu) {
+        [_popView dismissAnimated:YES];
+        _isShowNotificationMenu = NO;
+    }
     currentSelectedIndexPath = indexPath;
     NSArray *courseArray = [ZCYUserMgr sharedMgr].courseArray[indexPath.row];
     NSArray *colArray = courseArray[indexPath.section];
@@ -610,13 +703,13 @@ static const float animationTime = 0.2f;
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = [self.courseCollectionView cellForItemAtIndexPath:indexPath];
-//    if (cell.backgroundColor == kCommonWhite_Color)
-//    {
-//        return;
-//    }
+    //    if (cell.backgroundColor == kCommonWhite_Color)
+    //    {
+    //        return;
+    //    }
     if (old_selectedIndexPath)
     {
-//        UICollectionViewCell *cell = [self.courseCollectionView cellForItemAtIndexPath:old_selectedIndexPath];
+        //        UICollectionViewCell *cell = [self.courseCollectionView cellForItemAtIndexPath:old_selectedIndexPath];
         cell.alpha = 1.0f;
     }
 }
@@ -624,38 +717,42 @@ static const float animationTime = 0.2f;
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     
-  
-//    if (fabs(x_oldBGView - scrollView.contentOffset.x) > fabs(y_oldBGView - scrollView.contentOffset.y))
-//    {
-//        
-//        self.backgroundScrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, y_oldBGView);
-//        x_oldBGView = scrollView.contentOffset.x;
-//    } else if (fabs(x_oldBGView - scrollView.contentOffset.x) < fabs(y_oldBGView - scrollView.contentOffset.y)) {
-//        self.backgroundScrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, y_oldBGView);
-//        y_oldBGView = scrollView.contentOffset.y;
-//    } else {
-//        self.backgroundScrollView.contentOffset = CGPointMake(x_oldBGView, y_oldBGView);
-//    }
-//    x_oldBGView = scrollView.contentOffset.x;
-//    y_oldBGView = scrollView.contentOffset.y;
+    
+    //    if (fabs(x_oldBGView - scrollView.contentOffset.x) > fabs(y_oldBGView - scrollView.contentOffset.y))
+    //    {
+    //
+    //        self.backgroundScrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, y_oldBGView);
+    //        x_oldBGView = scrollView.contentOffset.x;
+    //    } else if (fabs(x_oldBGView - scrollView.contentOffset.x) < fabs(y_oldBGView - scrollView.contentOffset.y)) {
+    //        self.backgroundScrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, y_oldBGView);
+    //        y_oldBGView = scrollView.contentOffset.y;
+    //    } else {
+    //        self.backgroundScrollView.contentOffset = CGPointMake(x_oldBGView, y_oldBGView);
+    //    }
+    //    x_oldBGView = scrollView.contentOffset.x;
+    //    y_oldBGView = scrollView.contentOffset.y;
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-   
+    
 }
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-   
+    
     [self.headerView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.backgroundScrollView).with.offset(-scrollView.contentOffset.x - 200);
+        make.left.equalTo(self.backgroundScrollView).with.offset(-scrollView.contentOffset.x - 200);
     }];
 }
 #pragma mark - 手势
 - (void)handleWeekSelectedView:(UIPanGestureRecognizer *)gestureRecognizer
 {
-   CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view.superview];
+    if (_isShowNotificationMenu) {
+        [_popView dismissAnimated:YES];
+        _isShowNotificationMenu = NO;
+    }
+    CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view.superview];
     if (gestureRecognizer.state != UIGestureRecognizerStateFailed)
     {
         if (y_oldPanpoint != 0)
@@ -664,9 +761,9 @@ static const float animationTime = 0.2f;
         {
             
             if (self.bottomView.frame.size.height+self.bottomView.frame.origin.y != self.view.frame.size.height + 4.5)
-            [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.bottom.equalTo(self.view).with.offset(sum_yOffset+kStandardPx(18)/2);
-            }];
+                [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
+                    make.bottom.equalTo(self.view).with.offset(sum_yOffset+kStandardPx(18)/2);
+                }];
             _didTouchedFinishButton = NO;
             if (self.bottomView.frame.size.height+self.bottomView.frame.origin.y >= self.view.frame.size.height + kStandardPx(18)/2)
             {
@@ -678,7 +775,7 @@ static const float animationTime = 0.2f;
             {
                 [self hideWeekSelectedView];
             }
-
+            
             point.y -= 0.5;
         } else if (point.y < y_oldPanpoint){
             if (sum_yOffset <= -215)
@@ -690,7 +787,7 @@ static const float animationTime = 0.2f;
             {
                 sum_yOffset = 215;
             }
-
+            
             [self.bottomView mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.bottom.equalTo(self.view).with.offset(sum_yOffset+kStandardPx(18)/2);
             }];
@@ -718,6 +815,10 @@ static const float animationTime = 0.2f;
 
 - (void)handleWithCourseDetailView:(UIPanGestureRecognizer *)gestureRecognizer
 {
+    if (_isShowNotificationMenu) {
+        [_popView dismissAnimated:YES];
+        _isShowNotificationMenu = NO;
+    }
     CGPoint point = [gestureRecognizer locationInView:gestureRecognizer.view.superview];
     if (gestureRecognizer.state != UIGestureRecognizerStateFailed)
     {
@@ -725,7 +826,7 @@ static const float animationTime = 0.2f;
             sum_yCourseViewOffset = sum_yCourseViewOffset + point.y - y_oldCourseViewPoint;
         if (y_oldCourseViewPoint != 0 && point.y > y_oldCourseViewPoint) //下拉
         {
-
+            
             if (self.detailCourseView.frame.origin.y != self.view.frame.size.height - 78)
                 [self.detailCourseView mas_updateConstraints:^(MASConstraintMaker *make) {
                     make.top.equalTo(self.view.mas_bottom).with.offset(sum_yCourseViewOffset);
@@ -735,7 +836,7 @@ static const float animationTime = 0.2f;
             {
                 [self hideDetailCourseView];
             }
-
+            
             
             if (gestureRecognizer.state == 3)
             {
@@ -743,17 +844,17 @@ static const float animationTime = 0.2f;
                 {
                     [self hideDetailCourseView];
                 }
-
+                
                 if (self.view.frame.size.height - self.detailCourseView.frame.origin.y >= 360)
                 {
                     [self showDetailCourseView];
                 }
-
+                
             }
             
             point.y -= 0.5;
         } else if (point.y < y_oldCourseViewPoint) { //上拉
-           
+            
             if (self.detailCourseView.frame.origin.y != self.view.frame.size.height - 554)
                 [self.detailCourseView mas_updateConstraints:^(MASConstraintMaker *make) {
                     make.top.equalTo(self.view.mas_bottom).with.offset(sum_yCourseViewOffset);
@@ -771,7 +872,7 @@ static const float animationTime = 0.2f;
                 {
                     [self showAllDetailCourseView];
                 } else if (self.view.frame.size.height - self.detailCourseView.frame.origin.y <= 360)
-                [self showDetailCourseView];
+                    [self showDetailCourseView];
                 
             }
             point.y += 0.5;
@@ -785,14 +886,14 @@ static const float animationTime = 0.2f;
     {
         y_oldCourseViewPoint = 0;
     }
-
+    
 }
 
 - (void)showDetailCourseView
 {
     sum_yCourseViewOffset = -360;
     self.backgroundScrollView.contentSize = CGSizeMake(_courseWidth*7 + 28 + 3, 27+_courseWidth*6*1.26 + 3 + 360 - 68);
-
+    
     [UIView animateWithDuration:animationTime delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
         [self.detailCourseView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.view.mas_bottom).with.offset(-360);
@@ -822,13 +923,13 @@ static const float animationTime = 0.2f;
 {
     sum_yCourseViewOffset = -554;
     self.backgroundScrollView.contentSize = CGSizeMake(_courseWidth*7 + 28 + 3, 27+_courseWidth*6*1.26 + 3 + 10);
-
+    
     [UIView animateWithDuration:animationTime delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
         [self.detailCourseView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.view.mas_bottom).with.offset(-554);
         }];
         [self.detailCourseView.superview layoutIfNeeded];
-
+        
     } completion:^(BOOL finished) {
         
     }];
@@ -869,7 +970,7 @@ static const float animationTime = 0.2f;
             self.weekLabel.text = [NSString stringWithFormat:@"第%@周", [NSDate schoolWeekStringWithWeek:[ZCYUserMgr sharedMgr].shcoolWeek]];
         else
             self.weekLabel.text = [NSString stringWithFormat:@"第%@周", _weekArray[[self.weekPicker selectedRowInComponent:0]]];
-
+        
         [self.courseCollectionView reloadData];
     }
 }
@@ -902,7 +1003,16 @@ static const float animationTime = 0.2f;
 -(void)addNotificationDidPressed{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     ZCYCuurentTimeModel *timeModel = [ZCYUserMgr sharedMgr].schoolTimeModel;
-    NSInteger UTCInterval = 8;
+    if (timeModel == nil) {
+        [[ZCYProgressHUD sharedHUD]showWithText:@"请先打开网络哦～" inView:self.view hideAfterDelay:1.5];
+        [ZCYGetTimeHelper getCurrentTimeWithCompletionBlock:^(NSError *error, ZCYCuurentTimeModel *timeModel) {
+            if (error) {
+                NSLog(@"%@",error);
+            }else{
+                [ZCYUserMgr sharedMgr].schoolTimeModel = timeModel;
+            }
+        }];
+    }
     NSInteger currentWeek = [timeModel.currentWeek integerValue];
     NSInteger currentWeekDay = [timeModel.currentWeekDay integerValue];
     NSInteger selectedWeek = [self.weekPicker selectedRowInComponent:0]+1;
@@ -911,20 +1021,94 @@ static const float animationTime = 0.2f;
     [formate setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *startTimeStr = [NSString stringWithFormat:@"%@ 00:00:00",timeModel.term_start];
     NSDate *startTime = [formate dateFromString:startTimeStr];
-    NSTimeInterval startInterval = [startTime timeIntervalSince1970]+UTCInterval*3600;
+    NSTimeInterval startInterval = [startTime timeIntervalSince1970];
+    NSArray *courseArray = [ZCYUserMgr sharedMgr].courseArray[currentSelectedIndexPath.row];
+    NSArray *colArray = courseArray[currentSelectedIndexPath.section];
+    __block ZCYTimeTableModel *weekModel = [[ZCYTimeTableModel alloc]init];
     __weak typeof(self) weakself = self;
     //仅选当周
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"仅选本周" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         __strong typeof(weakself) strongSelf = weakself;
-        if (selectedWeek < currentWeek) {
+            if (selectedWeek < currentWeek) {
             [[ZCYProgressHUD sharedHUD] showWithText:@"该课已经上过了哦～" inView:strongSelf.view hideAfterDelay:1.0];
             return ;
         }else if (selectedWeek == currentWeek){
-            if (currentSelectedIndexPath.row+1 < currentWeekDay) {
+            if (selectedDay < currentWeekDay) {
                 [[ZCYProgressHUD sharedHUD] showWithText:@"该课已经上过了哦～" inView:strongSelf.view hideAfterDelay:1.0];
                 return;
             }
+            if (selectedDay == currentWeekDay) {
+                NSDate *date = [NSDate date];
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateFormat:@"HH:mm:ss"];
+                NSString *strHour = [dateFormatter stringFromDate:date];
+                NSDate *now = [dateFormatter dateFromString:strHour];
+                NSDate *courseStartDate;
+                NSString *courseStr;
+                if (currentSelectedIndexPath.section == 0) {
+                    courseStr = @"08:00:00";
+                    courseStartDate = [dateFormatter dateFromString:courseStr];
+                    if ([courseStartDate compare:now] == NSOrderedAscending) {
+                        [[ZCYProgressHUD sharedHUD] showWithText:@"该课已经上过了哦～" inView:strongSelf.view hideAfterDelay:1.0];
+                        return;
+                    }
+                }
+                if (currentSelectedIndexPath.section == 1) {
+                    courseStr = @"10:05:00";
+                    courseStartDate = [dateFormatter dateFromString:courseStr];
+                    if ([courseStartDate compare:now] == NSOrderedAscending) {
+                        [[ZCYProgressHUD sharedHUD] showWithText:@"该课已经上过了哦～" inView:strongSelf.view hideAfterDelay:1.0];
+                        return;
+                    }
+                    
+                }
+                if (currentSelectedIndexPath.section == 2) {
+                    courseStr = @"14:00:00";
+                    courseStartDate = [dateFormatter dateFromString:courseStr];
+                    if ([courseStartDate compare:now] == NSOrderedAscending) {
+                        [[ZCYProgressHUD sharedHUD] showWithText:@"该课已经上过了哦～" inView:strongSelf.view hideAfterDelay:1.0];
+                        return;
+                    }
+                    
+                }
+                if (currentSelectedIndexPath.section == 3) {
+                    courseStr = @"16:05:00";
+                    courseStartDate = [dateFormatter dateFromString:courseStr];
+                    if ([courseStartDate compare:now] == NSOrderedAscending) {
+                        [[ZCYProgressHUD sharedHUD] showWithText:@"该课已经上过了哦～" inView:strongSelf.view hideAfterDelay:1.0];
+                        return;
+                    }
+                }
+                if (currentSelectedIndexPath.section == 4) {
+                    courseStr = @"19:00:00";
+                    courseStartDate = [dateFormatter dateFromString:courseStr];
+                    if ([courseStartDate compare:now] == NSOrderedAscending) {
+                        [[ZCYProgressHUD sharedHUD] showWithText:@"该课已经上过了哦～" inView:strongSelf.view hideAfterDelay:1.0];
+                        return;
+                    }
+                }
+                if (currentSelectedIndexPath.section == 5) {
+                    courseStr = @"20:50:00";
+                    courseStartDate = [dateFormatter dateFromString:courseStr];
+                    if ([courseStartDate compare:now] == NSOrderedAscending) {
+                        [[ZCYProgressHUD sharedHUD] showWithText:@"该课已经上过了哦～" inView:strongSelf.view hideAfterDelay:1.0];
+                        return;
+                    }
+                }
+            }
         }
+        
+        for (int i = 0; i < colArray.count; i++) {
+            ZCYTimeTableModel *model = colArray[i];
+            NSArray *arr = model.courseWeeks;
+            for (NSInteger i = 0; i < arr.count; i++) {
+                if ([arr[i] integerValue] == selectedWeek) {
+                    weekModel = model;
+                }
+            }
+        }
+        NSString *courseName = weekModel.courseName;
+        
         NSTimeInterval dayInterval = (selectedDay-1+(selectedWeek-1)*7)*24*3600;
         NSTimeInterval hourInterval = 0;
         if (currentSelectedIndexPath.section == 0) {
@@ -947,45 +1131,50 @@ static const float animationTime = 0.2f;
         }
         NSTimeInterval allInterval = startInterval+dayInterval+hourInterval;
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:allInterval];
-        NSLog(@"%@",date);
-        [self addNotificationWithFireDate:date];
+        [self addNotificationWithFireDate:date andIdentifier:[NSString stringWithFormat:@"%@-第%lu周",courseName,selectedWeek]];
         [[ZCYProgressHUD sharedHUD] showWithText:@"设置成功" inView:strongSelf.view hideAfterDelay:1.0];
     }];
     [alert addAction:action];
     //所有周次
     UIAlertAction *act = [UIAlertAction actionWithTitle:@"所有周次" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         __strong typeof(self) strongSelf = weakself;
-        NSArray *courseArray = [ZCYUserMgr sharedMgr].courseArray[currentSelectedIndexPath.row];
-        NSArray *colArray = courseArray[currentSelectedIndexPath.section];
         NSMutableArray *weeksArray = [NSMutableArray array];
-        for (NSInteger index = 0; index < colArray.count; index++)
-        {
-            ZCYTimeTableModel *weekModel = colArray[index];
-            if (weekModel.courseWeeks[0] == [weekModel.courseWeeks lastObject])
-            {
-                if (selectedWeek < currentWeek) {
-                    [[ZCYProgressHUD sharedHUD] showWithText:@"该课已经结束了哦～" inView:strongSelf.view hideAfterDelay:1.0];
-                    return ;
-                }else if (selectedWeek == currentWeek){
-                    if (currentSelectedIndexPath.row+1 < currentWeekDay) {
-                        [[ZCYProgressHUD sharedHUD] showWithText:@"该课已经结束了哦～" inView:strongSelf.view hideAfterDelay:1.0];
-                        return;
-                    }
+        NSMutableArray *nameArray = [NSMutableArray array];
+        for (int i = 0; i < colArray.count; i++) {
+            ZCYTimeTableModel *model = colArray[i];
+            NSArray *arr = model.courseWeeks;
+            for (NSInteger i = 0; i < arr.count; i++) {
+                if ([arr[i] integerValue] == selectedWeek) {
+                    weekModel = model;
                 }
-
-            }
-            for (int i = 0; i < weekModel.courseWeeks.count; i++) {
-                [weeksArray addObject:weekModel.courseWeeks[i]];
             }
         }
         
+        if (weekModel.courseWeeks[0] == [weekModel.courseWeeks lastObject])
+        {
+            if (selectedWeek < currentWeek) {
+                [[ZCYProgressHUD sharedHUD] showWithText:@"该课已经结束了哦～" inView:strongSelf.view hideAfterDelay:1.0];
+                return ;
+            }else if (selectedWeek == currentWeek){
+                if (currentSelectedIndexPath.row+1 < currentWeekDay) {
+                    [[ZCYProgressHUD sharedHUD] showWithText:@"该课已经结束了哦～" inView:strongSelf.view hideAfterDelay:1.0];
+                    return;
+                }
+            }
+        }
+        for (int i = 0; i < weekModel.courseWeeks.count; i++) {
+            [weeksArray addObject:weekModel.courseWeeks[i]];
+            [nameArray addObject:weekModel.courseName];
+        }
         for (NSInteger i = weeksArray.count-1; i >= 0; i--) {
             if ([weeksArray[i] integerValue] < currentWeek) {
                 [weeksArray removeObjectAtIndex:i];
+                [nameArray removeObjectAtIndex:i];
             }
             if ([weeksArray[i] integerValue] == currentWeek) {
                 if (currentWeekDay > selectedDay) {
                     [weeksArray removeObjectAtIndex:i];
+                    [nameArray removeObjectAtIndex:i];
                 }
             }
         }
@@ -1007,15 +1196,14 @@ static const float animationTime = 0.2f;
             hourInterval = (18*60+50)*60;
         }
         if (currentSelectedIndexPath.section == 5) {
-            hourInterval = (20*60+45)*60;
+            hourInterval = (20*60+40)*60;
         }
         for (int i = 0; i < weeksArray.count; i++) {
             NSTimeInterval weekInterval = ([weeksArray[i] integerValue]-currentWeek)*7*24*3600;
             NSTimeInterval allInterval = startInterval+dayInterval+hourInterval+weekInterval;
             NSDate *date = [NSDate dateWithTimeIntervalSince1970:allInterval];
-            [self addNotificationWithFireDate:date];
+            [self addNotificationWithFireDate:date andIdentifier:[NSString stringWithFormat:@"%@-第%@周",nameArray[i],weeksArray[i]]];
         }
-
         [[ZCYProgressHUD sharedHUD] showWithText:@"设置成功" inView:strongSelf.view hideAfterDelay:1.0];
     }];
     [alert addAction:act];
@@ -1025,31 +1213,82 @@ static const float animationTime = 0.2f;
     [self presentViewController:alert animated:YES completion:nil];
 }
 
--(void)addNotificationWithFireDate:(NSDate *)date{
+-(void)addNotificationWithFireDate:(NSDate *)date andIdentifier:(NSString *)identifier{
+    if ([ZCYUserMgr sharedMgr].notificationIdentifiers == nil) {
+        [ZCYUserMgr sharedMgr].notificationIdentifiers = [NSMutableArray array];
+    }
+    if (_menuArray == nil) {
+        _menuArray = [NSMutableArray array];
+    }
+    [_menuArray addObject:identifier];
+    [[ZCYUserMgr sharedMgr].notificationIdentifiers addObject:identifier];
+    ZCYUserMgr *userMgr = [ZCYUserMgr sharedMgr];
+    NSData *archiveUserData = [NSKeyedArchiver archivedDataWithRootObject:userMgr];
+    [[NSUserDefaults standardUserDefaults] setObject:archiveUserData forKey:@"USERMGR"];
+    NSLog(@"%@",[ZCYUserMgr sharedMgr].notificationIdentifiers);
     if ([[UIDevice currentDevice] systemVersion].integerValue >= 10) {
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        //通知内容对象
         UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc]init];
         content.title = @"该上课啦！";
         content.body = [NSString stringWithFormat:@"同学，再过十分钟就要上课了，不要迟到哦～"];
         content.sound = [UNNotificationSound defaultSound];
         NSTimeInterval nowInterval = [date timeIntervalSinceNow];
+        //通知触发机制
         UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:nowInterval repeats:NO];
-        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"singleNotification" content:content trigger:trigger];
+        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
         //推送成功后处理
         [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
-            
+            [[ZCYUserMgr sharedMgr].notificationIdentifiers removeObject:identifier];
         }];
     }else{
+        NSDictionary *dic = @{[NSString stringWithFormat:@"%lu",_menuArray.count]:identifier};
         UILocalNotification *notification = [[UILocalNotification alloc]init];
         notification.fireDate = date;
         notification.alertBody = @"同学，该上课了哦！";
         notification.soundName = UILocalNotificationDefaultSoundName;
         notification.timeZone = [NSTimeZone defaultTimeZone];
+        notification.userInfo = dic;
         [[UIApplication sharedApplication] scheduleLocalNotification:notification];
     }
-
+    
 }
 
+-(void)changeNotification:(UIBarButtonItem *)sender{
+    if ([ZCYUserMgr sharedMgr].notificationIdentifiers == nil) {
+        [[ZCYProgressHUD sharedHUD] showWithText:@"还没有添加课程提醒哦" inView:self.view hideAfterDelay:1.0];
+        return;
+    }
+    if (_isShowNotificationMenu) {
+        [_popView dismissAnimated:YES];
+        _isShowNotificationMenu = NO;
+    }else{
+        self.notificationMenu.frame = CGRectMake(0, 0, 140, 200);
+        self.notificationMenu.backgroundColor = [UIColor colorWithRed:92/255.0 green:255/255.0 blue:117/255.0 alpha:1];
+        _notificationMenu.showsVerticalScrollIndicator = NO;
+        _notificationMenu.separatorStyle = UITableViewCellSelectionStyleDefault;
+        self.notificationMenu.alwaysBounceVertical = YES;
+        [self.notificationMenu reloadData];
+        _popView = [[CMPopTipView alloc] initWithCustomView:self.notificationMenu];
+        //    popView.delegate = self;
+        _popView.cornerRadius = 5;
+        _popView.backgroundColor = [UIColor colorWithRed:92/255.0 green:255/255.0 blue:117/255.0 alpha:1];
+        _popView.textColor = [UIColor whiteColor];
+        // 0是Slide  1是pop  2是Fade但是有问题，用前两个就好了
+        _popView.animation = arc4random() % 1;
+        // 立体效果，默认是YES
+        _popView.has3DStyle = arc4random() % 1;
+        //        popView.dismissTapAnywhere = YES;
+        //        [popView autoDismissAnimated:YES atTimeInterval:5.0];
+        
+        //    [popView presentPointingAtView:_atView inView:_containerView animated:YES];
+        
+        // 如果是原生的UIBarButtonItem，那么就调用这个方法
+        [_popView presentPointingAtBarButtonItem:sender animated:YES];
+        _isShowNotificationMenu = YES;
+    }
+    
+}
 
 
 #pragma mark - TOOL
@@ -1088,7 +1327,7 @@ static const float animationTime = 0.2f;
         classPlaceString = [NSString stringWithFormat:@"%@",@(idc)];
     } else {
         classPlaceString = [classID substringWithRange:NSMakeRange(0, [classID
-                                                                        length])];
+                                                                       length])];
     }
     cell.backgroundColor = cellColor;
     

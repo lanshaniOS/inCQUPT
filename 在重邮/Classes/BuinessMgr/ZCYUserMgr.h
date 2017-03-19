@@ -28,6 +28,7 @@
 @property (strong, nonatomic) NSData *settingImageData;  /**< 设置顶部图片 */
 @property (assign, nonatomic) NSInteger shcoolWeek;  /**< 开学周数 */
 @property (nonatomic,strong) ZCYCuurentTimeModel *schoolTimeModel;
+@property (nonatomic,strong) NSMutableArray *notificationIdentifiers;
 
 + (ZCYUserMgr *)sharedMgr;
 

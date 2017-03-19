@@ -14,7 +14,6 @@
 @property (readonly) NSInteger month;
 @property (readonly) NSInteger day;
 @property (readonly) NSString *weekString;
-@property (readonly) NSString *year;
 //@property (readonly) NSInteger schoolWeek;
 
 

@@ -23,6 +23,7 @@ static ZCYUserMgr *sharedMgr = nil;
         sharedMgr = [[self alloc] init];
         sharedMgr.studentNumber = @"";
         sharedMgr.courseArray = [[NSArray alloc] init];
+        sharedMgr.notificationIdentifiers = [NSMutableArray array];
     });
     return sharedMgr;
 }
@@ -43,7 +44,7 @@ static ZCYUserMgr *sharedMgr = nil;
     [aCoder encodeObject:self.identityID forKey:@"IDENTITYCARD"];
     [aCoder encodeObject:self.collegeName forKey:@"COLLEGENAME"];
     [aCoder encodeInteger:self.shcoolWeek forKey:@"SCHOOLWEEK"];
-    [aCoder encodeObject:self.schoolTimeModel forKey:@"SCHOOLTIMEMODEL"];
+    [aCoder encodeObject:self.notificationIdentifiers forKey:@"IDENTIFIERS"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -65,7 +66,7 @@ static ZCYUserMgr *sharedMgr = nil;
         self.identityID = [aDecoder decodeObjectForKey:@"IDENTITYCARD"];
         self.collegeName = [aDecoder decodeObjectForKey:@"COLLEGENAME"];
         self.shcoolWeek = [aDecoder decodeIntegerForKey:@"SCHOOLWEEK"];
-        self.schoolTimeModel = [aDecoder decodeObjectForKey:@"SCHOOLTIMEMODEL"];
+        self.notificationIdentifiers = [aDecoder decodeObjectForKey:@"IDENTIFIERS"];
     }
     return self;
 }
@@ -100,5 +101,6 @@ static ZCYUserMgr *sharedMgr = nil;
     self.settingImageData = nil;
     self.identityID = nil;
     self.collegeName = nil;
+    self.notificationIdentifiers = nil;
 }
 @end
